@@ -1,0 +1,67 @@
+﻿body {
+    background-color: aliceblue;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.dark-mode {
+    background-color: rgb(46, 44, 44);
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.registration {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: -12rem;
+}
+
+.light {
+    width: 2rem;
+    float: right;
+    margin: 1.5rem;
+}
+
+#logo {
+    width: 15rem;
+}
+
+button {
+    color: #FFFFFF;
+    padding: 0.75rem 1rem;
+    border-radius: 0.50rem;
+    width: 40%;
+    font-weight: 700;
+}
+
+.dark-blue {
+    background-color: blue;
+    border-color: blue;
+}
+
+.light-blue {
+    background-color: rgb(0, 183, 255);
+    border-color: rgb(0, 183, 255);
+}
+
+#d-mode {
+    align-self: flex-end;
+    margin-top: 2rem;
+    margin-right: 2rem;
+    width: 2.5rem;
+}
+
+footer {
+    text-align: center;
+    margin-bottom: 2rem;
+}

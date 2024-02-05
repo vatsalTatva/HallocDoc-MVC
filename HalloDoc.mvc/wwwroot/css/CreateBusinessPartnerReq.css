@@ -1,0 +1,74 @@
+﻿body {
+    background-color: aliceblue;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.dark-mode {
+    background-color: rgb(46, 44, 44);
+    color: white;
+}
+
+#navbar {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+}
+
+#logo {
+    width: 9rem;
+    margin-left: 5rem;
+    margin-top: 0.25rem;
+}
+
+#back-btn {
+    position: absolute;
+    color: rgb(0, 183, 255);
+    background-color: white;
+    border: 1px solid rgb(0, 183, 255);
+    border-radius: 5px;
+    width: 5rem;
+    height: 2.5rem;
+    top: 7rem;
+    right: 8rem;
+}
+
+#main-cont {
+    background-color: #FFFFFF;
+}
+
+h5 {
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.light {
+    width: 2rem;
+    float: right;
+    margin: 1.5rem;
+}
+
+#cancel {
+    float: right;
+    border: 1px solid rgb(0, 183, 255);
+    color: rgb(0, 183, 255);
+}
+
+#submit {
+    float: right;
+    border: 1px solid rgb(0, 183, 255);
+    background-color: rgb(0, 183, 255);
+    color: #FFFFFF;
+}
+
+.form-floating > .form-control-plaintext ~ label, .form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label, .form-floating > .form-select ~ label {
+    color: rgb(0, 183, 255);
+}
+
+    .form-floating > .form-control-plaintext ~ label::after, .form-floating > .form-control:focus ~ label::after, .form-floating > .form-control:not(:placeholder-shown) ~ label::after, .form-floating > .form-select ~ label::after {
+        background-color: transparent;
+    }
+
+.form-control:focus {
+    border: 1px solid rgb(0, 183, 255);
+}

@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Request</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/PatientRequest.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+    <div class="container d-flex flex-column justify-content-between min-vh-100 ">
+        <img class="float-right" onclick="darkMode()" id="d-mode" src="/images/dark.png" alt="dark">
+        <div class="registration d-flex flex-column justify-content-center align-items-center" >
+            <img id="logo" src="/images/logo.png" alt="logo">
+
+            <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" class="light-blue">Submit A Request</button>
+            
+            <button onclick="location.href='@Url.Action("Login", "Patient")'" class="dark-blue">Register Patients</button>
+        </div>
+        <footer class="mb-3">Terms of Conditions | Privacy Policy</footer>
+    </div>
+
+
+    <!-- script  -->
+    <script>
+        function darkMode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+
+            var img = element.querySelector("#d-mode")
+            img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
+        }
+    </script>
+</body>
+</html>

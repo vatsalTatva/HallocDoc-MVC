@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/CreateConciergeReq.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <title>Create Concierge Request</title>
+</head>
+
+<body>
+    <partial name="_navbar" />
+    <div class="container my-5 p-4" id="main-cont">
+        <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" id="back-btn">&lt; Back</button>
+
+        <div class="row">
+            <h5 class="col-12">Concierge Information</h5>
+
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="">
+                    <label for="floatingInput">Your First Name</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Your Last Name</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+                    <!-- <label for="floatingInput">Phone</label> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Email</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="">
+                    <label for="floatingInput">Hotel/Property Name</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <h5 class="col-12">Patient Information</h5>
+            <div class="col-12 mb-3">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                              style="height: 100px"></textarea>
+                    <label id="symptom-label" for="floatingTextarea2">Symptoms(Optional)</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="">
+                    <label for="floatingInput">First Name</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Last Name</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Date Of Birth</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h5>Patient Contact Information</h5>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Email</label>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput" placeholder="">
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h5>Patient Location</h5>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <div class="input-div form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="">
+                    <label for="floatingInput">Room # / Suite (Optional)</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12">
+                <button id="cancel" type="reset" class="btn my-2">Cancel</button>
+                <button id="submit" type="submit" class="btn m-2">Submit</button>
+            </div>
+        </div>
+
+
+
+    </div>
+    <partial name="_footer" />
+
+    <script>
+        const phoneInputField = document.querySelectorAll("input[type='tel']");
+        for (var i = 0; i < phoneInputField.length; i++) {
+            const phoneInput = window.intlTelInput(phoneInputField[i], {
+                utilsScript:
+                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            });
+        }
+    </script>
+</body>
+
+</html>

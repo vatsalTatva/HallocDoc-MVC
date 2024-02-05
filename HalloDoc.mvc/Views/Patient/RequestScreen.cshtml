@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "RequestScreen";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="~/css/RequestScreen.css">
+    <title>Request Screen</title>
+</head>
+
+<body>
+    <div class="d-flex flex-column justify-content-between min-vh-100">
+
+        <partial name="_navbar" />
+        <button onclick="location.href='@Url.Action("Index", "Home")'" id="back-btn">&lt; Back</button>
+        <div class="container">
+            
+            <h2>I am a ...</h2>
+            <button onclick="location.href='@Url.Action("CreatePatientReq", "Patient")'" class="req-btn purple">PATIENT</button>
+            <button onclick="location.href='@Url.Action("CreateFamilyFrndReq", "Patient")'" class="req-btn blue">FRIEND/FAMILY</button>
+            <button onclick="location.href='@Url.Action("CreateConciergeReq", "Patient")'" class="req-btn green">CONCIERGE</button>
+            <button onclick="location.href='@Url.Action("CreateBusinessPartnerReq", "Patient")'" class="req-btn pink">BUSINESS PARTNERS</button>
+        </div>
+        <partial name="_footer" />
+    </div>
+    
+
+</body>
+
+</html>
