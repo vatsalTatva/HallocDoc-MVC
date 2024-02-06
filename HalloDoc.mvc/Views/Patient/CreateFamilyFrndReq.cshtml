@@ -40,9 +40,8 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="tel" name="phone" class="form-control" id="floatingInput"
-                               placeholder="name@example.com">
-                        <label for="floatingInput">Phone</label>
+                        <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+
                     </div>
                 </div>
 
@@ -102,7 +101,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="tel" name="phone" class="form-control phone" id="floatingInput" placeholder="">
+                        <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
 
                     </div>
 
@@ -160,29 +159,9 @@
 
 
 
+            <partial name="RequestModal" />
 
-
-            <button class="d-none" id="myBtn"></button>
-
-
-            <div id="myModal" class="modal">
-
-
-                <div class="modal-content d-flex flex-column justify-content-evenly align-items-center">
-
-                    <img class="" id="info-icon" src="/images/info.png" alt="info">
-                    <h5>Information</h5>
-                    <p class="" id="info">
-                        When submitting a request, you must provide the correct contact information
-                        for the patient or the responsibility party. Failure to provide the correct email and phone
-                        number will delay service or be declined.
-                    </p>
-                    <span class="close"><button class="btn btn-primary">OK</button></span>
-                </div>
-
-            </div>
-
-
+ 
 
 
 
@@ -191,80 +170,19 @@
     </div>
 
     <partial name="_footer" />
-    <!-- script  -->
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+   
 
     <script>
-        $(document).ready(function () {
-            modal.style.display = "block";
-        });
-        function darkMode() {
-            var e1 = document.body;
-            e1.classList.toggle("dark-mode");
-
-            const e2 = document.getElementById('navbar');
-            e2.classList.toggle('dark-mode');
-
-            const e3 = document.getElementById('footr');
-            e3.classList.toggle('dark-mode');
-
-            const e4 = document.getElementById('main-cont');
-            e4.classList.toggle('dark-mode');
+       
 
 
-            if (e1.classList.contains('dark-mode')) {
-                e2.style.backgroundColor = 'black';
-                e3.style.backgroundColor = 'black';
-                e4.style.backgroundColor = 'rgba(255, 255, 255, 0.884)';
-                e4.style.color = 'black';
-
-
-
-            } else {
-                e2.style.backgroundColor = 'white';
-                e3.style.backgroundColor = '';
-                e4.style.backgroundColor = '';
-                e4.style.color = ''
-
-            }
-
-            var img = e1.querySelector(".light")
-            img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
-
+        const phoneInputField = document.querySelectorAll("input[type='tel']");
+        for (var i = 0; i < phoneInputField.length; i++) {
+            const phoneInput = window.intlTelInput(phoneInputField[i], {
+                utilsScript:
+                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            });
         }
-
-
-        var modal = document.getElementById("myModal");
-
-
-        var btn = document.getElementById("myBtn");
-
-
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-
-        const phoneInputField = document.querySelector(".phone");
-        const phoneInput = window.intlTelInput(phoneInputField, {
-            utilsScript:
-                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
     </script>
 </body>
 

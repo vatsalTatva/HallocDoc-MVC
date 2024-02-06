@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\css\\PatientRequest.css"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\RequestModal.css",
+      "PackagePath": "staticwebassets\\css\\RequestModal.css"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\RequestScreen.css",
       "PackagePath": "staticwebassets\\css\\RequestScreen.css"
     },

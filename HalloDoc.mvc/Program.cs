@@ -1,7 +1,15 @@
+using HalloDoc.mvc.Models;
+using Microsoft.EntityFrameworkCore;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<HalloDocDbContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("HalloDocDbContext")));
 
 var app = builder.Build();
 

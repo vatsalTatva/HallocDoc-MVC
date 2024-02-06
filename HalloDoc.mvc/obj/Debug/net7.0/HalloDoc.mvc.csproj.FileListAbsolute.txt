@@ -221,3 +221,12 @@ D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Dra
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\obj\Debug\net7.0\HalloDoc.mvc.csproj.CopyComplete
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Npgsql.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\System.CodeDom.dll

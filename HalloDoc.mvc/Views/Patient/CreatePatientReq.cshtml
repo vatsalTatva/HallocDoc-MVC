@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/CreatePatientReq.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <title>Create Patient Request</title>
 </head>
 
@@ -67,9 +68,8 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="tel" name="phone" class="form-control" id="floatingInput"
-                               placeholder="name@example.com">
-                        <label for="floatingInput">Phone</label>
+                        <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+
                     </div>
                 </div>
             </div>
@@ -131,7 +131,13 @@
 
     <!-- script  -->
     <script>
-        
+        const phoneInputField = document.querySelectorAll("input[type='tel']");
+        for (var i = 0; i < phoneInputField.length; i++) {
+            const phoneInput = window.intlTelInput(phoneInputField[i], {
+                utilsScript:
+                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            });
+        }
     </script>
 </body>
 
