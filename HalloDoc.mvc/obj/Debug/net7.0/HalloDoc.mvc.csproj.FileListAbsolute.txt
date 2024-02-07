@@ -230,3 +230,7 @@ D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Npgsql.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\System.CodeDom.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\BusinessLogic.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\DataAccess.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\BusinessLogic.pdb
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\DataAccess.pdb
