@@ -234,3 +234,6 @@ D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\BusinessLogic.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\DataAccess.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\BusinessLogic.pdb
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\DataAccess.pdb
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll

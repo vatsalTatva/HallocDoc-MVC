@@ -1,5 +1,7 @@
-//using HalloDoc.mvc.Models;
-//using Microsoft.EntityFrameworkCore;
+
+using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -8,8 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//builder.Services.AddDbContext<HalloDocDbContext>(options =>
-//options.UseNpgsql(builder.Configuration.GetConnectionString("HalloDocDbContext")));
+builder.Services.AddDbContext<DataAccess.Data.ApplicationDbContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("HalloDocDbContext")));
+
+builder.Services.AddScoped<ILoginService,LoginService>();
+builder.Services.AddScoped<IPatientService, PatientService>();
 
 var app = builder.Build();
 

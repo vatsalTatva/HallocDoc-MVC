@@ -1,4 +1,8 @@
 ﻿
+using BusinessLogic.Interfaces;
+using DataAccess.CustomModels;
+using DataAccess.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HalloDoc.mvc.Controllers
@@ -7,12 +11,55 @@ namespace HalloDoc.mvc.Controllers
     {
 
         private readonly ILogger<PatientController> _logger;
+        private readonly ILoginService _loginService;
+        private readonly IPatientService _patientService;
 
-        public PatientController(ILogger<PatientController> logger)
+        public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService)
         {
             _logger = logger;
+            _loginService = loginService;
+            _patientService = patientService;
         }
 
+
+
+
+        [HttpPost]
+        public IActionResult Login(LoginModel loginModel)
+        {
+            var user = _loginService.Login(loginModel);
+            if (user!=null)
+            {
+                
+                return RedirectToAction("CreatePatientReq", "Patient");
+            }
+            else
+            {
+                ViewBag.AuthFailedMessage = "Please enter valid username and password !!";
+            }
+            return View();
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Login(LoginModel loginmodel)
+        //{
+
+        //    var result = await _loginService.Login(loginmodel);
+        //    if (result)
+        //    {
+        //        return Ok("login successful");
+        //    }
+        //    return BadRequest("invalid credentials");
+        //}
+
+        [HttpPost]
+        public IActionResult AddPatient(PatientInfoModel patientInfoModel)
+        {
+
+            _patientService.AddPatientInfo(patientInfoModel);
+
+            return RedirectToAction("RequestScreen", "Patient");
+        }
 
         public IActionResult RequestScreen()
         {

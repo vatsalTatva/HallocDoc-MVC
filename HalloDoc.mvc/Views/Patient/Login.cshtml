@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model DataAccess.CustomModels.LoginModel
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,36 +9,43 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/Login.css">
+    @*<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>*@
 </head>
 <body>
 
     <div class="container-fluid vh-100 d-flex flex-column justify-content-between align-items-center">
 
         <img onclick="darkMode()" class="dark" src="/images/dark.png" alt="dark">
-        <div class="login">
+        <form class="login" method="post">
             <img id="logo" src="/images/logo.png" alt="logo">
             <span onclick="location.href='@Url.Action("Index", "Home")'"><a class="text-decoration-none">&lt; Back</a> </span>
             <h3>Login to your account</h3>
             <div class="input-div form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Username</label>
-            </div>
+                <input asp-for="email" type="email" class="form-control email" id="floatingInput" placeholder="name@example.com"  >
+                <label for="floatingInput" >Email</label>
+               @*<span class="text-danger z-2" asp-validate-for="email"></span>*@
+           </div>
 
             <div class="input-div form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input asp-for="password" type="password" class="form-control password" id="floatingPassword" placeholder="Password" >
                 <label for="floatingPassword">Password</label>
+                @*<span class="text-danger z-2" asp-validate-for="password"></span>*@
             </div>
-
-            <button>Log In</button>
+            <p id="Message" style="color: rgb(252, 39, 39);">@ViewBag.AuthFailedMessage</p>
+            <button type="submit">Log In</button>
 
             <a asp-controller="Patient" asp-action="ForgetPassword" id="forget-pass">Forget Password?</a>
-        </div>
+        </form>
+        <div id="message"></div>
         <footer>Terms of Conditions | Privacy Policy</footer>
     </div>
 
 
     <!-- script  -->
+  
+
     <script>
+       
         function darkMode() {
             var element = document.body;
             element.classList.toggle("dark-mode");
@@ -44,6 +53,26 @@
             var img = element.querySelector(".dark")
             img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
         }
+
+        //$(document).ready(function() {
+        //    $('#loginform').submit(function(e) {
+        //        e.preventDefault();
+        //        var email = $('.email').val;
+        //        var password = $('.password').val;
+        //        $.ajax({
+        //            url: '/Patient/Login',
+        //            method: 'Post',
+        //            data: {email:email , password: password},
+        //            success: function(response){
+        //                $('#message').text(response);
+        //            },
+        //            error: function(xhr,status,error){
+        //                $('#message').text(response);
+        //            }
+        //        });
+        //    });
+        //});
+
     </script>
 
 </body>

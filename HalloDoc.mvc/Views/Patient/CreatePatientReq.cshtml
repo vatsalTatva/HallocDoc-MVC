@@ -1,8 +1,11 @@
-﻿@*
+﻿@using DataAccess.CustomModels;
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
+
+@model PatientInfoModel
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +17,7 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <title>Create Patient Request</title>
 </head>
 
@@ -25,32 +29,32 @@
         <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" id="back-btn">&lt; Back</button>
 
 
-        <div class="container my-5 p-4" id="main-cont">
+        <form method="post" asp-controller="Patient" asp-action="AddPatient" class="container my-5 p-4" id="main-cont">
 
             <div class="row">
                 <h5 class="col-12">Patient Information</h5>
                 <div class="col-12 mb-3">
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                        <textarea asp-for="symptoms" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                   style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Enter Brief Details Of Symptoms (Optional)</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="firstName" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">First Name</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Last Name</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="dob" type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Date Of Birth</label>
                     </div>
                 </div>
@@ -62,14 +66,26 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="email" type="email" class="form-control" id="email" placeholder="name@example.com">
                         <label for="floatingInput">Email</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+                        <input asp-for="phoneNo" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
 
+                    </div>
+                </div>
+                <div id="password" class="col-6 " >
+                    <div class="input-div form-floating mb-3">
+                        <input asp-for="email" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Password</label>
+                    </div>
+                </div>
+                <div id="confirmPassword" class="col-6" >
+                    <div class="input-div form-floating mb-3">
+                        <input asp-for="email" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Confirm Password</label>
                     </div>
                 </div>
             </div>
@@ -80,31 +96,31 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="street" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">Street</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="city" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">City</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="state" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">State</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="zipCode" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">Zip Code</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="roomNo" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">Room # / Suite (Optional)</label>
                     </div>
                 </div>
@@ -123,7 +139,7 @@
                 </div>
             </div>
 
-        </div>
+        </form>
 
     </div>
 
@@ -138,6 +154,33 @@
                     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
             });
         }
+
+
+                $(document).ready(function() {
+                    $('#email').blur(function() {                   
+                        //var email = $(this).val();
+                        $('#password').show();
+                        $('#confirmPassword').show();
+                        //$.ajax({
+                        //    url: '/Patient/Login',
+                        //    method: 'Post',
+                        //    data: {email:email},
+                        //    success: function(response){
+                        //        if(response.exists){
+                        //            $('#password').show();
+                        //            $('#confirmPassword').show();
+                        //        }
+                        //        else{
+                        //            $('#password').hide();
+                        //            $('#confirmPassword').hide();
+                        //        }
+                        //    },
+                        //    error: function(xhr,status,error){
+                        //        console.log(error);
+                        //    }
+                        //});
+                    });
+                });
     </script>
 </body>
 
