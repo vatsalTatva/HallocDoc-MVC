@@ -13,6 +13,11 @@ body {
     background-color: #FFFFFF;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
 }
+.light {
+    width: 2rem;
+    float: right;
+    margin: 1.5rem;
+}
 nav{
     position:sticky;
     z-index:5;

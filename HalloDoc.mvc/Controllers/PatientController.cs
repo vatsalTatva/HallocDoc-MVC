@@ -21,7 +21,10 @@ namespace HalloDoc.mvc.Controllers
             _patientService = patientService;
         }
 
-
+        public IActionResult Index()
+        {
+            return View();
+        }
 
 
         [HttpPost]
@@ -61,6 +64,40 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("RequestScreen", "Patient");
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> CheckEmailExists( string email)
+            {
+            var emailExists = await _patientService.IsEmailExists(email);
+            return Json(new { emailExists });
+        }
+
+        [HttpPost]
+        public IActionResult AddFamilyRequest(FamilyReqModel familyReqModel)
+        {
+
+            _patientService.AddFamilyReq(familyReqModel);
+
+            return RedirectToAction("RequestScreen", "Patient");
+        }
+
+        [HttpPost]
+        public IActionResult AddConciergeRequest(ConciergeReqModel conciergeReqModel)
+        {
+
+            _patientService.AddConciergeReq(conciergeReqModel);
+
+            return RedirectToAction("RequestScreen", "Patient");
+        }
+
+        [HttpPost]
+        public IActionResult AddBusinessRequest(BusinessReqModel businessReqModel)
+        {
+
+            _patientService.AddBusinessReq(businessReqModel);
+
+            return RedirectToAction("RequestScreen", "Patient");
+        }
         public IActionResult RequestScreen()
         {
             return View();
@@ -70,6 +107,17 @@ namespace HalloDoc.mvc.Controllers
         {
             return View();
         }
+        //public IActionResult CreatePatientReq(PatientInfoModel model)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+        //        return RedirectToAction("RequestScreen");
+        //    }
+        //    else
+        //    {
+        //        return View(model);
+        //    }
+        //}
 
         public IActionResult CreateFamilyFrndReq()
         {

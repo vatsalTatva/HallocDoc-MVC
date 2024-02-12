@@ -3,6 +3,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "CreatePatientReq";
 }
 
 @model PatientInfoModel
@@ -18,6 +19,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <!-- Add jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Add jQuery Validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
     <title>Create Patient Request</title>
 </head>
 
@@ -29,8 +35,8 @@
         <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" id="back-btn">&lt; Back</button>
 
 
-        <form method="post" asp-controller="Patient" asp-action="AddPatient" class="container my-5 p-4" id="main-cont">
-
+        <form  class="container my-5 p-4" id="main-cont">
+            @*method="post" asp-controller="Patient" asp-action="AddPatient"*@
             <div class="row">
                 <h5 class="col-12">Patient Information</h5>
                 <div class="col-12 mb-3">
@@ -44,11 +50,13 @@
                     <div class="input-div form-floating mb-3">
                         <input asp-for="firstName" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">First Name</label>
+                        
                     </div>
+                   
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
                         <label for="floatingInput">Last Name</label>
                     </div>
                 </div>
@@ -66,7 +74,7 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <input asp-for="email" name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
                         <label for="floatingInput">Email</label>
                     </div>
                 </div>
@@ -76,15 +84,15 @@
 
                     </div>
                 </div>
-                <div id="password" class="col-6 " >
+                <div id="passwordSection" class="col-6 " style="display:none" >
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="email" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Password</label>
                     </div>
                 </div>
-                <div id="confirmPassword" class="col-6" >
+                <div id="confirmPasswordSec" class="col-6" style="display:none">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="email" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input  type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Confirm Password</label>
                     </div>
                 </div>
@@ -146,6 +154,12 @@
     <partial name="_footer" />
 
     <!-- script  -->
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
+    }
+
     <script>
         const phoneInputField = document.querySelectorAll("input[type='tel']");
         for (var i = 0; i < phoneInputField.length; i++) {
@@ -155,32 +169,25 @@
             });
         }
 
-
-                $(document).ready(function() {
-                    $('#email').blur(function() {                   
-                        //var email = $(this).val();
-                        $('#password').show();
-                        $('#confirmPassword').show();
-                        //$.ajax({
-                        //    url: '/Patient/Login',
-                        //    method: 'Post',
-                        //    data: {email:email},
-                        //    success: function(response){
-                        //        if(response.exists){
-                        //            $('#password').show();
-                        //            $('#confirmPassword').show();
-                        //        }
-                        //        else{
-                        //            $('#password').hide();
-                        //            $('#confirmPassword').hide();
-                        //        }
-                        //    },
-                        //    error: function(xhr,status,error){
-                        //        console.log(error);
-                        //    }
-                        //});
-                    });
-                });
+        $('#email').focusout(function () {
+       
+            var email = $(this).val();
+            $.ajax({
+                url: '/Patient/CheckEmailExists',
+                type: 'GET',
+                contentType: 'application/json',
+                data: { email: email },
+                success: function (response) {
+                    if (response.emailExists) {
+                        $('#passwordSection').hide();
+                        $('#confirmPasswordSec').hide();
+                    } else {
+                        $('#passwordSection').show();
+                        $('#confirmPasswordSec').show();
+                    }
+                }
+            });
+        });
     </script>
 </body>
 
