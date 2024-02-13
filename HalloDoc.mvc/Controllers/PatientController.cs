@@ -4,6 +4,7 @@ using DataAccess.CustomModels;
 using DataAccess.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -33,8 +34,9 @@ namespace HalloDoc.mvc.Controllers
             var user = _loginService.Login(loginModel);
             if (user!=null)
             {
-                
-                return RedirectToAction("CreatePatientReq", "Patient");
+                TempData["username"] = user.Username;
+                TempData["id"] = user.Id;
+                return RedirectToAction("PatientDashboard", "Patient");
             }
             else
             {
@@ -107,17 +109,19 @@ namespace HalloDoc.mvc.Controllers
         {
             return View();
         }
-        //public IActionResult CreatePatientReq(PatientInfoModel model)
-        //{
-        //    if(ModelState.IsValid)
-        //    {
-        //        return RedirectToAction("RequestScreen");
-        //    }
-        //    else
-        //    {
-        //        return View(model);
-        //    }
-        //}
+
+        [HttpPost]
+        public IActionResult CreatePatientReq( PatientInfoModel patientInfoModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // Save patient data to database
+                return RedirectToAction("RequestScreen");
+            }
+            return View(patientInfoModel);
+        }
+
+
 
         public IActionResult CreateFamilyFrndReq()
         {
@@ -142,6 +146,13 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult ForgetPassword()
         {
             return View();
+        }
+
+        public IActionResult PatientDashboard()
+        {
+            var infos = _patientService.GetPatientInfos();
+            var viewmodel = new PatientDashboardInfo { patientDashboardItems = infos };
+            return View(viewmodel);
         }
 
 

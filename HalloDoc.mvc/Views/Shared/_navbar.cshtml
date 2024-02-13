@@ -3,7 +3,34 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<style>
+    .dark-mode {
+        background-color: rgb(46, 44, 44);
+        color: white;
+    }
 
+    #navbar {
+        background-color: #FFFFFF;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+    }
+
+    .light {
+        width: 2rem;
+        float: right;
+        margin: 1.5rem;
+    }
+
+    nav {
+        position: sticky;
+        z-index: 5;
+    }
+
+    #nav-logo {
+        width: 9rem;
+        margin-left: 5rem;
+    }
+
+</style>
 
 <nav id="navbar">
     <img id="nav-logo" src="/images/logo.png" alt="logo">

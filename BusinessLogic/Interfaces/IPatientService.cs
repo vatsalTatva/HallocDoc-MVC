@@ -18,5 +18,7 @@ namespace BusinessLogic.Interfaces
         void AddConciergeReq(ConciergeReqModel conciergeReqModel);  
 
         void AddBusinessReq(BusinessReqModel businessReqModel); 
+
+        List<PatientDashboard> GetPatientInfos();
     }
 }

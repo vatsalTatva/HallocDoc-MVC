@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\css\\Login.css"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\PatientDashboard.css",
+      "PackagePath": "staticwebassets\\css\\PatientDashboard.css"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\PatientRequest.css",
       "PackagePath": "staticwebassets\\css\\PatientRequest.css"
     },

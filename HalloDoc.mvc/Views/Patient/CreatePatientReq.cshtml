@@ -19,11 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <!-- Add jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Add jQuery Validation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
+
     <title>Create Patient Request</title>
 </head>
 
@@ -35,13 +31,13 @@
         <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" id="back-btn">&lt; Back</button>
 
 
-        <form  class="container my-5 p-4" id="main-cont">
-            @*method="post" asp-controller="Patient" asp-action="AddPatient"*@
+        <form method="post" asp-controller="Patient" asp-action="AddPatient"   class="container my-5 p-4" id="main-cont">
+            
             <div class="row">
                 <h5 class="col-12">Patient Information</h5>
                 <div class="col-12 mb-3">
                     <div class="form-floating">
-                        <textarea asp-for="symptoms" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                        <textarea  asp-for="symptoms" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                   style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Enter Brief Details Of Symptoms (Optional)</label>
                     </div>
@@ -50,13 +46,13 @@
                     <div class="input-div form-floating mb-3">
                         <input asp-for="firstName" type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">First Name</label>
-                        
+                        <span asp-validation-for="firstName" class="text-danger"></span>
                     </div>
                    
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" >
                         <label for="floatingInput">Last Name</label>
                     </div>
                 </div>
@@ -76,6 +72,7 @@
                     <div class="input-div form-floating mb-3">
                         <input asp-for="email" name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
                         <label for="floatingInput">Email</label>
+                        <span asp-validation-for="email" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-6">
@@ -154,11 +151,7 @@
     <partial name="_footer" />
 
     <!-- script  -->
-    @section Scripts {
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
-    }
+ 
 
     <script>
         const phoneInputField = document.querySelectorAll("input[type='tel']");

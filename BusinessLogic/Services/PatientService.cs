@@ -207,5 +207,19 @@ namespace BusinessLogic.Services
             _db.Requestbusinesses.Add(requestbusiness);
             _db.SaveChanges();
         }
+
+        public List<PatientDashboard> GetPatientInfos()
+        {
+
+            
+            var user = _db.Requests.Where(x => x.Requestid == 12).FirstOrDefault();
+            return new List<PatientDashboard>
+            {
+                new PatientDashboard {createdDate = user.Createddate , currentStatus = (user.Status == 1 ? "PENDING" : "ACTIVE"),document = "DOC.JPG"  },
+                new PatientDashboard {createdDate = DateTime.Now, currentStatus = "pending", document="myname.jpg"},
+                new PatientDashboard {createdDate = DateTime.Now, currentStatus = "active", document="hername.jpg"}
+            };
+        }
     }
 }
+//

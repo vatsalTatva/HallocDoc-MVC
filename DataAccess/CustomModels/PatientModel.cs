@@ -15,6 +15,9 @@ namespace DataAccess.CustomModels
         public string firstName { get; set; }
         public string lastName { get; set; }
         public DateTime dob { get; set; }
+
+        [Required(ErrorMessage = "Please enter the patient's email address.")]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
         public string email { get; set; }
         public string phoneNo { get; set; }
         public string street { get; set; }
@@ -91,4 +94,15 @@ namespace DataAccess.CustomModels
         public int roomNo { get; set; }
     }
 
+    public class PatientDashboard
+    {
+        public DateTime createdDate { get; set; }
+        public string currentStatus { get; set; }   
+        public string document { get; set; }
+    }
+
+    public class PatientDashboardInfo
+    {
+        public List<PatientDashboard> patientDashboardItems { get; set; }  
+    }
 }

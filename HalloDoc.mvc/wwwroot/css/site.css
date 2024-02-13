@@ -5,49 +5,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-.dark-mode {
-    background-color: rgb(46, 44, 44);
-    color: white;
-}
-#navbar {
-    background-color: #FFFFFF;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-}
-.light {
-    width: 2rem;
-    float: right;
-    margin: 1.5rem;
-}
-nav{
-    position:sticky;
-    z-index:5;
-}
 
-#nav-logo {
-    width: 9rem;
-    margin-left: 5rem;
-}
-
-
-footer {
-    text-align: center;
-    
-}
-footer p {
-    font-size: 0.75rem;
-    float: right;
-    padding: 1rem 1rem 0 0;
-}
-
-#footr {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    background-color: rgb(46, 44, 44);
-    color: white;
-    height: 3rem;
-   
-}
 
 .iti {
     width: 100%;
