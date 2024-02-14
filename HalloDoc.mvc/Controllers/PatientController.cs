@@ -1,4 +1,5 @@
 ﻿
+using AspNetCoreHero.ToastNotification.Abstractions;
 using BusinessLogic.Interfaces;
 using DataAccess.CustomModels;
 using DataAccess.Data;
@@ -14,12 +15,15 @@ namespace HalloDoc.mvc.Controllers
         private readonly ILogger<PatientController> _logger;
         private readonly ILoginService _loginService;
         private readonly IPatientService _patientService;
+        private readonly INotyfService _notyf;
 
-        public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService)
+
+        public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService , INotyfService notyf)
         {
             _logger = logger;
             _loginService = loginService;
             _patientService = patientService;
+            _notyf = notyf;
         }
 
         public IActionResult Index()
@@ -31,18 +35,28 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult Login(LoginModel loginModel)
         {
-            var user = _loginService.Login(loginModel);
-            if (user!=null)
+            if (ModelState.IsValid)
             {
-                TempData["username"] = user.Username;
-                TempData["id"] = user.Id;
-                return RedirectToAction("PatientDashboard", "Patient");
+                var user = _loginService.Login(loginModel);
+                if (user != null)
+                {
+                    TempData["username"] = user.Username;
+                    TempData["id"] = user.Id;
+                    _notyf.Success("Logged In Successfully !!");
+                    return RedirectToAction("PatientDashboard", "Patient");
+                }
+                else
+                {
+                    _notyf.Error("Invalid Credentials");
+
+                    //ViewBag.AuthFailedMessage = "Please enter valid username and password !!";
+                }
+                return View();
             }
             else
             {
-                ViewBag.AuthFailedMessage = "Please enter valid username and password !!";
+                return View(loginModel);
             }
-            return View();
         }
 
         //[HttpPost]
@@ -148,12 +162,19 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+        //public IActionResult PatientDashboard()
+        //{
+        //    var infos = _patientService.GetPatientInfos();
+        //    var viewmodel = new PatientDashboardInfo { patientDashboardItems = infos };
+        //    return View(viewmodel);
+        //}
         public IActionResult PatientDashboard()
         {
-            var infos = _patientService.GetPatientInfos();
-            var viewmodel = new PatientDashboardInfo { patientDashboardItems = infos };
+            var infos = _patientService.GetMedicalHistory("abc@gmail.com");
+            var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
             return View(viewmodel);
         }
+
 
 
 

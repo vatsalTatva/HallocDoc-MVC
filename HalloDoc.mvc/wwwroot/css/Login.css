@@ -36,7 +36,7 @@
     width: 60%;
 }
 
-span {
+#back {
     margin-left: -15rem;
     color: rgb(0, 183, 255);
     cursor:pointer;
@@ -79,7 +79,7 @@ footer {
         width: 80%;
     }
 
-    span {
+    #back {
         margin-left: -12rem;
     }
 

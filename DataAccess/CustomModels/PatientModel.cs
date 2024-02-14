@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccess.Models;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,23 +11,25 @@ namespace DataAccess.CustomModels
 {
     public class PatientInfoModel
     {
-        public string symptoms { get; set; }
+        public string? symptoms { get; set; } = null;
 
         [Required(ErrorMessage = "First name is required")]
         public string firstName { get; set; }
-        public string lastName { get; set; }
+        public string? lastName { get; set; }
         public DateTime dob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
         public string email { get; set; }
-        public string phoneNo { get; set; }
-        public string street { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string zipCode { get; set; }
-        public string roomNo { get; set; }
-        public string country { get; set; }
+        public string? phoneNo { get; set; }
+        public string? street { get; set; }
+        public string? city { get; set; }
+        public string? state { get; set; }
+        public string? zipCode { get; set; }
+        public string? roomNo { get; set; }
+        public string? country { get; set; }
+
+         public IFormFile? file { get; set; }
 
 
     }
@@ -104,5 +108,16 @@ namespace DataAccess.CustomModels
     public class PatientDashboardInfo
     {
         public List<PatientDashboard> patientDashboardItems { get; set; }  
+    }
+
+    public class MedicalHistory
+    {
+        public DateTime createdDate { get; set; }
+        public string currentStatus { get; set; }
+        public string document { get; set; }
+    }
+    public class MedicalHistoryList
+    {
+        public List<MedicalHistory> medicalHistoriesList { get; set; }
     }
 }

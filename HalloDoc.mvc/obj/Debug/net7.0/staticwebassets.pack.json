@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HalloDoc.mvc.bundle.scp.css"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\info.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\info.png"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\CreateBusinessPartnerReq.css",
       "PackagePath": "staticwebassets\\css\\CreateBusinessPartnerReq.css"
     },

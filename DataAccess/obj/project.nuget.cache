@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "M1nLPanGtLvHJavyS/C4AhxQtcriMqQNItRD7iPjXFHW97QlyCRB7gkFQ+vKmlvTU86WJuKiWUA3VGMO3tm4GQ==",
+  "dgSpecHash": "kRDLYJyrH8Rn9bWItZYJmnLDhQFv6VV+ZA3mCnn8MHkIKThT8HJl8lIHjRIdElH5/A9cZ4Px+M30lUQpY/JrTg==",
   "success": true,
   "projectFilePath": "D:\\HalloDoc.mvc\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pce159\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\pce159\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.15\\microsoft.entityframeworkcore.7.0.15.nupkg.sha512",
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.15\\microsoft.entityframeworkcore.abstractions.7.0.15.nupkg.sha512",
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.15\\microsoft.entityframeworkcore.analyzers.7.0.15.nupkg.sha512",

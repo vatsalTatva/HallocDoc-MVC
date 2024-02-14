@@ -18,20 +18,24 @@
         <img onclick="darkMode()" class="dark" src="/images/dark.png" alt="dark">
         <form class="login" method="post">
             <img id="logo" src="/images/logo.png" alt="logo">
-            <span onclick="location.href='@Url.Action("Index", "Home")'"><a class="text-decoration-none">&lt; Back</a> </span>
+            <span id="back" onclick="location.href='@Url.Action("Index", "Home")'"><a class="text-decoration-none">&lt; Back</a> </span>
             <h3>Login to your account</h3>
-            <div class="input-div form-floating mb-3">
-                <input asp-for="email" type="email" class="form-control email" id="floatingInput" placeholder="name@example.com"  >
-                <label for="floatingInput" >Email</label>
-               @*<span class="text-danger z-2" asp-validate-for="email"></span>*@
-           </div>
-
-            <div class="input-div form-floating">
-                <input asp-for="password" type="password" class="form-control password" id="floatingPassword" placeholder="Password" >
-                <label for="floatingPassword">Password</label>
-                @*<span class="text-danger z-2" asp-validate-for="password"></span>*@
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="input-div form-floating mb-3">
+                    <input asp-for="email" type="email" class="form-control email" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Email</label>
+                </div>
+                <span asp-validation-for="email" class="text-danger"></span>
             </div>
-            <p id="Message" style="color: rgb(252, 39, 39);">@ViewBag.AuthFailedMessage</p>
+
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="input-div form-floating">
+                    <input asp-for="password" type="password" class="form-control password" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <span class="text-danger" asp-validation-for="password"></span>
+            </div>
+            @*<p id="Message" style="color: rgb(252, 39, 39);">@ViewBag.AuthFailedMessage</p>*@
             <button type="submit">Log In</button>
 
             <a asp-controller="Patient" asp-action="ForgetPassword" id="forget-pass">Forget Password?</a>

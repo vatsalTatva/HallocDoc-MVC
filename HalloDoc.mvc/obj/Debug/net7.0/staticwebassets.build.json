@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "v4J2Jz0ml1Is123cMiFBkK6WkAcfLpwUt/wK1CuZNZU=",
+  "Hash": "7z8MkRCW7AMxj+zqCmAtVZ0J8M3ms13g/PtNjIna4W4=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -16,6 +16,74 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\notyf.min.css",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "notyf.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\notyf.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\notyf.min.js",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "notyf.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\notyf.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\toastify.css",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "toastify.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\toastify.css"
+    },
+    {
+      "Identity": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\toastify.js",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "toastify.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\pce159\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\staticwebassets\\toastify.js"
+    },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\obj\\Debug\\net7.0\\scopedcss\\bundle\\HalloDoc.mvc.styles.css",
       "SourceId": "HalloDoc.mvc",
@@ -1443,6 +1511,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\info.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "UploadedFiles/info.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\info.png"
     }
   ]
 }

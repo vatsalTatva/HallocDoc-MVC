@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "cZwpKAtoTx9tRn+j1+gWBILxmzvMC9fX8nu2mMzHG48FxTMgXP1lY/8q9Va9MOMJ8JqpPlHglCl66eV/0/JQdw==",
+  "dgSpecHash": "NjqeW5ltEhYCo1oESh8yHK+lMAuDbnteMCVvoLsftgYuExgpXolkYUJ0YR62A6hgOQVslUDScE+9PWlHYAvf9A==",
   "success": true,
   "projectFilePath": "D:\\HalloDoc.mvc\\BusinessLogic\\BusinessLogic.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pce159\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.15\\microsoft.entityframeworkcore.7.0.15.nupkg.sha512",
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.15\\microsoft.entityframeworkcore.abstractions.7.0.15.nupkg.sha512",
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.15\\microsoft.entityframeworkcore.analyzers.7.0.15.nupkg.sha512",

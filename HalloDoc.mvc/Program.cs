@@ -1,4 +1,6 @@
 
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,9 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("HalloDocDbContext")
 builder.Services.AddScoped<ILoginService,LoginService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomCenter; });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +37,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseNotyf();
 
 app.MapControllerRoute(
     name: "default",

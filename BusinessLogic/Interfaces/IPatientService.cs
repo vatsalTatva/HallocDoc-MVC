@@ -20,5 +20,6 @@ namespace BusinessLogic.Interfaces
         void AddBusinessReq(BusinessReqModel businessReqModel); 
 
         List<PatientDashboard> GetPatientInfos();
+        List<MedicalHistory> GetMedicalHistory(string email);
     }
 }
