@@ -76,7 +76,7 @@ namespace HalloDoc.mvc.Controllers
         {
 
             _patientService.AddPatientInfo(patientInfoModel);
-
+            _notyf.Success("Submit Successfully !!");
             return RedirectToAction("RequestScreen", "Patient");
         }
 
@@ -170,6 +170,7 @@ namespace HalloDoc.mvc.Controllers
         //}
         public IActionResult PatientDashboard()
         {
+
             var infos = _patientService.GetMedicalHistory("abc@gmail.com");
             var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
             return View(viewmodel);

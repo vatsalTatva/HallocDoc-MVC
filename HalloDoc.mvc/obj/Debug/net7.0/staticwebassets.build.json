@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7z8MkRCW7AMxj+zqCmAtVZ0J8M3ms13g/PtNjIna4W4=",
+  "Hash": "YaCAEjQ1/kCsdDRsRqANzxk/mnuu2rn6WZFFQoHnmHk=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -1528,6 +1528,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\info.png"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\logo.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "UploadedFiles/logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\logo.png"
     }
   ]
 }

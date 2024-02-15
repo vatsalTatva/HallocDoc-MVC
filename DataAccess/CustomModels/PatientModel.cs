@@ -29,7 +29,7 @@ namespace DataAccess.CustomModels
         public string? roomNo { get; set; }
         public string? country { get; set; }
 
-         public IFormFile? file { get; set; }
+         public List<IFormFile>? file { get; set; }
 
 
     }
@@ -114,7 +114,7 @@ namespace DataAccess.CustomModels
     {
         public DateTime createdDate { get; set; }
         public string currentStatus { get; set; }
-        public string document { get; set; }
+        public List<string> document { get; set; }
     }
     public class MedicalHistoryList
     {

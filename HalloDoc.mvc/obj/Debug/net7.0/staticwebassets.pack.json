@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\info.png"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\logo.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\logo.png"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\CreateBusinessPartnerReq.css",
       "PackagePath": "staticwebassets\\css\\CreateBusinessPartnerReq.css"
     },
