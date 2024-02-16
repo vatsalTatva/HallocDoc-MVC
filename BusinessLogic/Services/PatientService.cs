@@ -5,6 +5,7 @@ using DataAccess.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using System.Reflection.Metadata;
 
 namespace BusinessLogic.Services
 {
@@ -239,72 +240,34 @@ namespace BusinessLogic.Services
             _db.SaveChanges();
         }
 
-        //public List<PatientDashboard> GetPatientInfos()
-        //{
-
-
-        //    var user = _db.Requests.Where(x => x.Requestid == 12).FirstOrDefault();
-        //    return new List<PatientDashboard>
-        //    {
-        //        new PatientDashboard {createdDate = user.Createddate , currentStatus = (user.Status == 1 ? "PENDING" : "ACTIVE"),document = "DOC.JPG"  },
-        //        new PatientDashboard {createdDate = DateTime.Now, currentStatus = "pending", document="myname.jpg"},
-        //        new PatientDashboard {createdDate = DateTime.Now, currentStatus = "active", document="hername.jpg"}
-        //    };
-        //}
-        public List<PatientDashboard> GetPatientInfos()
-        {
-
-
-            var user = _db.Requests.Where(x => x.Email == "abc@gmail.com").FirstOrDefault();
-            return new List<PatientDashboard>
-            {
-                new PatientDashboard {createdDate = user.Createddate , currentStatus = "Test",
-                    document = "test"
-
-                },
-                new PatientDashboard {createdDate = DateTime.Now, currentStatus = "pending", document="myname.jpg"},
-                new PatientDashboard {createdDate = DateTime.Now, currentStatus = "active", document="hername.jpg"}
-            };
-        }
-
+       
 
         public List<MedicalHistory> GetMedicalHistory(string email)
         {
-            //var user = _db.Requests.Where(x => x.Email == email).FirstOrDefault();
-
-            //var doc  = _db.Requestwisefiles.Where(x => x.Requestid == 33).FirstOrDefault();
-            //string file = doc.Filename;
-            //return new List<MedicalHistory>
-            //{
-            //    new MedicalHistory {createdDate = user.Createddate , currentStatus = "Test",document = file
-
-            //    }
-                
-            //};
-
-            //var pmh = _db.Requests.Where(r => r.Email == email).Select(r => new MedicalHistory
-            //{
-            //    createdDate = r.Createddate,
-            //    currentStatus = "testing",
-            //    document = _db.Requestwisefiles.Where(x => x.Requestid == r.Requestid).Select(x => x.Filename)
-            //});.ToList();
-
+           
 
             var medicalhistory = (from request  in _db.Requests 
                                   join requestfile in _db.Requestwisefiles
                                   on request.Requestid equals requestfile.Requestid
                                   where request.Email == email && request.Email != null
+                                  group requestfile by request.Requestid into groupedFiles
                                   select new MedicalHistory
-                                  { createdDate= request.Createddate,
-                                  currentStatus = request.Status.ToString(),
-                                  document = _db.Requestwisefiles
-                                  .Where(x => x.Requestid == request.Requestid)
-                                  .Select(x => x.Filename.ToString())
-                                  .ToList()
+                                  {
+                                      redId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
+                                  createdDate= groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
+                                  currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault().ToString(),
+                                  document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
                                   }).ToList();
 
 
             return medicalhistory;
+        }
+
+        public IQueryable<Requestwisefile>? GetAllDocById(int requestId)
+        {
+            var data = from request in _db.Requestwisefiles
+                       where request.Requestid == requestId select request;
+            return data;
         }
     }
 }

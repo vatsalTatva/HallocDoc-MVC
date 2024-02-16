@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\HalloDoc.mvc.bundle.scp.css"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\banner.jpg",
+      "PackagePath": "staticwebassets\\UploadedFiles\\banner.jpg"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\bg-image.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\bg-image.png"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\dark.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\dark.png"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\info.png",
       "PackagePath": "staticwebassets\\UploadedFiles\\info.png"
     },

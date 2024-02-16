@@ -98,20 +98,11 @@ namespace DataAccess.CustomModels
         public int roomNo { get; set; }
     }
 
-    public class PatientDashboard
-    {
-        public DateTime createdDate { get; set; }
-        public string currentStatus { get; set; }   
-        public string document { get; set; }
-    }
-
-    public class PatientDashboardInfo
-    {
-        public List<PatientDashboard> patientDashboardItems { get; set; }  
-    }
+    
 
     public class MedicalHistory
     {
+        public int redId { get; set; }
         public DateTime createdDate { get; set; }
         public string currentStatus { get; set; }
         public List<string> document { get; set; }

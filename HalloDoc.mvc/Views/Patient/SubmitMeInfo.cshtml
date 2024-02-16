@@ -3,7 +3,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "CreatePatientReq";
+    ViewData["Title"] = "SubmitMeInfo";
 }
 
 @model PatientInfoModel
@@ -24,23 +24,23 @@
 </head>
 
 <body>
-    <partial name="_navbar" />
+   
     <div class="d-flex flex-column justify-content-between min-vh-100">
-       
 
-        <div class="container d-flex justify-content-between my-4">
-            <h3>Patient Information</h3>
-            <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" id="back-btn">&lt; Back</button>
-        </div>
+
+       <div class="container d-flex justify-content-between my-4">
+            <h3>Submit Information</h3>
+            <button onclick="location.href='@Url.Action("PatientDashboard", "Patient")'" id="back-btn">&lt; Back</button>
+       </div>
 
 
         <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="AddPatient" class="container mb-5 p-4" id="main-cont">
-            
+
             <div class="row">
                 <h5 class="col-12">Patient Information</h5>
                 <div class="col-12 mb-3">
                     <div class="form-floating">
-                        <textarea  asp-for="symptoms" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                        <textarea asp-for="symptoms" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                   style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Enter Brief Details Of Symptoms (Optional)</label>
                     </div>
@@ -51,11 +51,11 @@
                         <label for="floatingInput">First Name</label>
                         <span asp-validation-for="firstName" class="text-danger"></span>
                     </div>
-                   
+
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Last Name</label>
                     </div>
                 </div>
@@ -84,18 +84,7 @@
 
                     </div>
                 </div>
-                <div id="passwordSection" class="col-6 " style="display:none" >
-                    <div class="input-div form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Password</label>
-                    </div>
-                </div>
-                <div id="confirmPasswordSec" class="col-6" style="display:none">
-                    <div class="input-div form-floating mb-3">
-                        <input  type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Confirm Password</label>
-                    </div>
-                </div>
+               
             </div>
 
             <div class="row">
@@ -132,6 +121,22 @@
                         <label for="floatingInput">Room # / Suite (Optional)</label>
                     </div>
                 </div>
+                <div class="form-floating mb-3 col-6 ">
+                    <button type="button" class="btn btn-outline-primary" style="height:3.3rem ; width:6rem"> <i class="bi bi-geo-alt"></i> Map</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h5>Relation</h5>
+                </div>
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input  type="text" class="form-control" id="floatingInput" placeholder="">
+                        <label for="floatingInput">Relation</label>
+                    </div>
+                </div>
+               
             </div>
 
             <div class="row">
@@ -139,7 +144,7 @@
                     <h5>(Optional) Upload Photo Or Document</h5>
                 </div>
                 <div class="col-12 mb-4">
-                    <input asp-for="file" class="form-control form-control-lg " id="formFileLg" type="file" multiple >
+                    <input asp-for="file" class="form-control form-control-lg " id="formFileLg" type="file" multiple>
                 </div>
                 <div class="col-12">
                     <button id="cancel" type="reset" class="btn my-2">Cancel</button>
@@ -154,7 +159,7 @@
     <partial name="_footer" />
 
     <!-- script  -->
- 
+
 
     <script>
         const phoneInputField = document.querySelectorAll("input[type='tel']");
@@ -165,26 +170,7 @@
             });
         }
 
-        $('#email').focusout(function () {
        
-            var email = $(this).val();
-            $.ajax({
-                url: '/Patient/CheckEmailExists',
-                type: 'GET',
-                contentType: 'application/json',
-                data: { email: email },
-                success: function (response) {
-                    if (response.emailExists) {
-                        $('#passwordSection').hide();
-                        $('#confirmPasswordSec').hide();
-                    } else {
-                        $('#passwordSection').show();
-                        $('#confirmPasswordSec').show();
-                    }
-                    $("#id").html(response);
-                }
-            });
-        });
     </script>
 </body>
 

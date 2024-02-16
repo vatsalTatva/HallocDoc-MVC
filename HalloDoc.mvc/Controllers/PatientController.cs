@@ -175,9 +175,15 @@ namespace HalloDoc.mvc.Controllers
             var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
             return View(viewmodel);
         }
+        public IActionResult SubmitMeInfo()
+        {
+            return View();
+        }
 
-
-
-
+        public IActionResult GetDcoumentsById(int requestId) 
+        {
+            var list = _patientService.GetAllDocById(requestId);
+            return PartialView("_DocumentList",list.ToList());
+        }
     }
 }
