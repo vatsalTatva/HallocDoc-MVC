@@ -170,7 +170,7 @@ namespace HalloDoc.mvc.Controllers
         //}
         public IActionResult PatientDashboard()
         {
-
+            
             var infos = _patientService.GetMedicalHistory("abc@gmail.com");
             var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
             return View(viewmodel);

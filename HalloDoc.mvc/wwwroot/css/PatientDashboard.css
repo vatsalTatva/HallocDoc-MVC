@@ -13,6 +13,12 @@
 #logo {
     width: 9rem;
 }
+@media (max-width:375px) {
+    #logo {
+        width: 7rem;
+    }
+}
+
 
 .light {
     width: 2rem;

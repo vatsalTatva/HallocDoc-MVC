@@ -124,7 +124,7 @@
                                         <th scope="col">Created Date<i class="bi bi-arrow-down-short"></i></th>
                                         <th scope="col">Current Status</th>
                                         <th scope="col">Document</th>
-                                        <th scope="col">ReqId</th>
+                                     
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -132,21 +132,18 @@
                                     {
                                         
                                         <tr>
-                                            <td>@items.createdDate</td>
+                                            <td>@items.createdDate.ToString("MMM dd, yyyy")</td>
                                             <td>@items.currentStatus</td>
                                             <td>
-                                                <a href="#" class="btn btn-outline-info fw-bold" onclick="showDocuments('@items.createdDate','@items.currentStatus',@items.redId)">
+                                                <a href="#" class="btn btn-outline-info fw-bold" onclick="showDocuments(@items.redId)">
                                                     <span><i class="bi bi-file-earmark fw-bold"></i></span>
                                                     <span>
                                                          View Documents (@items.document.Count())
-                                                       @* @foreach (var docs in items.document)
-                                                        {
-                                                            @docs
-                                                        }*@
+                                                     
                                                     </span>
                                                 </a>
                                             </td>
-                                            <td>@items.redId</td>
+                                         
                                         </tr>
                                     }
                                    
@@ -220,16 +217,13 @@
                         <p class="col-12">patient name</p>
                         <p class="col-12">
                             <span class="fw-bolder fs-4">testing test</span>
-                            <span>(f34r34t5gvr42)</span>
+                            <span>(f34r34t5gvr44)</span>
                         </p>
                         <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
                         <div class="col-12 mb-4">
                             <input class="form-control form-control-lg " id="formfilelg" type="file" multiple>
                         </div>
-                        <div class="col-12 d-flex justify-content-between">
-                            <h3>documents</h3>
-                            <button class="px-3" id="download-btn">download all</button>
-                        </div>
+                      
                         <div class="row" id="docList">
                             @* @await Html.PartialAsync("_documentlist",Model);*@
                         </div>
@@ -250,10 +244,9 @@
                     <h5 class="col-12">General Information</h5>
                     
                     <div class="col-6">
-                        <div class="input-div form-floating mb-3">
-                            <input  type="text" class="form-control" id="floatingInput" placeholder="">
-                            <label for="floatingInput">First Name</label>
-                         
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInputDisabled" placeholder="name" disabled>
+                            <label for="floatingInputDisabled">@TempData["username"]</label>
                         </div>
 
                     </div>
@@ -465,7 +458,7 @@
 
         }
       
-        function showDocuments(createdDate, currentStatus, requestId) {
+        function showDocuments( requestId) {
             debugger
             $.ajax({
                 url: '/Patient/GetDcoumentsById',
@@ -484,128 +477,13 @@
             document.getElementById('viewdocs').style.display = 'block';
         }
 
-        function getDocumentsForRequest(requestId) {
-            // Implement logic to fetch documents related to the requestId
-            // This could be an AJAX call to your server
-            // For demonstration, I'll assume you have a global variable called 'documentsData' containing all documents
-            return documentsData.filter(doc => doc.requestId === requestId);
-        }
+     
 
 
 
     </script>
 
-    <script>
-        $(document).ready(function () {
-            // Convert table rows to accordions in mobile view
-            if ($(window).width() < 768) {
-                $('#dataTable tr').each(function (index) {
-                    var $accordionHeader = $('<div class="accordion-header">');
-                    $accordionHeader.text('Accordion Header ' + (index + 1));
-
-                    var $accordionContent = $('<div class="accordion-content">');
-                    $accordionContent.html($(this).html());
-
-                    $('#accordionWrapper').append($accordionHeader).append($accordionContent);
-                });
-
-                // Toggle accordion content on header click
-                $('.accordion-header').click(function () {
-                    $(this).next('.accordion-content').slideToggle();
-                });
-            }
-        });
-
-        // Resize event listener to update accordion on window resize
-        $(window).resize(function () {
-            $('#accordionWrapper').empty();
-            if ($(window).width() < 768) {
-                $('#dataTable tr').each(function (index) {
-                    var $accordionHeader = $('<div class="accordion-header">');
-                    $accordionHeader.text('Accordion Header ' + (index + 1));
-
-                    var $accordionContent = $('<div class="accordion-content">');
-                    $accordionContent.html($(this).html());
-
-                    $('#accordionWrapper').append($accordionHeader).append($accordionContent);
-                });
-
-                // Toggle accordion content on header click
-                $('.accordion-header').click(function () {
-                    $(this).next('.accordion-content').slideToggle();
-                });
-            }
-        });
-
-
-        const phoneInputField = document.querySelectorAll("input[type='tel']");
-        for (var i = 0; i < phoneInputField.length; i++) {
-            const phoneInput = window.intlTelInput(phoneInputField[i], {
-                utilsScript:
-                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-            });
-        }
-
-        //----------model-----------
-        $('.modal').css('top', $(window).outerHeight() / 4 - ($(".modal-dialog").outerHeight()) / 2 + 'px');
-
-        let buttonId = null;
-
-        function passId(event) {
-            buttonId = event.target.id;
-
-        }
-
-        function redirect() {
-            if (buttonId == 'button1') {
-                location.assign('SubmitMeInfo');
-            }
-            else if (buttonId == 'button2') {
-                location.assign('patientsomeoneelse');
-            } else {
-                // Default redirection if buttonId is not set or unexpected
-            }
-        }
-
-
-        function swapDivs() {
-
-            // Get references to the div elements
-            var div1 = document.getElementById("medicalHistory");
-            var div2 = document.getElementById("viewdocs");
-
-            // Toggle the visibility of the divs
-            if (div1.style.display === "none") {
-                div1.style.display = "block";
-                div2.style.display = "none";
-            } else {
-                div1.style.display = "none";
-                div2.style.display = "block";
-            }
-
-
-        }
-       
-        function showDocuments(requestId) {
-            debugger
-            $.ajax({
-                url: '/Patient/GetDcoumentsById',
-                type: 'GET',
-                data: { requestId: requestId },
-                success: function (response) {
-
-                    $("#docList").html(response);
-                }
-            });
-
-           
-        }
-
-      
-
-
-
-    </script>
+   
 
 </body>
 
