@@ -1,11 +1,13 @@
 ﻿@using DataAccess.CustomModels;
 @{
     ViewData["Title"] = "PatientDashboard";
-   
+
 }
 
 @model MedicalHistoryList;
-
+@{
+    var street = @Model.medicalHistoriesList.FirstOrDefault().Street;
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,8 +54,8 @@
                     </li>
                     <li class="nav-item p-2 fw-bolder">
                         <span class="d-flex gap-1">
-                            <span>@TempData["username"]</span>
-                            <span>@TempData["id"]</span>
+                            <span>@Model.medicalHistoriesList.FirstOrDefault().FirstName</span>
+                            <span>@street</span>
                         </span>
                     </li>
             </div>
@@ -118,7 +120,7 @@
                             </button>
                         </div>
                         <div class="d-none d-md-block">
-                            <table class="table">
+                            <table class="table data-table">
                                 <thead class="table-secondary">
                                     <tr>
                                         <th scope="col">Created Date<i class="bi bi-arrow-down-short"></i></th>
@@ -153,52 +155,7 @@
                         </div>
 
                         <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingOne">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                            aria-controls="flush-collapseOne">
-                                        Created Date: Dec 5, 2023
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        Placeholder content for this accordion, which is intended to demonstrate the
-                                        <code>.accordion-flush</code> class. This is the first item's accordion body.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                            aria-controls="flush-collapseTwo">
-                                        Created Date:
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        Placeholder
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                            aria-controls="flush-collapseThree">
-                                        Created Date:
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        Placeholder
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
 
                     </div>
@@ -238,27 +195,27 @@
 
 
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="AddPatient" class="container my-5 p-4" id="main-cont">
+            <form method="post" enctype="multipart/form-data" asp-controller="Patient" class="container my-5 p-4" id="main-cont">
 
                 <div class="row">
                     <h5 class="col-12">General Information</h5>
                     
                     <div class="col-6">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInputDisabled" placeholder="name" disabled>
-                            <label for="floatingInputDisabled">@TempData["username"]</label>
+                            <input asp-for="medicalHistoriesList.FirstOrDefault().FirstName" type="text" class="form-control" id="floatingInputDisabled" placeholder="name" >
+                            <label for="floatingInputDisabled">First Name</label>
                         </div>
 
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input asp-for="medicalHistoriesList.FirstOrDefault().LastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
                             <label for="floatingInput">Last Name</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input asp-for="medicalHistoriesList.FirstOrDefault().DateOfBirth" type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
                             <label for="floatingInput">Date Of Birth</label>
                         </div>
                     </div>
@@ -301,7 +258,7 @@
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input  type="text" class="form-control" id="floatingInput" placeholder="">
+                            <input asp-for="@street" type="text" class="form-control" id="floatingInput" placeholder="">
                             <label for="floatingInput">Street</label>
                         </div>
                     </div>
@@ -313,7 +270,7 @@
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input  type="text" class="form-control" id="floatingInput" placeholder="">
+                            <input asp-for="medicalHistoriesList.FirstOrDefault().State" type="text" class="form-control" id="floatingInput" placeholder="">
                             <label for="floatingInput">State</label>
                         </div>
                     </div>
@@ -378,40 +335,74 @@
         $(document).ready(function () {
             // Convert table rows to accordions in mobile view
             if ($(window).width() < 768) {
-                $('#dataTable tr').each(function (index) {
-                    var $accordionHeader = $('<div class="accordion-header">');
-                    $accordionHeader.text('Accordion Header ' + (index + 1));
+                $('.data-table tbody tr').each(function (index) {
+                    var $accordionItem = $('<div class="accordion-item">');
+                    var $accordionHeader = $('<h2 class="accordion-header">');
+                    var $accordionButton = $('<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse">');
+                    var $accordionCollapse = $('<div class="accordion-collapse collapse">');
+                    var $accordionBody = $('<div class="accordion-body">');
 
-                    var $accordionContent = $('<div class="accordion-content">');
-                    $accordionContent.html($(this).html());
+                    // Extract data from table row
+                    var createdDate = $(this).find('td:eq(0)').text();
+                    var currentStatus = $(this).find('td:eq(1)').text();
+                    var documentLink = $(this).find('td:eq(2)').html();
 
-                    $('#accordionWrapper').append($accordionHeader).append($accordionContent);
+                    // Set accordion header text
+                    $accordionButton.text('Created Date: ' + createdDate);
+
+                    // Set accordion body content
+                    $accordionBody.append('<p><strong>Current Status:</strong> ' + currentStatus + '</p>');
+                    $accordionBody.append('<p><strong>Document:</strong> ' + documentLink + '</p>');
+
+                    // Append elements to accordion item
+                    $accordionHeader.append($accordionButton);
+                    $accordionCollapse.append($accordionBody);
+                    $accordionItem.append($accordionHeader).append($accordionCollapse);
+
+                    $('#accordionFlushExample').append($accordionItem);
                 });
 
                 // Toggle accordion content on header click
-                $('.accordion-header').click(function () {
-                    $(this).next('.accordion-content').slideToggle();
+                $('.accordion-button').click(function () {
+                    $(this).closest('.accordion-item').find('.accordion-collapse').collapse('toggle');
                 });
             }
         });
 
         // Resize event listener to update accordion on window resize
         $(window).resize(function () {
-            $('#accordionWrapper').empty();
+            $('#accordionFlushExample').empty();
             if ($(window).width() < 768) {
-                $('#dataTable tr').each(function (index) {
-                    var $accordionHeader = $('<div class="accordion-header">');
-                    $accordionHeader.text('Accordion Header ' + (index + 1));
+                $('.data-table tbody tr').each(function (index) {
+                    var $accordionItem = $('<div class="accordion-item">');
+                    var $accordionHeader = $('<h2 class="accordion-header">');
+                    var $accordionButton = $('<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse">');
+                    var $accordionCollapse = $('<div class="accordion-collapse collapse">');
+                    var $accordionBody = $('<div class="accordion-body">');
 
-                    var $accordionContent = $('<div class="accordion-content">');
-                    $accordionContent.html($(this).html());
+                    // Extract data from table row
+                    var createdDate = $(this).find('td:eq(0)').text();
+                    var currentStatus = $(this).find('td:eq(1)').text();
+                    var documentLink = $(this).find('td:eq(2)').html();
 
-                    $('#accordionWrapper').append($accordionHeader).append($accordionContent);
+                    // Set accordion header text
+                    $accordionButton.text('Created Date: ' + createdDate);
+
+                    // Set accordion body content
+                    $accordionBody.append('<p><strong>Current Status:</strong> ' + currentStatus + '</p>');
+                    $accordionBody.append('<p><strong>Document:</strong> ' + documentLink + '</p>');
+
+                    // Append elements to accordion item
+                    $accordionHeader.append($accordionButton);
+                    $accordionCollapse.append($accordionBody);
+                    $accordionItem.append($accordionHeader).append($accordionCollapse);
+
+                    $('#accordionFlushExample').append($accordionItem);
                 });
 
                 // Toggle accordion content on header click
-                $('.accordion-header').click(function () {
-                    $(this).next('.accordion-content').slideToggle();
+                $('.accordion-button').click(function () {
+                    $(this).closest('.accordion-item').find('.accordion-collapse').collapse('toggle');
                 });
             }
         });
@@ -459,7 +450,7 @@
         }
       
         function showDocuments( requestId) {
-            debugger
+          
             $.ajax({
                 url: '/Patient/GetDcoumentsById',
                 type: 'GET',

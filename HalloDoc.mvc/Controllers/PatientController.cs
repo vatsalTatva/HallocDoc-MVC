@@ -3,9 +3,12 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using BusinessLogic.Interfaces;
 using DataAccess.CustomModels;
 using DataAccess.Data;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -31,19 +34,37 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+        public static string GenerateSHA256(string input)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+            using (var hashEngine = SHA256.Create())
+            {
+                var hashedBytes = hashEngine.ComputeHash(bytes, 0, bytes.Length);
+                var sb = new StringBuilder();
+                foreach (var b in hashedBytes)
+                {
+                    var hex = b.ToString("x2");
+                    sb.Append(hex);
+                }
+                return sb.ToString();
+            }
+        }
 
         [HttpPost]
         public IActionResult Login(LoginModel loginModel)
         {
             if (ModelState.IsValid)
             {
+                string passwordhash = GenerateSHA256(loginModel.password);
+                loginModel.password = passwordhash;
                 var user = _loginService.Login(loginModel);
+                //the above data is coming from user table and storing in user object
                 if (user != null)
                 {
-                    TempData["username"] = user.Username;
-                    TempData["id"] = user.Id;
+                    TempData["username"] = user.Firstname;
+                    TempData["id"] = user.Lastname;
                     _notyf.Success("Logged In Successfully !!");
-                    return RedirectToAction("PatientDashboard", "Patient");
+                    return RedirectToAction("PatientDashboard", "Patient",user);
                 }
                 else
                 {
@@ -59,25 +80,21 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Login(LoginModel loginmodel)
-        //{
-
-        //    var result = await _loginService.Login(loginmodel);
-        //    if (result)
-        //    {
-        //        return Ok("login successful");
-        //    }
-        //    return BadRequest("invalid credentials");
-        //}
 
         [HttpPost]
         public IActionResult AddPatient(PatientInfoModel patientInfoModel)
         {
 
-            _patientService.AddPatientInfo(patientInfoModel);
-            _notyf.Success("Submit Successfully !!");
-            return RedirectToAction("RequestScreen", "Patient");
+            if (ModelState.IsValid)
+            {
+                _patientService.AddPatientInfo(patientInfoModel);
+                _notyf.Success("Submit Successfully !!");
+                return RedirectToAction("RequestScreen", "Patient");
+            }
+            else
+            {
+                return View(patientInfoModel);
+            }
         }
 
 
@@ -168,10 +185,17 @@ namespace HalloDoc.mvc.Controllers
         //    var viewmodel = new PatientDashboardInfo { patientDashboardItems = infos };
         //    return View(viewmodel);
         //}
-        public IActionResult PatientDashboard()
+
+
+        //public IActionResult PatientDashboard()
+        //{
+        //    me
+        //    return View();
+        //}
+        public IActionResult PatientDashboard(User user)
         {
             
-            var infos = _patientService.GetMedicalHistory("abc@gmail.com");
+            var infos = _patientService.GetMedicalHistory(user);
             var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
             return View(viewmodel);
         }

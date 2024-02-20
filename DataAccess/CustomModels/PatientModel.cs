@@ -11,12 +11,12 @@ namespace DataAccess.CustomModels
 {
     public class PatientInfoModel
     {
-        public string? symptoms { get; set; } = null;
+        public string? symptoms { get; set; }
 
         [Required(ErrorMessage = "First name is required")]
         public string firstName { get; set; }
         public string? lastName { get; set; }
-        public DateTime dob { get; set; }
+        public DateTime? dob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
@@ -106,6 +106,22 @@ namespace DataAccess.CustomModels
         public DateTime createdDate { get; set; }
         public string currentStatus { get; set; }
         public List<string> document { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+
+        public string PhoneNo { get; set; }
+
+        public string Street { get; set; }
+
+        public string City { get; set; }
+
+        public string ZipCode { get; set; }
+
+        public string State { get; set; }
+
+        public string Email { get; set; }
     }
     public class MedicalHistoryList
     {

@@ -21,7 +21,7 @@ namespace BusinessLogic.Interfaces
         void AddBusinessReq(BusinessReqModel businessReqModel); 
 
 
-        List<MedicalHistory> GetMedicalHistory(string email);
+        List<MedicalHistory> GetMedicalHistory(User user);
         IQueryable<Requestwisefile>? GetAllDocById(int requestId);
     }
 }

@@ -22,25 +22,22 @@ namespace BusinessLogic.Services
             _db = db;
         }
 
-        public Aspnetuser Login(LoginModel loginModel)
+        public User Login(LoginModel loginModel)
         {
 
-            var user = _db.Aspnetusers.FirstOrDefault(x => x.Email == loginModel.email && x.Passwordhash == loginModel.password);
+            var obj = _db.Aspnetusers.ToList();
+
+            User user = new User();
+
+            foreach (var item in obj)
+            {
+                if (item.Email == loginModel.email && item.Passwordhash == loginModel.password)
+                {
+                    user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == item.Id);
+                    return user;
+                }
+            }
             return user;
-            //var usr = _db.Aspnetusers.Where(x => x.Email == loginModel.email).FirstOrDefault();
-
-            //if (usr.Email == loginModel.email && usr != null)
-            //{
-            //    if (usr.Passwordhash == loginModel.password)
-            //    {
-            //        return usr;
-            //    }
-
-            //    return usr;
-            //}
-
-            //return usr;
-
 
 
 

@@ -72,33 +72,36 @@ namespace BusinessLogic.Services
             _db.Users.Add(u);
             _db.SaveChanges();
 
-            foreach(IFormFile file in patientInfoModel.file)
+            if(patientInfoModel.file != null)
             {
-                if (file != null && file.Length > 0)
+                foreach (IFormFile file in patientInfoModel.file)
                 {
-                    //get file name
-                    var fileName = Path.GetFileName(file.FileName);
-
-                    //define path
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
-
-                    // Copy the file to the desired location
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    if (file != null && file.Length > 0)
                     {
-                        file.CopyTo(stream)
-               ;
-                    }
+                        //get file name
+                        var fileName = Path.GetFileName(file.FileName);
 
-                    Requestwisefile requestwisefile = new()
-                    {
-                        Filename = fileName,
-                        Requestid = request.Requestid,
-                        Createddate = DateTime.Now
+                        //define path
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+
+                        // Copy the file to the desired location
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(stream)
+                   ;
+                        }
+
+                        Requestwisefile requestwisefile = new()
+                        {
+                            Filename = fileName,
+                            Requestid = request.Requestid,
+                            Createddate = DateTime.Now
+                        };
+
+                        _db.Requestwisefiles.Add(requestwisefile);
+                        _db.SaveChanges();
                     };
-
-                    _db.Requestwisefiles.Add(requestwisefile);
-                    _db.SaveChanges();
-                };
+                }
             }
         }
 
@@ -242,17 +245,19 @@ namespace BusinessLogic.Services
 
        
 
-        public List<MedicalHistory> GetMedicalHistory(string email)
+        public List<MedicalHistory> GetMedicalHistory(User user)
         {
            
 
             var medicalhistory = (from request  in _db.Requests 
                                   join requestfile in _db.Requestwisefiles
                                   on request.Requestid equals requestfile.Requestid
-                                  where request.Email == email && request.Email != null
+                                  where request.Email == user.Email && request.Email != null
                                   group requestfile by request.Requestid into groupedFiles
                                   select new MedicalHistory
                                   {
+                                      FirstName = user.Firstname,
+                                      Street = "wellington",
                                       redId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
                                   createdDate= groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
                                   currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault().ToString(),
