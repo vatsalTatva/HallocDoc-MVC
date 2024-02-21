@@ -12,6 +12,7 @@ using System.Text;
 
 namespace HalloDoc.mvc.Controllers
 {
+   
    public class PatientController : Controller
     {
 
@@ -19,7 +20,7 @@ namespace HalloDoc.mvc.Controllers
         private readonly ILoginService _loginService;
         private readonly IPatientService _patientService;
         private readonly INotyfService _notyf;
-
+        
 
         public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService , INotyfService notyf)
         {
@@ -58,13 +59,14 @@ namespace HalloDoc.mvc.Controllers
                 string passwordhash = GenerateSHA256(loginModel.password);
                 loginModel.password = passwordhash;
                 var user = _loginService.Login(loginModel);
+         
                 //the above data is coming from user table and storing in user object
                 if (user != null)
                 {
                     TempData["username"] = user.Firstname;
                     TempData["id"] = user.Lastname;
                     _notyf.Success("Logged In Successfully !!");
-                    return RedirectToAction("PatientDashboard", "Patient",user);
+                    return RedirectToAction("PatientDashboard",user);
                 }
                 else
                 {
@@ -192,6 +194,7 @@ namespace HalloDoc.mvc.Controllers
         //    me
         //    return View();
         //}
+     
         public IActionResult PatientDashboard(User user)
         {
             
@@ -199,15 +202,33 @@ namespace HalloDoc.mvc.Controllers
             var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
             return View(viewmodel);
         }
-        public IActionResult SubmitMeInfo()
-        {
-            return View();
-        }
-
+        
         public IActionResult GetDcoumentsById(int requestId) 
         {
             var list = _patientService.GetAllDocById(requestId);
             return PartialView("_DocumentList",list.ToList());
         }
+
+        public IActionResult Edit(MedicalHistoryList medicalHistoryList)
+        {
+            MedicalHistory medicalHistory = medicalHistoryList.medicalHistoriesList[0];
+            bool isEdited = _patientService.EditProfile(medicalHistory);
+            if (isEdited)
+            {
+                _notyf.Success("Profile Edited Successfully");
+                return RedirectToAction("PatientDashboard");
+            }
+            else
+            {
+                _notyf.Error("Profile Edited Failed");
+                return RedirectToAction("PatientDashboard");
+            }
+            
+        }
+        public IActionResult SubmitMeInfo()
+        {
+            return View();
+        }
+
     }
 }

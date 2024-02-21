@@ -23,5 +23,7 @@ namespace BusinessLogic.Interfaces
 
         List<MedicalHistory> GetMedicalHistory(User user);
         IQueryable<Requestwisefile>? GetAllDocById(int requestId);
+
+        bool EditProfile(MedicalHistory profile);
     }
 }

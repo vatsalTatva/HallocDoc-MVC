@@ -1,0 +1,98 @@
+﻿@using DataAccess.CustomModels;
+@model MedicalHistoryList
+<form method="post" enctype="multipart/form-data" asp-controller="Patient" class="container my-5 p-4" id="main-cont">
+
+    <div class="row">
+        <h5 class="col-12">General Information</h5>
+
+        <div class="col-6">
+            <div class="form-floating mb-3">
+                <input asp-for ="@Model.medicalHistoriesList.FirstOrDefault().FirstName" type="text" class="form-control" id="floatingInputDisabled" placeholder="name">
+                <label for="floatingInputDisabled">First Name</label>
+            </div>
+
+        </div>
+        <div class="col-6">
+            <div class="input-div form-floating mb-3">
+                <input asp-for="medicalHistoriesList.FirstOrDefault().LastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Last Name</label>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-div form-floating mb-3">
+                <input asp-for="medicalHistoriesList.FirstOrDefault().DateOfBirth" type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Date Of Birth</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h5>Contact Information</h5>
+        </div>
+
+
+
+        <div class="col-2">
+            <div class="form-floating">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected>Type</option>
+                    <option value="1">Mobile</option>
+                    <option value="2">Landline</option>
+                </select>
+                <label for="floatingSelect">Works with selects</label>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-div form-floating mb-3">
+                <input  type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-div form-floating mb-3">
+                <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                <label for="floatingInput">Email</label>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h5>Patient Location</h5>
+        </div>
+        <div class="col-6">
+            <div class="input-div form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                <label for="floatingInput">Street</label>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-div form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                <label for="floatingInput">City</label>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-div form-floating mb-3">
+                <input asp-for="medicalHistoriesList.FirstOrDefault().State" type="text" class="form-control" id="floatingInput" placeholder="">
+                <label for="floatingInput">State</label>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="input-div form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                <label for="floatingInput">Zip Code</label>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-floating mb-3">
+                <button type="button" class="btn btn-outline-primary" style="height:3.4rem ;"> <i class="bi bi-geo-alt"></i> Map</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</form>

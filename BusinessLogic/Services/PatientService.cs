@@ -243,7 +243,7 @@ namespace BusinessLogic.Services
             _db.SaveChanges();
         }
 
-       
+        
 
         public List<MedicalHistory> GetMedicalHistory(User user)
         {
@@ -257,7 +257,13 @@ namespace BusinessLogic.Services
                                   select new MedicalHistory
                                   {
                                       FirstName = user.Firstname,
-                                      Street = "wellington",
+                                      LastName = user.Lastname,
+                                      Email = user.Email,
+                                      PhoneNo = user.Mobile,
+                                      Street = user.Street,
+                                      City = user.City,
+                                      State = user.State,
+                                      ZipCode=user.Zipcode,
                                       redId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
                                   createdDate= groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
                                   currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault().ToString(),
@@ -273,6 +279,39 @@ namespace BusinessLogic.Services
             var data = from request in _db.Requestwisefiles
                        where request.Requestid == requestId select request;
             return data;
+        }
+
+        public bool EditProfile(MedicalHistory profile)
+        {
+
+            try
+            {
+                var existingUser = _db.Users.FirstOrDefault(x => x.Email == profile.Email);
+               if(existingUser != null)
+                {
+                    existingUser.Firstname = profile.FirstName;
+                    existingUser.Lastname = profile.LastName;
+                    existingUser.Email = profile.Email;
+                    existingUser.Mobile = profile.PhoneNo;
+                    existingUser.Street = profile.Street;
+                    existingUser.City = profile.City;
+                    existingUser.State = profile.State;
+                    existingUser.Zipcode = profile.ZipCode;
+                    _db.Users.Update(existingUser);
+                    _db.SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+              
+
+
+               
+            }
+            catch { return false; }
         }
     }
 }

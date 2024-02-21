@@ -5,9 +5,7 @@
 }
 
 @model MedicalHistoryList;
-@{
-    var street = @Model.medicalHistoriesList.FirstOrDefault().Street;
-}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
-@*    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-*@    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -54,8 +51,8 @@
                     </li>
                     <li class="nav-item p-2 fw-bolder">
                         <span class="d-flex gap-1">
-                            <span>@Model.medicalHistoriesList.FirstOrDefault().FirstName</span>
-                            <span>@street</span>
+                            <span>@Model.medicalHistoriesList[0].FirstName</span>
+                            <span>@Model.medicalHistoriesList[0].LastName</span>
                         </span>
                     </li>
             </div>
@@ -193,90 +190,77 @@
 
         </div>
 
-
+       
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <form method="post" enctype="multipart/form-data" asp-controller="Patient" class="container my-5 p-4" id="main-cont">
+            <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="Edit" class="container my-5 p-4" id="main-cont">
 
                 <div class="row">
                     <h5 class="col-12">General Information</h5>
-                    
+
                     <div class="col-6">
                         <div class="form-floating mb-3">
-                            <input asp-for="medicalHistoriesList.FirstOrDefault().FirstName" type="text" class="form-control" id="floatingInputDisabled" placeholder="name" >
+                            <input asp-for="@Model.medicalHistoriesList[0].FirstName" type="text" class="form-control" id="floatingInputDisabled" placeholder="name" disabled>
                             <label for="floatingInputDisabled">First Name</label>
                         </div>
 
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input asp-for="medicalHistoriesList.FirstOrDefault().LastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input asp-for="@Model.medicalHistoriesList[0].LastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" disabled>
                             <label for="floatingInput">Last Name</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input asp-for="medicalHistoriesList.FirstOrDefault().DateOfBirth" type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input asp-for="@Model.medicalHistoriesList[0].DateOfBirth" type="date" class="form-control" id="floatingInput" placeholder="name@example.com" disabled>
                             <label for="floatingInput">Date Of Birth</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        <h5>Contact Information</h5>
-                    </div>
+                    <h5 class="col-12">Contact Information</h5>
 
-                   
-                   
-                    <div class="col-2">
-                        <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected>Type</option>
-                                <option value="1">Mobile</option>
-                                <option value="2">Landline</option>
-                            </select>
-                            <label for="floatingSelect">Works with selects</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+                            <input asp-for="@Model.medicalHistoriesList[0].PhoneNo" type="tel"  class="form-control p-3 ps-5" id="floatingInput" disabled>
 
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                            <input asp-for="@Model.medicalHistoriesList[0].Email"  type="email" class="form-control" id="email" placeholder="name@example.com" disabled>
                             <label for="floatingInput">Email</label>
-                        </div>        
+                        </div>
                     </div>
-                                      
                 </div>
+               
+
                 <div class="row">
                     <div class="col-12">
                         <h5>Patient Location</h5>
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input asp-for="@street" type="text" class="form-control" id="floatingInput" placeholder="">
+                            <input asp-for="@Model.medicalHistoriesList[0].Street" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
                             <label for="floatingInput">Street</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="">
+                            <input asp-for="@Model.medicalHistoriesList[0].City" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
                             <label for="floatingInput">City</label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-div form-floating mb-3">
-                            <input asp-for="medicalHistoriesList.FirstOrDefault().State" type="text" class="form-control" id="floatingInput" placeholder="">
+                            <input asp-for="@Model.medicalHistoriesList[0].State" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
                             <label for="floatingInput">State</label>
                         </div>
                     </div>
                     <div class="col-5">
                         <div class="input-div form-floating mb-3">
-                            <input  type="text" class="form-control" id="floatingInput" placeholder="">
+                            <input asp-for="@Model.medicalHistoriesList[0].ZipCode" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
                             <label for="floatingInput">Zip Code</label>
                         </div>
                     </div>
@@ -287,8 +271,18 @@
                     </div>
                    
                 </div>
-                
-               
+
+                <div class="col w-auto">
+                    <a role="button" class="back btn btn-outline-info" id="editButton">
+                        Edit
+                    </a>
+                </div>
+
+                <div class="col w-auto">
+                    <button class="back btn btn-outline-info" type="submit" id="saveButton" hidden>
+                        Save
+                    </button>
+                </div>
 
             </form>
         </div>
@@ -468,7 +462,21 @@
             document.getElementById('viewdocs').style.display = 'block';
         }
 
-     
+        //script for edit and save button
+        $(document).ready(function () {
+            $('#editButton').click(function () {
+
+              
+                $('input[type="text"]').removeAttr('disabled', false);
+                $('input[type="email"]').removeAttr('disabled', false);
+                $('input[type="date"]').removeAttr('disabled', false);
+                $('input[type="tel"]').removeAttr('disabled', false);
+            
+                // Hide the edit button after clicking it
+                $(this).hide();
+                $('#saveButton').removeAttr('hidden', false);
+            });
+        });
 
 
 

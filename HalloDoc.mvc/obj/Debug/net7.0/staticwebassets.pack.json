@@ -25,6 +25,14 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\logo.png"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\AdminDashboard.css",
+      "PackagePath": "staticwebassets\\css\\AdminDashboard.css"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\AdminLogin.css",
+      "PackagePath": "staticwebassets\\css\\AdminLogin.css"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\CreateBusinessPartnerReq.css",
       "PackagePath": "staticwebassets\\css\\CreateBusinessPartnerReq.css"
     },
