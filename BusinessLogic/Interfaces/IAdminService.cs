@@ -10,6 +10,6 @@ namespace BusinessLogic.Interfaces
 {
     public interface IAdminService
     {
-        List<AdminDashTableModel> GetRequestsByStatus(int reqStatus);
+        List<AdminDashTableModel> GetRequestsByStatus();
     }
 }

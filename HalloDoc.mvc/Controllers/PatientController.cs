@@ -7,6 +7,8 @@ using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -20,14 +22,16 @@ namespace HalloDoc.mvc.Controllers
         private readonly ILoginService _loginService;
         private readonly IPatientService _patientService;
         private readonly INotyfService _notyf;
+        private readonly ApplicationDbContext _db;
         
 
-        public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService , INotyfService notyf)
+        public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService , INotyfService notyf,ApplicationDbContext db)
         {
             _logger = logger;
             _loginService = loginService;
             _patientService = patientService;
             _notyf = notyf;
+            _db = db;
         }
 
         public IActionResult Index()
@@ -181,6 +185,105 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public IActionResult PatientResetPasswordEmail(Aspnetuser user)
+
+        {
+
+            var usr = _db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email);
+            if (usr != null)
+            {
+                string Id = _db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email).Id;
+                string resetPasswordUrl = GenerateResetPasswordUrl(Id);
+                SendEmail(user.Email, "Reset Your Password", $"Hello, reset your password using this link: {resetPasswordUrl}");
+            }
+            else
+            {
+                _notyf.Error("Email Id Not Registered");
+                return RedirectToAction("ForgotPassword", "Patient");
+            }
+
+
+            return RedirectToAction("Login");
+        }
+
+        private string GenerateResetPasswordUrl(string userId)
+        {
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string resetPasswordPath = Url.Action("ResetPassword", new { id = userId });
+            return baseUrl + resetPasswordPath;
+        }
+
+        private Task SendEmail(string email, string subject, string message)
+        {
+            var mail = "tatva.dotnet.vatsalgadoya@outlook.com";
+            var password = "VatsalTatva@2024";
+
+            var client = new SmtpClient("smtp.office365.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(mail, password)
+            };
+            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+        }
+
+        // Handle the reset password URL in the same controller or in a separate one
+        public IActionResult ResetPassword(string id)
+        {
+            var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == id);
+            return View(aspuser);
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(Aspnetuser aspnetuser)
+        {
+            var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == aspnetuser.Id);
+            aspuser.Passwordhash = aspnetuser.Passwordhash;
+            _db.Aspnetusers.Update(aspuser);
+            _db.SaveChanges();
+            return RedirectToAction("Login");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //public IActionResult PatientDashboard()
         //{
         //    var infos = _patientService.GetPatientInfos();
@@ -194,7 +297,7 @@ namespace HalloDoc.mvc.Controllers
         //    me
         //    return View();
         //}
-     
+
         public IActionResult PatientDashboard(User user)
         {
             

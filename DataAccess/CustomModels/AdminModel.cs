@@ -16,17 +16,34 @@ namespace DataAccess.CustomModels
     }
 
     public class AdminDashTableModel {
-        public int status { get; set; }
-        public string? name { get; set; }
-        public DateTime? dateOfBirth { get; set; }
-        public string? requestor { get; set; }
-        public DateTime? requestedDate { get; set; }
-        public string? phone { get; set; }
-        public string? address { get; set; }
+        public string? firstName { get; set; }
+
+        public string? lastName { get; set; }
+
+        public string strMonth { get; set; }
+        public int? intYear { get; set; }
+        public int? intDate { get; set; }
+
+        public string? requestorFname { get; set; }
+
+        public string? requestorLname { get; set; }
+
+        public DateTime createdDate { get; set; }
+
+        public string? mobileNo { get; set; }
+
+        public string? city { get; set; }
+
+        public string? street { get; set; }
+
+        public string? zipCode { get; set; }
+
+        public string? state { get; set; }
+
         public string? notes { get; set; }
 
-        public string? chatsWith { get; set; }
+        public int? requestTypeId { get; set; }
 
-        public string? actions { get; set; }
+        public int? status { get; set; }
     }
 }

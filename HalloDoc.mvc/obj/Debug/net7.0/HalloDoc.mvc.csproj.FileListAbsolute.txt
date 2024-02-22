@@ -240,3 +240,8 @@ D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.Views.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\obj\Debug\net7.0\HalloDoc.mvc.MvcApplicationPartsAssemblyInfo.cs
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\MailKit.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\MimeKit.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

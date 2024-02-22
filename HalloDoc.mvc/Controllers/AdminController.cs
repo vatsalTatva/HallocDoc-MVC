@@ -35,7 +35,8 @@ namespace HalloDoc.mvc.Controllers
         }
         public IActionResult AdminDashboard()
         {
-            return View();
+            var list = _adminService.GetRequestsByStatus();
+            return View(list);
         }
     }
 }

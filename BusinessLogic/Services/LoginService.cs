@@ -28,6 +28,7 @@ namespace BusinessLogic.Services
             var obj = _db.Aspnetusers.ToList();
 
             User user = new User();
+            user = null;
 
             foreach (var item in obj)
             {

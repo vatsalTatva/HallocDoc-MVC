@@ -127,5 +127,7 @@ namespace DataAccess.CustomModels
     public class MedicalHistoryList
     {
         public List<MedicalHistory> medicalHistoriesList { get; set; }
+
+          
     }
 }
