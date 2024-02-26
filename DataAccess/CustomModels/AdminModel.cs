@@ -20,7 +20,7 @@ namespace DataAccess.CustomModels
 
         public string? lastName { get; set; }
 
-        public string strMonth { get; set; }
+        public string? strMonth { get; set; }
         public int? intYear { get; set; }
         public int? intDate { get; set; }
 

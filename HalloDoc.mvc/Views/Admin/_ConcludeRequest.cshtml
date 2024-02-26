@@ -1,7 +1,6 @@
-﻿
-<!-- table -->
+﻿<!-- table -->
 <div class="d-none d-md-block">
-    <table class="table table-hover data-table w-100" >
+    <table class="table table-hover data-table w-100">
         <thead class="table-secondary">
             <tr>
                 <th scope="col">Name</th>
@@ -16,10 +15,10 @@
             </tr>
         </thead>
         <tbody>
-           
+
             @foreach (var item in Model)
             {
-                if (item.status == 1)
+                if (item.status == 6)
                 {
                     var bgColor = "He";
 
@@ -126,7 +125,7 @@
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <a class="dropdown-item" onclick="location.href='@Url.Action("ViewCase", "Admin")'">
+                                            <a class="dropdown-item" href="#">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewCase
                                             </a>
@@ -176,9 +175,3 @@
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
-
-<script>
-    $(document).ready(function () {
-        $('.data-table').DataTable({ "searching": false, "lengthChange": false, "pageLength": 7 });
-    });
-</script>

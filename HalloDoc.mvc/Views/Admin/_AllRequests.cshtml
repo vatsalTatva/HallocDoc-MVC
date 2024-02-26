@@ -5,10 +5,26 @@
     <div class="col-4 col-md-2 p-1 p-md-3 ">
         <button class=" statustablinks darkblue " onclick="openTab(event, 'tab1')">
             <div class="d-flex flex-column align-items-start">
-                <span>
+                <span class="d-flex gap-2">
                     <i class="d-none d-md-block bi bi-plus-circle-dotted"></i> New
                 </span>
-                <span class="fs-5">1432</span>
+                <span class="fs-5 fw-bolder">
+                    @if (Model==null)
+                    {
+                        <span>-</span>
+                    }
+                    else{
+                        int count = 0;
+                        foreach(var item in Model)
+                        {
+                            if (item.status == 1)
+                            {
+                                count++;
+                            }
+                        }
+                        <span>@count</span>
+                    }
+                    </span>
 
             </div>
         </button>
@@ -16,10 +32,27 @@
     <div class="col-4 col-md-2 p-1 p-md-3">
         <button class="col-md-2 statustablinks lightblue" onclick="openTab(event, 'tab2')">
             <div class="d-flex flex-column align-items-start">
-                <span>
+                <span class="d-flex gap-2">
                     <i class="d-none d-md-block bi bi-person-exclamation"></i> Pending
                 </span>
-                <span class="fs-5">1432</span>
+                <span class="fs-5 fw-bolder">
+                    @if (Model == null)
+                    {
+                        <span>-</span>
+                    }
+                    else
+                    {
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            if (item.status == 2)
+                            {
+                                count++;
+                            }
+                        }
+                        <span>@count</span>
+                    }
+                </span>
 
             </div>
         </button>
@@ -28,10 +61,27 @@
     <div class="col-4 col-md-2  p-1 p-md-3">
         <button class="col-md-2 statustablinks green" onclick="openTab(event, 'tab3')">
             <div class="d-flex flex-column align-items-start">
-                <span>
+                <span class="d-flex gap-2">
                     <i class="d-none d-md-block bi bi-check2-circle"></i> Active
                 </span>
-                <span class="fs-5">1432</span>
+                <span class="fs-5 fw-bolder">
+                    @if (Model == null)
+                    {
+                        <span>-</span>
+                    }
+                    else
+                    {
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            if (item.status == 4 || item.status==5)
+                            {
+                                count++;
+                            }
+                        }
+                        <span>@count</span>
+                    }
+                </span>
 
             </div>
         </button>
@@ -40,10 +90,27 @@
     <div class="col-4 col-md-2 p-1 p-md-3">
         <button class="col-md-2 statustablinks pink" onclick="openTab(event, 'tab4')">
             <div class="d-flex flex-column align-items-start">
-                <span>
+                <span class="d-flex gap-2">
                     <i class="d-none d-md-block bi bi-arrow-clockwise"></i> Conclude
                 </span>
-                <span class="fs-5">1432</span>
+                <span class="fs-5 fw-bolder">
+                    @if (Model == null)
+                    {
+                        <span>-</span>
+                    }
+                    else
+                    {
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            if (item.status == 6)
+                            {
+                                count++;
+                            }
+                        }
+                        <span>@count</span>
+                    }
+                </span>
 
             </div>
         </button>
@@ -52,10 +119,27 @@
     <div class="col-4 col-md-2 p-1 p-md-3">
         <button class="col-md-2 statustablinks blue" onclick="openTab(event, 'tab5')">
             <div class="d-flex flex-column align-items-start">
-                <span>
+                <span class="d-flex gap-2">
                     <i class="d-none d-md-block bi bi-person-lock"></i> To Close
                 </span>
-                <span class="fs-5">1432</span>
+                <span class="fs-5 fw-bolder">
+                    @if (Model == null)
+                    {
+                        <span>-</span>
+                    }
+                    else
+                    {
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            if ((item.status == 3 || item.status == 7) || item.status == 8)
+                            {
+                                count++;
+                            }
+                        }
+                        <span>@count</span>
+                    }
+                </span>
 
             </div>
         </button>
@@ -64,10 +148,27 @@
     <div class="col-4 col-md-2 p-1 p-md-3">
         <button class="col-md-2 statustablinks purple" onclick="openTab(event, 'tab6')">
             <div class="d-flex flex-column align-items-start">
-                <span>
+                <span class="d-flex gap-2">
                     <i class="d-none d-md-block bi bi-currency-dollar"></i> Unpaid
                 </span>
-                <span class="fs-5">1432</span>
+                <span class="fs-5 fw-bolder">
+                    @if (Model == null)
+                    {
+                        <span>-</span>
+                    }
+                    else
+                    {
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            if (item.status == 9)
+                            {
+                                count++;
+                            }
+                        }
+                        <span>@count</span>
+                    }
+                </span>
 
             </div>
         </button>
@@ -148,25 +249,20 @@
 </div>
 
 <div id="tab2" class="statustabcontent">
-    <h3>Tab 2 Content</h3>
-    <p>This is the content of tab 2.</p>
+    <partial name="_PendingRequest" />
 </div>
 
 <div id="tab3" class="statustabcontent">
-    <h3>Tab 3 Content</h3>
-    <p>This is the content of tab 3.</p>
+    <partial name="_ActiveRequest" />
 </div>
 <div id="tab4" class="statustabcontent">
-    <h3>Tab 3 Content</h3>
-    <p>This is the content of tab 3.</p>
+    <partial name="_ConcludeRequest" />
 </div>
 <div id="tab5" class="statustabcontent">
-    <h3>Tab 3 Content</h3>
-    <p>This is the content of tab 3.</p>
+    <partial name="_ToCloseRequest" />
 </div>
 <div id="tab6" class="statustabcontent">
-    <h3>Tab 3 Content</h3>
-    <p>This is the content of tab 3.</p>
+    <partial name="_UnpaidRequest" />
 </div>
 
 

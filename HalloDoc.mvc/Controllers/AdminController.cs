@@ -38,5 +38,10 @@ namespace HalloDoc.mvc.Controllers
             var list = _adminService.GetRequestsByStatus();
             return View(list);
         }
+
+        public  IActionResult ViewCase()
+        {
+            return View();
+        }
     }
 }

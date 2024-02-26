@@ -114,28 +114,46 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult AddFamilyRequest(FamilyReqModel familyReqModel)
         {
-
-            _patientService.AddFamilyReq(familyReqModel);
-
-            return RedirectToAction("RequestScreen", "Patient");
+            if (ModelState.IsValid)
+            {
+                _patientService.AddFamilyReq(familyReqModel);
+                _notyf.Success("Submit Successfully !!");
+                return RedirectToAction("RequestScreen", "Patient");
+            }
+            else
+            {
+                return View(familyReqModel);
+            }
         }
 
         [HttpPost]
         public IActionResult AddConciergeRequest(ConciergeReqModel conciergeReqModel)
         {
-
-            _patientService.AddConciergeReq(conciergeReqModel);
-
-            return RedirectToAction("RequestScreen", "Patient");
+            if (ModelState.IsValid)
+            {
+                _patientService.AddConciergeReq(conciergeReqModel);
+                _notyf.Success("Submit Successfully !!");
+                return RedirectToAction("RequestScreen", "Patient");
+            }
+            else
+            {
+                return View(conciergeReqModel);
+            }
         }
 
         [HttpPost]
         public IActionResult AddBusinessRequest(BusinessReqModel businessReqModel)
         {
-
-            _patientService.AddBusinessReq(businessReqModel);
-
-            return RedirectToAction("RequestScreen", "Patient");
+            if (ModelState.IsValid)
+            {
+                _patientService.AddBusinessReq(businessReqModel);
+                _notyf.Success("Submit Successfully !!");
+                return RedirectToAction("RequestScreen", "Patient");
+            }
+            else
+            {
+                return View(businessReqModel) ;
+            }
         }
         public IActionResult RequestScreen()
         {
@@ -185,6 +203,19 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult CreateAccount(CreateAccountModel createAccountModel)
+        {
+            if (ModelState.IsValid)
+            {              
+                _notyf.Success("Registered Successfully !!");
+                return RedirectToAction("Login", "Patient");
+            }
+            else
+            {
+                return View(createAccountModel);
+            }
+        }
 
 
 
@@ -312,21 +343,43 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_DocumentList",list.ToList());
         }
 
-        public IActionResult Edit(MedicalHistoryList medicalHistoryList)
+        //public IActionResult Edit(MedicalHistoryList medicalHistoryList)
+        //{
+        //    MedicalHistory medicalHistory = medicalHistoryList.medicalHistoriesList[0];
+        //    bool isEdited = _patientService.EditProfile(medicalHistory);
+        //    if (isEdited)
+        //    {
+        //        _notyf.Success("Profile Edited Successfully");
+        //        return RedirectToAction("PatientDashboard");
+        //    }
+        //    else
+        //    {
+        //        _notyf.Error("Profile Edited Failed");
+        //        return RedirectToAction("PatientDashboard");
+        //    }
+
+        //}
+
+
+        public IActionResult Edit(MedicalHistory medicalHistory)
         {
-            MedicalHistory medicalHistory = medicalHistoryList.medicalHistoriesList[0];
-            bool isEdited = _patientService.EditProfile(medicalHistory);
-            if (isEdited)
-            {
-                _notyf.Success("Profile Edited Successfully");
-                return RedirectToAction("PatientDashboard");
-            }
-            else
-            {
-                _notyf.Error("Profile Edited Failed");
-                return RedirectToAction("PatientDashboard");
-            }
-            
+
+            var existingUser = _db.Users.FirstOrDefault(x => x.Email == medicalHistory.Email);
+            existingUser.Firstname = medicalHistory.FirstName;
+            existingUser.Lastname = medicalHistory.LastName;
+            //existingUser.dob = medicalHistory.DateOfBirth;
+            existingUser.Email = medicalHistory.Email;
+            //existingUser. = medicalHistory.ContactType;
+            existingUser.Mobile = medicalHistory.PhoneNo;
+            existingUser.Street = medicalHistory.Street;
+            existingUser.City = medicalHistory.City;
+            existingUser.State = medicalHistory.State;
+            existingUser.Zipcode = medicalHistory.ZipCode;
+
+            _db.Users.Update(existingUser);
+            _db.SaveChanges();
+            _notyf.Success("Profile Updated Successfully !!");
+            return RedirectToAction("PatientDashboard", "Patient", existingUser);
         }
         public IActionResult SubmitMeInfo()
         {

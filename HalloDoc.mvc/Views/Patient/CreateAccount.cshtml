@@ -1,0 +1,103 @@
+﻿@using DataAccess.CustomModels;
+
+@model CreateAccountModel;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <link rel="stylesheet" href="~/css/Login.css">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+
+    <div class="container-fluid vh-100 d-flex flex-column justify-content-between align-items-center">
+
+        <img onclick="darkMode()" class="dark" src="/images/dark.png" alt="dark">
+        <form class="login" method="post" onsubmit="return validateForm()">
+            <img id="logo" src="/images/logo.png" alt="logo">
+            <span id="back" onclick="location.href='@Url.Action("Login", "Patient")'"><a class="text-decoration-none">&lt; Back</a> </span>
+            <h3>Create your account</h3>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="input-div form-floating mb-3">
+                    <input asp-for="email" type="email" class="form-control email" id="email" placeholder="">
+                    <label for="floatingInput">Email</label>
+                </div>
+                <p id="isEmailExists" style="color: red; display: none;">EmailId already Exists</p>
+                <div class="input-div form-floating mb-3" id="passwordSection" >
+                    <input asp-for="password" type="password" class="form-control password" id="password" placeholder="">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <div class="input-div form-floating mb-3" id="confirmPasswordSec">
+                    <input asp-for="confirmPassword" type="password" class="form-control password" id="confirmPassword" placeholder="">
+                    <label for="floatingPassword">Confirm Password</label>
+                </div>
+                <p id="passwordMatchError" style="color: red; display: none;">Passwords do not match.</p>
+            </div>
+
+
+            @*<p id="Message" style="color: rgb(252, 39, 39);">@ViewBag.AuthFailedMessage</p>*@
+            <button type="submit">Create Account</button>
+
+
+        </form>
+        <div id="message"></div>
+        <footer>Terms of Conditions | Privacy Policy</footer>
+    </div>
+
+
+    <!-- script  -->
+
+
+    <script>
+
+        function darkMode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+
+            var img = element.querySelector(".dark")
+            img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
+        }
+
+        $('#email').focusout(function () {
+
+            var email = $(this).val();
+            $.ajax({
+                url: '/Patient/CheckEmailExists',
+                type: 'GET',
+                contentType: 'application/json',
+                data: { email: email },
+                success: function (response) {
+                    if (response.emailExists) {
+                        $('#isEmailExists').show();
+                        $('#passwordSection').hide();
+                        $('#confirmPasswordSec').hide();
+                     
+                    } else {
+                        $('#isEmailExists').hide();
+                        $('#passwordSection').show();
+                        $('#confirmPasswordSec').show();
+                      
+                    }
+                    $("#id").html(response);
+                }
+            });
+        });
+
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                document.getElementById("passwordMatchError").style.display = "block";
+                return false; // Prevent form submission
+            }
+
+            // If passwords match, allow form submission
+            return true;
+        }
+
+    </script>
+
+</body>
+</html>

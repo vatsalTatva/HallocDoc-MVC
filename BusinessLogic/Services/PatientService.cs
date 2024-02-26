@@ -266,7 +266,7 @@ namespace BusinessLogic.Services
                                       ZipCode=user.Zipcode,
                                       redId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
                                   createdDate= groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
-                                  currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault().ToString(),
+                                  currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault(),
                                   document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
                                   }).ToList();
 
