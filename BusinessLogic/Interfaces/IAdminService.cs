@@ -1,5 +1,6 @@
 ﻿
 using DataAccess.CustomModels;
+using DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ namespace BusinessLogic.Interfaces
 {
     public interface IAdminService
     {
-        List<AdminDashTableModel> GetRequestsByStatus();
+        Aspnetuser GetAspnetuser(string email);
+        List<AdminDashTableModel> GetRequestsByStatus(int status);
+
+        ViewCaseViewModel ViewCaseViewModel(int Requestclientid,int RequestTypeId);
     }
 }

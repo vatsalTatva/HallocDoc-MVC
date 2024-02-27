@@ -23,7 +23,8 @@ namespace HalloDoc.mvc.Controllers
         private readonly IPatientService _patientService;
         private readonly INotyfService _notyf;
         private readonly ApplicationDbContext _db;
-        
+       
+
 
         public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService , INotyfService notyf,ApplicationDbContext db)
         {
@@ -32,6 +33,7 @@ namespace HalloDoc.mvc.Controllers
             _patientService = patientService;
             _notyf = notyf;
             _db = db;
+          
         }
 
         public IActionResult Index()
@@ -58,12 +60,17 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult Login(LoginModel loginModel)
         {
+
+
             if (ModelState.IsValid)
             {
                 string passwordhash = GenerateSHA256(loginModel.password);
                 loginModel.password = passwordhash;
                 var user = _loginService.Login(loginModel);
-         
+
+                //var userId = user.Userid;
+                //HttpContext.Session.SetInt32("UserId", userId);
+
                 //the above data is coming from user table and storing in user object
                 if (user != null)
                 {
@@ -93,6 +100,10 @@ namespace HalloDoc.mvc.Controllers
 
             if (ModelState.IsValid)
             {
+                if(patientInfoModel.password != null)
+                {
+                    patientInfoModel.password = GenerateSHA256(patientInfoModel.password);
+                }
                 _patientService.AddPatientInfo(patientInfoModel);
                 _notyf.Success("Submit Successfully !!");
                 return RedirectToAction("RequestScreen", "Patient");
@@ -331,7 +342,10 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult PatientDashboard(User user)
         {
-            
+            //var userId = HttpContext.Session.GetInt32("userId");
+
+
+
             var infos = _patientService.GetMedicalHistory(user);
             var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
             return View(viewmodel);

@@ -16,7 +16,9 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "First name is required")]
         public string firstName { get; set; }
         public string? lastName { get; set; }
-        public DateTime? dob { get; set; }
+
+        [Required(ErrorMessage ="Date of Birth is required")]
+        public DateOnly dob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]

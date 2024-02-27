@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Index";
 }
-
+<link rel="stylesheet" href="~/css/DarkMode.css" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="container d-flex flex-column justify-content-between min-vh-100 ">
-        <img class="float-right" onclick="darkMode()" id="d-mode" src="/images/dark.png" alt="dark">
+        <img class="float-right" onclick="toggleDarkMode()" id="d-mode" src="/images/dark.png" alt="dark">
         <div class="registration d-flex flex-column justify-content-center align-items-center" >
             <img id="logo" src="/images/logo.png" alt="logo">
 
@@ -26,9 +26,9 @@
         <footer class="mb-3">Terms of Conditions | Privacy Policy</footer>
     </div>
 
-
+    <script src="~/js/DarkMode.js"></script>
     <!-- script  -->
-    <script>
+    @*<script>
         function darkMode() {
             var element = document.body;
             element.classList.toggle("dark-mode");
@@ -36,6 +36,6 @@
             var img = element.querySelector("#d-mode")
             img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
         }
-    </script>
+    </script>*@
 </body>
 </html>

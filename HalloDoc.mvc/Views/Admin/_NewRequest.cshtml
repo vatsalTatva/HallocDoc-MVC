@@ -1,4 +1,5 @@
-﻿
+﻿@using DataAccess.CustomModels;
+@model List<AdminDashTableModel>;
 <!-- table -->
 <div class="d-none d-md-block">
     <table class="table table-hover data-table w-100" >
@@ -126,7 +127,7 @@
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <a class="dropdown-item" onclick="location.href='@Url.Action("ViewCase", "Admin")'">
+                                            <a class="dropdown-item" href="@Url.Action("ViewCase", new {Requestclientid = item.requestClientId, RequestTypeId=item.requestTypeId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewCase
                                             </a>

@@ -21,58 +21,91 @@ namespace BusinessLogic.Services
        
         public void AddPatientInfo(PatientInfoModel patientInfoModel)
         {
-            Request request = new Request();
-            request.Requesttypeid = 2;
-            request.Status = 1;
-            request.Createddate = DateTime.Now;
-            request.Isurgentemailsent = new BitArray(1);
-            request.Firstname = patientInfoModel.firstName;
-            request.Lastname = patientInfoModel.lastName;
-            request.Phonenumber = patientInfoModel.phoneNo;
-            request.Email = patientInfoModel.email;
-            
-            _db.Requests.Add(request);
-            _db.SaveChanges();
 
-            Requestclient info = new Requestclient();
-            info.Requestid = request.Requestid;
-            info.Notes = patientInfoModel.symptoms;
-            info.Firstname = patientInfoModel.firstName;
-            info.Lastname = patientInfoModel.lastName;
-            info.Phonenumber = patientInfoModel.phoneNo;
-            info.Email = patientInfoModel.email; 
-            info.Street = patientInfoModel.street;
-            info.City = patientInfoModel.city;
-            info.State = patientInfoModel.state;
-            info.Zipcode = patientInfoModel.zipCode;
-            
+         
+                var aspnetuser = _db.Aspnetusers.Where(m => m.Email == patientInfoModel.email).FirstOrDefault();
+                User u = new User();
+                if (aspnetuser == null)
+                {
+                    Aspnetuser aspnetuser1 = new Aspnetuser();
+                    aspnetuser1.Id = Guid.NewGuid().ToString();
+                    aspnetuser1.Passwordhash = patientInfoModel.password;
+                    aspnetuser1.Email = patientInfoModel.email;
+                    string username = patientInfoModel.firstName + patientInfoModel.lastName;
+                    aspnetuser1.Username = username;
+                    aspnetuser1.Phonenumber = patientInfoModel.phoneNo;
+                    aspnetuser1.Createddate = DateTime.Now;
+                    aspnetuser1.Modifieddate = DateTime.Now;
+                    _db.Aspnetusers.Add(aspnetuser1);
+             
+                    
 
-            _db.Requestclients.Add(info);
-            _db.SaveChanges();
+                    u.Aspnetuserid = aspnetuser1.Id;
+                    u.Firstname = patientInfoModel.firstName;
+                    u.Lastname = patientInfoModel.lastName;
+                    u.Email = patientInfoModel.email;
+                    u.Mobile = patientInfoModel.phoneNo;
+                    u.Street = patientInfoModel.street;
+                    u.City = patientInfoModel.city;
+                    u.State = patientInfoModel.state;
+                    u.Zipcode = patientInfoModel.zipCode;
+                    u.Createdby = patientInfoModel.firstName + patientInfoModel.lastName;
+                    u.Intyear = int.Parse(patientInfoModel.dob.ToString("yyyy"));
+                    u.Intdate = int.Parse(patientInfoModel.dob.ToString("dd"));
+                    u.Strmonth = patientInfoModel.dob.ToString("MMM");
+                    u.Createddate = DateTime.Now;
+                    u.Modifieddate = DateTime.Now;
+                    u.Status = 1;
+                    u.Regionid = 1;
+
+                    _db.Users.Add(u);
+                _db.SaveChanges();
+            }
+                else
+                {
+                    u = _db.Users.Where(m => m.Email == patientInfoModel.email).FirstOrDefault();
+                }
 
 
-            var user = _db.Aspnetusers.Where(x => x.Email == patientInfoModel.email).FirstOrDefault();
-           
+                Request request = new Request();
+                request.Requesttypeid = 2;
+                request.Status = 1;
+                request.Createddate = DateTime.Now;
+                request.Isurgentemailsent = new BitArray(1);
+                request.Firstname = patientInfoModel.firstName;
+                request.Lastname = patientInfoModel.lastName;
+                request.Phonenumber = patientInfoModel.phoneNo;
+                request.Email = patientInfoModel.email;
 
+             
 
-            User u = new User();
-            u.Aspnetuserid = user.Id;
-            u.Firstname = patientInfoModel.firstName;
-            u.Lastname = patientInfoModel.lastName;
-            u.Email = patientInfoModel.email;
-            u.Mobile = patientInfoModel.phoneNo;
-            u.Street = patientInfoModel.street;
-            u.City = patientInfoModel.city;
-            u.State = patientInfoModel.state;
-            u.Zipcode = patientInfoModel.zipCode;
-            u.Createdby = user.Username;
-            u.Createddate = DateTime.Now;
-            //u.roomno = patientInfoModel.roomno;
+                _db.Requests.Add(request);
+                _db.SaveChanges();
 
-            _db.Users.Add(u);
-            _db.SaveChanges();
+                Requestclient info = new Requestclient();
+                info.Request = request;
+                info.Requestid = request.Requestid;
+                info.Notes = patientInfoModel.symptoms;
+                info.Firstname = patientInfoModel.firstName;
+                info.Lastname = patientInfoModel.lastName;
+                info.Phonenumber = patientInfoModel.phoneNo;
+                info.Email = patientInfoModel.email;
+                info.Street = patientInfoModel.street;
+                info.City = patientInfoModel.city;
+                info.State = patientInfoModel.state;
+                info.Zipcode = patientInfoModel.zipCode;
+                info.Intyear = int.Parse(patientInfoModel.dob.ToString("yyyy"));
+                info.Intdate = int.Parse(patientInfoModel.dob.ToString("dd"));
+                info.Strmonth = patientInfoModel.dob.ToString("MMM");
+                info.Regionid = 1;
 
-            if(patientInfoModel.file != null)
+                _db.Requestclients.Add(info)
+   ;
+                _db.SaveChanges();
+
+          
+
+            if (patientInfoModel.file != null)
             {
                 foreach (IFormFile file in patientInfoModel.file)
                 {

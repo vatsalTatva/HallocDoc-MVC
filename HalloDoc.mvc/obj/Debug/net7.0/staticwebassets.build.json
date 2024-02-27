@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "k5wzBPcOU9sM3t5IITuuP/o6jsweX5RgGSPe97qjrx8=",
+  "Hash": "Jd+Q0jv8VmGmEuEJ2K13uh9/T3WfxNv76dmz6u7GkiI=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -219,6 +219,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\CreatePatientReq.css"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\DarkMode.css",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "css/DarkMode.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\DarkMode.css"
     },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\ForgetPassword.css",
@@ -559,6 +576,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\portrait.png"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\js\\DarkMode.js",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "js/DarkMode.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\DarkMode.js"
     },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\js\\site.js",

@@ -49,6 +49,10 @@
       "PackagePath": "staticwebassets\\css\\CreatePatientReq.css"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\DarkMode.css",
+      "PackagePath": "staticwebassets\\css\\DarkMode.css"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\ForgetPassword.css",
       "PackagePath": "staticwebassets\\css\\ForgetPassword.css"
     },
@@ -127,6 +131,10 @@
     {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\portrait.png",
       "PackagePath": "staticwebassets\\images\\portrait.png"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\js\\DarkMode.js",
+      "PackagePath": "staticwebassets\\js\\DarkMode.js"
     },
     {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\js\\site.js",

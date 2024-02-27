@@ -9,21 +9,7 @@
                     <i class="d-none d-md-block bi bi-plus-circle-dotted"></i> New
                 </span>
                 <span class="fs-5 fw-bolder">
-                    @if (Model==null)
-                    {
-                        <span>-</span>
-                    }
-                    else{
-                        int count = 0;
-                        foreach(var item in Model)
-                        {
-                            if (item.status == 1)
-                            {
-                                count++;
-                            }
-                        }
-                        <span>@count</span>
-                    }
+                   -
                     </span>
 
             </div>
@@ -243,27 +229,27 @@
 
 </div>
 
-<div id="tab1" class="statustabcontent">
-    <partial name="_NewRequest" />
+<div id="tab1" class="statustabcontent" >
 
 </div>
 
 <div id="tab2" class="statustabcontent">
-    <partial name="_PendingRequest" />
+    @*<partial name="_PendingRequest" />*@
 </div>
 
 <div id="tab3" class="statustabcontent">
-    <partial name="_ActiveRequest" />
+    @*<partial name="_ActiveRequest" />*@
 </div>
 <div id="tab4" class="statustabcontent">
-    <partial name="_ConcludeRequest" />
+    @*<partial name="_ConcludeRequest" />*@
 </div>
 <div id="tab5" class="statustabcontent">
-    <partial name="_ToCloseRequest" />
+    @*<partial name="_ToCloseRequest" />*@
 </div>
 <div id="tab6" class="statustabcontent">
-    <partial name="_UnpaidRequest" />
+    @*<partial name="_UnpaidRequest" />*@
 </div>
+
 
 
 

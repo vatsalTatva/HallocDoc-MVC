@@ -1,7 +1,11 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using DataAccess.CustomModels;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -23,25 +27,90 @@ namespace HalloDoc.mvc.Controllers
         {
             return View();
         }
+        public static string GenerateSHA256(string input)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+            using (var hashEngine = SHA256.Create())
+            {
+                var hashedBytes = hashEngine.ComputeHash(bytes, 0, bytes.Length);
+                var sb = new StringBuilder();
+                foreach (var b in hashedBytes)
+                {
+                    var hex = b.ToString("x2");
+                    sb.Append(hex);
+                }
+                return sb.ToString();
+            }
+        }
         public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
         {
             if(ModelState.IsValid)
             {
-                
-                return RedirectToAction("AdminDashboard","Admin");
+                var aspnetuser = _adminService.GetAspnetuser(adminLoginModel.email);
+                if (aspnetuser != null)
+                {
+                    adminLoginModel.password = GenerateSHA256(adminLoginModel.password);
+                    if (aspnetuser.Passwordhash == adminLoginModel.password)
+                    {
+                        _notyf.Success("Logged in Successfully");
+                        return RedirectToAction("AdminDashboard", "Admin");
+                    }
+                    else
+                    {
+                        _notyf.Error("Password is incorrect");
+                        
+                        return View(adminLoginModel);
+                    }    
+                }
+                _notyf.Error("Email is incorrect");
+                return View(adminLoginModel);
             }
             return View(adminLoginModel);
             
         }
         public IActionResult AdminDashboard()
         {
-            var list = _adminService.GetRequestsByStatus();
-            return View(list);
-        }
-
-        public  IActionResult ViewCase()
-        {
+           
             return View();
         }
+
+        public IActionResult GetRequestsByStatus(int tabNo)
+        {
+            var list = _adminService.GetRequestsByStatus(tabNo);
+            if (tabNo == 1)
+            {
+                return PartialView("_NewRequest", list);
+            }
+            else if (tabNo == 2)
+            {
+                return PartialView("_PendingRequest", list);
+            }
+            else if (tabNo == 3)
+            {
+                return PartialView("_ActiveRequest", list);
+            }
+            else if (tabNo == 4)
+            {
+                return PartialView("_ConcludeRequest", list);
+            }
+            else if (tabNo == 5)
+            {
+                return PartialView("_ToCloseRequest", list);
+            }
+            else if (tabNo == 6)
+            {
+                return PartialView("_UnpaidRequest", list);
+            }
+            return View();
+        }
+
+        
+        public IActionResult ViewCase(int Requestclientid,int RequestTypeId)
+        {
+            var obj = _adminService.ViewCaseViewModel(Requestclientid,RequestTypeId);
+
+            return View(obj);
+        }
+
     }
 }
