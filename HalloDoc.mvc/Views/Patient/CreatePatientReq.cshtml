@@ -82,8 +82,9 @@
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="phoneNo" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
-
+                        
                     </div>
+                    <span asp-validation-for="phoneNo" class="text-danger"></span>
                 </div>
                 <div id="passwordSection" class="col-6 " style="display:none" >
                     <div class="input-div form-floating mb-3">

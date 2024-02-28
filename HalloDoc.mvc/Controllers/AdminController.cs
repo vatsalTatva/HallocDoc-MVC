@@ -4,6 +4,7 @@ using BusinessLogic.Services;
 using DataAccess.CustomModels;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -44,7 +45,7 @@ namespace HalloDoc.mvc.Controllers
         }
         public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var aspnetuser = _adminService.GetAspnetuser(adminLoginModel.email);
                 if (aspnetuser != null)
@@ -58,22 +59,29 @@ namespace HalloDoc.mvc.Controllers
                     else
                     {
                         _notyf.Error("Password is incorrect");
-                        
-                        return View(adminLoginModel);
-                    }    
+
+                        return View();
+                    }
                 }
                 _notyf.Error("Email is incorrect");
+                return View();
+            }
+            else
+            {
                 return View(adminLoginModel);
             }
-            return View(adminLoginModel);
-            
         }
+       
         public IActionResult AdminDashboard()
         {
            
             return View();
         }
-
+        public IActionResult GetCount()
+        {
+            var statusCountModel = _adminService.GetStatusCount();
+            return PartialView("_AllRequests", statusCountModel);
+        }
         public IActionResult GetRequestsByStatus(int tabNo)
         {
             var list = _adminService.GetRequestsByStatus(tabNo);

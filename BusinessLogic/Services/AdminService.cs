@@ -92,6 +92,31 @@ namespace BusinessLogic.Services
 
             return result;
         }
+
+        public StatusCountModel GetStatusCount()
+        {
+            var requestsWithClients = _db.Requests
+     .Join(_db.Requestclients,
+         r => r.Requestid,
+         rc => rc.Requestid,
+         (r, rc) => new { Request = r, RequestClient = rc })
+     .ToList();
+
+            StatusCountModel statusCount = new StatusCountModel
+            {
+                NewCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.Unassigned),
+                PendingCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.Accepted),
+                ActiveCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.MDEnRoute || x.Request.Status == (int)StatusEnum.MDOnSite),
+                ConcludeCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.Conclude),
+                ToCloseCount = requestsWithClients.Count(x => (x.Request.Status == (int)StatusEnum.Cancelled || x.Request.Status == (int)StatusEnum.CancelledByPatient) || x.Request.Status == (int)StatusEnum.Closed),
+                UnpaidCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.Unpaid)
+            };
+
+            return statusCount;
+
+
+        }
+
         public ViewCaseViewModel ViewCaseViewModel(int Requestclientid ,int RequestTypeId)
         {
             Requestclient obj = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == Requestclientid);

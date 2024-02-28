@@ -21,8 +21,11 @@ namespace DataAccess.CustomModels
         public DateOnly dob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
-        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string email { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits long")]
         public string? phoneNo { get; set; }
         public string? street { get; set; }
         public string? city { get; set; }

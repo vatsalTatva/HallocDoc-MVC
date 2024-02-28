@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Interfaces;
 using DataAccess.CustomModels;
 using DataAccess.Data;
+using DataAccess.Enums;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -55,7 +56,7 @@ namespace BusinessLogic.Services
                     u.Strmonth = patientInfoModel.dob.ToString("MMM");
                     u.Createddate = DateTime.Now;
                     u.Modifieddate = DateTime.Now;
-                    u.Status = 1;
+                    u.Status = (int)StatusEnum.Unassigned;
                     u.Regionid = 1;
 
                     _db.Users.Add(u);
@@ -68,8 +69,8 @@ namespace BusinessLogic.Services
 
 
                 Request request = new Request();
-                request.Requesttypeid = 2;
-                request.Status = 1;
+                request.Requesttypeid = (int)RequestTypeEnum.Patient;
+                request.Status = (int)StatusEnum.Unassigned;
                 request.Createddate = DateTime.Now;
                 request.Isurgentemailsent = new BitArray(1);
                 request.Firstname = patientInfoModel.firstName;
@@ -151,8 +152,8 @@ namespace BusinessLogic.Services
         public void AddFamilyReq(FamilyReqModel familyReqModel)
         {
             Request request = new Request();
-            request.Requesttypeid = 3;
-            request.Status = 1;
+            request.Requesttypeid = (int)RequestTypeEnum.Family;
+            request.Status = (int)StatusEnum.Unassigned;
             request.Createddate = DateTime.Now;
             request.Isurgentemailsent = new BitArray(1);
             request.Firstname = familyReqModel.firstName;
@@ -184,8 +185,8 @@ namespace BusinessLogic.Services
         public void AddConciergeReq(ConciergeReqModel conciergeReqModel)
         {
             Request request = new Request();
-            request.Requesttypeid = 4;
-            request.Status = 1;
+            request.Requesttypeid = (int)RequestTypeEnum.Concierge;
+            request.Status = (int)StatusEnum.Unassigned;
             request.Createddate = DateTime.Now;
             request.Isurgentemailsent = new BitArray(1);
             request.Firstname = conciergeReqModel.firstName;
@@ -234,8 +235,8 @@ namespace BusinessLogic.Services
         public void AddBusinessReq(BusinessReqModel businessReqModel)
         {
             Request request = new Request();
-            request.Requesttypeid = 1;
-            request.Status = 1;
+            request.Requesttypeid = (int)RequestTypeEnum.Business;
+            request.Status = (int)StatusEnum.Unassigned;
             request.Createddate = DateTime.Now;
             request.Isurgentemailsent = new BitArray(1);
             request.Firstname = businessReqModel.firstName;

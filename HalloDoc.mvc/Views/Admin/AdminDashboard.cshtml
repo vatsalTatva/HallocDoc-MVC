@@ -77,7 +77,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
                                 data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
-                                aria-selected="true">
+                                aria-selected="true" onclick="ShowAllRequests()">
                             Dashboard
                         </button>
                     </li>
@@ -134,7 +134,7 @@
              tabindex="0">
 
 
-            <partial name="_AllRequests"/>
+           
         </div>
         <!-- tab2  pending -->
         <div class="tab-pane fade" id="provider-location-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
@@ -283,7 +283,20 @@
                 }
             });
         }
+
+        function ShowAllRequests(){
+            $.ajax({
+                url: '/Admin/GetCount',
+                type: 'GET',
+               
+                success: function (response) {
+                    $("#home-tab-pane").html(response);
+                }
+            });
+        }
+
       
+
     </script>
  
 

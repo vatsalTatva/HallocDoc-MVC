@@ -35,7 +35,7 @@
                 </div>
                 <span class="text-danger" asp-validation-for="password"></span>
             </div>
-            @*<p id="Message" style="color: rgb(252, 39, 39);">@ViewBag.AuthFailedMessage</p>*@
+          
             <button type="submit">Log In</button>
             <div>If you don't have account? <a asp-controller="Patient" asp-action="CreateAccount">Create Account</a></div>
             <a asp-controller="Patient" asp-action="ForgetPassword" id="forget-pass">Forget Password?</a>
