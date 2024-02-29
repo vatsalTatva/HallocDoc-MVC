@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Jd+Q0jv8VmGmEuEJ2K13uh9/T3WfxNv76dmz6u7GkiI=",
+  "Hash": "q0HPEYcEIQiGOBG26vqszMlsV85v+TsZXAax66qUyDk=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -151,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\AdminLogin.css"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\AdminViewNote.css",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "css/AdminViewNote.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\AdminViewNote.css"
     },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\CreateBusinessPartnerReq.css",
@@ -374,6 +391,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\admin.svg",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "images/admin.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\admin.svg"
+    },
+    {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\banner.jpg",
       "SourceId": "HalloDoc.mvc",
       "SourceType": "Discovered",
@@ -440,6 +474,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\doc-portrait.jpg"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\doctor.svg",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "images/doctor.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\doctor.svg"
     },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\favicon.ico",
@@ -576,6 +627,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\portrait.png"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\transfer-horizontal-svgrepo-com.svg",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "images/transfer-horizontal-svgrepo-com.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\transfer-horizontal-svgrepo-com.svg"
     },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\js\\DarkMode.js",

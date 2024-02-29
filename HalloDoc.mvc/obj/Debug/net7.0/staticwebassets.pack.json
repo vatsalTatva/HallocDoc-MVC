@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\css\\AdminLogin.css"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\AdminViewNote.css",
+      "PackagePath": "staticwebassets\\css\\AdminViewNote.css"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\CreateBusinessPartnerReq.css",
       "PackagePath": "staticwebassets\\css\\CreateBusinessPartnerReq.css"
     },
@@ -85,6 +89,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\admin.svg",
+      "PackagePath": "staticwebassets\\images\\admin.svg"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\banner.jpg",
       "PackagePath": "staticwebassets\\images\\banner.jpg"
     },
@@ -99,6 +107,10 @@
     {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\doc-portrait.jpg",
       "PackagePath": "staticwebassets\\images\\doc-portrait.jpg"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\doctor.svg",
+      "PackagePath": "staticwebassets\\images\\doctor.svg"
     },
     {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\favicon.ico",
@@ -131,6 +143,10 @@
     {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\portrait.png",
       "PackagePath": "staticwebassets\\images\\portrait.png"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\images\\transfer-horizontal-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\images\\transfer-horizontal-svgrepo-com.svg"
     },
     {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\js\\DarkMode.js",

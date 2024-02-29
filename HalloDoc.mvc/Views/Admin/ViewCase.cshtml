@@ -1,4 +1,5 @@
 ﻿@using DataAccess.CustomModels;
+@using DataAccess.Enums;
 @{
     ViewData["Title"] = "ViewCase";
 }
@@ -52,28 +53,31 @@
 
 
     var bgColor = "He";
-    var requestType = "VIP";
+    var role = "hello";
 
-        @if (Model.RequestTypeId == 1)
-        {
-            bgColor = "#60be5e";
-        requestType = "Patient";
+    @if (Model.RequestTypeId == (int)RequestTypeEnum.Business)
+    {
+        bgColor = "#d76879";
+        role = "Business";
     }
-    else if (Model.RequestTypeId == 2)
-        {
-            bgColor = "#e69232";
-        requestType = "Family";
-        }
-    else if (Model.RequestTypeId == 3)
-        {
-            bgColor = "#d76879";
-        requestType = "Business";
-        }
-    else if (Model.RequestTypeId == 4)
-        {
-            bgColor = "#0b7ebf";
-        requestType = "Concierge";
-        }
+    else if (Model.RequestTypeId == (int)RequestTypeEnum.Patient)
+    {
+        bgColor = "#60be5e";
+        role = "Patient";
+
+
+    }
+    else if (Model.RequestTypeId == (int)RequestTypeEnum.Family)
+    {
+        bgColor = "#e69232";
+        role = "FamilyFriend";
+
+    }
+    else if (Model.RequestTypeId == (int)RequestTypeEnum.Concierge)
+    {
+        bgColor = "#0b7ebf";
+        role = "Concierge";
+    }
 }
 <div class=" container-fluid    ">
     <!-- main part -->
@@ -85,7 +89,7 @@
             <div class="col-6 d-flex justify-content-start">
                 <p class="d-flex">
                     <span class="fw-bold fs-4"> New Request</span>
-                    <span class=" text-white boder rounded p-1 mx-2" style="background:@bgColor">@requestType</span>
+                    <span class=" text-white boder rounded p-1 mx-2" style="background:@bgColor">@role</span>
                 </p>
             </div>
             <div class="col-6 d-flex justify-content-end">

@@ -17,5 +17,13 @@ namespace BusinessLogic.Interfaces
         StatusCountModel GetStatusCount();
 
         ViewCaseViewModel ViewCaseViewModel(int Requestclientid,int RequestTypeId);
+
+        ViewNotesModel ViewNotes(int ReqId);
+
+        bool UpdateAdminNotes(string additionalNotes, int reqId);
+
+        CancelCaseModel CancelCase(int reqId);
+
+        bool SubmitCancelCase(CancelCaseModel cancelCaseModel);
     }
 }

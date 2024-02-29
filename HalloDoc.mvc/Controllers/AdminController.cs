@@ -120,5 +120,44 @@ namespace HalloDoc.mvc.Controllers
             return View(obj);
         }
 
+        [HttpPost]
+        public IActionResult UpdateNotes(ViewNotesModel model)
+        {
+            int? reqId = HttpContext.Session.GetInt32("RNId");
+            bool isUpdated = _adminService.UpdateAdminNotes(model.AdditionalNotes, (int)reqId);
+            if (isUpdated)
+            {
+                _notyf.Success("Saved Changes !!");
+                return RedirectToAction("ViewNote", "Admin", new { ReqId = reqId });
+
+            }
+            return View();
+        }
+
+        public IActionResult ViewNote(int ReqId)
+        {
+            HttpContext.Session.SetInt32("RNId", ReqId);
+            ViewNotesModel data = _adminService.ViewNotes(ReqId);
+            return View(data);
+        }
+
+        public IActionResult CancelCase(int reqId)
+        {
+            HttpContext.Session.SetInt32("CancelReqId", reqId);
+            var model = _adminService.CancelCase(reqId);
+            return PartialView("_CancelCase", model);
+        }
+
+        public IActionResult SubmitCancelCase(CancelCaseModel cancelCaseModel)
+        {
+            cancelCaseModel.reqId = HttpContext.Session.GetInt32("CancelReqId");
+            bool isCancelled =  _adminService.SubmitCancelCase(cancelCaseModel);
+            if (isCancelled)
+            {
+                _notyf.Success("Cancelled successfully");
+                return RedirectToAction("AdminDashboard", "Admin");
+            }
+            return View();  
+        }
     }
 }

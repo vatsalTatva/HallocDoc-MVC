@@ -1,0 +1,20 @@
+﻿.svg {
+    height: 30px;
+    width: 30px
+}
+
+.container {
+    display: flex;
+}
+
+.notes {
+    height: 45px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+    .notes:hover {
+        cursor: pointer;
+    }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -59,6 +60,8 @@ namespace DataAccess.CustomModels
         public int? status { get; set; }
 
         public int? requestClientId { get; set; }
+
+        public int? reqId { get; set; }
     }
 
     public class ViewCaseViewModel
@@ -82,4 +85,28 @@ namespace DataAccess.CustomModels
         public string? Room { get; set; }
         public string? ConfirmationNumber { get; set; }
     }
+
+    public class ViewNotesModel
+    {
+        public string? TransferNotes { get; set; }
+        public string? PhysicianNotes { get; set; }
+
+        public string? AdminNotes { get; set; }
+        public string? AdditionalNotes { get; set; }
+
+        public int ReqId { get; set; }
+    }
+
+    public class CancelCaseModel
+    {
+        public string? PatientFName { get; set; }
+        public string? PatientLName { get; set; }
+        public List<Casetag>? casetaglist { get; set; }
+
+      
+        public int? casetag { get; set; }
+        public int? reqId { get; set; }
+        public string? notes { get; set; }
+    }
 }
+

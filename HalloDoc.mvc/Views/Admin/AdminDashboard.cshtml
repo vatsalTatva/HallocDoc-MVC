@@ -1,4 +1,5 @@
 ﻿@using DataAccess.CustomModels;
+
 @{
     ViewData["Title"] = "AdminDashboard";
 }
@@ -256,6 +257,8 @@
         });
 
 
+       
+
         function showNewRequests(status) {
             $.ajax({
                 url: '/Admin/GetRequestsByStatus',
@@ -295,7 +298,23 @@
             });
         }
 
-      
+
+        function showCancelCase(reqId) {
+            $.ajax({
+                url: '/Admin/CancelCase',
+                type: 'GET',
+                data: { reqId: reqId },
+                success: function (response) {
+
+                    $("#modelContent").html(response);
+                    
+                    $('#cancelModal').modal('show');
+                    
+                }
+            });
+        }
+
+       
 
     </script>
  
