@@ -314,8 +314,24 @@
             });
         }
 
-       
+        function showAssignCase(reqId){
 
+            $.ajax({
+                url: '/Admin/AssignCase',
+                type: 'GET',
+                data: { reqId: reqId },
+                success: function (response) {
+
+                    $("#modelContent").html(response);
+
+                    $('#assignModal').modal('show');
+
+                }
+            });
+        }
+
+       
+       
     </script>
  
 

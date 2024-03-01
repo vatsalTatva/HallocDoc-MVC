@@ -220,6 +220,7 @@ namespace BusinessLogic.Services
                 var req = _db.Requests.Where(x => x.Requestid == cancelCaseModel.reqId).FirstOrDefault();
                 req.Status = (int)StatusEnum.Cancelled;
                 req.Casetag = cancelCaseModel.casetag.ToString();
+                req.Modifieddate = DateTime.Now;
                 var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == cancelCaseModel.reqId).FirstOrDefault();
                 if (reqStatusLog == null) {
                     Requeststatuslog rsl = new Requeststatuslog();
@@ -228,6 +229,7 @@ namespace BusinessLogic.Services
                     rsl.Notes = cancelCaseModel.notes;
                     rsl.Createddate = DateTime.Now;
                     _db.Requeststatuslogs.Add(rsl);
+                    _db.Requests.Update(req);
                     _db.SaveChanges();
                     return true;
                 }
@@ -235,7 +237,9 @@ namespace BusinessLogic.Services
                 {
                     reqStatusLog.Status = (int)StatusEnum.Cancelled;
                     reqStatusLog.Notes = cancelCaseModel.notes;
+                   
                     _db.Requeststatuslogs.Update(reqStatusLog);
+                    _db.Requests.Update(req);
                     _db.SaveChanges();
                     return true;
                 }
@@ -249,6 +253,69 @@ namespace BusinessLogic.Services
                 return false;
             }
         
+        }
+
+        public AssignCaseModel AssignCase(int reqId)
+        {
+
+            var regionlist = _db.Regions.ToList();
+            AssignCaseModel assignCaseModel = new()
+            { 
+                regionList = regionlist,
+
+            };
+            return assignCaseModel;
+        }
+
+        public List<Physician> GetPhysicianByRegion(int Regionid)
+        {
+            
+            var physicianList = _db.Physicianregions.Where(x => x.Regionid == Regionid).Select(x => x.Physician).ToList();
+           
+            return physicianList;
+
+
+        }
+
+        public bool SubmitAssignCase(AssignCaseModel assignCaseModel)
+        {
+            try
+            {
+
+                var req  = _db.Requests.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
+                req.Status = (int)StatusEnum.Accepted;
+                req.Physicianid = assignCaseModel.selectPhysicianId;
+                req.Modifieddate = DateTime.Now;
+                
+                var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
+                if (reqStatusLog == null)
+                {
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Requestid = (int)assignCaseModel.ReqId;
+                    rsl.Status = (int)StatusEnum.Accepted;
+                    rsl.Notes = assignCaseModel.description;
+                    rsl.Createddate = DateTime.Now;
+                    _db.Requeststatuslogs.Add(rsl);
+                    _db.Requests.Update(req);
+                    _db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    reqStatusLog.Status = (int)StatusEnum.Accepted;
+                    reqStatusLog.Notes = assignCaseModel.description;
+                    _db.Requeststatuslogs.Update(reqStatusLog);
+                    _db.Requests.Update(req);
+                    _db.SaveChanges();
+                    return true;
+                }
+
+               
+            }
+            catch(Exception ex) {
+                return false;
+            }
+
         }
     }
 

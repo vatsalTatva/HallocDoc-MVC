@@ -25,5 +25,10 @@ namespace BusinessLogic.Interfaces
         CancelCaseModel CancelCase(int reqId);
 
         bool SubmitCancelCase(CancelCaseModel cancelCaseModel);
+
+        AssignCaseModel AssignCase(int reqId);
+
+        List<Physician> GetPhysicianByRegion(int Regionid);
+        bool SubmitAssignCase(AssignCaseModel assignCaseModel);
     }
 }

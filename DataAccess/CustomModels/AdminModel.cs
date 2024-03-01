@@ -108,5 +108,16 @@ namespace DataAccess.CustomModels
         public int? reqId { get; set; }
         public string? notes { get; set; }
     }
+
+    public class AssignCaseModel
+    {
+        public int? ReqId { get; set; }
+        public List<Region>? regionList { get; set; }
+        public List<Physician> physicianList { get; set; }
+        public int? selectRegionId { get; set; }
+        public int? selectPhysicianId { get; set; }
+        public string? description { get; set; }
+
+    }
 }
 

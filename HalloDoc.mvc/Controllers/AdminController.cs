@@ -159,5 +159,30 @@ namespace HalloDoc.mvc.Controllers
             }
             return View();  
         }
+
+        public IActionResult AssignCase(int reqId)
+        {
+            HttpContext.Session.SetInt32("AssignReqId", reqId);
+            var model  = _adminService.AssignCase(reqId);
+            return PartialView("_AssignCase",model);
+        }
+
+        public IActionResult GetPhysician(int selectRegion)
+        {
+            List<Physician> physicianlist = _adminService.GetPhysicianByRegion(selectRegion);
+            return Json(new {physicianlist});
+        }
+
+        public IActionResult SubmitAssignCase(AssignCaseModel assignCaseModel)
+        {
+            assignCaseModel.ReqId = HttpContext.Session.GetInt32("AssignReqId");
+            bool isAssigned = _adminService.SubmitAssignCase(assignCaseModel);
+            if(isAssigned)
+            {
+                _notyf.Success("Assigned successfully");
+                return RedirectToAction("AdminDashboard", "Admin");
+            }
+            return View();
+        }
     }
 }
