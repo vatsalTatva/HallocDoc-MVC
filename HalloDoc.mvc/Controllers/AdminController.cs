@@ -15,13 +15,14 @@ namespace HalloDoc.mvc.Controllers
         private readonly ILogger<AdminController> _logger;
         private readonly INotyfService _notyf;
         private readonly IAdminService _adminService;
+        private readonly IPatientService _patientService;
 
-
-        public AdminController(ILogger<AdminController> logger ,INotyfService notyfService , IAdminService adminService)
+        public AdminController(ILogger<AdminController> logger ,INotyfService notyfService , IAdminService adminService , IPatientService patientService)
         {
             _logger = logger;
             _notyf = notyfService;
             _adminService = adminService;
+            _patientService = patientService;
         }
 
         public IActionResult Index()
@@ -183,6 +184,72 @@ namespace HalloDoc.mvc.Controllers
                 return RedirectToAction("AdminDashboard", "Admin");
             }
             return View();
+        }
+
+        public IActionResult BlockCase(int reqId)
+        {
+            HttpContext.Session.SetInt32("BlockReqId", reqId);
+            var model = _adminService.BlockCase(reqId);
+            return PartialView("_BlockCase",model);
+        }
+
+        [HttpPost]
+        public IActionResult SubmitBlockCase(BlockCaseModel blockCaseModel)
+        {
+            blockCaseModel.ReqId = HttpContext.Session.GetInt32("BlockReqId");
+            bool isBlocked = _adminService.SubmitBlockCase(blockCaseModel);
+            if (isBlocked)
+            {
+                _notyf.Success("Blocked Successfully");
+                return RedirectToAction("AdminDashboard", "Admin");
+            }
+            _notyf.Error("BlockCase Failed");
+            return RedirectToAction("AdminDashboard", "Admin");
+        }
+
+
+        public IActionResult ViewUploads(int reqId)
+        {
+            HttpContext.Session.SetInt32("rid", reqId);
+            var model = _adminService.GetAllDocById(reqId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult UploadFiles(ViewUploadModel model)
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            if(model.uploadedFiles== null)
+            {
+                _notyf.Error("First Upload Files");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+            bool isUploaded =  _adminService.UploadFiles(model.uploadedFiles, rid);
+            if (isUploaded)
+            {
+                _notyf.Success("Uploaded Successfully");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+            else
+            {
+                _notyf.Error("Upload Failed");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+        }
+
+        public IActionResult DeleteFileById(int id)
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            bool isDeleted = _adminService.DeleteFileById(id);
+            if (isDeleted)
+            {
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+            else
+            {
+                _notyf.Error("SomeThing Went Wrong");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
         }
     }
 }

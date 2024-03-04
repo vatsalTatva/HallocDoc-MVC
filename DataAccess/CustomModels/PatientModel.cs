@@ -139,16 +139,27 @@ namespace DataAccess.CustomModels
         public int? roomNo { get; set; }
     }
 
-    
+
 
     public class MedicalHistory
     {
-        
-        public int redId { get; set; }
+
+        public int reqId { get; set; }
         public DateTime createdDate { get; set; }
         public int currentStatus { get; set; }
         public List<string> document { get; set; }
 
+
+    }
+    public class MedicalHistoryList
+    {
+        public List<MedicalHistory>? medicalHistoriesList { get; set; }
+        public int? id { get; set; }
+        public string? firstName { get; set; }
+        public string? lastName { get; set; }
+    }
+    public class Profile
+    {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -164,11 +175,6 @@ namespace DataAccess.CustomModels
         public string? State { get; set; }
 
         public string? Email { get; set; }
-    }
-    public class MedicalHistoryList
-    {
-        public List<MedicalHistory> medicalHistoriesList { get; set; }
-
-          
+        public int? userId { get; set; }
     }
 }

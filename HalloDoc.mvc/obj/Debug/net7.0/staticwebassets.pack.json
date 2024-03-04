@@ -17,12 +17,28 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\dark.png"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\doc-portrait.jpg",
+      "PackagePath": "staticwebassets\\UploadedFiles\\doc-portrait.jpg"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\info-icon.svg",
+      "PackagePath": "staticwebassets\\UploadedFiles\\info-icon.svg"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\info.png",
       "PackagePath": "staticwebassets\\UploadedFiles\\info.png"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\light.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\light.png"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\logo.png",
       "PackagePath": "staticwebassets\\UploadedFiles\\logo.png"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\portrait.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\portrait.png"
     },
     {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\css\\AdminDashboard.css",

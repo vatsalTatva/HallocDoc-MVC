@@ -1,6 +1,7 @@
 ﻿
 using DataAccess.CustomModels;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,12 @@ namespace BusinessLogic.Interfaces
 
         List<Physician> GetPhysicianByRegion(int Regionid);
         bool SubmitAssignCase(AssignCaseModel assignCaseModel);
+        BlockCaseModel BlockCase(int reqId);
+        bool SubmitBlockCase(BlockCaseModel blockCaseModel);
+        ViewUploadModel GetAllDocById(int requestId);
+
+        bool UploadFiles(List<IFormFile> files, int reqId);
+
+        bool DeleteFileById(int reqFileId);
     }
 }

@@ -277,55 +277,100 @@ namespace BusinessLogic.Services
             _db.SaveChanges();
         }
 
-        
 
-        public List<MedicalHistory> GetMedicalHistory(User user)
+
+        public MedicalHistoryList GetMedicalHistory(int userid)
         {
-           
+            var user = _db.Users.FirstOrDefault(x => x.Userid == userid);
 
-            var medicalhistory = (from request  in _db.Requests 
+
+            var medicalhistory = (from request in _db.Requests
                                   join requestfile in _db.Requestwisefiles
                                   on request.Requestid equals requestfile.Requestid
                                   where request.Email == user.Email && request.Email != null
                                   group requestfile by request.Requestid into groupedFiles
                                   select new MedicalHistory
                                   {
-                                      FirstName = user.Firstname,
-                                      LastName = user.Lastname,
-                                      Email = user.Email,
-                                      PhoneNo = user.Mobile,
-                                      Street = user.Street,
-                                      City = user.City,
-                                      State = user.State,
-                                      ZipCode=user.Zipcode,
-                                      redId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
-                                  createdDate= groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
-                                  currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault(),
-                                  document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
+
+                                      reqId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
+                                      createdDate = groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
+                                      currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault(),
+                                      document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
                                   }).ToList();
 
+            MedicalHistoryList medicalHistoryList = new()
+            {
+                medicalHistoriesList = medicalhistory,
+                id = userid,
+                firstName = user.Firstname,
+                lastName = user.Lastname
+            };
 
-            return medicalhistory;
+            return medicalHistoryList;
         }
 
         public IQueryable<Requestwisefile>? GetAllDocById(int requestId)
         {
             var data = from request in _db.Requestwisefiles
-                       where request.Requestid == requestId select request;
+                       where request.Requestid == requestId
+                       select request;
             return data;
         }
 
-        public bool EditProfile(MedicalHistory profile)
+        public void AddFile(IFormFile file, int reqId)
+        {
+            var fileName = Path.GetFileName(file.FileName);
+
+            //define path
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+
+            // Copy the file to the desired location
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream)
+     ;
+            }
+            Requestwisefile requestwisefile = new()
+            {
+                Filename = fileName,
+                Requestid = reqId,
+                Createddate = DateTime.Now
+            };
+            _db.Requestwisefiles.Add(requestwisefile);
+            _db.SaveChanges();
+        }
+
+
+        public Profile GetProfile(int userid)
+        {
+            var user = _db.Users.FirstOrDefault(x => x.Userid == userid);
+            Profile profile = new()
+            {
+                FirstName = user.Firstname,
+                LastName = user.Lastname,
+                Email = user.Email,
+                PhoneNo = user.Mobile,
+                State = user.State,
+                City = user.City,
+                Street = user.Street,
+                ZipCode = user.Zipcode,
+
+
+            };
+            return profile;
+        }
+
+        public bool EditProfile(Profile profile)
         {
 
             try
             {
-                var existingUser = _db.Users.FirstOrDefault(x => x.Email == profile.Email);
-               if(existingUser != null)
+                var existingUser = _db.Users.Where(x => x.Userid == profile.userId).FirstOrDefault();
+                if (existingUser != null)
                 {
+
                     existingUser.Firstname = profile.FirstName;
                     existingUser.Lastname = profile.LastName;
-                    existingUser.Email = profile.Email;
                     existingUser.Mobile = profile.PhoneNo;
                     existingUser.Street = profile.Street;
                     existingUser.City = profile.City;
@@ -340,12 +385,8 @@ namespace BusinessLogic.Services
                 {
                     return false;
                 }
-              
-
-
-               
             }
-            catch { return false; }
+            catch (Exception ex) { return false; }
         }
     }
 }

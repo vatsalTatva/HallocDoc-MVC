@@ -69,7 +69,7 @@ namespace HalloDoc.mvc.Controllers
                 var user = _loginService.Login(loginModel);
 
                 //var userId = user.Userid;
-                //HttpContext.Session.SetInt32("UserId", userId);
+                HttpContext.Session.SetInt32("UserId", user.Userid);
 
                 //the above data is coming from user table and storing in user object
                 if (user != null)
@@ -77,7 +77,7 @@ namespace HalloDoc.mvc.Controllers
                     TempData["username"] = user.Firstname;
                     TempData["id"] = user.Lastname;
                     _notyf.Success("Logged In Successfully !!");
-                    return RedirectToAction("PatientDashboard",user);
+                    return RedirectToAction("PatientDashboard","Patient");
                 }
                 else
                 {
@@ -308,92 +308,56 @@ namespace HalloDoc.mvc.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public IActionResult PatientDashboard()
-        //{
-        //    var infos = _patientService.GetPatientInfos();
-        //    var viewmodel = new PatientDashboardInfo { patientDashboardItems = infos };
-        //    return View(viewmodel);
-        //}
-
-
-        //public IActionResult PatientDashboard()
-        //{
-        //    me
-        //    return View();
-        //}
-
-        public IActionResult PatientDashboard(User user)
+        public IActionResult PatientDashboard()
         {
-            //var userId = HttpContext.Session.GetInt32("userId");
+            int? userid = HttpContext.Session.GetInt32("UserId");
 
+            var infos = _patientService.GetMedicalHistory((int)userid);
 
-
-            var infos = _patientService.GetMedicalHistory(user);
-            var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
-            return View(viewmodel);
-        }
-        
-        public IActionResult GetDcoumentsById(int requestId) 
-        {
-            var list = _patientService.GetAllDocById(requestId);
-            return PartialView("_DocumentList",list.ToList());
+            return View(infos);
         }
 
-        //public IActionResult Edit(MedicalHistoryList medicalHistoryList)
-        //{
-        //    MedicalHistory medicalHistory = medicalHistoryList.medicalHistoriesList[0];
-        //    bool isEdited = _patientService.EditProfile(medicalHistory);
-        //    if (isEdited)
-        //    {
-        //        _notyf.Success("Profile Edited Successfully");
-        //        return RedirectToAction("PatientDashboard");
-        //    }
-        //    else
-        //    {
-        //        _notyf.Error("Profile Edited Failed");
-        //        return RedirectToAction("PatientDashboard");
-        //    }
-
-        //}
-
-
-        public IActionResult Edit(MedicalHistory medicalHistory)
+        public IActionResult DocumentList(int reqId)
         {
+            HttpContext.Session.SetInt32("rid", reqId);
+            var y = _patientService.GetAllDocById(reqId);
+            return View(y)
+     ;
+        }
 
-            var existingUser = _db.Users.FirstOrDefault(x => x.Email == medicalHistory.Email);
-            existingUser.Firstname = medicalHistory.FirstName;
-            existingUser.Lastname = medicalHistory.LastName;
-            //existingUser.dob = medicalHistory.DateOfBirth;
-            existingUser.Email = medicalHistory.Email;
-            //existingUser. = medicalHistory.ContactType;
-            existingUser.Mobile = medicalHistory.PhoneNo;
-            existingUser.Street = medicalHistory.Street;
-            existingUser.City = medicalHistory.City;
-            existingUser.State = medicalHistory.State;
-            existingUser.Zipcode = medicalHistory.ZipCode;
+        [HttpPost]
+        public IActionResult DocumentList()
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            var file = HttpContext.Request.Form.Files.FirstOrDefault();
+            _patientService.AddFile(file, rid);
+            return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+        }
 
-            _db.Users.Update(existingUser);
-            _db.SaveChanges();
-            _notyf.Success("Profile Updated Successfully !!");
-            return RedirectToAction("PatientDashboard", "Patient", existingUser);
+
+
+        public IActionResult ShowProfile(int userid)
+        {
+            HttpContext.Session.SetInt32("EditUserId", userid);
+            var profile = _patientService.GetProfile(userid);
+            return PartialView("_Profile", profile);
+        }
+
+        public IActionResult SaveEditProfile(Profile profile)
+        {
+            int EditUserId = (int)HttpContext.Session.GetInt32("EditUserId");
+            profile.userId = EditUserId;
+            bool isEdited = _patientService.EditProfile(profile);
+            if (isEdited)
+            {
+                _notyf.Success("Profile Edited Successfully");
+                return RedirectToAction("PatientDashboard");
+            }
+            else
+            {
+                _notyf.Error("Profile Edited Failed");
+                return RedirectToAction("PatientDashboard");
+            }
         }
         public IActionResult SubmitMeInfo()
         {

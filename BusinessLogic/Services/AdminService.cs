@@ -3,8 +3,10 @@ using DataAccess.CustomModels;
 using DataAccess.Data;
 using DataAccess.Enums;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -316,6 +318,148 @@ namespace BusinessLogic.Services
                 return false;
             }
 
+        }
+
+        public BlockCaseModel BlockCase(int reqId)
+        {
+            var reqClient = _db.Requestclients.Where(x => x.Requestid==reqId).FirstOrDefault();
+            BlockCaseModel model = new()
+            {
+                ReqId = reqId,
+                firstName = reqClient.Firstname,
+                lastName= reqClient.Lastname,
+                reason=null
+            };
+
+            return model;
+        }
+
+        public bool SubmitBlockCase(BlockCaseModel blockCaseModel)
+        {
+            try
+            {
+                var request = _db.Requests.FirstOrDefault(r => r.Requestid == blockCaseModel.ReqId);
+                if(request != null)
+                {
+                    if (request.Isdeleted == null)
+                    {
+                        request.Isdeleted = new BitArray(1);
+                        request.Isdeleted[0] = true;
+                        request.Status = (int)StatusEnum.Clear;
+                        request.Modifieddate = DateTime.Now;
+
+                        _db.Requests.Update(request);
+                       
+                    }
+                    Blockrequest blockrequest = new Blockrequest();
+
+                    blockrequest.Phonenumber = request.Phonenumber==null?"+91":request.Phonenumber;
+                    blockrequest.Email = request.Email;
+                    blockrequest.Reason = blockCaseModel.reason;
+                    blockrequest.Requestid = (int)blockCaseModel.ReqId;
+                    blockrequest.Createddate = DateTime.Now;
+                   
+                    _db.Blockrequests.Add(blockrequest);
+                    _db.SaveChanges();
+                    return true;
+                   
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public ViewUploadModel GetAllDocById(int requestId)
+        {
+            
+            var list = _db.Requestwisefiles.Where(x => x.Requestid == requestId).ToList();  
+            var reqClient = _db.Requestclients.Where(x => x.Requestid == requestId).FirstOrDefault();
+
+            ViewUploadModel result = new()
+            {
+                files = list,
+                firstName = reqClient.Firstname,
+                lastName = reqClient.Lastname,
+
+            };
+
+            return result;
+            
+        }
+
+        public bool UploadFiles(List<IFormFile> files ,int reqId)
+        {
+
+            try
+            {
+                if (files != null)
+                {
+                    foreach (IFormFile file in files)
+                    {
+                        if (file != null && file.Length > 0)
+                        {
+                            //get file name
+                            var fileName = Path.GetFileName(file.FileName);
+
+                            //define path
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+
+                            // Copy the file to the desired location
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                file.CopyTo(stream)
+                       ;
+                            }
+
+                            Requestwisefile requestwisefile = new()
+                            {
+                                Filename = fileName,
+                                Requestid = reqId,
+                                Createddate = DateTime.Now
+                            };
+
+                            _db.Requestwisefiles.Add(requestwisefile);
+                            
+                        }
+                    }
+                    _db.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteFileById(int reqFileId)
+        {
+            try
+            {
+                var reqWiseFile = _db.Requestwisefiles.Where(x=>x.Requestwisefileid == reqFileId).FirstOrDefault();
+                if (reqWiseFile != null)
+                {
+                    _db.Requestwisefiles.Remove(reqWiseFile);
+                    _db.SaveChanges();
+                   return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 

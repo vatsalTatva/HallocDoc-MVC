@@ -4,7 +4,7 @@
 
 }
 @{
-    string[] Enum = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDEnRoute" , "MDOnSite" ,
+    string[] Status = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDEnRoute" , "MDOnSite" ,
                 "Conclude" , "CancelledByPatient" , "Closed" , "Unpaid" , "Clear"   };
 }
 
@@ -55,8 +55,8 @@
                     </li>
                     <li class="nav-item p-2 fw-bolder">
                         <span class="d-flex gap-1">
-                            <span>@Model.medicalHistoriesList[0].FirstName</span>
-                            <span>@Model.medicalHistoriesList[0].LastName</span>
+                            <span>@Model.firstName</span>
+                            <span>@Model.lastName</span>
                         </span>
                     </li>
             </div>
@@ -95,7 +95,7 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" onclick="ShowProfile(@Model.id)">
                             Profile
                         </button>
                     </li>
@@ -131,25 +131,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var items in Model.medicalHistoriesList)
+                                    @if (Model.medicalHistoriesList.Count != 0)
                                     {
-                                        
-                                        <tr>
-                                            <td>@items.createdDate.ToString("MMM dd, yyyy")</td>
-                                            <td>@Enum[items.currentStatus]</td>
-                                            <td>
-                                                <a href="#" class="btn btn-outline-info fw-bold" onclick="showDocuments(@items.redId)">
-                                                    <span><i class="bi bi-file-earmark fw-bold"></i></span>
-                                                    <span>
-                                                         View Documents (@items.document.Count())
-                                                     
-                                                    </span>
-                                                </a>
-                                            </td>
-                                         
-                                        </tr>
+
+                                        foreach (var items in Model.medicalHistoriesList)
+                                        {
+
+                                            <tr>
+                                                <td>@items.createdDate.ToString("MMM dd, yyyy")</td>
+                                                <td>@Status[items.currentStatus]</td>
+                                                <td>
+                                                    <a class="btn btn-outline-info fw-bold" asp-controller="Patient" asp-action="DocumentList" asp-route-reqId=@items.reqId>
+                                                        <span><i class="bi bi-file-earmark fw-bold"></i></span>
+                                                        <span>
+                                                            View Documents (@items.document.Count())
+
+                                                        </span>
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                        }
                                     }
-                                   
+                                    else
+                                    {
+                                        <tr>No Items found</tr>
+                                    }
                                 </tbody>
                             </table>
                             
@@ -174,16 +181,20 @@
                     <div class="row">
                         <p class="col-12">patient name</p>
                         <p class="col-12">
-                            <span class="fw-bolder fs-4">testing test</span>
+                            <span class="fw-bolder fs-4">@Model.firstName @Model.lastName</span>
                             <span>(f34r34t5gvr44)</span>
                         </p>
                         <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
                         <div class="col-12 mb-4">
-                            <input class="form-control form-control-lg " id="formfilelg" type="file" multiple>
+                            <form class="input-group" method="post"  enctype="multipart/form-data">
+                                <input name="file" type="file" class="form-control" id="formFileLg" multiple>
+                                <button  class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
+                                <br />
+                            </form>
                         </div>
                       
                         <div class="row" id="docList">
-                            @* @await Html.PartialAsync("_documentlist",Model);*@
+                            
                         </div>
                         <!-- row--- -->
                     </div>
@@ -194,115 +205,9 @@
 
         </div>
 
-       
+        @*--------------------profile--------------- *@
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="Edit" class="container my-5 p-4" id="main-cont">
-
-                <div class="row">
-                    <h5 class="col-12">General Information</h5>
-
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input asp-for="@Model.medicalHistoriesList.FirstOrDefault().FirstName" type="text" class="form-control" id="floatingInputDisabled" placeholder="name" disabled>
-                            <span asp-validation-for="@Model.medicalHistoriesList.FirstOrDefault().FirstName" class="text-danger"></span>
-
-                            <label for="floatingInputDisabled">First Name</label>
-                        </div>
-
-                    </div>
-                    <div class="col-6">
-                        <div class="input-div form-floating mb-3">
-                            <input asp-for="@Model.medicalHistoriesList.FirstOrDefault().LastName" type="text" class="form-control" id="floatingInput" disabled>
-                            <label for="floatingInput">Last Name</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="input-div form-floating mb-3">
-                            <input asp-for="@Model.medicalHistoriesList.FirstOrDefault().DateOfBirth" type="date" class="form-control" id="floatingInput" placeholder="name@example.com" disabled>
-                            <label for="floatingInput">Date Of Birth</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <h5>Contact Information</h5>
-                    </div>
-
-
-
-                    <div class="col-2">
-                        <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" type="select" aria-label="Floating label select example" disabled>
-                                <option value="1">Mobile</option>
-                                <option value="2">Landline</option>
-                            </select>
-                            <label for="floatingSelect">Works With Selects</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-div form-floating mb-3">
-                            <input type="tel" asp-for="@Model.medicalHistoriesList.FirstOrDefault().PhoneNo" name="phone" class="form-control p-3 ps-5" id="floatingInput" disabled>
-
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="input-div form-floating mb-3">
-                            <input name="email" asp-for="@Model.medicalHistoriesList.FirstOrDefault().Email" type="email" class="form-control" id="email" placeholder="name@example.com" disabled>
-                            <label for="floatingInput">Email</label>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <h5>Patient Location</h5>
-                    </div>
-                    <div class="col-6">
-                        <div class="input-div form-floating mb-3">
-                            <input asp-for="@Model.medicalHistoriesList.FirstOrDefault().Street" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                            <label for="floatingInput">Street</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="input-div form-floating mb-3">
-                            <input asp-for="@Model.medicalHistoriesList.FirstOrDefault().City" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                            <label for="floatingInput">City</label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="input-div form-floating mb-3">
-                            <input asp-for="@Model.medicalHistoriesList.FirstOrDefault().State" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                            <label for="floatingInput">State</label>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="input-div form-floating mb-3">
-                            <input asp-for="@Model.medicalHistoriesList.FirstOrDefault().ZipCode" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                            <label for="floatingInput">Zip Code</label>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-floating mb-3">
-                            <button type="button" class="btn btn-outline-primary" style="height:3.4rem ;"> <i class="bi bi-geo-alt"></i> Map</button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col w-auto">
-                    <a role="button" class="back btn btn-outline-info" id="editButton">
-                        Edit
-                    </a>
-                </div>
-
-                <div class="col w-auto">
-                    <button class="back btn btn-outline-info" type="submit" id="saveButton" hidden>
-                        Save
-                    </button>
-                </div>
-
-            </form>
+            
         </div>
 
 
@@ -472,30 +377,25 @@
                     $("#docList").html(response);
                 }
             });
-
-
-          
-
             document.getElementById('medicalHistory').style.display = 'none';
             document.getElementById('viewdocs').style.display = 'block';
         }
 
-        //script for edit and save button
-        $(document).ready(function () {
-            $('#editButton').click(function () {
 
-              
-                $('input[type="text"]').removeAttr('disabled', false);
-                $('input[type="email"]').removeAttr('disabled', false);
-                $('input[type="date"]').removeAttr('disabled', false);
-                $('input[type="tel"]').removeAttr('disabled', false);
-            
-                // Hide the edit button after clicking it
-                $(this).hide();
-                $('#saveButton').removeAttr('hidden', false);
+        
+
+        function ShowProfile(userid) {
+       
+            $.ajax({
+                url: '/Patient/ShowProfile',
+                type: 'GET',
+                data: { userid: userid },
+                success: function (response) {
+
+                    $("#profile-tab-pane").html(response);
+                }
             });
-        });
-
+        }
 
 
     </script>

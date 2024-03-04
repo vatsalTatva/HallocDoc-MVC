@@ -1,5 +1,6 @@
 ﻿using DataAccess.CustomModels;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,14 @@ namespace BusinessLogic.Interfaces
 
         void AddConciergeReq(ConciergeReqModel conciergeReqModel);  
 
-        void AddBusinessReq(BusinessReqModel businessReqModel); 
+        void AddBusinessReq(BusinessReqModel businessReqModel);
 
 
-        List<MedicalHistory> GetMedicalHistory(User user);
+        MedicalHistoryList GetMedicalHistory(int userid);
         IQueryable<Requestwisefile>? GetAllDocById(int requestId);
+        Profile GetProfile(int userid);
+        bool EditProfile(Profile profile);
 
-        bool EditProfile(MedicalHistory profile);
+        void AddFile(IFormFile file, int reqId);
     }
 }

@@ -330,6 +330,20 @@
             });
         }
 
+        function showBlockCase(reqId){
+            $.ajax({
+                url: '/Admin/BlockCase',
+                type: 'GET',
+                data: { reqId: reqId },
+                success: function (response) {
+
+                    $("#modelContent").html(response);
+
+                    $('#blockModal').modal('show');
+
+                }
+            });
+        }
        
        
     </script>
