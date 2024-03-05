@@ -61,7 +61,7 @@
                     </li>
             </div>
             <li class="nav-item">
-                <button id="logout" class="px-3">
+                <button id="logout" onclick="location.href='@Url.Action("Login", "Patient")'" class="px-3">
                     <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
                 </button>
 
@@ -171,7 +171,7 @@
 
             </div>
 
-            <div class="container-fluid mt-5" style="background-color: aliceblue; display:none"  id="viewdocs">
+           @* <div class="container-fluid mt-5" style="background-color: aliceblue; display:none"  id="viewdocs">
                
                 <div class="container bg-white p-4 ">
                     <div class="d-flex justify-content-between mb-4">
@@ -201,7 +201,7 @@
 
                     <!-- ----container    -->
                 </div>
-            </div>
+            </div>*@
 
         </div>
 
@@ -355,31 +355,25 @@
         }
 
 
-        function swapDivs() {
-
-            // Get references to the div elements
-            document.getElementById("medicalHistory").style.display = "block";
-            document.getElementById("viewdocs").style.display = "none";
-
-         
-
-
-        }
+        //function swapDivs() {
+        //    document.getElementById("medicalHistory").style.display = "block";
+        //    document.getElementById("viewdocs").style.display = "none";
+        //}
       
-        function showDocuments( requestId) {
+        //function showDocuments( requestId) {
           
-            $.ajax({
-                url: '/Patient/GetDcoumentsById',
-                type: 'GET',
-                data: { requestId: requestId },
-                success: function (response) {
+        //    $.ajax({
+        //        url: '/Patient/GetDcoumentsById',
+        //        type: 'GET',
+        //        data: { requestId: requestId },
+        //        success: function (response) {
 
-                    $("#docList").html(response);
-                }
-            });
-            document.getElementById('medicalHistory').style.display = 'none';
-            document.getElementById('viewdocs').style.display = 'block';
-        }
+        //            $("#docList").html(response);
+        //        }
+        //    });
+        //    document.getElementById('medicalHistory').style.display = 'none';
+        //    document.getElementById('viewdocs').style.display = 'block';
+        //}
 
 
         

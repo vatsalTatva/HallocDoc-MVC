@@ -5,6 +5,8 @@ using DataAccess.CustomModels;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -251,5 +253,46 @@ namespace HalloDoc.mvc.Controllers
                 return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
             }
         }
+
+        public IActionResult DeleteAllFiles(List<string> selectedFiles)
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            bool isDeleted = _adminService.DeleteAllFiles(selectedFiles, rid);
+            if (isDeleted)
+            {
+                _notyf.Success("Deleted Successfully");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+            _notyf.Error("SomeThing Went Wrong");
+            return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+
+        }
+
+        public IActionResult SendAllFiles(List<string> selectedFiles) 
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+
+            var message = string.Join(", ", selectedFiles);
+            SendEmail("yashvariya23@gmail.com", "Documents", message);
+            _notyf.Success("Send Mail Successfully");
+            return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+        }
+
+        private Task SendEmail(string email, string subject, string message)
+        {
+            var mail = "tatva.dotnet.vatsalgadoya@outlook.com";
+            var password = "VatsalTatva@2024";
+
+            var client = new SmtpClient("smtp.office365.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(mail, password)
+            };
+
+            
+
+            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+        }
+
     }
 }

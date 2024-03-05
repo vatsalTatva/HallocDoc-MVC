@@ -21,6 +21,18 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\doc-portrait.jpg"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\favicon.ico",
+      "PackagePath": "staticwebassets\\UploadedFiles\\favicon.ico"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\image_2024_01_17T04_17_17_757Z.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\image_2024_01_17T04_17_17_757Z.png"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\images-modified2.jfif",
+      "PackagePath": "staticwebassets\\UploadedFiles\\images-modified2.jfif"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\info-icon.svg",
       "PackagePath": "staticwebassets\\UploadedFiles\\info-icon.svg"
     },

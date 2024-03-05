@@ -11,6 +11,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using BusinessLogic.Services;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -321,17 +322,29 @@ namespace HalloDoc.mvc.Controllers
         {
             HttpContext.Session.SetInt32("rid", reqId);
             var y = _patientService.GetAllDocById(reqId);
-            return View(y)
-     ;
+            return View(y);
         }
 
         [HttpPost]
-        public IActionResult DocumentList()
+        public IActionResult UploadDocuments(DocumentModel model)
         {
             var rid = (int)HttpContext.Session.GetInt32("rid");
-            var file = HttpContext.Request.Form.Files.FirstOrDefault();
-            _patientService.AddFile(file, rid);
-            return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            if (model.uploadedFiles == null)
+            {
+                _notyf.Error("First Upload Files");
+                return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            }
+            bool isUploaded = _patientService.UploadDocuments(model.uploadedFiles, rid);
+            if (isUploaded)
+            {
+                _notyf.Success("Uploaded Successfully");
+                return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            }
+            else
+            {
+                _notyf.Error("Upload Failed");
+                return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            }
         }
 
 

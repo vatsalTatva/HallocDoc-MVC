@@ -38,5 +38,7 @@ namespace BusinessLogic.Interfaces
         bool UploadFiles(List<IFormFile> files, int reqId);
 
         bool DeleteFileById(int reqFileId);
+
+        bool DeleteAllFiles(List<string> filename ,  int reqId);
     }
 }
