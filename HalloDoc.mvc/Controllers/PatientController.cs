@@ -24,16 +24,19 @@ namespace HalloDoc.mvc.Controllers
         private readonly IPatientService _patientService;
         private readonly INotyfService _notyf;
         private readonly ApplicationDbContext _db;
+        private readonly IJwtService _jwtService;
        
 
 
-        public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService , INotyfService notyf,ApplicationDbContext db)
+        public PatientController(ILogger<PatientController> logger , ILoginService loginService,IPatientService patientService , INotyfService notyf,ApplicationDbContext db,IJwtService jwtService
+            )
         {
             _logger = logger;
             _loginService = loginService;
             _patientService = patientService;
             _notyf = notyf;
             _db = db;
+            _jwtService = jwtService;
           
         }
 
@@ -75,8 +78,9 @@ namespace HalloDoc.mvc.Controllers
                 //the above data is coming from user table and storing in user object
                 if (user != null)
                 {
-                    TempData["username"] = user.Firstname;
-                    TempData["id"] = user.Lastname;
+                    //TempData["username"] = user.Firstname;
+                    //TempData["id"] = user.Lastname;
+                  
                     _notyf.Success("Logged In Successfully !!");
                     return RedirectToAction("PatientDashboard","Patient");
                 }

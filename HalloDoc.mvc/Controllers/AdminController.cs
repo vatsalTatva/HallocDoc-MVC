@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using HalloDoc.mvc.Auth;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -18,13 +19,16 @@ namespace HalloDoc.mvc.Controllers
         private readonly INotyfService _notyf;
         private readonly IAdminService _adminService;
         private readonly IPatientService _patientService;
+        private readonly IJwtService _jwtService;
 
-        public AdminController(ILogger<AdminController> logger ,INotyfService notyfService , IAdminService adminService , IPatientService patientService)
+
+        public AdminController(ILogger<AdminController> logger ,INotyfService notyfService , IAdminService adminService , IPatientService patientService,IJwtService jwtService)
         {
             _logger = logger;
             _notyf = notyfService;
             _adminService = adminService;
             _patientService = patientService;
+            _jwtService = jwtService;
         }
 
         public IActionResult Index()
@@ -46,6 +50,8 @@ namespace HalloDoc.mvc.Controllers
                 return sb.ToString();
             }
         }
+
+        
         public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
         {
             if (ModelState.IsValid)
@@ -56,6 +62,8 @@ namespace HalloDoc.mvc.Controllers
                     adminLoginModel.password = GenerateSHA256(adminLoginModel.password);
                     if (aspnetuser.Passwordhash == adminLoginModel.password)
                     {
+                        var jwtToken = _jwtService.GetJwtToken(aspnetuser);
+                        Response.Cookies.Append("jwt", jwtToken);
                         _notyf.Success("Logged in Successfully");
                         return RedirectToAction("AdminDashboard", "Admin");
                     }
@@ -74,12 +82,20 @@ namespace HalloDoc.mvc.Controllers
                 return View(adminLoginModel);
             }
         }
-       
+
+        [CustomAuthorize("Admin")]
         public IActionResult AdminDashboard()
         {
            
             return View();
         }
+
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return RedirectToAction("AdminLogin", "Admin");
+        }
+
         public IActionResult GetCount()
         {
             var statusCountModel = _adminService.GetStatusCount();
@@ -278,7 +294,7 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
         }
 
-        private Task SendEmail(string email, string subject, string message)
+        public Task SendEmail(string email, string subject, string message)
         {
             var mail = "tatva.dotnet.vatsalgadoya@outlook.com";
             var password = "VatsalTatva@2024";

@@ -245,3 +245,11 @@ D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\MailKit.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\MimeKit.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

@@ -25,7 +25,7 @@ namespace BusinessLogic.Services
 
         public Aspnetuser GetAspnetuser(string email)
         {
-            var aspNetUser = _db.Aspnetusers.FirstOrDefault(x => x.Email == email);
+            var aspNetUser = _db.Aspnetusers.Include(x => x.Aspnetuserroles).FirstOrDefault(x => x.Email == email);
             return aspNetUser;
         }
 
@@ -431,7 +431,7 @@ namespace BusinessLogic.Services
                     _db.SaveChanges();
                     return true;
                 }
-                else { return false; }
+                else {return false; }
 
             }
             catch (Exception ex)
