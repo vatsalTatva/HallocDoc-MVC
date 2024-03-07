@@ -11,7 +11,7 @@ namespace HalloDoc.mvc.Auth
     public class CustomAuthorize : Attribute, IAuthorizationFilter
     {
         private readonly string _role;
-        public CustomAuthorize(string role = "")
+        public CustomAuthorize(string role="")
         {
             _role = role;
         }

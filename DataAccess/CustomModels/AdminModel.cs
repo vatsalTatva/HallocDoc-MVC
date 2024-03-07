@@ -104,7 +104,6 @@ namespace DataAccess.CustomModels
         public string? PatientLName { get; set; }
         public List<Casetag>? casetaglist { get; set; }
 
-      
         public int? casetag { get; set; }
         public int? reqId { get; set; }
         public string? notes { get; set; }

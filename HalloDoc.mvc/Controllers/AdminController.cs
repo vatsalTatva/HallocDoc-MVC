@@ -10,6 +10,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using HalloDoc.mvc.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -51,7 +52,12 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
-        
+        [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+        [HttpPost]
         public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Logout()
         {
             Response.Cookies.Delete("jwt");
@@ -162,21 +169,32 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult CancelCase(int reqId)
         {
-            HttpContext.Session.SetInt32("CancelReqId", reqId);
+           
             var model = _adminService.CancelCase(reqId);
+            model.reqId = reqId;
             return PartialView("_CancelCase", model);
         }
 
-        public IActionResult SubmitCancelCase(CancelCaseModel cancelCaseModel)
+        
+        [HttpPost]
+        public IActionResult SubmitCancelCase(int casetag, string notes,int reqId)
         {
-            cancelCaseModel.reqId = HttpContext.Session.GetInt32("CancelReqId");
-            bool isCancelled =  _adminService.SubmitCancelCase(cancelCaseModel);
-            if (isCancelled)
+            CancelCaseModel cancelCaseModel = new()
             {
-                _notyf.Success("Cancelled successfully");
-                return RedirectToAction("AdminDashboard", "Admin");
-            }
-            return View();  
+                casetag = casetag,
+                notes = notes,
+                reqId = reqId
+            };
+
+
+            
+            bool isCancelled = _adminService.SubmitCancelCase(cancelCaseModel);
+                
+                   // _notyf.Success("Cancelled successfully");
+                    return Json(new { isCancelled = isCancelled });
+             
+
+
         }
 
         public IActionResult AssignCase(int reqId)
@@ -310,5 +328,12 @@ namespace HalloDoc.mvc.Controllers
             return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
         }
 
+        public IActionResult SendOrder()
+        {
+            return View();
+        }
+
     }
+
+
 }
