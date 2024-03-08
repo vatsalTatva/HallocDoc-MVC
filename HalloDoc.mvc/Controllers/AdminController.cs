@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using HalloDoc.mvc.Auth;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json.Nodes;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -328,9 +329,25 @@ namespace HalloDoc.mvc.Controllers
             return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
         }
 
-        public IActionResult SendOrder()
+        public IActionResult Order(int reqId)
         {
-            return View();
+            var order = _adminService.FetchProfession();
+            order.ReqId =reqId;
+            return View(order);
+        }
+
+        [HttpGet]
+        public JsonArray FetchBusiness(int proffesionId)
+        {
+            var result = _adminService.FetchVendors(proffesionId);
+            return result;
+        }
+
+        [HttpGet]
+        public Healthprofessional VendorDetails(int selectedValue)
+        {
+            var result = _adminService.VendorDetails(selectedValue);
+            return result;
         }
 
     }

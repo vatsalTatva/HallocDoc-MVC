@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
@@ -484,6 +485,38 @@ namespace BusinessLogic.Services
             {
                 return false;
             }
+        }
+
+        public Order FetchProfession()
+        {
+            
+           
+            var Healthprofessionaltype = _db.Healthprofessionaltypes.ToList();
+
+            Order order = new()
+            {
+                Profession = Healthprofessionaltype
+               
+            };
+            return order;
+        }
+        public JsonArray FetchVendors(int proffesionId)
+        {
+            var result = new JsonArray();
+            IEnumerable<Healthprofessional> businesses = _db.Healthprofessionals.Where(prof => prof.Profession == proffesionId);
+
+            foreach (Healthprofessional business in businesses)
+            {
+                result.Add(new { businessId = business.Vendorid, businessName = business.Vendorname });
+            }
+            return result;
+        }
+
+        public Healthprofessional VendorDetails(int selectedValue)
+        {
+            Healthprofessional business = _db.Healthprofessionals.First(prof => prof.Vendorid == selectedValue);
+
+            return business;
         }
     }
 

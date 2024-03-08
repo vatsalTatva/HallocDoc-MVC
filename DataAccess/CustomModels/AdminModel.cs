@@ -136,5 +136,16 @@ namespace DataAccess.CustomModels
         public List<IFormFile>? uploadedFiles { get; set; }
 
     }
+    public class Order
+    {
+        public int? ReqId { get; set; }
+        public List<Healthprofessionaltype> Profession { get; set; }
+        public List<Healthprofessional> Business { get; set; }
+        public string BusineesContact { get; set; }
+        public string email { get; set; }
+        public string faxnumber { get; set; }
+        public string orderdetail { get; set; }
+
+    }
 }
 
