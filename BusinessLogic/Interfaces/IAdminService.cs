@@ -44,5 +44,7 @@ namespace BusinessLogic.Interfaces
         Order FetchProfession();
         JsonArray FetchVendors(int selectedValue);
         Healthprofessional VendorDetails(int selectedValue);
+        bool SendOrder(Order order);
+        bool ClearCase(int reqId);
     }
 }

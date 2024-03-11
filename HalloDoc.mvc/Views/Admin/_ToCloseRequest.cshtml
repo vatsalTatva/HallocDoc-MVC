@@ -237,10 +237,10 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <button class="dropdown-item" onclick="clearCase(@item.reqId)">
                                                 <i class="bi bi-x-circle"></i>
                                                 Clear Case
-                                            </a>
+                                            </button>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#">
@@ -259,7 +259,25 @@
         </tbody>
     </table>
 </div>
-
+<div id="modelContent3"></div>
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
+
+<script>
+    function clearCase(reqId){
+        var url = '@Url.Action("ClearCase","Admin")';
+
+        $.ajax({
+            url:url,
+            type:'GET',
+            data:{reqId:reqId},
+            success:function(response){
+                console.log(response);
+                $("#modelContent3").html(response);
+
+                $('#exampleModal').modal('show');
+            }
+        });
+    }
+</script>

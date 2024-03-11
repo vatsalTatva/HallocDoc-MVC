@@ -518,6 +518,51 @@ namespace BusinessLogic.Services
 
             return business;
         }
+
+        public bool SendOrder(Order order)
+        {
+            try
+            {
+                Orderdetail od = new Orderdetail();
+                od.Vendorid = order.BusinessId;
+                od.Requestid = order.ReqId;
+                od.Faxnumber = order.faxnumber;
+                od.Email = order.email;
+                od.Businesscontact = order.BusineesContact;
+                od.Prescription = order.orderDetail;
+                od.Noofrefill = order.RefilNo;
+                od.Createddate = DateTime.Now;
+                od.Createdby = "Admin";
+
+                _db.Orderdetails.Add(od);
+                _db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool ClearCase(int reqId)
+        {
+            try
+            {
+                var request = _db.Requests.FirstOrDefault(x=>x.Requestid==reqId);
+                if (request != null)
+                {
+                    request.Status = (int)StatusEnum.Clear;
+                    _db.Requests.Update(request);
+                    _db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 
 }

@@ -198,6 +198,7 @@ namespace HalloDoc.mvc.Controllers
 
         }
 
+        [HttpGet]
         public IActionResult AssignCase(int reqId)
         {
             HttpContext.Session.SetInt32("AssignReqId", reqId);
@@ -211,6 +212,7 @@ namespace HalloDoc.mvc.Controllers
             return Json(new {physicianlist});
         }
 
+        [HttpPost]
         public IActionResult SubmitAssignCase(AssignCaseModel assignCaseModel)
         {
             assignCaseModel.ReqId = HttpContext.Session.GetInt32("AssignReqId");
@@ -329,6 +331,7 @@ namespace HalloDoc.mvc.Controllers
             return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
         }
 
+        [HttpGet]
         public IActionResult Order(int reqId)
         {
             var order = _adminService.FetchProfession();
@@ -349,6 +352,50 @@ namespace HalloDoc.mvc.Controllers
             var result = _adminService.VendorDetails(selectedValue);
             return result;
         }
+
+        [HttpPost]
+        public IActionResult Order(Order order)
+        {
+            bool isSend = _adminService.SendOrder(order);
+            return Json(new { isSend = isSend });
+        }
+
+        [HttpGet]
+        public IActionResult TransferCase(int reqId)
+        {
+            var model = _adminService.AssignCase(reqId);
+            model.ReqId = reqId;
+            return PartialView("_TransferCase", model);
+        }
+
+        [HttpPost]
+        public IActionResult SubmitTransferCase(AssignCaseModel transferCaseModel)
+        {            
+            bool isTransferred = _adminService.SubmitAssignCase(transferCaseModel);
+            return Json(new { isTransferred = isTransferred });
+        }
+
+
+        [HttpGet]
+        public IActionResult ClearCase(int reqId)
+        {
+            ViewBag.ClearCaseId = reqId;
+            return PartialView("_ClearCase");
+        }
+
+        [HttpPost]
+        public IActionResult SubmitClearCase(int reqId)
+        {
+            bool isClear =  _adminService.ClearCase(reqId);
+            if(isClear)
+            {
+                _notyf.Success("Cleared SUccessfully");
+                return RedirectToAction("AdminDashboard");
+            }
+            _notyf.Error("Failed");
+            return RedirectToAction("AdminDashboard");
+        }
+
 
     }
 
