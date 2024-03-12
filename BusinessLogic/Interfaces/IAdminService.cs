@@ -46,5 +46,6 @@ namespace BusinessLogic.Interfaces
         Healthprofessional VendorDetails(int selectedValue);
         bool SendOrder(Order order);
         bool ClearCase(int reqId);
+        SendAgreementModel SendAgreementCase(int reqId);
     }
 }

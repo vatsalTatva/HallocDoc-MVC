@@ -33,5 +33,10 @@ namespace HalloDoc.mvc.Controllers
         {
             return View();
         }
+
+        public IActionResult ReviewAgreement()
+        {
+            return View();
+        }
     }
 }

@@ -310,7 +310,7 @@ namespace HalloDoc.mvc.Controllers
             var rid = (int)HttpContext.Session.GetInt32("rid");
 
             var message = string.Join(", ", selectedFiles);
-            SendEmail("yashvariya23@gmail.com", "Documents", message);
+            SendEmail("vatsalgadoya123@gmail.com", "Documents", message);
             _notyf.Success("Send Mail Successfully");
             return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
         }
@@ -394,6 +394,31 @@ namespace HalloDoc.mvc.Controllers
             }
             _notyf.Error("Failed");
             return RedirectToAction("AdminDashboard");
+        }
+
+        [HttpGet]
+        public IActionResult SendAgreement(int reqId,int reqType)
+        {
+            var model = _adminService.SendAgreementCase(reqId);
+            model.reqType = reqType;
+            return PartialView("_sendagreement", model);
+        }
+
+        [HttpPost]
+        public IActionResult SendAgreement(string email)
+        {
+            try
+            {
+                string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home");
+                
+                SendEmail(email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
+                return Json(new { isSend = true });
+
+            }
+            catch (Exception ex) {
+                return Json(new { isSend = false });
+            }
         }
 
 

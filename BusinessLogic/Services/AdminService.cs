@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -297,6 +298,7 @@ namespace BusinessLogic.Services
                     rsl.Requestid = (int)assignCaseModel.ReqId;
                     rsl.Status = (int)StatusEnum.Accepted;
                     rsl.Notes = assignCaseModel.description;
+                    rsl.Physicianid = assignCaseModel.selectPhysicianId;
                     rsl.Createddate = DateTime.Now;
                     _db.Requeststatuslogs.Add(rsl);
                     _db.Requests.Update(req);
@@ -307,6 +309,8 @@ namespace BusinessLogic.Services
                 {
                     reqStatusLog.Status = (int)StatusEnum.Accepted;
                     reqStatusLog.Notes = assignCaseModel.description;
+                    reqStatusLog.Physicianid = assignCaseModel.selectPhysicianId;
+
                     _db.Requeststatuslogs.Update(reqStatusLog);
                     _db.Requests.Update(req);
                     _db.SaveChanges();
@@ -562,6 +566,17 @@ namespace BusinessLogic.Services
             {
                 return false;
             }
+        }
+
+        public SendAgreementModel SendAgreementCase(int reqId)
+        {
+            var requestClient = _db.Requestclients.Where(x => x.Requestid == reqId).FirstOrDefault();
+            SendAgreementModel obj = new();
+            obj.Reqid = reqId;
+            obj.PhoneNumber = requestClient.Phonenumber;
+            obj.Email = requestClient.Email;
+
+            return obj;
         }
     }
 

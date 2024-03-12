@@ -150,5 +150,14 @@ namespace DataAccess.CustomModels
         public int? RefilNo { get; set; }
 
     }
+
+    public class SendAgreementModel
+    {
+        public int? Reqid { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Email { get; set; }
+
+        public int? reqType { get; set; }
+    }
 }
 
