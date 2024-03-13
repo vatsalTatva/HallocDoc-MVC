@@ -47,5 +47,6 @@ namespace BusinessLogic.Interfaces
         bool SendOrder(Order order);
         bool ClearCase(int reqId);
         SendAgreementModel SendAgreementCase(int reqId);
+        CloseCaseModel ShowCloseCase(int reqId);
     }
 }

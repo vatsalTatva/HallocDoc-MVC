@@ -89,7 +89,7 @@ namespace DataAccess.CustomModels
 
     public class ViewNotesModel
     {
-        public string? TransferNotes { get; set; }
+        public List<Requeststatuslog>? TransferNotesList { get; set; }
         public string? PhysicianNotes { get; set; }
 
         public string? AdminNotes { get; set; }
@@ -158,6 +158,25 @@ namespace DataAccess.CustomModels
         public string? Email { get; set; }
 
         public int? reqType { get; set; }
+    }
+
+    public class CloseCaseModel
+    {
+        public int? reqid { get; set; }
+        public string? email { get; set; }
+        public string? phoneNo { get; set; }
+        public string fname { get; set; }
+        public string lname { get; set; }
+        public string? fulldateofbirth { get; set; }
+        public string? str_month { get; set; }
+        public int? int_year { get; set; }
+        public int? int_date { get; set; }
+        public string? confirmation_no { get; set; }
+        public int? status { get; set; }
+        public List<Requestwisefile>? files { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Atleast One File")]
+        public IFormFile Upload { get; set; }
     }
 }
 

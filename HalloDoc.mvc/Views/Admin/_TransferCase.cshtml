@@ -62,7 +62,7 @@
                 $('#selectPhysician').html("<option disabled selected value>" + "Select Physician" + "</option>");
                 console.log(response.physicianlist.length);
                 for (var i = 0; i < response.physicianlist.length; i++) {
-                    console.log("hello");
+                   
                     $("#selectPhysician").append('<option value = "' + response.physicianlist[i].physicianid + '" >' + response.physicianlist[i].firstname + '</option>')
 
                 }

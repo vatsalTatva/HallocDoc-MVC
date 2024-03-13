@@ -19,7 +19,7 @@
 
         </div>
 
-        <form method="post" asp-action="UpdateNotes" asp-controller="Admin">
+        <form method="post" asp-action="UpdateNotes" asp-controller="Admin" onsubmit="return ViewNoteValidation()">
 
             <div class="shadow p-3 dashboard-card mt-4 bg-white">
 
@@ -29,11 +29,22 @@
                 <div class="row">
 
                     <div class="col-md-6 col-12">
-                        <div class="form-floating mt-3 notes">
-                            <img src="~/images/transfer-horizontal-svgrepo-com.svg" class="svg mx-2" />
-                            Transfer Notes :
-                            <span>@Model.TransferNotes</span>
+                        <div class="dropdown mt-3 ">
+                            <button class="btn  dropdown-toggle w-100 text-start notes text-black border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/images/transfer-horizontal-svgrepo-com.svg" class="svg mx-2" />
+                                Transfer Notes
+                            </button>
+                            @if (Model.TransferNotesList != null && Model.TransferNotesList.Count>0)
+                            {
+                                <ul class="dropdown-menu w-100">
+                                   @foreach(var item in Model.TransferNotesList)
+                                    {
+                                        <li><a class="dropdown-item">@item.Notes on @item.Createddate</a></li>                                      
+                                    }
+                                </ul>
+                            }
                         </div>
+                      
                     </div>
 
                     <div class="col-md-6 col-12">
@@ -54,11 +65,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-floating mt-3">
-                                <textarea style="height:100px" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" asp-for="AdditionalNotes"></textarea>
+                                <textarea style="height:100px" class="form-control" placeholder="Leave a comment here" id="notes" asp-for="AdditionalNotes"></textarea>
                                 <label for="floatingTextarea2">
                                     Admin Notes
 
                                 </label>
+                                <small id="notesRequired" class="d-none" style=" color:red">Admin Note is required</small>
                             </div>
 
                         </div>
@@ -73,3 +85,28 @@
 
     </div>
 </div>
+<script>
+    $('#notes').on('input', function () {
+        let notes = $("#notes").val();
+        if (notes != "") {
+            $("#notesRequired").addClass('d-none').removeClass('d-block');
+
+
+        }
+        if (notes == "") {
+            $("#notesRequired").addClass('d-block').removeClass('d-none');
+        }
+    });
+
+    function ViewNoteValidation(){
+        var notes = $("#notes").val();
+        if (notes == "") {
+            $("#notesRequired").addClass('d-block').removeClass('d-none');
+            return false;
+        } else {
+            $("#notesRequired").addClass('d-none').removeClass('d-block');
+            return true;
+        }
+
+    }
+</script>

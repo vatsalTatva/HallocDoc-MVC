@@ -12,6 +12,7 @@ using System.Text;
 using HalloDoc.mvc.Auth;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json.Nodes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -178,24 +179,18 @@ namespace HalloDoc.mvc.Controllers
 
         
         [HttpPost]
-        public IActionResult SubmitCancelCase(int casetag, string notes,int reqId)
+        public IActionResult SubmitCancelCase(CancelCaseModel cancelCaseModel,int reqId)
         {
-            CancelCaseModel cancelCaseModel = new()
-            {
-                casetag = casetag,
-                notes = notes,
-                reqId = reqId
-            };
-
-
-            
+            cancelCaseModel.reqId = reqId;
             bool isCancelled = _adminService.SubmitCancelCase(cancelCaseModel);
-                
-                   // _notyf.Success("Cancelled successfully");
-                    return Json(new { isCancelled = isCancelled });
-             
 
-
+            if (isCancelled)
+            {
+                _notyf.Success("Cancelled successfully");
+                return RedirectToAction("AdminDashboard");
+            }
+            _notyf.Error("Cancellation Failed");
+            return RedirectToAction("AdminDashboard");
         }
 
         [HttpGet]
@@ -227,15 +222,15 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult BlockCase(int reqId)
         {
-            HttpContext.Session.SetInt32("BlockReqId", reqId);
+           
             var model = _adminService.BlockCase(reqId);
             return PartialView("_BlockCase",model);
         }
 
         [HttpPost]
-        public IActionResult SubmitBlockCase(BlockCaseModel blockCaseModel)
+        public IActionResult SubmitBlockCase(BlockCaseModel blockCaseModel,int reqId)
         {
-            blockCaseModel.ReqId = HttpContext.Session.GetInt32("BlockReqId");
+            blockCaseModel.ReqId = reqId;
             bool isBlocked = _adminService.SubmitBlockCase(blockCaseModel);
             if (isBlocked)
             {
@@ -309,13 +304,14 @@ namespace HalloDoc.mvc.Controllers
         {
             var rid = (int)HttpContext.Session.GetInt32("rid");
 
-            var message = string.Join(", ", selectedFiles);
-            SendEmail("vatsalgadoya123@gmail.com", "Documents", message);
+           
+            //var message = string.Join(", ", selectedFiles);
+            SendEmail("yashvariya23@gmail.com", "Documents", selectedFiles);
             _notyf.Success("Send Mail Successfully");
             return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
         }
 
-        public Task SendEmail(string email, string subject, string message)
+        public Task SendEmail(string email, string subject, List<string> filenames)
         {
             var mail = "tatva.dotnet.vatsalgadoya@outlook.com";
             var password = "VatsalTatva@2024";
@@ -326,9 +322,20 @@ namespace HalloDoc.mvc.Controllers
                 Credentials = new NetworkCredential(mail, password)
             };
 
-            
+            MailMessage mailMessage = new MailMessage();
+            for (var i = 0; i < filenames.Count; i++)
+            {
+                string pathname = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", filenames[i]);
+                Attachment attachment = new Attachment(pathname);
+                mailMessage.Attachments.Add(attachment);
+            }
+            mailMessage.To.Add(email);
+            mailMessage.From = new MailAddress(mail);
 
-            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+            mailMessage.Subject=subject;
+
+
+            return client.SendMailAsync(mailMessage);
         }
 
         [HttpGet]
@@ -412,13 +419,20 @@ namespace HalloDoc.mvc.Controllers
                 string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
                 string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home");
                 
-                SendEmail(email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
+                //SendEmail(email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
                 return Json(new { isSend = true });
 
             }
             catch (Exception ex) {
                 return Json(new { isSend = false });
             }
+        }
+
+        [HttpGet]
+        public IActionResult CloseCase(int ReqId)
+        {
+            var model = _adminService.ShowCloseCase(ReqId);
+            return View(model);
         }
 
 
