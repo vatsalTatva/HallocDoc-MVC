@@ -23,7 +23,7 @@
                                 <label for="exampleInputPassword1" class=" ms-2 innertext small">Password</label>
                                 <button class="btn show-password" style="right: 15px;position: absolute;top: 18%;"
                                         type="button">
-                                    <i class="fa-regular fa-eye" onclick="passwordVisible2()"
+                                    <i class="bi bi-eye-fill" onclick="passwordVisible2()"
                                        id="passHide2"></i>
                                 </button>
                             </div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="d-flex justify-content-end mt-3">
                             <button onclick="resetPass()" type="button" id="ResetPassword"
-                                    class="btn btn-outline-secondary border-info text-info">
+                                    class="btn  border-info text-info">
                                 Reset Password
                             </button>
                         </div>
@@ -127,9 +127,9 @@
                                 Edit
                             </button>
 
-                            <button type="button" id="submitBtn" class="btn btn-info text-white EditBtn">Save</button>
+                            <button type="button" id="submitBtn" class="btn btn-info text-white EditBtn" style="display:none">Save</button>
 
-                            <button type="button" id="cancelBtn" class="btn btn-outline-info EditBtn"
+                            <button type="button" id="cancelBtn" class="btn btn-outline-info EditBtn" style="display:none"
                                     onclick="disableFields()">
                                 Cancel
                             </button>
@@ -179,9 +179,9 @@
                                 Edit
                             </button>
 
-                            <button type="button" id="submitBtn2" class="btn btn-info text-white EditBtn">Save</button>
+                            <button type="button" id="submitBtn2" class="btn btn-info text-white EditBtn" style="display:none">Save</button>
 
-                            <button type="button" id="cancelBtn2" class="btn btn-outline-info EditBtn"
+                            <button type="button" id="cancelBtn2" class="btn btn-outline-info EditBtn" style="display:none"
                                     onclick="disableFields2()">
                                 Cancel
                             </button>
@@ -192,3 +192,86 @@
         </form>
     </div>
 </div>
+<script>
+    const phoneInputPatient = document.querySelector("#phone");
+    const phoneInputP = window.intlTelInput(phoneInputPatient, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+    const phoneInputPatientTwo = document.querySelector("#phone2");
+    const phoneInputPTwo = window.intlTelInput(phoneInputPatientTwo, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+    function disableFields() {
+        document.querySelectorAll('.d1class').forEach(function (element) {
+            element.disabled = true;
+        });
+        // Hide the submit and cancel buttons, show the edit button
+        document.getElementById('submitBtn').style.display = 'none';
+        document.getElementById('cancelBtn').style.display = 'none';
+        document.getElementById('editBtn').style.display = 'block';
+    }
+
+    function enableFields() {
+        document.querySelectorAll('.d1class').forEach(function (element) {
+            element.disabled = false;
+        });
+        // Show the submit and cancel buttons, hide the edit button
+        document.getElementById('submitBtn').style.display = 'block';
+        document.getElementById('cancelBtn').style.display = 'block';
+        document.getElementById('editBtn').style.display = 'none';
+    }
+    disableFields();
+
+    function disableFields2() {
+        document.querySelectorAll('.dclass').forEach(function (element) {
+            element.disabled = true;
+        });
+        // Hide the submit and cancel buttons, show the edit button
+        document.getElementById('submitBtn2').style.display = 'none';
+        document.getElementById('cancelBtn2').style.display = 'none';
+        document.getElementById('editBtn2').style.display = 'block';
+    }
+
+    function enableFields2() {
+        document.querySelectorAll('.dclass').forEach(function (element) {
+            element.disabled = false;
+        });
+        // Show the submit and cancel buttons, hide the edit button
+        document.getElementById('submitBtn2').style.display = 'block';
+        document.getElementById('cancelBtn2').style.display = 'block';
+        document.getElementById('editBtn2').style.display = 'none';
+    }
+    disableFields2();
+
+    function passwordVisible2() {
+        let a = document.getElementById("passHide2")
+        console.log(a)
+        if (a.classList.contains("bi-eye-fill")) {
+            a.classList.remove("bi-eye-fill")
+            a.classList.add("bi-eye-slash-fill")
+        } else {
+            a.classList.remove("bi-eye-slash-fill")
+            a.classList.add("bi-eye-fill")
+        }
+
+        var x = document.getElementById("floatingPassword2");
+        if (x.type === "password") {
+            x.type = "text";
+            console.log("hi1")
+        } else {
+            x.type = "password";
+            console.log("hi2")
+        }
+    }
+
+
+    function resetPass() {
+        var payload = {
+
+        }
+    }
+</script>

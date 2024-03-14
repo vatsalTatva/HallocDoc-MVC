@@ -165,8 +165,8 @@ namespace DataAccess.CustomModels
         public int? reqid { get; set; }
         public string? email { get; set; }
         public string? phoneNo { get; set; }
-        public string fname { get; set; }
-        public string lname { get; set; }
+        public string? fname { get; set; }
+        public string? lname { get; set; }
         public string? fulldateofbirth { get; set; }
         public string? str_month { get; set; }
         public int? int_year { get; set; }

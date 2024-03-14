@@ -225,28 +225,28 @@ namespace BusinessLogic.Services
                 req.Status = (int)StatusEnum.Cancelled;
                 req.Casetag = cancelCaseModel.casetag.ToString();
                 req.Modifieddate = DateTime.Now;
-                var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == cancelCaseModel.reqId).FirstOrDefault();
-                if (reqStatusLog == null) {
-                    Requeststatuslog rsl = new Requeststatuslog();
-                    rsl.Requestid = (int)cancelCaseModel.reqId;
-                    rsl.Status = (int)StatusEnum.Cancelled;
-                    rsl.Notes = cancelCaseModel.notes;
-                    rsl.Createddate = DateTime.Now;
-                    _db.Requeststatuslogs.Add(rsl);
-                    _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
-                }
-                else
-                {
-                    reqStatusLog.Status = (int)StatusEnum.Cancelled;
-                    reqStatusLog.Notes = cancelCaseModel.notes;
+                //var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == cancelCaseModel.reqId).FirstOrDefault();
+                //if (reqStatusLog == null) {
+                Requeststatuslog rsl = new Requeststatuslog();
+                rsl.Requestid = (int)cancelCaseModel.reqId;
+                rsl.Status = (int)StatusEnum.Cancelled;
+                rsl.Notes = cancelCaseModel.notes;
+                rsl.Createddate = DateTime.Now;
+                _db.Requeststatuslogs.Add(rsl);
+                _db.Requests.Update(req);
+                _db.SaveChanges();
+                return true;
+                //}
+                //else
+                //{
+                //    reqStatusLog.Status = (int)StatusEnum.Cancelled;
+                //    reqStatusLog.Notes = cancelCaseModel.notes;
                    
-                    _db.Requeststatuslogs.Update(reqStatusLog);
-                    _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
-                }
+                //    _db.Requeststatuslogs.Update(reqStatusLog);
+                //    _db.Requests.Update(req);
+                //    _db.SaveChanges();
+                //    return true;
+                //}
 
                 
                
@@ -291,31 +291,31 @@ namespace BusinessLogic.Services
                 req.Physicianid = assignCaseModel.selectPhysicianId;
                 req.Modifieddate = DateTime.Now;
                 
-                var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
-                if (reqStatusLog == null)
-                {
-                    Requeststatuslog rsl = new Requeststatuslog();
-                    rsl.Requestid = (int)assignCaseModel.ReqId;
-                    rsl.Status = (int)StatusEnum.Accepted;
-                    rsl.Notes = assignCaseModel.description;
-                    rsl.Physicianid = assignCaseModel.selectPhysicianId;
-                    rsl.Createddate = DateTime.Now;
-                    _db.Requeststatuslogs.Add(rsl);
-                    _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
-                }
-                else
-                {
-                    reqStatusLog.Status = (int)StatusEnum.Accepted;
-                    reqStatusLog.Notes = assignCaseModel.description;
-                    reqStatusLog.Physicianid = assignCaseModel.selectPhysicianId;
+                //var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
+                //if (reqStatusLog == null)
+                //{
+                Requeststatuslog rsl = new Requeststatuslog();
+                rsl.Requestid = (int)assignCaseModel.ReqId;
+                rsl.Status = (int)StatusEnum.Accepted;
+                rsl.Notes = assignCaseModel.description;
+                rsl.Physicianid = assignCaseModel.selectPhysicianId;
+                rsl.Createddate = DateTime.Now;
+                _db.Requeststatuslogs.Add(rsl);
+                _db.Requests.Update(req);
+                _db.SaveChanges();
+                return true;
+                //}
+                //else
+                //{
+                //    reqStatusLog.Status = (int)StatusEnum.Accepted;
+                //    reqStatusLog.Notes = assignCaseModel.description;
+                //    reqStatusLog.Physicianid = assignCaseModel.selectPhysicianId;
 
-                    _db.Requeststatuslogs.Update(reqStatusLog);
-                    _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
-                }
+                //    _db.Requeststatuslogs.Update(reqStatusLog);
+                //    _db.Requests.Update(req);
+                //    _db.SaveChanges();
+                //    return true;
+                //}
 
                
             }
@@ -581,22 +581,71 @@ namespace BusinessLogic.Services
 
         public CloseCaseModel ShowCloseCase(int reqId)
         {
-            var requestClient = _db.Requestclients.FirstOrDefault(x=>x.Requestid == reqId);
+            var rc = _db.Requestclients.FirstOrDefault(x=>x.Requestid == reqId);
             var list = _db.Requestwisefiles.Where(x => x.Requestid == reqId).ToList();
+            string date = null;
+            if ((rc.Intyear != null && rc.Intdate != null) && rc.Strmonth != null)
+            {
+                date = new DateTime((int)(rc.Intyear), Convert.ToInt16(rc.Strmonth), (int)(rc.Intdate)).ToString("yyyy-MM-dd");
+            }
             CloseCaseModel model = new()
             {
                 reqid= reqId,
-                fname=requestClient.Firstname,
-                lname=requestClient.Lastname,
-                email=requestClient.Email,
-                phoneNo=requestClient.Phonenumber,
-                files=list
+                fname= rc.Firstname,
+                lname= rc.Lastname,
+                email= rc.Email,
+                phoneNo= rc.Phonenumber,
+                files=list,
+               
+                fulldateofbirth = date,
 
-                
+
 
             };
 
             return model;
+        }
+
+        public bool SaveCloseCase(CloseCaseModel model)
+        {
+            try
+            {
+                var reqClient = _db.Requestclients.FirstOrDefault(x => x.Requestid == model.reqid);
+                reqClient.Phonenumber = model.phoneNo;
+                reqClient.Email=model.email;
+                _db.Requestclients.Update(reqClient);
+                _db.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
+
+        public bool SubmitCloseCase(int ReqId)
+        {
+            try
+            {
+                var request = _db.Requests.FirstOrDefault(x=>x.Requestid== ReqId);
+                request.Status = (int)StatusEnum.Unpaid;
+                _db.Requests.Update(request);
+                _db.Requeststatuslogs.Add(new Requeststatuslog()
+                {
+                    Requestid=ReqId,
+                    Status = (int)StatusEnum.Unpaid,
+                    Notes="Case closed and unpaid",
+                    Createddate = DateTime.Now,
+                });
+                _db.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
         }
     }
 

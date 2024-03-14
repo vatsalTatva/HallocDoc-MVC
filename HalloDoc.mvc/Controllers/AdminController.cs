@@ -435,6 +435,37 @@ namespace HalloDoc.mvc.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult CloseCase(CloseCaseModel model)
+        {
+
+            bool isSaved =_adminService.SaveCloseCase(model);
+            if (isSaved)
+            {
+                _notyf.Success("Saved");
+            }
+            else
+            {
+                _notyf.Error("Failed");
+            }
+            return RedirectToAction("CloseCase", new {ReqId=model.reqid});
+        }
+
+        public IActionResult SubmitCloseCase(int ReqId)
+        {
+            bool isClosed = _adminService.SubmitCloseCase(ReqId);
+            if (isClosed)
+            {
+                _notyf.Success("Closed Successfully");
+                return RedirectToAction("AdminDashboard");
+            }
+            else
+            {
+                _notyf.Error("Failed to close");
+                return RedirectToAction("CloseCase", new { ReqId = ReqId });
+            }
+        }
+
 
     }
 
