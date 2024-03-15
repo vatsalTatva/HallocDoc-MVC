@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BusinessLogic.Services
 {
@@ -646,6 +647,49 @@ namespace BusinessLogic.Services
                 Console.WriteLine(ex.ToString());
                 return false;
             }
+        }
+
+        public EncounterFormModel EncounterForm(int reqId)
+        {
+            var reqClient = _db.Requestclients.FirstOrDefault(x => x.Requestid == reqId);
+            var encForm = _db.Encounterforms.FirstOrDefault(x => x.Requestid == reqId);
+            EncounterFormModel ef = new EncounterFormModel();
+            ef.reqid = reqId;
+            ef.FirstName = reqClient.Firstname;
+            ef.LastName = reqClient.Lastname;
+            ef.Location = reqClient.Street + reqClient.City + reqClient.State + reqClient.Zipcode;
+            //ef.BirthDate = new DateTime((int)(reqClient.Intyear), Convert.ToInt16(reqClient.Strmonth), (int)(reqClient.Intdate)).ToString("yyyy-MM-dd");
+            ef.PhoneNumber = reqClient.Phonenumber;
+            ef.Email = reqClient.Email;
+            if(encForm!= null )
+            {
+                ef.HistoryIllness = encForm.Illnesshistory;
+                ef.MedicalHistory = encForm.Medicalhistory;
+                //ef.Date = encForm.Intdate;
+                ef.Medications = encForm.Medications;
+                ef.Allergies = encForm.Allergies;
+                //ef.Temp = encForm.Temperature;
+                //ef.Hr = encForm.Heartrate;
+                //ef.Rr = encForm.r;
+                //ef.BpS = obj2.BpS;
+                //ef.BpD = obj2.BpD;
+                //ef.O2 = obj2.O2;
+                //ef.Pain = obj2.Pain;
+                //ef.Heent = obj2.Heent;
+                //ef.Cv = obj2.Cv;
+                //ef.Chest = obj2.Chest;
+                //ef.Abd = obj2.Abd;
+                //ef.Extr = obj2.Extr;
+                //ef.Skin = obj2.Skin;
+                //ef.Neuro = obj2.Neuro;
+                //ef.Other = obj2.Other;
+                //ef.Diagnosis = obj2.Diagnosis;
+                //ef.TreatmentPlan = obj2.TreatmentPlan;
+                //ef.MedicationDispensed = obj2.MedicationDispensed;
+                //ef.Procedures = obj2.Procedures;
+                //ef.FollowUp = obj2.FollowUp;
+            }
+            return ef;
         }
     }
 

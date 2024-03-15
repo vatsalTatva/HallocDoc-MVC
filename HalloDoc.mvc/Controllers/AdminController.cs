@@ -466,6 +466,11 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
+        public IActionResult EncounterForm(int ReqId)
+        {
+            var model = _adminService.EncounterForm(ReqId);
+            return View(model);
+        }
 
     }
 
