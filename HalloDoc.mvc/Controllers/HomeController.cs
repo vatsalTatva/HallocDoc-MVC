@@ -1,4 +1,6 @@
-﻿using HalloDoc.mvc.Models;
+﻿using BusinessLogic.Interfaces;
+using DataAccess.CustomModels;
+using HalloDoc.mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,10 +9,12 @@ namespace HalloDoc.mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAdminService _adminService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAdminService adminService)
         {
             _logger = logger;
+            _adminService = adminService;
         }
 
         public IActionResult Index()
@@ -34,9 +38,37 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
-        public IActionResult ReviewAgreement()
+        public IActionResult ReviewAgreement(int reqId)
         {
-            return View();
+            AgreementModel am = new AgreementModel();
+            am.reqId = reqId;
+            return View(am);
         }
+        public IActionResult AgreeAgreement(AgreementModel agreementModal)
+        {
+            bool isSaved = _adminService.IAgreeAgreement(agreementModal);
+            return RedirectToAction("AdminDashboard", "Admin");
+
+        }
+
+        public IActionResult CancelAgreement(int reqId)
+        {
+            var model = _adminService.ICancelAgreement(reqId);
+            return PartialView("_cancelagreement", model);
+        }
+
+        [HttpPost]
+        public IActionResult CancelAgreementSubmit(int ReqClientid, string Description)
+        {
+            AgreementModel model = new()
+            {
+                reqClientId = ReqClientid,
+                reason = Description,
+            };
+            var obj = _adminService.SubmitCancelAgreement(model);
+            return RedirectToAction("admin_dashboard", "Admin", obj);
+        }
+
+
     }
 }

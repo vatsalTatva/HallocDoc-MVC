@@ -35,17 +35,17 @@ public partial class Encounterform
 
     public string? Allergies { get; set; }
 
-    public string? Temperature { get; set; }
+    public decimal? Temperature { get; set; }
 
-    public string? Heartrate { get; set; }
+    public decimal? Heartrate { get; set; }
 
-    public string? Respirationrate { get; set; }
+    public decimal? Respirationrate { get; set; }
 
-    public string? Bloodpressuresystolic { get; set; }
+    public int? Bloodpressuresystolic { get; set; }
 
-    public string? Bloodpressurediastolic { get; set; }
+    public int? Bloodpressurediastolic { get; set; }
 
-    public string? Oxygenlevel { get; set; }
+    public decimal? Oxygenlevel { get; set; }
 
     public string? Pain { get; set; }
 

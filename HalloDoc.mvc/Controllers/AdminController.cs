@@ -113,6 +113,10 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult GetRequestsByStatus(int tabNo)
         {
             var list = _adminService.GetRequestsByStatus(tabNo);
+            if (tabNo == 0)
+            {
+                return Json(list);
+            }
             if (tabNo == 1)
             {
                 return PartialView("_NewRequest", list);
@@ -140,7 +144,36 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
-        
+        [HttpPost]
+        public string ExportReq(List<AdminDashTableModel> reqList)
+        {
+            StringBuilder stringbuild = new StringBuilder();
+
+            string header = "\"No\"," + "\"Name\"," + "\"DateOfBirth\"," + "\"Requestor\"," +
+                "\"RequestDate\"," + "\"Phone\"," + "\"Notes\"," + "\"Address\","
+                 + "\"Physician\"," + "\"DateOfService\"," + "\"Region\"," +
+                "\"Status\"," + "\"RequestTypeId\"," + "\"OtherPhone\"," + "\"Email\"," + "\"RequestId\"," + Environment.NewLine + Environment.NewLine;
+
+            stringbuild.Append(header);
+            int count = 1;
+
+            foreach (var item in reqList)
+            {
+                string content = $"\"{count}\"," + $"\"{item.firstName}\"," + $"\"{item.intDate}\"," + $"\"{item.requestorFname}\"," +
+                    $"\"{item.intDate}\"," + $"\"{item.mobileNo}\"," + $"\"{item.notes}\"," + $"\"{item.street}\"," +
+                    $"\"{item.lastName}\"," + $"\"{item.intDate}\"," + $"\"{item.street}\"," +
+                    $"\"{item.status}\"," + $"\"{item.requestTypeId}\"," + $"\"{item.mobileNo}\"," + $"\"{item.firstName}\"," + $"\"{item.reqId}\"," + Environment.NewLine;
+
+                count++;
+                stringbuild.Append(content);
+            }
+
+            string finaldata = stringbuild.ToString();
+
+            return finaldata;
+           
+        }
+
         public IActionResult ViewCase(int Requestclientid,int RequestTypeId)
         {
             var obj = _adminService.ViewCaseViewModel(Requestclientid,RequestTypeId);
@@ -411,19 +444,37 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_sendagreement", model);
         }
 
+        public Task SendEmail(string email, string subject, string message)
+        {
+            var mail = "tatva.dotnet.vatsalgadoya@outlook.com";
+            var password = "VatsalTatva@2024";
+
+            var client = new SmtpClient("smtp.office365.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(mail, password)
+            };
+
+
+
+            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+        }
+
+
         [HttpPost]
-        public IActionResult SendAgreement(string email)
+        public IActionResult SendAgreement(SendAgreementModel model)
         {
             try
             {
                 string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-                string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home");
-                
-                //SendEmail(email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
+                string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home", new { reqId = model.Reqid });
+
+                SendEmail(model.Email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
                 return Json(new { isSend = true });
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return Json(new { isSend = false });
             }
         }
@@ -466,10 +517,25 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult EncounterForm(int ReqId)
         {
             var model = _adminService.EncounterForm(ReqId);
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EncounterForm(EncounterFormModel model)
+        {
+            bool isSaved = _adminService.SubmitEncounterForm(model);
+            if (isSaved)
+            {
+                _notyf.Success("Saved!!");
+            }
+            else {
+                _notyf.Error("Failed");
+            }
+            return RedirectToAction("EncounterForm", new { ReqId = model.reqid });
         }
 
     }

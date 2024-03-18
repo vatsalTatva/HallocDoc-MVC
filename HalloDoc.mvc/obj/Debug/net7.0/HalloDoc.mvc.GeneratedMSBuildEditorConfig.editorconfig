@@ -120,6 +120,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXZpZXdBZ3JlZW1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Home/_CancelAgreement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfQ2FuY2VsQWdyZWVtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Patient/CreateAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGVBY2NvdW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

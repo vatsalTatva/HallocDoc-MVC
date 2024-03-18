@@ -484,12 +484,8 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Allergies)
                 .HasMaxLength(500)
                 .HasColumnName("allergies");
-            entity.Property(e => e.Bloodpressurediastolic)
-                .HasMaxLength(50)
-                .HasColumnName("bloodpressurediastolic");
-            entity.Property(e => e.Bloodpressuresystolic)
-                .HasMaxLength(50)
-                .HasColumnName("bloodpressuresystolic");
+            entity.Property(e => e.Bloodpressurediastolic).HasColumnName("bloodpressurediastolic");
+            entity.Property(e => e.Bloodpressuresystolic).HasColumnName("bloodpressuresystolic");
             entity.Property(e => e.Cardiovascular)
                 .HasMaxLength(500)
                 .HasColumnName("cardiovascular");
@@ -519,7 +515,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("character varying")
                 .HasColumnName("followup");
             entity.Property(e => e.Heartrate)
-                .HasMaxLength(50)
+                .HasPrecision(10, 2)
                 .HasColumnName("heartrate");
             entity.Property(e => e.Heent)
                 .HasMaxLength(500)
@@ -555,7 +551,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(500)
                 .HasColumnName("other");
             entity.Property(e => e.Oxygenlevel)
-                .HasMaxLength(50)
+                .HasPrecision(10, 2)
                 .HasColumnName("oxygenlevel");
             entity.Property(e => e.Pain)
                 .HasMaxLength(50)
@@ -568,7 +564,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnName("procedures");
             entity.Property(e => e.Requestid).HasColumnName("requestid");
             entity.Property(e => e.Respirationrate)
-                .HasMaxLength(50)
+                .HasPrecision(10, 2)
                 .HasColumnName("respirationrate");
             entity.Property(e => e.Servicedate)
                 .HasColumnType("timestamp without time zone")
@@ -580,7 +576,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("strmonth");
             entity.Property(e => e.Temperature)
-                .HasMaxLength(50)
+                .HasPrecision(10, 2)
                 .HasColumnName("temperature");
             entity.Property(e => e.Treatmentplan)
                 .HasColumnType("character varying")

@@ -160,6 +160,15 @@ namespace DataAccess.CustomModels
         public int? reqType { get; set; }
     }
 
+    public class AgreementModel
+    {
+        public string? fName { get; set; }
+        public string? lName { get; set; }
+        public string? reason { get; set; }
+        public int? reqId { get; set; }
+        public int? reqClientId { get; set;}
+    }
+
     public class CloseCaseModel
     {
         public int? reqid { get; set; }

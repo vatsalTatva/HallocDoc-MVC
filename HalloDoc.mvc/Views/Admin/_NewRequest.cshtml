@@ -18,10 +18,10 @@
             <button class="action-btn">
                 <i class="bi bi-journal-text"></i> <span class="d-none d-md-block">Create Requests</span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" id="exportNewReq">
                 <i class="bi bi-reply"></i> <span class="d-none d-md-block">Export</span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" onclick="ExportAll()">
                 <i class="bi bi-reply-all"></i> <span class="d-none d-md-block">Export All</span>
             </button>
             <button class="action-btn">
@@ -256,7 +256,12 @@
 </div>
 
 <script>
-    
+    $("#exportNewReq").click(function () {
+      
+        var request = @Html.Raw(Json.Serialize(Model));
+      
+        Export(request);
+    });
     function allElements() {
 
         let a = document.getElementsByClassName("Patient");
@@ -422,6 +427,8 @@
         // $('.dataTables_length').hide();
         $('.dataTables_filter').hide();
     });
+
+
 
     
 
