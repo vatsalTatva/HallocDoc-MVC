@@ -176,9 +176,9 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult ViewCase(int Requestclientid,int RequestTypeId)
         {
-            var obj = _adminService.ViewCaseViewModel(Requestclientid,RequestTypeId);
+            var model = _adminService.ViewCaseViewModel(Requestclientid,RequestTypeId);
 
-            return View(obj);
+            return View(model);
         }
 
         [HttpPost]
@@ -470,13 +470,13 @@ namespace HalloDoc.mvc.Controllers
                 string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home", new { reqId = model.Reqid });
 
                 SendEmail(model.Email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
-                return Json(new { isSend = true });
-
+                _notyf.Success("Agreement Sent");
             }
             catch (Exception ex)
             {
-                return Json(new { isSend = false });
+                _notyf.Error("Failed to sent");
             }
+            return RedirectToAction("AdminDashboard");
         }
 
         [HttpGet]
@@ -538,6 +538,12 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("EncounterForm", new { ReqId = model.reqid });
         }
 
+
+        [HttpGet]
+        public IActionResult ShowMyProfile() 
+        {
+            return PartialView("_MyProfile");
+        }
     }
 
 

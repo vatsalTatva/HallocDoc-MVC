@@ -94,7 +94,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
                                 data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane"
-                                aria-selected="false">
+                                aria-selected="false" onClick="showMyProfile()">
                             My Profile
                         </button>
                     </li>
@@ -145,7 +145,7 @@
             provider-location......
         </div>
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-           <partial name="_MyProfile"/>
+          
         </div>
         <div class="tab-pane fade" id="provider-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             provider......
@@ -440,6 +440,16 @@
                 success: function (response) {
                     console.log(response);
                     Export(response);
+                }
+            });
+        }
+
+        function showMyProfile(){
+            $.ajax({
+                url:'/Admin/ShowMyProfile',
+                type:'GET',
+                success:function(response){
+                    $("#profile-tab-pane").html(response);
                 }
             });
         }

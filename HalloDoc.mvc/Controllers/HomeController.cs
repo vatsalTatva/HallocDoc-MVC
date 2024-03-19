@@ -1,5 +1,7 @@
-﻿using BusinessLogic.Interfaces;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using BusinessLogic.Interfaces;
 using DataAccess.CustomModels;
+using DataAccess.Enums;
 using HalloDoc.mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -10,11 +12,14 @@ namespace HalloDoc.mvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAdminService _adminService;
+        private readonly INotyfService _notyf;
 
-        public HomeController(ILogger<HomeController> logger, IAdminService adminService)
+
+        public HomeController(ILogger<HomeController> logger, IAdminService adminService,INotyfService notyfService)
         {
             _logger = logger;
             _adminService = adminService;
+            _notyf = notyfService;
         }
 
         public IActionResult Index()
@@ -38,35 +43,68 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult ReviewAgreement(int reqId)
         {
-            AgreementModel am = new AgreementModel();
-            am.reqId = reqId;
-            return View(am);
+            var status = _adminService.GetStatusForReviewAgreement(reqId);
+            if (status == (int)StatusEnum.MDEnRoute)
+            {
+                TempData["ReviewStatus"]= "Review Agreement is Already Accepted !!";
+                return RedirectToAction("AgreementStatus");
+            }
+            else if(status == (int)StatusEnum.CancelledByPatient)
+            {
+                TempData["ReviewStatus"] = "Review Agreement is Already Cancelled by patient !!";
+                return RedirectToAction("AgreementStatus");
+            }
+            else
+            {
+                AgreementModel model = new()
+                {
+                    reqId = reqId,
+                };
+
+                return View(model);
+            }
         }
-        public IActionResult AgreeAgreement(AgreementModel agreementModal)
+
+        public IActionResult AgreementStatus()
         {
-            bool isSaved = _adminService.IAgreeAgreement(agreementModal);
-            return RedirectToAction("AdminDashboard", "Admin");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ReviewAgreement(AgreementModel agreementModal)
+        {
+            bool isSaved = _adminService.AgreeAgreement(agreementModal);
+            if (isSaved)
+            {
+                _notyf.Success("Agreement Accepted");
+                return RedirectToAction("Login", "Patient");
+            }
+            _notyf.Error("Something went wrong");
+            return RedirectToAction("ReviewAgreement", new {reqId= agreementModal.reqId});
 
         }
 
+        [HttpGet]
         public IActionResult CancelAgreement(int reqId)
         {
-            var model = _adminService.ICancelAgreement(reqId);
+            var model = _adminService.CancelAgreement(reqId);
             return PartialView("_cancelagreement", model);
         }
 
         [HttpPost]
-        public IActionResult CancelAgreementSubmit(int ReqClientid, string Description)
+        public IActionResult CancelAgreement(AgreementModel model)
         {
-            AgreementModel model = new()
+            bool isCancelled = _adminService.SubmitCancelAgreement(model);
+            if (isCancelled)
             {
-                reqClientId = ReqClientid,
-                reason = Description,
-            };
-            var obj = _adminService.SubmitCancelAgreement(model);
-            return RedirectToAction("admin_dashboard", "Admin", obj);
+                _notyf.Success("Agreement Cancelled");
+                return RedirectToAction("Login", "Patient");
+            }
+            _notyf.Error("Something went wrong");
+            return RedirectToAction("ReviewAgreement", new { reqId = model.reqId });
         }
 
 

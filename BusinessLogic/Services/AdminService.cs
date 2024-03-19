@@ -162,6 +162,7 @@ namespace BusinessLogic.Services
             Requestclient obj = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == Requestclientid);
             ViewCaseViewModel viewCaseViewModel = new()
             {
+                Requestid=obj.Requestid,
                 Requestclientid = obj.Requestclientid,
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
@@ -649,20 +650,26 @@ namespace BusinessLogic.Services
             }
         }
 
-        public bool IAgreeAgreement(AgreementModel model)
+        public int GetStatusForReviewAgreement(int reqId)
+        {
+            var status = (int)_db.Requests.Where(x => x.Requestid == reqId).Select(x => x.Status).FirstOrDefault();
+            return status;
+        }
+
+        public bool AgreeAgreement(AgreementModel model)
         {
             try
             {
                 var req = _db.Requests.FirstOrDefault(x => x.Requestid == model.reqId);
-                var requestclient = _db.Requestclients.FirstOrDefault(x => x.Requestid == model.reqId);
+               
 
                 req.Status = (int)StatusEnum.MDEnRoute;
-
+                req.Modifieddate= DateTime.Now;
                 Requeststatuslog rsl = new Requeststatuslog();
                 rsl.Requestid = req.Requestid;
                 rsl.Status = (int)StatusEnum.MDEnRoute;
                 rsl.Createddate = DateTime.Now;
-
+                rsl.Notes = "Agreement accepted by patient";
                 _db.Requests.Update(req);
                 _db.Requeststatuslogs.Add(rsl);
                 _db.SaveChanges();
@@ -677,41 +684,33 @@ namespace BusinessLogic.Services
         }
 
 
-        public AgreementModel ICancelAgreement(int reqId)
+        public AgreementModel CancelAgreement(int reqId)
         {
-            //var req = _db.Requests.FirstOrDefault(x => x.Requestid == agreementModal.Reqid);
             var requestclient = _db.Requestclients.FirstOrDefault(x => x.Requestid == reqId);
             AgreementModel model = new()
             {
                 reqId = reqId,
                 fName = requestclient.Firstname,
                 lName = requestclient.Lastname,
-                reqClientId = requestclient.Requestclientid
-
-
             };
             return model;
-
-
         }
 
-        public bool SubmitCancelAgreement(AgreementModal model)
+        public bool SubmitCancelAgreement(AgreementModel model)
         {
             try
             {
-                var reqclientid = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == model.ReqClientId);
+                var request = _db.Requests.FirstOrDefault(x => x.Requestid == model.reqId);
 
 
-                if (model.ReqClientId != null)
+                if (request != null)
                 {
-                    var request = _db.Requests.FirstOrDefault(x => x.Requestid == reqclientid.Requestid);
-
-                    request.Status = (int)StatusEnum.Closed;
-
+                    request.Status = (int)StatusEnum.CancelledByPatient;
+                    request.Modifieddate = DateTime.Now;
                     Requeststatuslog rsl = new Requeststatuslog();
                     rsl.Requestid = request.Requestid;
-                    rsl.Status = request.Status;
-                    rsl.Notes = model.Reason;
+                    rsl.Status = (int)StatusEnum.CancelledByPatient;
+                    rsl.Notes = model.reason;
                     rsl.Createddate = DateTime.Now;
 
                     _db.Requests.Update(request);
@@ -782,6 +781,7 @@ namespace BusinessLogic.Services
 
                 var ef = _db.Encounterforms.FirstOrDefault(r => r.Requestid == model.reqid);
 
+
                 if (ef == null)
                 {
                     Encounterform _encounter = new Encounterform()
@@ -826,6 +826,7 @@ namespace BusinessLogic.Services
                 }
                 else
                 {
+                    
                     var efdetail = _db.Encounterforms.FirstOrDefault(x=>x.Requestid==model.reqid);
                     
                     efdetail.Requestid = model.reqid;
@@ -870,6 +871,35 @@ namespace BusinessLogic.Services
             }
 
         }
+
+        public MyProfileModel MyProfile(string sessionEmail)
+        {
+            var myProfileMain = _db.Admins.Where(x => x.Email == sessionEmail).Select(x => new MyProfileModel()
+            {
+                fname = x.Firstname,
+                lname = x.Lastname,
+                email = x.Email,
+                confirm_email = x.Email,
+                mobile_no = x.Mobile,
+                addr1 = x.Address1,
+                addr2 = x.Address2,
+                city=x.City,
+                zip = x.Zip,
+                state = _db.Regions.Where(r => r.Regionid == x.Regionid).Select(r => r.Name).First(),
+                roles = _db.Aspnetroles.ToList(),
+            }).ToList().FirstOrDefault();
+
+            var aspnetuser = _db.Aspnetusers.Where(r => r.Email == sessionEmail).First();
+
+           
+
+            myProfileMain.username = aspnetuser.Username;
+            myProfileMain.password = aspnetuser.Passwordhash;
+
+            return myProfileMain;
+        }
+
+
     }
 
 }
