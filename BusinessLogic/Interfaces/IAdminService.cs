@@ -63,5 +63,9 @@ namespace BusinessLogic.Interfaces
         int GetStatusForReviewAgreement(int reqId);
 
         MyProfileModel MyProfile(string email);
+
+        bool VerifyState(string state);
+
+        bool CreateRequest(CreateRequestModel model, string sessionEmail);
     }
 }

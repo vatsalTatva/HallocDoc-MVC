@@ -13,6 +13,8 @@ using HalloDoc.mvc.Auth;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json.Nodes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -174,6 +176,31 @@ namespace HalloDoc.mvc.Controllers
            
         }
 
+        [HttpGet]
+        public IActionResult SendLink()
+        {
+            return PartialView("_SendLink");
+        }
+        [HttpPost]
+        public IActionResult SendLink(SendLinkModel model)
+        {
+            bool isSend=false;
+            try
+            {
+                string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                string reviewPathLink = baseUrl + Url.Action("RequestScreen", "Patient");
+
+                SendEmail(model.email, "Create Patient Request", $"Hello, please create patient request from this link: {reviewPathLink}");
+                _notyf.Success("Link Sent");
+                isSend = true;
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Failed to sent");
+            }
+            return Json(new {isSend=isSend});
+           
+        }
         public IActionResult ViewCase(int Requestclientid,int RequestTypeId)
         {
             var model = _adminService.ViewCaseViewModel(Requestclientid,RequestTypeId);
@@ -542,8 +569,60 @@ namespace HalloDoc.mvc.Controllers
         [HttpGet]
         public IActionResult ShowMyProfile() 
         {
-            return PartialView("_MyProfile");
+            var request = HttpContext.Request;
+            var token = request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return Json("ok");
+            }
+            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+
+            var model = _adminService.MyProfile(emailClaim.Value);
+            return PartialView("_MyProfile",model);
         }
+
+        [HttpGet]
+        public IActionResult CreateRequest() 
+        {
+            return View();        
+        }
+
+        [HttpGet]
+        public IActionResult VerifyState(string stateMain)
+        {
+            if (stateMain.Trim() == null)
+            {
+                return Json(new { isSend = false });
+            }
+            var isSend = _adminService.VerifyState(stateMain);
+            return Json(new { isSend = isSend });
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateRequest(CreateRequestModel model)
+        {
+            var request = HttpContext.Request;
+            var token = request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                _notyf.Error("Token Expired");
+                return View(model);
+            }
+            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+            var isSaved = _adminService.CreateRequest(model, emailClaim.Value);
+            if (isSaved)
+            {
+                _notyf.Success("Request Created");
+                return RedirectToAction("AdminDshboard");
+            }
+            else
+            {
+                _notyf.Error("Failed to Create");
+                return View(model);
+            }
+        }
+
     }
 
 

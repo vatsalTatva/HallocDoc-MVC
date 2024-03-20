@@ -453,6 +453,18 @@
                 }
             });
         }
+
+        function sendLink()
+        {
+            $.ajax({
+                url:'/Admin/SendLink',
+                type:'GET',
+                success:function(response){
+                    $('#modelContent').html(response);
+                    $('#sendLinkPopUpOne').modal('show');
+                }
+            })
+        }
     </script>
  
 
