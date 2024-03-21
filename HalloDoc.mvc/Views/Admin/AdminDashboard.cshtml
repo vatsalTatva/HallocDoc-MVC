@@ -101,7 +101,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="provider-tab" data-bs-toggle="tab"
                                 data-bs-target="#provider-tab-pane" type="button" role="tab"
-                                aria-controls="provider-tab-pane" aria-selected="false">
+                                aria-controls="provider-tab-pane" aria-selected="false" onClick="showProvider()">
                             Providers
                         </button>
                     </li>
@@ -148,7 +148,7 @@
           
         </div>
         <div class="tab-pane fade" id="provider-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            provider......
+            
         </div>
         <div class="tab-pane fade" id="partner-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             partner......
@@ -303,10 +303,12 @@
                 success: function (response) {
                     $("#home-tab-pane").html(response);
                     openTab(event, 'tab1'); // on load page tab1 will open by default
+                    $('#newTable').addClass("active");
                 }
             });
         }
 
+        
 
         function showCancelCase(reqId) {
             $.ajax({
@@ -464,6 +466,17 @@
                     $('#sendLinkPopUpOne').modal('show');
                 }
             })
+        }
+
+        function showProvider()
+        {
+            $.ajax({
+                url: '/Admin/ShowProvider',
+                type: 'GET',
+                success: function (response) {
+                    $("#provider-tab-pane").html(response);
+                }
+            });
         }
     </script>
  

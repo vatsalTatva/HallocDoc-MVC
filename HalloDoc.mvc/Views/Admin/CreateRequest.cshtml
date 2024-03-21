@@ -10,7 +10,7 @@
         <button onclick="location.href='@Url.Action("AdminDashboard", "Admin")'" id="back-btn">&lt; Back</button>
     </div>
 
-    <form class="shadow border rounded my-3 bg-white" id="CreateRequestForm" method="post">
+    <form class="shadow border rounded my-3 bg-white" id="CreateRequestForm" method="post" onsubmit="return CheckRegion()">
         <div class="mx-3 my-4 ">
             <h5 class="mb-3 mt-2">Patient</h5>
 
@@ -188,4 +188,29 @@
         window.location.href = "https://www.google.com/maps/search/?api=1&query=" + street + city + state + zipcode;
     }
 
+    function CheckRegion(){
+        var state = $("#floatingInputState").val();
+        console.log(state);
+
+        $.ajax({
+            url: "/Admin/VerifyState",
+            type: 'GET',
+            data: { stateMain: state },
+            success: function (result) {
+                event.preventDefault();
+                if (result.isSend == true) {
+                    document.getElementById("floatingInputState").style.border = "1px solid green";
+                    return true;
+                    
+                } else {
+                    document.getElementById("floatingInputState").style.border = "1px solid red";
+                    toastr.error("Enter valid State !!");
+                    return false;
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    }
 </script>

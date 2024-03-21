@@ -146,6 +146,12 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+        public IActionResult FilterRegion(int regionId,int tabNo)
+        {
+            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            return PartialView("_NewRequest", list);
+        }
+
         [HttpPost]
         public string ExportReq(List<AdminDashTableModel> reqList)
         {
@@ -590,7 +596,7 @@ namespace HalloDoc.mvc.Controllers
         [HttpGet]
         public IActionResult VerifyState(string stateMain)
         {
-            if (stateMain.Trim() == null)
+            if (stateMain==null || stateMain.Trim() == null)
             {
                 return Json(new { isSend = false });
             }
@@ -606,7 +612,7 @@ namespace HalloDoc.mvc.Controllers
             var token = request.Cookies["jwt"];
             if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
             {
-                _notyf.Error("Token Expired");
+                _notyf.Error("Token Expired,Login Again");
                 return View(model);
             }
             var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
@@ -614,13 +620,19 @@ namespace HalloDoc.mvc.Controllers
             if (isSaved)
             {
                 _notyf.Success("Request Created");
-                return RedirectToAction("AdminDshboard");
+                return RedirectToAction("AdminDashboard");
             }
             else
             {
                 _notyf.Error("Failed to Create");
                 return View(model);
             }
+        }
+
+
+        public IActionResult ShowProvider()
+        {
+            return PartialView("_Provider");
         }
 
     }

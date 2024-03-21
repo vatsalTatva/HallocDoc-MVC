@@ -16,6 +16,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BusinessLogic.Services
 {
@@ -34,7 +35,7 @@ namespace BusinessLogic.Services
             return aspNetUser;
         }
 
-        public List<AdminDashTableModel> GetRequestsByStatus(int tabNo)
+        public DashboardModel GetRequestsByStatus(int tabNo)
         {
             var query = from r in _db.Requests
                         join rc in _db.Requestclients on r.Requestid equals rc.Requestid
@@ -57,7 +58,8 @@ namespace BusinessLogic.Services
                             requestTypeId = r.Requesttypeid,
                             status = r.Status,
                             requestClientId = rc.Requestclientid,
-                            reqId = r.Requestid
+                            reqId = r.Requestid,
+                            regionId=rc.Regionid
                         };
 
 
@@ -97,10 +99,20 @@ namespace BusinessLogic.Services
 
             var result = query.ToList();
 
+            DashboardModel dashboardModel = new DashboardModel();
+            dashboardModel.adminDashTableList = result;
+            dashboardModel.regionList = _db.Regions.ToList();
 
-            return result;
+            return dashboardModel;
         }
 
+        public DashboardModel GetRequestByRegion(int regionId,int tabNo)
+        {
+            DashboardModel model = new DashboardModel();
+            model = GetRequestsByStatus(tabNo);
+            model.adminDashTableList = model.adminDashTableList.Where(x => x.regionId == regionId).ToList();
+            return model;
+        }
         public StatusCountModel GetStatusCount()
         {
             var requestsWithClients = _db.Requests
@@ -896,7 +908,7 @@ namespace BusinessLogic.Services
            
 
             myProfileMain.username = aspnetuser.Username;
-            myProfileMain.password = aspnetuser.Passwordhash;
+            //myProfileMain.password = aspnetuser.Passwordhash;
 
             return myProfileMain;
         }
@@ -940,6 +952,7 @@ namespace BusinessLogic.Services
 
                 if (existUser == null)
                 {
+                    _asp.Id = Guid.NewGuid().ToString();
                     _asp.Username = model.firstname + "_" + model.lastname;
                     _asp.Email = model.email;
                     _asp.Phonenumber = model.phone;
@@ -957,11 +970,11 @@ namespace BusinessLogic.Services
                     _user.Street = model.street;
                     _user.Zipcode = model.zipcode;
                     _user.Strmonth = model.dateofbirth.Substring(5, 2);
-                    _user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
-                    _user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
+                    _user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
+                    _user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
                     _user.Createdby = _asp.Id;
                     _user.Createddate = DateTime.Now;
-                    _user.Regionid = _db.Regions.Where(r => r.Name.ToLower() == model.state.ToLower()).Select(r => r.Regionid).FirstOrDefault();
+                    _user.Regionid = stateMain.Regionid;
                     _db.Users.Add(_user);
                     _db.SaveChanges();
 
@@ -977,17 +990,19 @@ namespace BusinessLogic.Services
                     }
                 }
 
-                _req.Requesttypeid = 1;
-                _req.Userid =Convert.ToInt32(admin.Aspnetuserid);
+                _req.Requesttypeid = (int)RequestTypeEnum.Patient;
+                _req.Userid =_db.Users.Where(x=>x.Email==sessionEmail).Select(x=>x.Userid).First();
                 _req.Firstname = admin.Firstname;
                 _req.Lastname = admin.Lastname;
                 _req.Phonenumber = admin.Mobile;
                 _req.Email = admin.Email;
-                _req.Status = 1;
+                _req.Status = (int)StatusEnum.Unassigned;
                 _req.Confirmationnumber = admin.Firstname.Substring(0, 1) + DateTime.Now.ToString().Substring(0, 19);
                 _req.Createddate = DateTime.Now;
-
+                _req.Isurgentemailsent = new BitArray(1);
+                _req.Isurgentemailsent[0] = false;
                 _db.Requests.Add(_req);
+               
                 _db.SaveChanges();
 
 
@@ -1003,7 +1018,7 @@ namespace BusinessLogic.Services
                 _reqClient.City = model.city;
                 _reqClient.State = model.state;
                 _reqClient.Zipcode = model.zipcode;
-                _reqClient.Regionid = _db.Regions.Where(r => r.Name.ToLower() == model.state.ToLower()).Select(r => r.Regionid).FirstOrDefault();
+                _reqClient.Regionid = stateMain.Regionid;
                 _reqClient.Email = model.email;
 
                 _db.Requestclients.Add(_reqClient);
@@ -1011,7 +1026,7 @@ namespace BusinessLogic.Services
 
                 _note.Requestid = _req.Requestid;
                 _note.Adminnotes = model.admin_notes;
-                _note.Createdby = _db.Aspnetusers.Where(r => r.Email == model.email).Select(r => r.Id).FirstOrDefault();
+                _note.Createdby = _db.Aspnetusers.Where(r => r.Email == sessionEmail).Select(r => r.Id).First();
                 _note.Createddate = DateTime.Now;
                 _db.Requestnotes.Add(_note);
                 _db.SaveChanges();

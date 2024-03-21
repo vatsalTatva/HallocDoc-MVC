@@ -14,7 +14,8 @@ namespace BusinessLogic.Interfaces
     public interface IAdminService
     {
         Aspnetuser GetAspnetuser(string email);
-        List<AdminDashTableModel> GetRequestsByStatus(int status);
+        DashboardModel GetRequestsByStatus(int status);
+        DashboardModel GetRequestByRegion(int regionId,int tabNo);
 
         StatusCountModel GetStatusCount();
 
@@ -67,5 +68,6 @@ namespace BusinessLogic.Interfaces
         bool VerifyState(string state);
 
         bool CreateRequest(CreateRequestModel model, string sessionEmail);
+
     }
 }

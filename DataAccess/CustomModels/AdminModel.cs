@@ -63,6 +63,14 @@ namespace DataAccess.CustomModels
         public int? requestClientId { get; set; }
 
         public int? reqId { get; set; }
+        public int? regionId { get; set; }
+    }
+
+   
+    public class DashboardModel
+    {
+        public List<AdminDashTableModel>? adminDashTableList { get; set; }
+        public List<Region>? regionList { get; set; }
     }
 
     public class ViewCaseViewModel
