@@ -112,9 +112,10 @@ namespace HalloDoc.mvc.Controllers
             var statusCountModel = _adminService.GetStatusCount();
             return PartialView("_AllRequests", statusCountModel);
         }
-        public IActionResult GetRequestsByStatus(int tabNo)
+        public IActionResult GetRequestsByStatus(int tabNo, int CurrentPage)
         {
-            var list = _adminService.GetRequestsByStatus(tabNo);
+            var list = _adminService.GetRequestsByStatus(tabNo, CurrentPage);
+            
             if (tabNo == 0)
             {
                 return Json(list);
@@ -579,12 +580,34 @@ namespace HalloDoc.mvc.Controllers
             var token = request.Cookies["jwt"];
             if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
             {
-                return Json("ok");
+                return Json("token expired");
             }
             var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
 
             var model = _adminService.MyProfile(emailClaim.Value);
             return PartialView("_MyProfile",model);
+        }
+        public string GetTokenEmail()
+        {
+            var token = HttpContext.Request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return "";
+            }
+            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+            return emailClaim.Value;
+        }
+        [HttpPost]
+        public IActionResult ResetPassword(string resetPassword)
+        {
+            var tokenEmail = GetTokenEmail();
+            if (tokenEmail != "")
+            {
+                resetPassword= GenerateSHA256(resetPassword);
+                bool isReset = _adminService.ResetPassword(tokenEmail,resetPassword);
+                return Json(new { isReset = isReset });
+            }
+            return Json(new { isReset = false });   
         }
 
         [HttpGet]

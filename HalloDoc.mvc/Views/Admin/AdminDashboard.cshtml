@@ -263,6 +263,46 @@
             }
         });
 
+        function changepage(CurrentPage, tabNo) {
+            debugger
+            console.log("pagination");
+
+            $.ajax({
+                url: '/Admin/GetRequestsByStatus',
+                type: "GET",
+                data: { tabNo: tabNo, CurrentPage: CurrentPage },
+
+                success: function (response) {
+                    console.log(response);
+                    if (tabNo == 1) {
+                        $("#tab1").html(response);
+
+
+                    }
+                    if (tabNo == 2) {
+                        $("#tab2").html(response);
+                    }
+                    if (tabNo == 3) {
+                        $("#tab3").html(response);
+                    }
+                    if (tabNo == 4) {
+                        $("#tab4").html(response);
+                    }
+                    if (tabNo == 5) {
+                        $("#tab5").html(response);
+                    }
+                    if (tabNo == 6) {
+                        $("#tab6").html(response);
+                    }
+
+
+                },
+                error: function (error) {
+                    console.log(error)
+
+                }
+            });
+        }
 
        
 

@@ -14,7 +14,7 @@ namespace BusinessLogic.Interfaces
     public interface IAdminService
     {
         Aspnetuser GetAspnetuser(string email);
-        DashboardModel GetRequestsByStatus(int status);
+        DashboardModel GetRequestsByStatus(int status, int CurrentPage);
         DashboardModel GetRequestByRegion(int regionId,int tabNo);
 
         StatusCountModel GetStatusCount();
@@ -64,10 +64,13 @@ namespace BusinessLogic.Interfaces
         int GetStatusForReviewAgreement(int reqId);
 
         MyProfileModel MyProfile(string email);
+        bool ResetPassword(string tokenEmail, string resetPassword);
 
         bool VerifyState(string state);
 
         bool CreateRequest(CreateRequestModel model, string sessionEmail);
+
+        List<ProviderModel> GetProvider();
 
     }
 }

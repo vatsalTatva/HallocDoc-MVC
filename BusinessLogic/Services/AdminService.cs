@@ -35,7 +35,7 @@ namespace BusinessLogic.Services
             return aspNetUser;
         }
 
-        public DashboardModel GetRequestsByStatus(int tabNo)
+        public DashboardModel GetRequestsByStatus(int tabNo, int CurrentPage)
         {
             var query = from r in _db.Requests
                         join rc in _db.Requestclients on r.Requestid equals rc.Requestid
@@ -98,18 +98,22 @@ namespace BusinessLogic.Services
 
 
             var result = query.ToList();
+            int count = result.Count();
+            int TotalPage = (int)Math.Ceiling(count / (double)5);
+            result = result.Skip((CurrentPage - 1) * 5).Take(5).ToList();
 
             DashboardModel dashboardModel = new DashboardModel();
             dashboardModel.adminDashTableList = result;
             dashboardModel.regionList = _db.Regions.ToList();
-
+            dashboardModel.TotalPage = TotalPage;
+            dashboardModel.CurrentPage = CurrentPage;
             return dashboardModel;
         }
 
         public DashboardModel GetRequestByRegion(int regionId,int tabNo)
         {
             DashboardModel model = new DashboardModel();
-            model = GetRequestsByStatus(tabNo);
+            model = GetRequestsByStatus(tabNo,1);
             model.adminDashTableList = model.adminDashTableList.Where(x => x.regionId == regionId).ToList();
             return model;
         }
@@ -913,6 +917,31 @@ namespace BusinessLogic.Services
             return myProfileMain;
         }
 
+        public bool ResetPassword(string tokenEmail, string resetPassword)
+        {
+            try
+            {
+                var aspUser = _db.Aspnetusers.Where(r => r.Email == tokenEmail).Select(r => r).First();
+
+                if (aspUser.Passwordhash != resetPassword)
+                {
+                    aspUser.Passwordhash = resetPassword;
+                    _db.Aspnetusers.Update(aspUser);
+
+                    _db.SaveChanges();
+
+                    return true;
+                }
+                return false;
+
+               
+
+            }catch (Exception ex) {
+                return false;
+            }
+
+        }
+
         public bool VerifyState(string state)
         {
             
@@ -1034,7 +1063,26 @@ namespace BusinessLogic.Services
                 return true;
             }
 
+
+
             
+        }
+
+        public List<ProviderModel> GetProvider()
+        {
+            List<ProviderModel> model = new List<ProviderModel>();
+
+            var query = from p in _db.Physicians
+                            join pn in _db.Physiciannotifications on p.Physicianid equals pn.Pysicianid
+                            //where r.Status == status
+                            select new AdminDashTableModel
+                            {
+                                
+                            };
+
+
+
+            return model;
         }
 
 

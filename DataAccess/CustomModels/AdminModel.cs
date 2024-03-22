@@ -71,6 +71,9 @@ namespace DataAccess.CustomModels
     {
         public List<AdminDashTableModel>? adminDashTableList { get; set; }
         public List<Region>? regionList { get; set; }
+        public int? TotalPage { get; set; }
+
+        public int? CurrentPage { get; set; }
     }
 
     public class ViewCaseViewModel
@@ -339,5 +342,15 @@ namespace DataAccess.CustomModels
 
         public bool? indicate { get; set; }
     }
+
+    public class ProviderModel {
+        public bool? isNotified { get; set; }
+        public string? name { get; set; }
+        public string? role { get; set; }
+        public string? callStatus { get; set; }
+        public string? status { get; set; }
+        public string? physicianId { get; set; }
+    }
+
 }
 

@@ -275,8 +275,19 @@
 
 
     function resetPass() {
-        var payload = {
-
-        }
+        var password = $('#floatingPassword2').val();
+        $.ajax({
+            url:'Adminb/ResetPassword',
+            type:'POST',
+            data:{resetPassword:password},
+            success:function(response){
+                if(response.isReset==true){
+                    toastr.success("Reset successfully");
+                }
+                else{
+                    toastr.error("Failed to reset");
+                }
+            }
+        })
     }
 </script>
