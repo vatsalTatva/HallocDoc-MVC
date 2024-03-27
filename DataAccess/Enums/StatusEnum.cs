@@ -19,4 +19,5 @@ namespace DataAccess.Enums
         Unpaid=9,
         Clear=10
     }
+
 }

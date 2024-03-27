@@ -80,6 +80,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NvbmNsdWRlUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_ContactProvider.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NvbnRhY3RQcm92aWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_EditProvider.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRQcm92aWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_MyProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX015UHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

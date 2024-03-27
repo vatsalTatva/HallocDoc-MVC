@@ -65,12 +65,18 @@ namespace BusinessLogic.Interfaces
 
         MyProfileModel MyProfile(string email);
         bool ResetPassword(string tokenEmail, string resetPassword);
-
+        bool SubmitAdminInfo(MyProfileModel model, string tokenEmail);
+        bool SubmitBillingInfo(MyProfileModel model, string tokenEmail);
         bool VerifyState(string state);
 
         bool CreateRequest(CreateRequestModel model, string sessionEmail);
 
         List<ProviderModel> GetProvider();
+        //ProviderModel ProviderContact(int phyId);
+        public bool StopNotification(int phyId);
+
+        bool ProviderContactEmail(int phyIdMain, string msg);
+
 
     }
 }

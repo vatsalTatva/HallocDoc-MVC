@@ -849,6 +849,10 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Region).WithMany(p => p.Physicians)
                 .HasForeignKey(d => d.Regionid)
                 .HasConstraintName("fk_physician1");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Physicians)
+                .HasForeignKey(d => d.Roleid)
+                .HasConstraintName("fk_physician4");
         });
 
         modelBuilder.Entity<Physicianlocation>(entity =>

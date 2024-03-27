@@ -942,6 +942,113 @@ namespace BusinessLogic.Services
 
         }
 
+        public bool SubmitAdminInfo(MyProfileModel model,string tokenEmail)
+        {
+            try
+            {
+
+                var aspUser = _db.Aspnetusers.Where(r => r.Email == tokenEmail).Select(r => r).First();
+
+                var adminInfo = _db.Admins.Where(r => r.Email == tokenEmail).Select(r => r).First();
+
+                if (adminInfo.Firstname != model.fname || adminInfo.Lastname != model.lname || adminInfo.Email != model.email || adminInfo.Mobile != model.mobile_no)
+                {
+                    if (adminInfo.Firstname != model.fname)
+                    {
+                        
+                        adminInfo.Firstname = model.fname;
+                        
+                    }
+
+                    if (adminInfo.Lastname != model.lname)
+                    {
+                        adminInfo.Lastname = model.lname;
+                    }
+
+                    if (adminInfo.Email != model.email)
+                    {
+                        adminInfo.Email = model.email;
+                        aspUser.Email = model.email;
+
+                        int index = model.email.IndexOf('@');
+                        var username = model.email.Substring(0, index);
+                        aspUser.Username =username;
+                    }
+
+                    if (adminInfo.Mobile != model.mobile_no)
+                    {
+                        adminInfo.Mobile = model.mobile_no;
+                        aspUser.Phonenumber = model.mobile_no;
+                    }
+
+
+                    aspUser.Modifieddate = DateTime.Now;
+                    
+                    _db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool SubmitBillingInfo(MyProfileModel model,string tokenEmail)
+        {
+            try
+            {
+                var adminInfo = _db.Admins.Where(r => r.Email == tokenEmail).Select(r => r).First();
+
+                var regionid = _db.Regions.Where(x => x.Name.ToLower() == model.state.ToLower()).Select(x => x.Regionid).First();
+
+                if (adminInfo.Address1 != model.addr1 || adminInfo.Address2 != model.addr2 || adminInfo.City != model.city || adminInfo.Zip != model.zip || adminInfo.Regionid != regionid)
+                {
+
+                    if (adminInfo.Address1 != model.addr1)
+                    {
+                        adminInfo.Address1 = model.addr1;
+                    }
+
+                    if (adminInfo.Address2 != model.addr2)
+                    {
+                        adminInfo.Address2 = model.addr2;
+                    }
+
+                    if (adminInfo.City != model.city)
+                    {
+                        adminInfo.City = model.city;
+                    }
+
+                    if (adminInfo.Zip != model.zip)
+                    {
+                        adminInfo.Zip = model.zip;
+                    }
+                    
+                    if (adminInfo.Regionid != regionid)
+                    {
+                        adminInfo.Regionid = regionid;
+                    }
+
+                    _db.SaveChanges();
+
+                    return true;
+                }
+
+                return false;
+                
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool VerifyState(string state)
         {
             
@@ -1070,23 +1177,117 @@ namespace BusinessLogic.Services
 
         public List<ProviderModel> GetProvider()
         {
-            List<ProviderModel> model = new List<ProviderModel>();
+            
 
-            var query = from p in _db.Physicians
-                            join pn in _db.Physiciannotifications on p.Physicianid equals pn.Pysicianid
-                            //where r.Status == status
-                            select new AdminDashTableModel
-                            {
-                                
-                            };
+            var provider = from phy in _db.Physicians
+                           join role in _db.Roles on phy.Roleid equals role.Roleid
+                           join phynoti in _db.Physiciannotifications on phy.Physicianid equals phynoti.Pysicianid
+                           orderby phy.Physicianid
+                           select new ProviderModel
+                           {
+                               phyId = phy.Physicianid,
+                               firstName = phy.Firstname,
+                               lastName = phy.Lastname,
+                               status = phy.Status.ToString(),
+                               role = role.Name,
+                               onCallStatus = "un available",
+                               notification = phynoti.Isnotificationstopped[0],
+                           };
+            var result = provider.ToList();
 
+            return result;
+        }
+    
+        public bool StopNotification(int phyId)
+        {
 
+            var phyNotification = _db.Physiciannotifications.Where(r => r.Pysicianid == phyId).Select(r => r).First();
 
-            return model;
+            var notification = new BitArray(1);
+            notification[0] = false;
+
+            if (phyNotification.Isnotificationstopped[0] == notification[0])
+            {
+                phyNotification.Isnotificationstopped = new BitArray(1);
+                phyNotification.Isnotificationstopped[0] = true;
+                _db.Physiciannotifications.Update(phyNotification);
+                _db.SaveChanges();
+
+                return true;
+            }
+            else
+            {
+                phyNotification.Isnotificationstopped = new BitArray(1);
+                phyNotification.Isnotificationstopped[0] = false;
+                _db.Physiciannotifications.Update(phyNotification);
+                _db.SaveChanges();
+
+                return false;
+            }
         }
 
 
+        public bool ProviderContactEmail(int phyId, string msg)
+        {
 
+            var providerEmail = _db.Physicians.Where(x => x.Physicianid == phyId).Select(x=>x.Email).First();
+
+            try
+            {
+                SendAndSaveProviderEmail(providerEmail, msg, phyId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+        }
+        public void SendAndSaveProviderEmail(string provider, string msg, int phyId)
+        {
+            string senderEmail = "tatva.dotnet.vatsalgadoya@outlook.com";
+            string senderPassword = "VatsalTatva@2024";
+            SmtpClient client = new SmtpClient("smtp.office365.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(senderEmail, senderPassword),
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false
+            };
+
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress(senderEmail, "HalloDoc"),
+                Subject = "Mail For provider",
+                IsBodyHtml = true,
+                Body = $"{msg}",
+            };
+
+
+            mailMessage.To.Add(provider);
+
+            client.Send(mailMessage);
+
+            Emaillog emaillog = new Emaillog();
+
+
+            emaillog.Subjectname = mailMessage.Subject;
+            emaillog.Emailtemplate = "Sender : " + senderEmail + "Reciver :" + provider + "Subject : " + mailMessage.Subject + "Message : " + msg;
+            emaillog.Emailid = provider;
+            emaillog.Roleid = 1;
+            emaillog.Adminid = _db.Admins.Where(r => r.Email == "abc@gmail.com").Select(r => r.Adminid).First();
+            emaillog.Physicianid = phyId;
+            emaillog.Createdate = DateTime.Now;
+            emaillog.Sentdate = DateTime.Now;
+            emaillog.Isemailsent = new BitArray(1, true);
+
+            
+
+            _db.Emaillogs.Add(emaillog);
+            _db.SaveChanges();
+        }
 
     }
 

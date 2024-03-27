@@ -13,10 +13,10 @@
     $('#selectRegion').on('change', function () {
         let selectRegion = $("#selectRegion").val();
         if (selectRegion != null) {
-            $("#regionRequired").addClass('d-none').removeClass('d-block');
+            $("#regionRequired").addClass('d-none');
         }
         else {
-            $("#regionRequired").addClass('d-block').removeClass('d-none');
+            $("#regionRequired").removeClass('d-none');
         }
     });
 
@@ -66,12 +66,12 @@
         });
     }
     function CheckValidation(){
-        var selectRegion = $("#selectRegion").val();
-
-        if (selectRegion == null) {
-            $("#regionRequired").addClass('d-block').removeClass('d-none');
-        } else {
-            $("#regionRequired").addClass('d-none').removeClass('d-block');
+        let selectRegion = $("#selectRegion").val();
+        if (selectRegion != null) {
+            $("#regionRequired").addClass('d-none');
+        }
+        else {
+            $("#regionRequired").removeClass('d-none');
         }
 
         var selectPhysician = $("#selectPhysician").val();

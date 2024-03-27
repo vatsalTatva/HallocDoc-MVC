@@ -610,6 +610,38 @@ namespace HalloDoc.mvc.Controllers
             return Json(new { isReset = false });   
         }
 
+        [HttpPost]
+        public IActionResult SubmitAdminInfo(MyProfileModel model)
+        {
+            var tokenEmail = GetTokenEmail();
+            if (tokenEmail != "")
+            {               
+                bool isSubmit = _adminService.SubmitAdminInfo(model,tokenEmail );
+                return Json(new { isSubmit = isSubmit });
+            }
+            return Json(new { isSubmit = false });
+        }
+
+        [HttpPost]
+        public IActionResult SubmitBillingInfo(MyProfileModel model)
+        {
+            var tokenEmail = GetTokenEmail();
+            if (tokenEmail != "")
+            {
+                var isRegionExists = _adminService.VerifyState(model.state);
+                if (isRegionExists)
+                {
+                    bool isSubmit = _adminService.SubmitBillingInfo(model, tokenEmail);
+                    return Json(new { isSubmit = isSubmit , isRegionExists=isRegionExists });
+                }
+                else
+                {
+                    return Json(new { isRegionExists = isRegionExists });
+                }
+            }
+            return Json(new { isSubmit = false });
+        }
+
         [HttpGet]
         public IActionResult CreateRequest() 
         {
@@ -655,7 +687,38 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult ShowProvider()
         {
-            return PartialView("_Provider");
+            var model = _adminService.GetProvider();
+            return PartialView("_Provider",model);
+        }
+
+
+        [HttpGet]
+        public IActionResult ProviderContactModal(int phyId)
+        {
+
+            var model = new ProviderModel();
+            model.phyId = phyId;
+
+            return PartialView("_ContactProvider", model);
+        }
+
+        [HttpPost]
+        public IActionResult ContactProviderEmail(int phyId, string msg)
+        {
+            var isSend = _adminService.ProviderContactEmail(phyId, msg);
+            return Json(new { isSend = isSend });
+        }
+
+        public IActionResult ProviderCheckbox(int phyId)
+        {
+            var isStopped = _adminService.StopNotification(phyId);
+            return Json(new { isStopped = isStopped});
+        }
+
+        public IActionResult EditProvider()
+        {
+            EditProviderModel2 model = new EditProviderModel2();    
+            return PartialView("_EditProvider",model);
         }
 
     }
