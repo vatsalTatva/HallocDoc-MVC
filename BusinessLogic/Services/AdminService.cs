@@ -17,6 +17,7 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Xml.Linq;
 
 namespace BusinessLogic.Services
 {
@@ -1287,6 +1288,175 @@ namespace BusinessLogic.Services
 
             _db.Emaillogs.Add(emaillog);
             _db.SaveChanges();
+        }
+
+        public EditProviderModel EditProviderProfile(int phyId, string tokenEmail)
+        {
+            var phy = _db.Physicians.Where(r => r.Physicianid == phyId).Select(r => r).First();
+
+            var user = _db.Aspnetusers.Where(r => r.Email == phy.Email).First();
+
+            EditProviderModel _profile = new EditProviderModel()
+            {
+                //username = _context.Aspnetusers.Where(r => r.Email == sessionEmail).Select(r => r.Username).First(),
+                Firstname = phy.Firstname,
+                Lastname = phy.Lastname,
+                Email = phy.Email,
+                PhoneNumber = phy.Mobile,
+                MedicalLicesnse = phy.Medicallicense,
+                NPInumber = phy.Npinumber,
+                SycnEmail = phy.Syncemailaddress,
+                Address1 = phy.Address1,
+                Address2 = phy.Address2,
+                city = phy.City,
+                zipcode = phy.Zip,
+                altPhone = phy.Altphone,
+                Businessname = phy.Businessname,
+                BusinessWebsite = phy.Businesswebsite,
+                Adminnotes = phy.Adminnotes,
+
+                username = user.Username,
+                password = user.Passwordhash,
+            };
+
+            return _profile;
+        }
+
+        public List<Region> RegionTable()
+        {
+            var region = _db.Regions.ToList();
+            return region;
+        }
+
+        public List<PhysicianRegionTable> PhyRegionTable(int phyId)
+        {
+            var region = _db.Regions.ToList();
+            var phyRegion = _db.Physicianregions.ToList();
+
+            var checkedRegion = region.Select(r1 => new PhysicianRegionTable
+            {
+                Regionid = r1.Regionid,
+                Name = r1.Name,
+                ExistsInTable = phyRegion.Any(r2 => r2.Physicianid == phyId && r2.Regionid == r1.Regionid),
+            }).ToList();
+
+            return checkedRegion;
+        }
+
+
+        public List<AccountAccess> AccountAccess()
+        {
+            var obj = (from role in _db.Roles
+                       where role.Isdeleted != new BitArray(1, true)
+                       select new AccountAccess
+                       {
+                           Name = role.Name,
+                           RoleId = role.Roleid,
+                           AccountType = role.Accounttype,
+                       }).ToList();
+            return obj;
+        }
+
+        public bool DeleteRole(int roleId)
+        {
+            try
+            {
+                var role = _db.Roles.FirstOrDefault(x => x.Roleid == roleId);
+                role.Isdeleted = new BitArray(1, true);
+                _db.Roles.Update(role);
+                _db.SaveChanges();
+                return true;
+            }
+            catch(Exception ex) 
+            {
+                return false;
+            }
+        }
+
+        public CreateAccess FetchRole(short selectedValue)
+        {
+            if (selectedValue == 0)
+            {
+                CreateAccess obj = new()
+                {
+                    Menu = _db.Menus.ToList(),
+                };
+                return obj;
+            }
+            else if (selectedValue == 1 || selectedValue == 2)
+            {
+
+                CreateAccess obj = new()
+                {
+                    Menu = _db.Menus.Where(x => x.Accounttype == selectedValue).ToList(),
+                };
+                return obj;
+            }
+            else
+            {
+                CreateAccess obj = new();
+                return obj;
+            }
+        }
+        public string RoleExists(string roleName, short accountType)
+        {
+            var isRoleExistNotDeleted = _db.Roles.Where(x => (x.Name.ToLower() == roleName.Trim().ToLower() && x.Accounttype == accountType) && x.Isdeleted[0] == false).Any();
+            if(isRoleExistNotDeleted)
+            {
+                return "exists";
+            }
+            var isRoleExistsDeleted = _db.Roles.Where(x => (x.Name.ToLower() == roleName.Trim().ToLower() && x.Accounttype == accountType) && x.Isdeleted[0] == true).Any();
+            if(isRoleExistsDeleted)
+            {
+                return "existsButDeleted";
+            }
+            return "notExists";
+        }
+        public bool CreateRole(List<int> menuIds, string roleName, short accountType)
+        {
+            try
+            {
+                Role role = new()
+                {
+                    Name = roleName,
+                    Accounttype = accountType,
+                    Createdby = "Admin",
+                    Createddate = DateTime.Now,
+                    Isdeleted = new BitArray(1, false),
+                };
+                _db.Roles.Add(role);
+                _db.SaveChanges();
+
+                foreach (int menuId in menuIds)
+                {
+                    Rolemenu rolemenu = new()
+                    {
+                        Roleid = role.Roleid,
+                        Menuid = menuId,
+                    };
+                    _db.Rolemenus.Add(rolemenu);
+                };
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex) { 
+                return false;
+            }
+
+        }
+        public bool ModifyRole(List<int> menuIds, string roleName, short accountType)
+        {
+            try
+            {
+                var role = _db.Roles.Where(x => x.Name == roleName.Trim().ToLower()).First();
+                role.Modifieddate = DateTime.Now;
+                role.Modifiedby = "Admin";
+                _db.Roles.Update(role);
+
+                //_db.Rolemenus.Where(x => x.Roleid == role.Roleid).Remove();
+                return true;
+            }
+            catch { return false; }
         }
 
     }

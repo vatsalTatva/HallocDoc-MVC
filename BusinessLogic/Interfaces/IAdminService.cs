@@ -76,7 +76,17 @@ namespace BusinessLogic.Interfaces
         public bool StopNotification(int phyId);
 
         bool ProviderContactEmail(int phyIdMain, string msg);
+        EditProviderModel EditProviderProfile(int phyId, string tokenEmail);
+        List<Region> RegionTable();
+        List<PhysicianRegionTable> PhyRegionTable(int phyId);
 
+        List<AccountAccess> AccountAccess();
+        bool DeleteRole(int roleId);
 
+        CreateAccess FetchRole(short selectedValue);
+        bool CreateRole(List<int> menuIds, string roleName, short accountType);
+
+        string RoleExists(string roleName, short accountType);
+        bool ModifyRole(List<int> menuIds, string roleName, short accountType);
     }
 }

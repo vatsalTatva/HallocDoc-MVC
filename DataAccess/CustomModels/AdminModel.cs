@@ -441,13 +441,13 @@ namespace DataAccess.CustomModels
     }
     public class PhysicianRegionTable
     {
-        public int PhysicianId { get; set; }
+        public int? PhysicianId { get; set; }
 
-        public int Regionid { get; set; }
+        public int? Regionid { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public bool ExistsInTable { get; set; }
+        public bool? ExistsInTable { get; set; }
     }
     public class EditProviderModel2
     {
@@ -455,6 +455,19 @@ namespace DataAccess.CustomModels
         public List<Region>? regions { get; set; }
 
         public List<PhysicianRegionTable>? physicianregiontable { get; set; }
+    }
+
+    public class AccountAccess
+    {
+        public int RoleId { get; set; }
+        public string Name { get; set; }
+        public short AccountType { get; set; }
+
+    }
+
+    public class CreateAccess
+    {
+        public List<Menu> Menu { get; set; }
     }
 }
 

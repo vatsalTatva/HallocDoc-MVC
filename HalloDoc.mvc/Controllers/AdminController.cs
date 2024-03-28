@@ -15,6 +15,7 @@ using System.Text.Json.Nodes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -715,12 +716,76 @@ namespace HalloDoc.mvc.Controllers
             return Json(new { isStopped = isStopped});
         }
 
-        public IActionResult EditProvider()
+        public IActionResult EditProvider(int phyId)
         {
-            EditProviderModel2 model = new EditProviderModel2();    
-            return PartialView("_EditProvider",model);
+            var tokenemail = GetTokenEmail();
+            if (tokenemail != null)
+            {
+                
+                EditProviderModel2 model = new EditProviderModel2();
+                model.editPro= _adminService.EditProviderProfile(phyId, tokenemail);
+                model.regions = _adminService.RegionTable();
+                model.physicianregiontable = _adminService.PhyRegionTable(phyId);
+                return PartialView("_EditProvider",model);
+            }
+            _notyf.Error("Token is expired,Login again");
+            return RedirectToAction("AdminLogin");
         }
 
+
+        [HttpGet]
+        public IActionResult ShowAccountAccess()
+        {
+            var obj = _adminService.AccountAccess();
+            return PartialView("_AccountAccess", obj);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteRole(int RoleId)
+        {
+            var isDeleted = _adminService.DeleteRole(RoleId);
+            return Json(new { isDeleted = isDeleted });
+        }
+
+
+        [HttpGet]
+        public IActionResult CreateAccess()
+        {
+            var obj = _adminService.FetchRole(0);
+            return PartialView("_CreateAccess", obj);
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateAccessPost(List<int> MenuIds, string RoleName, short AccountType)
+        {
+            var roleStatus = _adminService.RoleExists(RoleName,AccountType);
+            if (roleStatus=="exists")
+            {
+                return Json(new{ isRoleExists=true});
+            }
+            else if (roleStatus== "existsButDeleted")
+            {
+                var isCreated = _adminService.ModifyRole(MenuIds, RoleName, AccountType);
+                // create service for modifying role and delete rows from rolemenu
+                return Json(new { isCreated = false });
+            }
+            else 
+            {
+                var isCreated = _adminService.CreateRole(MenuIds, RoleName, AccountType);
+                return Json(new { isCreated = isCreated });
+            }
+            
+        }
+
+        [HttpGet]
+        public CreateAccess FetchRoles(short selectedValue)
+        {
+            var obj = _adminService.FetchRole(selectedValue);
+            return obj;
+        }
+
+       
     }
 
 

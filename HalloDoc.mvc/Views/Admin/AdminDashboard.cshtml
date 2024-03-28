@@ -129,10 +129,26 @@
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="access-tab" data-bs-toggle="tab" data-bs-target="#access-tab-pane"
-                                type="button" role="tab" aria-controls="access-tab-pane" aria-selected="false">
+                        @*<button class="nav-link" id="access-tab" data-bs-toggle="tab" data-bs-target="#access-tab-pane"
+                                type="button" role="tab" aria-controls="access-tab-pane" aria-selected="false" onclick="accountAccess()">
                             Access
-                        </button>
+                        </button>*@
+                        <div class="dropdown">
+                            <button class="nav-link" type="button" id="access-tab" data-bs-toggle="dropdown" data-bs-target="#access-tab-pane" aria-expanded="false">
+                                Access
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                <li>
+                                    <button class="nav-link mx-3" id="access-tab" data-bs-toggle="tab"
+                                            data-bs-target="#access-tab-pane" type="button" role="tab"
+                                            aria-controls="access-tab-pane" onclick="accountAccess()" aria-selected="false">
+                                        Account Access
+                                    </button>
+                                </li>
+                                <li><a class="dropdown-item" href="#">User Access</a></li>
+                                <li><a class="dropdown-item" href="#">Create Admin Account</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="record-tab" data-bs-toggle="tab" data-bs-target="#record-tab-pane"
@@ -531,6 +547,18 @@
                 type: 'GET',
                 success: function (response) {
                     $("#provider-tab-pane").html(response);
+                }
+            });
+        }
+        function accountAccess() {
+            $.ajax({
+                url: '/Admin/ShowAccountAccess',
+                type: 'GET',
+                success: function (response) {
+                    $("#access-tab-pane").html(response);
+                },
+                error:function(e){
+                    alert("error loading partial view");
                 }
             });
         }

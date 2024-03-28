@@ -256,7 +256,6 @@
 
     function passwordVisible2() {
         let a = document.getElementById("passHide2")
-        console.log(a)
         if (a.classList.contains("bi-eye-fill")) {
             a.classList.remove("bi-eye-fill")
             a.classList.add("bi-eye-slash-fill")
@@ -268,10 +267,8 @@
         var x = document.getElementById("floatingPassword2");
         if (x.type === "password") {
             x.type = "text";
-            console.log("hi1")
         } else {
             x.type = "password";
-            console.log("hi2")
         }
     }
 
