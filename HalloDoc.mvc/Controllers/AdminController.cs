@@ -726,11 +726,20 @@ namespace HalloDoc.mvc.Controllers
                 model.editPro= _adminService.EditProviderProfile(phyId, tokenemail);
                 model.regions = _adminService.RegionTable();
                 model.physicianregiontable = _adminService.PhyRegionTable(phyId);
+                model.roles = _adminService.GetRoles();
                 return PartialView("_EditProvider",model);
             }
             _notyf.Error("Token is expired,Login again");
             return RedirectToAction("AdminLogin");
         }
+
+        [HttpPost]
+        public IActionResult providerEditFirst(string password, int phyId, string email)
+        {
+            bool editProvider = _adminService.providerResetPass(email, password);
+            return Json(new { indicate = editProvider, phyId = phyId });
+        }
+
 
 
         [HttpGet]
@@ -759,17 +768,12 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult CreateAccessPost(List<int> MenuIds, string RoleName, short AccountType)
         {
-            var roleStatus = _adminService.RoleExists(RoleName,AccountType);
-            if (roleStatus=="exists")
+            var isRoleExists = _adminService.RoleExists(RoleName,AccountType);
+            if (isRoleExists)
             {
                 return Json(new{ isRoleExists=true});
             }
-            else if (roleStatus== "existsButDeleted")
-            {
-                var isCreated = _adminService.ModifyRole(MenuIds, RoleName, AccountType);
-                // create service for modifying role and delete rows from rolemenu
-                return Json(new { isCreated = false });
-            }
+           
             else 
             {
                 var isCreated = _adminService.CreateRole(MenuIds, RoleName, AccountType);
@@ -785,7 +789,19 @@ namespace HalloDoc.mvc.Controllers
             return obj;
         }
 
-       
+        [HttpGet]
+        public IActionResult ProviderLocation()
+        {
+            return PartialView("_ProviderLocation");
+        }
+        [HttpGet]
+        public IActionResult GetLocation()
+        {
+            List<Physicianlocation> getLocation = _adminService.GetPhysicianlocations();
+            return Ok(getLocation);
+        }
+
+
     }
 
 

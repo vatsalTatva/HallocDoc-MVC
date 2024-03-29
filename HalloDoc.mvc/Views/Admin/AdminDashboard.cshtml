@@ -87,7 +87,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="provider-location-tab" data-bs-toggle="tab"
                                 data-bs-target="#provider-location-tab-pane" type="button" role="tab"
-                                aria-controls="provider-location-tab-pane" aria-selected="false">
+                                aria-controls="provider-location-tab-pane" aria-selected="false" onclick="providerLocation()">
                             Provider Location
                         </button>
                     </li>
@@ -174,7 +174,7 @@
         <!-- tab2  pending -->
         <div class="tab-pane fade" id="provider-location-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
              tabindex="0">
-            provider-location......
+
         </div>
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
           
@@ -561,6 +561,18 @@
                     alert("error loading partial view");
                 }
             });
+        }
+        function providerLocation(){
+            $.ajax({
+                url: '/Admin/ProviderLocation',
+                type: 'GET',
+                success: function(response){
+                    $("#provider-location-tab-pane").html(response);
+                },
+                error: function (e) {
+                    alert("error loading partial view");
+                }
+            })
         }
     </script>
  

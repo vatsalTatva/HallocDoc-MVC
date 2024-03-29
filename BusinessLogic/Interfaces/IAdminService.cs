@@ -86,7 +86,9 @@ namespace BusinessLogic.Interfaces
         CreateAccess FetchRole(short selectedValue);
         bool CreateRole(List<int> menuIds, string roleName, short accountType);
 
-        string RoleExists(string roleName, short accountType);
-        bool ModifyRole(List<int> menuIds, string roleName, short accountType);
+        bool RoleExists(string roleName, short accountType);
+        List<Physicianlocation> GetPhysicianlocations();
+        List<Role> GetRoles();
+        bool providerResetPass(string email, string password);
     }
 }

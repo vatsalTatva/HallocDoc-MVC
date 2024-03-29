@@ -371,6 +371,7 @@ namespace DataAccess.CustomModels
         public string? password { get; set; }
 
         public string? Email { get; set; }
+        public string? Con_Email { get; set; }
 
         public string? PhoneNumber { get; set; }
 
@@ -406,38 +407,49 @@ namespace DataAccess.CustomModels
         public string? Address1 { get; set; }
         public string? Address2 { get; set; }
 
-        public int? PhyID { get; set; }
+        public int PhyID { get; set; }
+        public int statusId { get; set; }
 
-        
+        public List<Region> regions { get; set; }
+
+        //public List<Physicianregion> physicianregions { get; set; }
 
         public string? altPhone { get; set; }
         public string? State { get; set; }
+        public int? StateId { get; set; }
+        public string? flag { get; set; }
 
         public IFormFile? Photo { get; set; }
 
+        public string? PhotoValue { get; set; }
+
         public IFormFile? Signature { get; set; }
 
-        public BitArray? isAgreementdoc { get; set; }
+        public string? SignatureValue { get; set; }
 
-        public BitArray? isBackgrounddoc { get; set; }
+        public IFormFile? ContractorAgreement { get; set; }
 
-        public BitArray? isTrainingdoc { get; set; }
+        public bool IsContractorAgreement { get; set; }
 
-        public BitArray? isNondiclosuserdoc { get; set; }
+        public IFormFile? BackgroundCheck { get; set; }
 
-        public BitArray? isLicesensdoc { get; set; }
+        public bool IsBackgroundCheck { get; set; }
 
-        public IFormFile? isAgreementdocument { get; set; }
+        public IFormFile? HIPAA { get; set; }
 
-        public IFormFile? isBackgrounddocument { get; set; }
+        public bool IsHIPAA { get; set; }
 
-        public IFormFile? isTrainingdocument { get; set; }
+        public IFormFile? NonDisclosure { get; set; }
 
-        public IFormFile? isNondiclosuserdocument { get; set; }
+        public bool IsNonDisclosure { get; set; }
 
-        public IFormFile? isLicesensdocument { get; set; }
+        public IFormFile? LicenseDocument { get; set; }
 
-        public List<Role>? roles { get; set; }
+        public bool IsLicenseDocument { get; set; }
+
+        public List<Role> roles { get; set; }
+
+        public bool? indicate { get; set; }
     }
     public class PhysicianRegionTable
     {
@@ -447,7 +459,7 @@ namespace DataAccess.CustomModels
 
         public string? Name { get; set; }
 
-        public bool? ExistsInTable { get; set; }
+        public bool ExistsInTable { get; set; }
     }
     public class EditProviderModel2
     {
@@ -455,6 +467,7 @@ namespace DataAccess.CustomModels
         public List<Region>? regions { get; set; }
 
         public List<PhysicianRegionTable>? physicianregiontable { get; set; }
+        public List<Role>? roles { get; set; }
     }
 
     public class AccountAccess

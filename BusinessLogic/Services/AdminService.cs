@@ -1314,6 +1314,18 @@ namespace BusinessLogic.Services
                 Businessname = phy.Businessname,
                 BusinessWebsite = phy.Businesswebsite,
                 Adminnotes = phy.Adminnotes,
+                statusId = (int)phy.Status,
+                PhyID = phyId,
+                Roleid = phy.Roleid,
+                Regionid = phy.Regionid,
+                PhotoValue = phy.Photo,
+                SignatureValue = phy.Signature,
+                IsContractorAgreement = phy.Isagreementdoc == null ? false : true,
+                IsBackgroundCheck = phy.Isbackgrounddoc == null ? false : true,
+                IsHIPAA = phy.Istrainingdoc == null ? false : true,
+                IsNonDisclosure = phy.Isnondisclosuredoc == null ? false : true,
+                IsLicenseDocument = phy.Islicensedoc == null ? false : true,
+
 
                 username = user.Username,
                 password = user.Passwordhash,
@@ -1322,6 +1334,12 @@ namespace BusinessLogic.Services
             return _profile;
         }
 
+
+        public List<Role> GetRoles()
+        {
+            var roles = _db.Roles.ToList();
+            return roles;
+        }
         public List<Region> RegionTable()
         {
             var region = _db.Regions.ToList();
@@ -1342,7 +1360,20 @@ namespace BusinessLogic.Services
 
             return checkedRegion;
         }
+        public bool providerResetPass(string email, string password)
+        {
+            var resetPass = _db.Aspnetusers.Where(r => r.Email == email).Select(r => r).First();
 
+            if (resetPass.Passwordhash != password)
+            {
+                resetPass.Passwordhash = password;
+                _db.SaveChanges();
+
+                return true;
+            }
+            return false;
+
+        }
 
         public List<AccountAccess> AccountAccess()
         {
@@ -1364,6 +1395,14 @@ namespace BusinessLogic.Services
                 var role = _db.Roles.FirstOrDefault(x => x.Roleid == roleId);
                 role.Isdeleted = new BitArray(1, true);
                 _db.Roles.Update(role);
+                _db.SaveChanges();
+
+                var rolemenu = _db.Rolemenus.Where(x=>x.Roleid == roleId).ToList();
+
+                foreach(var item in rolemenu)
+                {
+                    _db.Rolemenus.Remove(item);
+                }
                 _db.SaveChanges();
                 return true;
             }
@@ -1398,19 +1437,15 @@ namespace BusinessLogic.Services
                 return obj;
             }
         }
-        public string RoleExists(string roleName, short accountType)
+        public bool RoleExists(string roleName, short accountType)
         {
-            var isRoleExistNotDeleted = _db.Roles.Where(x => (x.Name.ToLower() == roleName.Trim().ToLower() && x.Accounttype == accountType) && x.Isdeleted[0] == false).Any();
-            if(isRoleExistNotDeleted)
+            BitArray deletedBit = new BitArray(new[] { false });
+            var isRoleExists = _db.Roles.Where(x => (x.Name.ToLower() == roleName.Trim().ToLower() && x.Accounttype == accountType) && (x.Isdeleted.Equals(deletedBit))).Any();
+            if(isRoleExists)
             {
-                return "exists";
+                return true;
             }
-            var isRoleExistsDeleted = _db.Roles.Where(x => (x.Name.ToLower() == roleName.Trim().ToLower() && x.Accounttype == accountType) && x.Isdeleted[0] == true).Any();
-            if(isRoleExistsDeleted)
-            {
-                return "existsButDeleted";
-            }
-            return "notExists";
+            return false;
         }
         public bool CreateRole(List<int> menuIds, string roleName, short accountType)
         {
@@ -1444,20 +1479,13 @@ namespace BusinessLogic.Services
             }
 
         }
-        public bool ModifyRole(List<int> menuIds, string roleName, short accountType)
-        {
-            try
-            {
-                var role = _db.Roles.Where(x => x.Name == roleName.Trim().ToLower()).First();
-                role.Modifieddate = DateTime.Now;
-                role.Modifiedby = "Admin";
-                _db.Roles.Update(role);
 
-                //_db.Rolemenus.Where(x => x.Roleid == role.Roleid).Remove();
-                return true;
-            }
-            catch { return false; }
+        public List<Physicianlocation> GetPhysicianlocations()
+        {
+            var phyLocation = _db.Physicianlocations.ToList();
+            return phyLocation;
         }
+
 
     }
 
