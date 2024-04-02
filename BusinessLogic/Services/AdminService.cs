@@ -18,16 +18,22 @@ using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Xml.Linq;
+using System.Text.Json;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BusinessLogic.Services
 {
     public class AdminService : IAdminService
     {
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _environment;
 
-        public AdminService(ApplicationDbContext db)
+
+        public AdminService(ApplicationDbContext db , IWebHostEnvironment environment)
         {
             _db = db;
+            _environment = environment;
         }
 
         public Aspnetuser GetAspnetuser(string email)
@@ -175,7 +181,21 @@ namespace BusinessLogic.Services
                 return false;
             }
         }
-
+        public static string GenerateSHA256(string input)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+            using (var hashEngine = SHA256.Create())
+            {
+                var hashedBytes = hashEngine.ComputeHash(bytes, 0, bytes.Length);
+                var sb = new StringBuilder();
+                foreach (var b in hashedBytes)
+                {
+                    var hex = b.ToString("x2");
+                    sb.Append(hex);
+                }
+                return sb.ToString();
+            }
+        }
         public ViewCaseViewModel ViewCaseViewModel(int Requestclientid ,int RequestTypeId)
         {
             Requestclient obj = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == Requestclientid);
@@ -1198,6 +1218,30 @@ namespace BusinessLogic.Services
 
             return result;
         }
+     public List<ProviderModel> GetProviderByRegion(int regionId)
+        {
+            
+
+            var provider = from phy in _db.Physicians
+                           join role in _db.Roles on phy.Roleid equals role.Roleid
+                           join phynoti in _db.Physiciannotifications on phy.Physicianid equals phynoti.Pysicianid
+                           join phyregion in _db.Physicianregions on phy.Physicianid equals phyregion.Physicianid
+                           where phyregion.Regionid == regionId
+                           orderby phy.Physicianid
+                           select new ProviderModel
+                           {
+                               phyId = phy.Physicianid,
+                               firstName = phy.Firstname,
+                               lastName = phy.Lastname,
+                               status = phy.Status.ToString(),
+                               role = role.Name,
+                               onCallStatus = "un available",
+                               notification = phynoti.Isnotificationstopped[0],
+                           };
+            var result = provider.ToList();
+
+            return result;
+        }
     
         public bool StopNotification(int phyId)
         {
@@ -1290,6 +1334,146 @@ namespace BusinessLogic.Services
             _db.SaveChanges();
         }
 
+
+      
+        public void CreateProviderAccount(CreateProviderAccount model)
+        {
+            List<string> validProfileExtensions = new() { ".jpeg", ".png", ".jpg" };
+            List<string> validDocumentExtensions = new() { ".pdf" };
+
+            try
+            {
+                Guid generatedId = Guid.NewGuid();
+
+                Aspnetuser aspUser = new()
+                {
+                    Id = generatedId.ToString(),
+                    Username = model.UserName,
+                    Passwordhash = GenerateSHA256(model.Password),
+                    Email = model.Email,
+                    Phonenumber = model.Phone,
+                    Createddate = DateTime.Now,
+                }; _db.Aspnetusers.Add(aspUser);
+                _db.SaveChanges();
+
+
+                Physician phy = new()
+                {
+                    Aspnetuserid = generatedId.ToString(),
+                    Firstname = model.FirstName,
+                    Lastname = model.LastName,
+                    Email = model.Email,
+                    Mobile = model.Phone,
+                    Medicallicense = model.MedicalLicenseNumber,
+                    Adminnotes = model.AdminNote,
+                    Address1 = model.Address1,
+                    Address2 = model.Address2,
+                    City = model.City,
+                    //Regionid = model.RegionId,
+                    Zip = model.Zip,
+                    Altphone = model.PhoneNumber,
+                    Createdby = "1",
+                    Createddate = DateTime.Now,
+                    Roleid = model.Role,
+                    Npinumber = model.NPINumber,
+                    Businessname = model.BusinessName,
+                    Businesswebsite = model.BusinessWebsite,
+                };
+
+                _db.Physicians.Add(phy);
+                _db.SaveChanges();
+
+
+                Physiciannotification physiciannotification = new()
+                {
+                    Pysicianid = phy.Physicianid,
+                    Isnotificationstopped = new BitArray(1, false),
+                };
+                _db.Physiciannotifications.Add(physiciannotification);
+                _db.SaveChanges();
+
+
+                string path = Path.Combine(_environment.WebRootPath, "PhysicianImages", phy.Physicianid.ToString());
+
+                if (model.Photo != null)
+                {
+                    string fileExtension = Path.GetExtension(model.Photo.FileName);
+                    if (validProfileExtensions.Contains(fileExtension))
+                    {
+                        InsertFileAfterRename(model.Photo, path, "ProfilePhoto");
+                        phy.Photo = Path.GetFileName(model.Photo.FileName);
+
+                    }
+                }
+                if (model.ICA != null)
+                {
+                    string fileExtension = Path.GetExtension(model.ICA.FileName);
+                    if (validDocumentExtensions.Contains(fileExtension))
+                    {
+                        phy.Isagreementdoc = new BitArray(1, true);
+                        InsertFileAfterRename(model.ICA, path, "ICA");
+                    }
+                }
+                if (model.BGCheck != null)
+                {
+                    string fileExtension = Path.GetExtension(model.BGCheck.FileName);
+                    if (validDocumentExtensions.Contains(fileExtension))
+                    {
+                        phy.Isbackgrounddoc = new BitArray(1, true);
+                        InsertFileAfterRename(model.BGCheck, path, "BackgroundCheck");
+                    }
+                }
+                if (model.HIPAACompliance != null)
+                {
+                    string fileExtension = Path.GetExtension(model.HIPAACompliance.FileName);
+                    if (validDocumentExtensions.Contains(fileExtension))
+                    {
+                        phy.Isnondisclosuredoc = new BitArray(1, true);
+                        InsertFileAfterRename(model.HIPAACompliance, path, "HipaaCompliance");
+                    }
+                }
+                if (model.NDA != null)
+                {
+                    string fileExtension = Path.GetExtension(model.NDA.FileName);
+                    if (validDocumentExtensions.Contains(fileExtension))
+                    {
+                        phy.Isnondisclosuredoc = new BitArray(1, true);
+                        InsertFileAfterRename(model.NDA, path, "NDA");
+                    }
+                }
+                _db.Physicians.Update(phy);
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+            };
+
+
+        }
+        public void InsertFileAfterRename(IFormFile file, string path, string updateName)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string[] oldfiles = Directory.GetFiles(path, updateName + ".*");
+            foreach (string f in oldfiles)
+            {
+                System.IO.File.Delete(f);
+            }
+
+            string extension = Path.GetExtension(file.FileName);
+
+            string fileName = updateName + extension;
+
+            string fullPath = Path.Combine(path, fileName);
+
+            using FileStream stream = new(fullPath, FileMode.Create);
+            file.CopyTo(stream);
+        }
+
+
         public EditProviderModel EditProviderProfile(int phyId, string tokenEmail)
         {
             var phy = _db.Physicians.Where(r => r.Physicianid == phyId).Select(r => r).First();
@@ -1334,6 +1518,8 @@ namespace BusinessLogic.Services
             return _profile;
         }
 
+
+     
 
         public List<Role> GetRoles()
         {
@@ -1754,6 +1940,163 @@ namespace BusinessLogic.Services
                 _db.SaveChanges();
             }
 
+
+        }
+
+        public bool CreateAdminAccount(CreateAdminAccount obj, string email)
+        {
+            var emailExists = _db.Aspnetusers.Where(x => x.Email == obj.Email).Any();
+            if (emailExists)
+            {
+                return false;
+            }
+            else
+            {
+                Guid id = Guid.NewGuid();
+                Aspnetuser aspnetuser = new()
+                {
+                    Id = id.ToString(),
+                    Username = obj.UserName,
+                    Passwordhash = GenerateSHA256(obj.AdminPassword),
+                    Email = obj.Email,
+                    Phonenumber = obj.AdminPhone,
+                    Createddate = DateTime.Now,
+
+
+                };
+                _db.Aspnetusers.Add(aspnetuser);
+                _db.SaveChanges();
+
+                var aspnetId = _db.Aspnetusers.Where(x => x.Email == email).Select(x => x.Id).First();
+                Admin admin = new Admin();
+
+
+                admin.Aspnetuserid = aspnetuser.Id;
+                admin.Firstname = obj.FirstName;
+                admin.Lastname = obj.LastName;
+                admin.Email = obj.Email;
+
+                admin.Mobile = obj.AdminPhone;
+                admin.Address1 = obj.Address1;
+
+                admin.Address2 = obj.Address2;
+                admin.Zip = obj.Zip;
+                admin.Altphone = obj.BillingPhone;
+                admin.Createdby = aspnetId;
+                admin.Createddate = DateTime.Now;
+                admin.Isdeleted = new BitArray(1, false);
+
+
+                _db.Admins.Add(admin);
+                _db.SaveChanges();
+
+
+
+
+                var AdminRegions = obj.AdminRegion.ToList();
+                for (int i = 0; i < AdminRegions.Count; i++)
+                {
+                    Adminregion adminregion = new()
+                    {
+                        Adminid = admin.Adminid,
+                        Regionid = _db.Regions.First(x => x.Regionid == AdminRegions[i]).Regionid,
+                    };
+
+                    _db.Adminregions.Add(adminregion);
+                    _db.SaveChanges();
+                }
+
+                return true;
+
+            }
+
+
+        }
+        public CreateShiftModel GetCreateShift()
+        {
+            var regionList = _db.Regions.ToList();
+            var phy = _db.Physicians.ToList();
+
+            CreateShiftModel obj = new()
+            {
+                Regions = regionList,
+                Physicians = phy
+            };
+
+            return obj;
+        }
+
+
+        public void CreateNewShiftSubmit(string selectedDays, CreateShiftModel obj, int adminId)
+        {
+            var admin = _db.Admins.FirstOrDefault(x => x.Adminid == adminId);
+
+            var day = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedDays);
+
+            var curDate = obj.StartDate;
+            var curDay = (int)obj.StartDate.DayOfWeek;
+
+            if (!obj.IsRepeat)
+            {
+                var shift = new Shift()
+                {
+                    Physicianid = obj.PhysicianId,
+                    Startdate = obj.StartDate,
+                    Isrepeat = new BitArray(0, false),
+                    Repeatupto = obj.RepeatUpto,
+                    Createdby = admin.Aspnetuserid,
+                    Createddate = DateTime.Now,
+                };
+                _db.Shifts.Add(shift);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var shift = new Shift()
+                {
+                    Physicianid = obj.PhysicianId,
+                    Startdate = obj.StartDate,
+                    Isrepeat = new BitArray(1, true),
+                    Repeatupto = obj.RepeatUpto,
+                    Createdby = admin.Aspnetuserid,
+                    Createddate = DateTime.Now,
+                };
+                _db.Shifts.Add(shift);
+                _db.SaveChanges();
+
+
+                for (int i = 1; i <= obj.RepeatUpto; i++)
+                {
+                    foreach (var item in day)
+                    {
+                        if (item.Checked)
+                        {
+                            var shiftDay = 7 * i - curDay + item.Id;
+                            var shiftDate = curDate.AddDays(shiftDay);
+
+                            var shiftdetail = new Shiftdetail()
+                            {
+                                Shiftid = shift.Shiftid,
+                                Shiftdate = shiftDate,
+                                Starttime = obj.StartTime,
+                                Endtime = obj.EndTime,
+                                Status = (short)_db.Physicians.FirstOrDefault(x => x.Physicianid == obj.PhysicianId).Status,
+
+                            };
+                            _db.Shiftdetails.Add(shiftdetail);
+                            _db.SaveChanges();
+
+                            var shiftRegion = new Shiftdetailregion()
+                            {
+                                Regionid = obj.RegionId,
+                                Shiftdetailid = shiftdetail.Shiftdetailid,
+                            };
+                            _db.Shiftdetailregions.Add(shiftRegion);
+                            _db.SaveChanges();
+                        }
+                    }
+                }
+            }
 
         }
 

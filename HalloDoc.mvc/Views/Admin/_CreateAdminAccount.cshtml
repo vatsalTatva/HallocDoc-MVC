@@ -1,0 +1,192 @@
+﻿@using DataAccess.CustomModels;
+@model CreateAdminAccount;
+
+<div class="container">
+    <div class=" d-flex justify-content-between mt-4" >
+        <h4>
+            Create Admin Account
+        </h4>
+        <button onclick="location.href='@Url.Action("AdminDashboard", "Admin")'" id="back-btn">&lt; Back</button>
+    </div>
+    <div class="justify-content-center shadow bg-white my-4">
+        <div class="viewCaseForm form-floating patient-request-form p-3">
+            <form method="post" asp-controller="Admin" asp-action="AdminAccount" class="mb-4">
+                <h5>Account Information</h5>
+                <div class="row g-2 m-1">
+                    <div class="col-4">
+                        <div class="form-floating">
+                            <input asp-for="UserName" type="text" class="form-control" id="AdminUserName">
+                            <label for="">User Name</label>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-floating">
+                            <input asp-for="AdminPassword" type="password" class="form-control" id="AdminPassword">
+                            <label for="floatingSelectGrid">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <select class="form-select mb-3" id="role">
+                                <option>Active</option>
+                                <option>Out</option>
+                                <option>Died</option>
+                            </select>
+                            <label for="">Role</label>
+                        </div>
+                    </div>
+                </div>
+
+                <h5>Administration Information</h5>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="FirstName" type="text" class="form-control" id="AdminFirstName">
+                            <label for="">First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="LastName" type="text" class="form-control" id="AdminLastName">
+                            <label for="floatingSelectGrid">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="email" asp-for="Email" class="form-control" id="AdminEmail">
+                            <label for="">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="email" asp-for="ConfirmEmail" class="form-control" id="AdminConfirmEmail" onblur="confirmEmail()">
+                            <label for="">Confirm Email</label>
+                            <span class="d-none" style="color:red" id="EmailConfirmVedidation">Email And Confirm Email is Not Matching</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <input type="tel" asp-for="AdminPhone" class="patientPhone form-control w-100 h-100">
+                            <label for="">Phone</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-start flex-wrap mt-4">
+                        @foreach (var region in Model.RegionList)
+                        {
+
+                            <div class="form-floating mt-1 me-3 checkColor ">
+                                <input class="region-checkbox form-check-input border" value="@region.Regionid" name="AdminRegion" type="checkbox" style="" />
+                                <span>@region.Name</span>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+                <h5>Mailing & Billing Information</h5>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" asp-for="Address1" class="form-control" placeholder="">
+                            <label for="">Address1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" asp-for="Address2" class="form-control" placeholder="">
+                            <label for="floatingSelectGrid">Address2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" asp-for="City" placeholder="">
+                            <label for="">City</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <select class="form-select border-0" aria-label="Default select example">
+                                @foreach (var items in Model.RegionList)
+                                {
+                                    <option value="@items.Regionid" selected>@items.Name</option>
+                                }
+                            </select>
+                            <label for="">Select A Region</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" asp-for="Zip" class="form-control" placeholder="">
+                            <label for="">Zip</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <input type="tel" asp-for="BillingPhone" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <label for="">Phone</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button type="button" onclick="createAdminPostFor()" class="btn btn-success float-end m-1">Create Account</button><br />
+            </form>
+        </div>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+</script>
+<script>
+    function confirmEmail() {
+        var email = document.getElementById("AdminEmail").value
+        var confemail = document.getElementById("AdminConfirmEmail").value
+        if (email != confemail) {
+            $('#EmailConfirmVedidation').addClass("d-block").removeClass("d-none");
+            // alert('Email Not Matching!');
+        }
+        else {
+            $('#EmailConfirmVedidation').addClass("d-block").removeClass("d-none");
+        }
+    }
+
+    $('.admin-tab').removeClass("active");
+    $('#access-tab').addClass("active");
+
+    function createAdminPostFor() {
+
+        var payload2 = $("#CreateAdminAccountForm").serializeArray();
+        var RegionArray = [];
+        var checkedBoxes = $('.region-checkbox:checkbox:checked');
+        console.log(RegionArray);
+        ; $.each(checkedBoxes, function () {
+            RegionArray.push(parseInt(this.value))
+        });
+        console.log(payload2);
+        payload2.push({ name: 'RegionArray', value: RegionArray });
+        //if ($("#myProfileThirdForm").valid()) {
+        $.ajax({
+            url: "/Admin/AdminAccount",
+            type: 'POST',
+            data: payload2,
+            success: function (response) {
+                //     if (response.isRegionExists == false) {
+                //         toastr.error("State doesn't exists !!");
+                //     }
+                //     else if (response.isSubmit == true) {
+                //         toastr.success("Data Updated");
+                //     } else {
+                //         toastr.error("Change atleast one field");
+                //     }
+            },
+
+            error: function (e) {
+                alert("Error");
+            },
+        });
+        //}
+    }
+</script>

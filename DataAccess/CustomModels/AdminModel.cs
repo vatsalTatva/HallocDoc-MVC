@@ -77,6 +77,13 @@ namespace DataAccess.CustomModels
         public int? CurrentPage { get; set; }
     }
 
+    public class FilterModel
+    {
+        public string? searchWord { get; set; }
+        public int? requestType { get; set; }
+        public int? regionId { get; set; }
+
+    }
     public class ViewCaseViewModel
     {
         public int Requestclientid { get; set; }
@@ -363,6 +370,11 @@ namespace DataAccess.CustomModels
         public string? message { get; set; }
     }
 
+    public class ProviderModel2
+    {
+        public List<ProviderModel>? providerModels { get; set; }
+        public List<Region>? regions { get; set; }
+    }
  
     public class EditProviderModel
     {
@@ -481,6 +493,87 @@ namespace DataAccess.CustomModels
     public class CreateAccess
     {
         public List<Menu> Menu { get; set; }
+    }
+    public class CreateShiftModel
+    {
+        public int RegionId { get; set; }
+
+        public int PhysicianId { get; set; }
+
+        public DateOnly StartDate { get; set; }
+
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
+
+        public bool IsRepeat { get; set; }
+
+        public string? WeekDays { get; set; }
+
+        public int? RepeatUpto { get; set; }
+
+        public IEnumerable<Region> Regions { get; set; }
+        public IEnumerable<Physician> Physicians { get; set; }
+
+        public IEnumerable<CheckBoxData> Days { get; set; }
+
+    }
+    public class CheckBoxData
+    {
+        public int Id { get; set; }
+        public string value { get; set; }
+
+        public bool Checked { get; set; }
+    }
+
+    public class CreateProviderAccount
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public List<Role> RolesList { get; set; }
+        public int Role { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string MedicalLicenseNumber { get; set; }
+        public string NPINumber { get; set; }
+        public List<Region> RegionList { get; set; }
+        public List<int> ProviderRegion { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+        public string Phone { get; set; }
+        public string BusinessName { get; set; }
+        public string BusinessWebsite { get; set; }
+        public string AdminNote { get; set; }
+        public IFormFile Photo { get; set; }
+        public IFormFile ICA { get; set; }
+        public IFormFile BGCheck { get; set; }
+        public IFormFile HIPAACompliance { get; set; }
+        public IFormFile NDA { get; set; }
+    }
+    public class CreateAdminAccount
+    {
+        public string? UserName { get; set; }
+        public string? AdminPassword { get; set; }
+        public short? Status { get; set; }
+        public string? Role { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? AdminPhone { get; set; }
+        public string? Email { get; set; }
+        public string? ConfirmEmail { get; set; }
+        public List<Region>? RegionList { get; set; }
+        public IEnumerable<int> AdminRegion { get; set; }
+        public string? Address1 { get; set; }
+        public string? Address2 { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? Zip { get; set; }
+        public string? BillingPhone { get; set; }
+        public int[] RegionArray { get; set; }
     }
 }
 

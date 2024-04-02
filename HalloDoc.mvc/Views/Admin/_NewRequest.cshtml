@@ -41,7 +41,7 @@
         </div>
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating">
-                <select class="form-select" id="newRegionFilter" aria-label="Floating label select example">
+                <select class="form-select" id="newRegionFilter" onchange="FilterData()" aria-label="Floating label select example">
                     <option disabled selected>Regions</option>
                     @foreach(var item in Model.regionList)
                     {
@@ -275,18 +275,26 @@
         Export(request);
     });
 
-    $('#newRegionFilter').on('change', function () {
-        var searchRegion = $('#newRegionFilter').val();
+    //$('#newRegionFilter').on('change',
+        
 
+    //    FilterData
+        
+    //);
+
+    function FilterData(){
+
+        var searchRegion = $('#newRegionFilter').val();
         $.ajax({
             url: '/Admin/FilterRegion',
             type: 'GET',
             data: { regionId: searchRegion, tabNo: 1 },
             success: function (response) {
                 $("#tab1").html(response);
+                $('#newRegionFilter').val(searchRegion);
             }
         })
-    })
+    }
    
     function allElements() {
 
@@ -427,32 +435,34 @@
 
 
     }
-    $(document).ready(function () {
 
-        $('.data-table').DataTable({
-            "initComplete": function (settings, json) {
+    //client side pagination
+    //$(document).ready(function () {
 
-                $('#my-search-input').val(settings.oPreviousSearch.sSearch);
+    //    $('.data-table').DataTable({
+    //        "initComplete": function (settings, json) {
 
-                $('#my-search-input').on('keyup', function () {
-                    var searchValue = $(this).val();
-                    settings.oPreviousSearch.sSearch = searchValue;
-                    settings.oApi._fnReDraw(settings);
-                });
-            },
-            "lengthMenu": [[5, 10, -1], [5, 10, "All"]],
-            "pageLength": 5,
-            language: {
-                oPaginate: {
-                    sNext: '<i class="bi bi-caret-right-fill text-info"></i>',
-                    sPrevious: '<i class="bi bi-caret-left-fill text-info"></i>'
+    //            $('#my-search-input').val(settings.oPreviousSearch.sSearch);
 
-                }
-            }
-        });
-        // $('.dataTables_length').hide();
-        $('.dataTables_filter').hide();
-    });
+    //            $('#my-search-input').on('keyup', function () {
+    //                var searchValue = $(this).val();
+    //                settings.oPreviousSearch.sSearch = searchValue;
+    //                settings.oApi._fnReDraw(settings);
+    //            });
+    //        },
+    //        "lengthMenu": [[5, 10, -1], [5, 10, "All"]],
+    //        "pageLength": 5,
+    //        language: {
+    //            oPaginate: {
+    //                sNext: '<i class="bi bi-caret-right-fill text-info"></i>',
+    //                sPrevious: '<i class="bi bi-caret-left-fill text-info"></i>'
+
+    //            }
+    //        }
+    //    });
+    //    // $('.dataTables_length').hide();
+    //    $('.dataTables_filter').hide();
+    //});
 
 
 

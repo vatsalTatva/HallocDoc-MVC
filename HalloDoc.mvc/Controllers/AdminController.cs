@@ -685,13 +685,49 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
-
+        [HttpGet]
         public IActionResult ShowProvider()
         {
-            var model = _adminService.GetProvider();
+            ProviderModel2 model = new ProviderModel2();
+            model.regions = _adminService.RegionTable();
+            model.providerModels = _adminService.GetProvider();
+            return PartialView("_Provider",model);
+        }
+        [HttpGet]
+        public IActionResult ProviderRegionFilter(int regionId)
+        {
+           
+            ProviderModel2 model = new ProviderModel2();
+            model.regions = _adminService.RegionTable();
+            if (regionId == 0)
+            {
+                model.providerModels = _adminService.GetProvider();
+            }
+            else
+            {
+                model.providerModels = _adminService.GetProviderByRegion(regionId);
+            }
             return PartialView("_Provider",model);
         }
 
+
+
+        [HttpGet]
+        public IActionResult CreateProviderAccount()
+        {
+            CreateProviderAccount obj = new CreateProviderAccount();
+            obj.RegionList = _adminService.RegionTable();
+            obj.RolesList = _adminService.GetRoles();
+            return PartialView("_CreateProviderAccount",obj );
+        }
+
+        [HttpPost]
+        public IActionResult CreateProviderAccount(CreateProviderAccount model)
+        {
+
+            _adminService.CreateProviderAccount(model);
+            return RedirectToAction("AdminDashboard");
+        }
 
         [HttpGet]
         public IActionResult ProviderContactModal(int phyId)
@@ -836,6 +872,57 @@ namespace HalloDoc.mvc.Controllers
             List<Physicianlocation> getLocation = _adminService.GetPhysicianlocations();
             return Ok(getLocation);
         }
+
+        [HttpGet]
+        public IActionResult CreateAdminAccount()
+        {
+            CreateAdminAccount obj = new CreateAdminAccount();
+            obj.RegionList = _adminService.RegionTable();
+            return PartialView("_CreateAdminAccount", obj);
+        }
+
+        [HttpPost]
+        public IActionResult AdminAccount(CreateAdminAccount model)
+        {
+            var email = GetTokenEmail();
+            var isCreated = _adminService.CreateAdminAccount(model, email);
+            if (isCreated)
+            {
+                _notyf.Success("Account Created!!");
+                return RedirectToAction("AdminDashboard");
+            }
+            else
+            {
+                _notyf.Error("Somethng Went Wrong!!");
+                return PartialView("_createadminaccount");
+            }
+        }
+
+        public IActionResult CreateShift()
+        {
+            var obj = _adminService.GetCreateShift();
+            return View("_CreateShift", obj);
+        }
+
+        public IActionResult Scheduling()
+        {
+            //var obj = _adminService.CreateNewShiftSubmit();
+            return PartialView("_Scheduling");
+        }
+
+        public IActionResult MonthTable()
+        {
+            return PartialView("_SchedulingMonthTable");
+        }
+        public IActionResult WeekTable()
+        {
+            return PartialView("_SchedulingWeekTable");
+        }
+        public IActionResult DayTable()
+        {
+            return PartialView("_SchedulingDayTable");
+        }
+
 
 
     }

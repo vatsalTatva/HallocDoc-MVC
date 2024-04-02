@@ -72,10 +72,13 @@ namespace BusinessLogic.Interfaces
         bool CreateRequest(CreateRequestModel model, string sessionEmail);
 
         List<ProviderModel> GetProvider();
+        List<ProviderModel> GetProviderByRegion(int regionId);
+
         //ProviderModel ProviderContact(int phyId);
         public bool StopNotification(int phyId);
 
         bool ProviderContactEmail(int phyIdMain, string msg);
+        void CreateProviderAccount(CreateProviderAccount model);
         EditProviderModel EditProviderProfile(int phyId, string tokenEmail);
         List<Region> RegionTable();
         List<PhysicianRegionTable> PhyRegionTable(int phyId);
@@ -96,5 +99,10 @@ namespace BusinessLogic.Interfaces
         bool PhysicianBusinessInfoUpdate(EditProviderModel2 dataMain);
         bool EditOnBoardingData(EditProviderModel2 dataMain);
         void editProviderDeleteAccount(int phyId);
+        bool CreateAdminAccount(CreateAdminAccount obj, string email);
+        void CreateNewShiftSubmit(string selectedDays, CreateShiftModel obj, int adminId);
+
+        CreateShiftModel GetCreateShift();
+
     }
 }
