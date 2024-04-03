@@ -117,11 +117,15 @@ namespace BusinessLogic.Services
             return dashboardModel;
         }
 
-        public DashboardModel GetRequestByRegion(int regionId,int tabNo)
+        public DashboardModel GetRequestByRegion(FilterModel filterModel)
         {
             DashboardModel model = new DashboardModel();
-            model = GetRequestsByStatus(tabNo,1);
-            model.adminDashTableList = model.adminDashTableList.Where(x => x.regionId == regionId).ToList();
+            model = GetRequestsByStatus(filterModel.tabNo, 1);
+            if (filterModel.regionId != 0)
+            {
+                model.adminDashTableList = model.adminDashTableList.Where(x => x.regionId == filterModel.regionId).ToList();
+            }
+            
             return model;
         }
         public StatusCountModel GetStatusCount()
@@ -1336,7 +1340,7 @@ namespace BusinessLogic.Services
 
 
       
-        public void CreateProviderAccount(CreateProviderAccount model)
+        public bool CreateProviderAccount(CreateProviderAccount model)
         {
             List<string> validProfileExtensions = new() { ".jpeg", ".png", ".jpg" };
             List<string> validDocumentExtensions = new() { ".pdf" };
@@ -1443,9 +1447,11 @@ namespace BusinessLogic.Services
                 }
                 _db.Physicians.Update(phy);
                 _db.SaveChanges();
+                return true;
             }
             catch (Exception e)
             {
+                return false;
             };
 
 
@@ -2098,6 +2104,146 @@ namespace BusinessLogic.Services
                 }
             }
 
+        }
+        //************Records****************
+
+        public List<RequestsRecordModel> SearchRecords(RecordsModel recordsModel)
+        {
+            //List<requestsRecordModel> listdata = new List<requestsRecordModel>();
+            //requestsRecordModel requestsRecordModel = new requestsRecordModel();
+
+            var requestList = _db.Requests.Where(r => r.Isdeleted == null).Select(x => new RequestsRecordModel()
+            {
+                requestid = x.Requestid,
+                requesttypeid = x.Requesttypeid,
+                patientname = x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.Firstname).First(),
+                requestor = x.Firstname,
+                email = x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.Email).First(),
+                contact = x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.Phonenumber).First(),
+                address = x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.Street).First() + " " + x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.City).First() + " " + x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.State).First(),
+                zip = x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.Zipcode).First(),
+                statusId = x.Status,
+                physician = _db.Physicians.Where(r => r.Physicianid == x.Physicianid).Select(r => r.Firstname).First(),
+                physicianNote = x.Requestnotes.Where(r => r.Requestid == x.Requestid).Select(r => r.Physiciannotes).First(),
+                AdminNote = x.Requestnotes.Where(r => r.Requestid == x.Requestid).Select(r => r.Adminnotes).First(),
+                pateintNote = x.Requestclients.Where(r => r.Requestid == x.Requestid).Select(r => r.Notes).First(),
+            }).ToList();
+
+            if (recordsModel != null)
+            {
+                if (recordsModel.searchRecordOne != null)
+                {
+                    requestList = requestList.Where(r => r.statusId == recordsModel.searchRecordOne).Select(r => r).ToList();
+                }
+
+                if (recordsModel.searchRecordTwo != null)
+                {
+                    requestList = requestList.Where(r => r.patientname.Trim().ToLower().Contains(recordsModel.searchRecordTwo.Trim().ToLower())).Select(r => r).ToList();
+                }
+
+                if (recordsModel.searchRecordThree != null)
+                {
+                    requestList = requestList.Where(r => r.requesttypeid == recordsModel.searchRecordThree).Select(r => r).ToList();
+                }
+
+                if (recordsModel.searchRecordSix != null)
+                {
+                    requestList = requestList.Where(r => r.requestor.Trim().ToLower().Contains(recordsModel.searchRecordSix.Trim().ToLower())).Select(r => r).ToList();
+                }
+
+                if (recordsModel.searchRecordSeven != null)
+                {
+                    requestList = requestList.Where(r => r.email.Trim().ToLower().Contains(recordsModel.searchRecordSeven.Trim().ToLower())).Select(r => r).ToList();
+                }
+
+                if (recordsModel.searchRecordEight != null)
+                {
+                    requestList = requestList.Where(r => r.contact.Trim().ToLower().Contains(recordsModel.searchRecordEight.Trim().ToLower())).Select(r => r).ToList();
+                }
+            }
+
+            return requestList;
+        }
+
+        //public void DeleteRecords(int reqId)
+        //{
+        //    var reqClient = _context.Requests.Where(r => r.Requestid == reqId).Select(r => r).First();
+
+        //    if (reqClient.Isdeleted == null)
+        //    {
+        //        reqClient.Isdeleted = new BitArray(1, true);
+        //        _context.SaveChanges();
+        //    }
+        //}
+
+        //public byte[] GenerateExcelFile(List<requestsRecordModel> recordsModel)
+        //{
+        //    ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; using (var excelPackage = new ExcelPackage())
+        //    {
+        //        var worksheet = excelPackage.Workbook.Worksheets.Add("Requests");
+
+        //        // Add headers
+        //        worksheet.Cells[1, 1].Value = "Patient Name";
+        //        worksheet.Cells[1, 2].Value = "Requestor";
+        //        worksheet.Cells[1, 3].Value = "Date Of Service";
+        //        worksheet.Cells[1, 4].Value = "Close Case Date";
+        //        worksheet.Cells[1, 5].Value = "Email";
+        //        worksheet.Cells[1, 6].Value = "Phone Number";
+        //        worksheet.Cells[1, 7].Value = "Address";
+        //        worksheet.Cells[1, 8].Value = "Zip";
+        //        worksheet.Cells[1, 9].Value = "Physician";
+        //        worksheet.Cells[1, 10].Value = "Physician Notes";
+        //        worksheet.Cells[1, 11].Value = "Admin Note";
+        //        worksheet.Cells[1, 12].Value = "Patient Notes";
+
+        //        // Populate data
+        //        for (int i = 0; i < recordsModel.Count; i++)
+        //        {
+        //            var rowData = recordsModel[i];
+        //            worksheet.Cells[i + 2, 1].Value = rowData.patientname;
+        //            worksheet.Cells[i + 2, 2].Value = rowData.requestor;
+        //            worksheet.Cells[i + 2, 3].Value = rowData.dateOfService;
+        //            worksheet.Cells[i + 2, 4].Value = rowData.closeCaseDate;
+        //            worksheet.Cells[i + 2, 5].Value = rowData.email;
+        //            worksheet.Cells[i + 2, 6].Value = rowData.contact;
+        //            worksheet.Cells[i + 2, 7].Value = rowData.address;
+        //            worksheet.Cells[i + 2, 8].Value = rowData.zip;
+        //            worksheet.Cells[i + 2, 9].Value = rowData.physician;
+        //            worksheet.Cells[i + 2, 10].Value = rowData.physicianNote;
+        //            worksheet.Cells[i + 2, 11].Value = rowData.AdminNote;
+        //            worksheet.Cells[i + 2, 12].Value = rowData.pateintNote;
+        //        }
+
+        //        // Convert package to bytes for download
+        //        return excelPackage.GetAsByteArray();
+        //    }
+        //}
+        public List<User> PatientRecords(PatientRecordsModel patientRecordsModel)
+        {
+
+            var users = _db.Users.ToList();
+
+            if (patientRecordsModel != null)
+            {
+                if (patientRecordsModel.searchRecordOne != null)
+                {
+                    users = users.Where(r => r.Firstname.Trim().ToLower().Contains(patientRecordsModel.searchRecordOne.Trim().ToLower())).Select(r => r).ToList();
+                }
+                if (patientRecordsModel.searchRecordTwo != null)
+                {
+                    users = users.Where(r => r.Lastname.Trim().ToLower().Contains(patientRecordsModel.searchRecordTwo.Trim().ToLower())).Select(r => r).ToList();
+                }
+                if (patientRecordsModel.searchRecordThree != null)
+                {
+                    users = users.Where(r => r.Email.Trim().ToLower().Contains(patientRecordsModel.searchRecordThree.Trim().ToLower())).Select(r => r).ToList();
+                }
+                if (patientRecordsModel.searchRecordFour != null)
+                {
+                    users = users.Where(r => r.Mobile.Trim().ToLower().Contains(patientRecordsModel.searchRecordFour.Trim().ToLower())).Select(r => r).ToList();
+                }
+            }
+
+            return users;
         }
 
     }

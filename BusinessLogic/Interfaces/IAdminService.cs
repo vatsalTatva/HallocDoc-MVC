@@ -15,7 +15,7 @@ namespace BusinessLogic.Interfaces
     {
         Aspnetuser GetAspnetuser(string email);
         DashboardModel GetRequestsByStatus(int status, int CurrentPage);
-        DashboardModel GetRequestByRegion(int regionId,int tabNo);
+        DashboardModel GetRequestByRegion(FilterModel filterModel);
 
         StatusCountModel GetStatusCount();
 
@@ -78,7 +78,7 @@ namespace BusinessLogic.Interfaces
         public bool StopNotification(int phyId);
 
         bool ProviderContactEmail(int phyIdMain, string msg);
-        void CreateProviderAccount(CreateProviderAccount model);
+        bool CreateProviderAccount(CreateProviderAccount model);
         EditProviderModel EditProviderProfile(int phyId, string tokenEmail);
         List<Region> RegionTable();
         List<PhysicianRegionTable> PhyRegionTable(int phyId);
@@ -103,6 +103,7 @@ namespace BusinessLogic.Interfaces
         void CreateNewShiftSubmit(string selectedDays, CreateShiftModel obj, int adminId);
 
         CreateShiftModel GetCreateShift();
-
+        List<RequestsRecordModel> SearchRecords(RecordsModel recordsModel);
+        List<User> PatientRecords(PatientRecordsModel patientRecordsModel);
     }
 }

@@ -82,6 +82,7 @@ namespace DataAccess.CustomModels
         public string? searchWord { get; set; }
         public int? requestType { get; set; }
         public int? regionId { get; set; }
+        public int tabNo { get; set; }
 
     }
     public class ViewCaseViewModel
@@ -574,6 +575,51 @@ namespace DataAccess.CustomModels
         public string? Zip { get; set; }
         public string? BillingPhone { get; set; }
         public int[] RegionArray { get; set; }
+    }
+    public class RecordsModel
+    {
+        public List<RequestsRecordModel>? requestListMain { get; set; }
+        public int? searchRecordOne { get; set; }
+        public string? searchRecordTwo { get; set; }
+        public int? searchRecordThree { get; set; }
+        public DateOnly? searchRecordFour { get; set; }
+        public DateOnly? searchRecordFive { get; set; }
+        public string? searchRecordSix { get; set; }
+        public string? searchRecordSeven { get; set; }
+        public string? searchRecordEight { get; set; }
+    }
+    public class RequestsRecordModel
+    {
+        public string? patientname { get; set; }
+        public string? requestor { get; set; }
+        public DateTime? dateOfService { get; set; }
+        public DateTime? closeCaseDate { get; set; }
+        public string? email { get; set; }
+        public string? contact { get; set; }
+        public string? address { get; set; }
+        public string? zip { get; set; }
+        public string? status { get; set; }
+        public int? statusId { get; set; }
+        public string? physician { get; set; }
+        public string? physicianNote { get; set; }
+        public string? providerNote { get; set; }
+        public string? AdminNote { get; set; }
+        public string? pateintNote { get; set; }
+        public int? requestid { get; set; }
+        public int? requesttypeid { get; set; }
+        public int? userid { get; set; }
+        public int? flag { get; set; }
+      
+    }
+
+    public class PatientRecordsModel
+    {
+        public List<User>? users { get; set; }
+        public string? searchRecordOne { get; set; }
+        public string? searchRecordTwo { get; set; }
+        public string? searchRecordThree { get; set; }
+        public string? searchRecordFour { get; set; }
+        public int? flag { get; set; }
     }
 }
 

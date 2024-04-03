@@ -35,13 +35,13 @@
     <div class="row mt-3 bg-white">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="my-search-input" placeholder="Search">
+                <input type="text" class="form-control" id="searchword" oninput="FilterData()" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating">
-                <select class="form-select" id="newRegionFilter" onchange="FilterData()" aria-label="Floating label select example">
+                <select class="form-select" id="newRegionFilter" onchange="FilterData(1)" aria-label="Floating label select example">
                     <option disabled selected>Regions</option>
                     @foreach(var item in Model.regionList)
                     {
@@ -251,7 +251,7 @@
             else
             {
                 <tr>
-                    <td colspan="3" style="text-align: center;">No records found.</td>
+                    <td colspan="9" style="text-align: center;">No records found.</td>
                 </tr>
             }
             
@@ -282,13 +282,18 @@
         
     //);
 
-    function FilterData(){
+    function FilterData(tabNo){
 
         var searchRegion = $('#newRegionFilter').val();
+        var searchword = $('#searchword').val();
+        let payload = {
+            regionId: searchRegion,
+            tabNo:tabNo
+        }
         $.ajax({
             url: '/Admin/FilterRegion',
             type: 'GET',
-            data: { regionId: searchRegion, tabNo: 1 },
+            data:payload,
             success: function (response) {
                 $("#tab1").html(response);
                 $('#newRegionFilter').val(searchRegion);

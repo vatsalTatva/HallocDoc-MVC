@@ -148,9 +148,9 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
-        public IActionResult FilterRegion(int regionId,int tabNo)
+        public IActionResult FilterRegion(FilterModel filterModel)
         {
-            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            var list = _adminService.GetRequestByRegion(filterModel);
             return PartialView("_NewRequest", list);
         }
 
@@ -725,8 +725,8 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult CreateProviderAccount(CreateProviderAccount model)
         {
 
-            _adminService.CreateProviderAccount(model);
-            return RedirectToAction("AdminDashboard");
+            bool isCreated = _adminService.CreateProviderAccount(model);
+            return Json(new {isCreated=isCreated});
         }
 
         [HttpGet]
@@ -923,7 +923,36 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_SchedulingDayTable");
         }
 
+        [HttpGet]
+        public IActionResult SearchRecords(RecordsModel recordsModel)
+        {
+            RecordsModel model = new RecordsModel();
+            model.requestListMain = _adminService.SearchRecords(recordsModel);
+            if (model.requestListMain.Count() == 0)
+            {
+                RequestsRecordModel rec = new RequestsRecordModel();
+                rec.flag = 1;
+                model.requestListMain.Add(rec);
+            }
 
+            return PartialView("_SearchRecord",model);
+
+            
+        }
+
+        [HttpGet]
+        public IActionResult PatientRecords(PatientRecordsModel patientRecordsModel)
+        {
+            PatientRecordsModel model = new PatientRecordsModel();
+            model.users = _adminService.PatientRecords(patientRecordsModel);
+
+            if (model.users.Count() == 0)
+            {
+                model.flag = 1;
+            }
+
+            return PartialView("_PatientRecord", model);
+        }
 
     }
 
