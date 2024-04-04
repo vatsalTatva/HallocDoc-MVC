@@ -954,6 +954,84 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_PatientRecord", model);
         }
 
+        public IActionResult Partners()
+        {
+            return PartialView("_Partners");
+        }
+        public IActionResult BusinessTable(string vendor,string profession)
+        {
+            var obj = _adminService.BusinessTable(vendor, profession);
+            return PartialView("_BusinessTable", obj);
+        }
+
+        //public IActionResult Patners()
+        //{
+        //    AddBusinessModel obj = new()
+        //    {
+        //        RegionList = _adminService.GetRegion(),
+        //        ProfessionList = _adminService.GetProfession()
+        //    };
+        //    return PartialView("_Partners", obj);
+        //}
+
+        
+
+        public IActionResult AddVendor()
+        {
+            AddBusinessModel obj = new()
+            {
+                RegionList = _adminService.RegionTable(),
+                ProfessionList = _adminService.GetProfession()
+            };
+            return PartialView("_AddVendor", obj);
+        }
+
+        [HttpPost]
+        public IActionResult AddVendor(AddBusinessModel obj)
+        {
+            if (obj.BusinessName != null && obj.FaxNumber != null)
+            {
+                bool isAdded=_adminService.AddBusiness(obj);
+                
+                return Json(new { isAdded=isAdded });
+            }
+            else
+            {
+                _notyf.Error("Please Enter a Data");
+                return BadRequest();
+            }
+
+
+           
+
+        }
+
+        [HttpGet]
+        public IActionResult SearchVendor(string vendor, string profession)
+        {
+            var obj = _adminService.BusinessTable(vendor,profession);
+            return PartialView("_BusinessTable", obj);
+        }
+        public IActionResult DeleteBusiness(int VendorId)
+        {
+            var isDeleted = _adminService.RemoveBusiness(VendorId);
+            return Json(new { isDeleted=isDeleted });
+        }
+
+        public IActionResult EditBusinessData(int VendorId)
+        {
+            var obj = _adminService.GetEditBusiness(VendorId);
+            return PartialView("_EditBusiness", obj);
+        }
+
+        //[HttpPost]
+        //public IActionResult EditBusinessSubmit(EditBusinessModel model)
+        //{
+        //    _adminService.EditBusiness(model);
+        //    _notyf.Success("Data Updated!!");
+        //    return Partners();
+        //}
+
     }
 
 

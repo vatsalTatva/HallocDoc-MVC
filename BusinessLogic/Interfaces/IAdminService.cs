@@ -105,5 +105,10 @@ namespace BusinessLogic.Interfaces
         CreateShiftModel GetCreateShift();
         List<RequestsRecordModel> SearchRecords(RecordsModel recordsModel);
         List<User> PatientRecords(PatientRecordsModel patientRecordsModel);
+        List<BusinessTableModel> BusinessTable(string vendor, string profession);
+        List<Healthprofessionaltype> GetProfession();
+        bool AddBusiness(AddBusinessModel obj);
+        bool RemoveBusiness(int VendorId);
+        AddBusinessModel GetEditBusiness(int VendorId);
     }
 }

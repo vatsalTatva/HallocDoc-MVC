@@ -135,7 +135,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="partner-tab" data-bs-toggle="tab"
                                 data-bs-target="#partner-tab-pane" type="button" role="tab" aria-controls="partner-tab-pane"
-                                aria-selected="false">
+                                aria-selected="false" onclick="showPartners()">
                             Partners
                         </button>
                     </li>
@@ -663,6 +663,18 @@
             })
         }
 
+        function showPartners(){
+            $.ajax({
+                url: '/Admin/Partners',
+                type: 'GET',
+                success: function (response) {
+                    $("#partner-tab-pane").html(response);
+                },
+                error: function (e) {
+                    alert("Error loading partial view");
+                }
+            })
+        }
     </script>
  
 

@@ -60,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FjdGl2ZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_AddVendor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FkZFZlbmRvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_AllRequests.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FsbFJlcXVlc3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -70,6 +74,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_BlockCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0Jsb2NrQ2FzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_BusinessTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0J1c2luZXNzVGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_CancelCase.cshtml]
@@ -104,6 +112,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NyZWF0ZVNoaWZ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_EditBusiness.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRCdXNpbmVzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_EditProvider.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRQcm92aWRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -114,6 +126,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_NewRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX05ld1JlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_Partners.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1BhcnRuZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_PatientRecord.cshtml]

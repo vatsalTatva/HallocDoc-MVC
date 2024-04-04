@@ -2246,6 +2246,134 @@ namespace BusinessLogic.Services
             return users;
         }
 
+        public List<BusinessTableModel> BusinessTable(string vendor,string profession)
+        {
+            BitArray deletedBit = new BitArray(1, false);
+
+            var obj = (from t1 in _db.Healthprofessionals
+                       join t2 in _db.Healthprofessionaltypes on t1.Profession equals t2.Healthprofessionalid
+                       where t1.Isdeleted == deletedBit
+                       select new BusinessTableModel
+                       {
+                           BusinessId = t1.Vendorid,
+                           BusinessName = t1.Vendorname,
+                           ProfessionId = t2.Healthprofessionalid,
+                           ProfessionName = t2.Professionname,
+                           Email = t1.Email,
+                           PhoneNumber = t1.Phonenumber,
+                           FaxNumber = t1.Faxnumber,
+                           BusinessContact = t1.Businesscontact
+                       });
+            var objList = obj.ToList();
+            if (vendor != null)
+            {
+                objList = objList.Where(x => x.BusinessName.Trim().ToLower().Contains(vendor.Trim().ToLower())).Select(x => x).ToList();
+            }
+            if (profession != null)
+            {
+                objList = objList.Where(x => x.ProfessionName.Trim().ToLower().Contains(profession.Trim().ToLower())).Select(x => x).ToList();
+            }
+            return objList;
+        }
+        public List<Healthprofessionaltype> GetProfession()
+        {
+            var obj = _db.Healthprofessionaltypes.ToList();
+            return obj;
+        }
+        public bool AddBusiness(AddBusinessModel obj)
+        {
+            try
+            {
+                var vendor = _db.Healthprofessionals.Where(x => x.Vendorid == obj.VendorId).First();
+
+                if (vendor != null)
+                {
+                    vendor.Vendorname = obj.BusinessName;
+                    vendor.Profession = obj.ProfessionId;
+                    vendor.Email = obj.Email;
+                    vendor.Faxnumber = obj.FaxNumber;
+                    vendor.Phonenumber = obj.PhoneNumber;
+                    vendor.Businesscontact = obj.BusinessContact;
+                    vendor.Address = obj.Street;
+                    vendor.City = obj.City;
+                    vendor.Zip = obj.Zip;
+                    vendor.Regionid = obj.RegionId;
+
+                    _db.Healthprofessionals.Update(vendor);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    Healthprofessional healthprofessional = new()
+                    {
+                        Vendorname = obj.BusinessName,
+                        Profession = obj.ProfessionId,
+                        Faxnumber = obj.FaxNumber,
+                        Address = obj.Street,
+                        City = obj.City,
+                        State = _db.Regions.Where(x => x.Regionid == obj.RegionId).Select(x => x.Name).First(),
+                        Zip = obj.Zip,
+                        Regionid = obj.RegionId,
+                        Createddate = DateTime.Now,
+                        Businesscontact = obj.BusinessContact,
+                        Phonenumber = obj.PhoneNumber,
+                        Email = obj.Email,
+                        Isdeleted = new BitArray(1, false),
+                    };
+                    _db.Healthprofessionals.Add(healthprofessional);
+                    _db.SaveChanges();
+                }
+               
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        public bool RemoveBusiness(int VendorId)
+        {
+            try
+            {
+                var vendor = _db.Healthprofessionals.FirstOrDefault(x => x.Vendorid == VendorId);
+                if (vendor!=null && vendor.Isdeleted != null)
+                {
+                    vendor.Isdeleted[0] = true;
+                    _db.Healthprofessionals.Update(vendor);
+                    _db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }catch (Exception e)
+            {
+                return false;
+            }
+        }
+        public AddBusinessModel GetEditBusiness(int VendorId)
+        {
+            var vendor = _db.Healthprofessionals.FirstOrDefault(x => x.Vendorid == VendorId);
+
+            var vendorType = _db.Healthprofessionaltypes.FirstOrDefault(x => x.Healthprofessionalid == vendor.Profession);
+            AddBusinessModel obj = new()
+            {
+                VendorId = VendorId,
+                BusinessName = vendor.Vendorname,
+                ProfessionId = (int)vendor.Profession,
+                Email = vendor.Email,
+                PhoneNumber = vendor.Phonenumber,
+                FaxNumber = vendor.Faxnumber,
+                BusinessContact = vendor.Businesscontact,
+                Street = vendor.Address,
+                City = vendor.City,
+                Zip = vendor.Zip,
+                RegionList = RegionTable(),
+                ProfessionList = GetProfession(),
+                RegionId = (int)vendor.Regionid
+            };
+            return obj;
+
+        }
+
     }
 
 }

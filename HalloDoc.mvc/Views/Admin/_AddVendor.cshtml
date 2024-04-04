@@ -1,0 +1,199 @@
+﻿@using DataAccess.CustomModels;
+@model AddBusinessModel;
+
+<div class="container">
+    <div class="d-flex justify-content-between mt-4">
+        <h4>
+            Submit Information
+        </h4>
+
+        <button onclick="showPartners()" id="back-btn">
+            Back
+        </button>
+
+    </div>
+   
+    <div class="mt-4 bg-white form-floating shadow w-100 px-3 pt-3 pb-5">
+
+            <form method="post" id="AddVendorForm">
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="vendorbusinessName" asp-for="BusinessName" placeholder="" />
+                            <label for="userName">Business Name</label>
+                            <small id="vendorbusinessNamereq" style="color:red" class="d-none">Business Name is Required</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select class="form-select mb-3" id="HealthProfessional" asp-for="ProfessionId">
+
+                                <option selected disabled>Select A Profession</option>
+                                @foreach (var item in Model.ProfessionList)
+                                {
+                                    <option value="@item.Healthprofessionalid">@item.Professionname</option>
+                                }
+                            </select>
+                            <label for="role">Select A Profession</label>
+                            <small id="HealthProfessionalreq" style="color:red" class="d-none">please select Profession</small>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="vendorfaxNumber" asp-for="FaxNumber" placeholder="" />
+                            <label for="userName">Fax Number</label>
+                            <small id="vendorfaxNumberreq" style="color:red" class="d-none">Fax Number is Required</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="tel" class="form-control" asp-for="PhoneNumber" placeholder="">
+                            <label for="">Phone Number</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" asp-for="Email" placeholder="">
+                            <label for="">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100">
+                            <input type="tel" class="patientPhone form-control w-100 h-100" asp-for="BusinessContact" placeholder="">
+                            <label for="">Business Contact</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" asp-for="Street" placeholder="">
+                            <label for="">Street</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" asp-for="City" placeholder="">
+                            <label for="">City</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating w-100 h-100 ">
+                            <select class="form-select" aria-label="Default select example" asp-for="RegionId" id="addvendorregion">
+
+                                <option selected disabled>Select A Region</option>
+                                @foreach (var items in Model.RegionList)
+                                {
+                                    <option value="@items.Regionid">@items.Name</option>
+                                }
+                            </select>
+                            <label for="">Select A Region</label>
+                            <small id="addvendorregionreq" style="color:red" class="d-none">Please selecct region</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" asp-for="Zip" placeholder="">
+                            <label for="">Zip/Postal</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="AddVendorData()" class="btn btn-success float-end mt-2 me-1">Save</button><br />
+            </form>
+        </div>
+
+   
+</div>
+
+<script>
+
+    $('#vendorbusinessName').on('input', function () {
+        var business = $('#vendorbusinessName').val();
+        if (business == "") {
+            $('#vendorbusinessNamereq').removeClass("d-none");
+        } else {
+            $('#vendorbusinessNamereq').addClass("d-none");
+        }
+    })
+
+    $('#vendorfaxNumber').on('input', function () {
+        var faxnumber = $('#vendorfaxNumber').val();
+        if (faxnumber == "") {
+            $('#vendorfaxNumberreq').removeClass("d-none");
+        } else {
+            $('#vendorfaxNumberreq').addClass("d-none");
+        }
+    })
+
+    $('#HealthProfessional').on('change', function () {
+        var health = $('#HealthProfessional').val();
+        if (health == null) {
+            $('#HealthProfessionalreq').removeClass("d-none");
+        } else {
+            $('#HealthProfessionalreq').addClass("d-none");
+        }
+    })
+
+    $('#addvendorregion').on('change', function () {
+        var region = $('#addvendorregion').val();
+        if (region == null) {
+            $('#addvendorregionreq').removeClass("d-none");
+        } else {
+            $('#addvendorregionreq').addClass("d-none");
+        }
+    })
+
+    function AddVendorData() {
+     
+        var business = $('#vendorbusinessName').val();
+        if (business == "") {
+            $('#vendorbusinessNamereq').removeClass("d-none");
+        } 
+        var faxnumber = $('#vendorfaxNumber').val();
+        if (faxnumber == "") {
+            $('#vendorfaxNumberreq').removeClass("d-none");
+        } 
+        var health = $('#HealthProfessional').val();
+        if (health == null) {
+            $('#HealthProfessionalreq').removeClass("d-none");
+        } 
+
+        var region = $('#addvendorregion').val();
+        if (region == null) {
+            $('#addvendorregionreq').removeClass("d-none");
+        }
+
+        if ((business != "" && faxnumber != "") && (health != null && region != null)) {
+            var payloadMain = $("#AddVendorForm").serializeArray();
+
+            $.ajax({
+                url: "/Admin/AddVendor",
+                type: 'POST',
+                data: payloadMain,
+                success: function (result) {
+                    if(result.isAdded){
+                        showPartners();
+                        toastr.success("Business Added");
+                    }else{
+                        toastr.error("Something went wrong");
+                    }
+                },
+                error: function () {
+                     alert("Error");
+
+                },
+            });
+        }
+        else {
+            console.log("Error");
+        }
+    }
+</script>
