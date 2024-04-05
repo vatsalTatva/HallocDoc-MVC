@@ -1,0 +1,73 @@
+﻿@using DataAccess.CustomModels;
+@{
+    ViewData["Title"] = "AdminLogin";
+}
+
+@model AdminLoginModel
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="~/css/AdminLogin.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="contianer-fluid">
+        <div class="row">
+
+            <!-- left -->
+            <div class="col-lg-6 col-md-6 col-sm-12 left">
+                <img class="w-100 vh-100" src="/images/banner.jpg" alt="banner">
+            </div>
+
+            <!-- right  -->
+            <div class="col-lg-6 col-md-6 col-sm-12 right">
+                <img onclick="darkMode()" class="d-mode" src="/images/dark.png" alt="dark">
+                <form method="post" class="login">
+                    <img id="logo" src="/images/logo.png" alt="logo">
+                    <h3>Login to your account</h3>
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="email" type="email" class="form-control email" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email</label>
+                        </div>
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                        <div class="input-div form-floating">
+                            <input asp-for="password" type="password" class="form-control password" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <span class="text-danger" asp-validation-for="password"></span>
+                    </div>
+                    <button type="submit">Log In</button>
+
+                    <a id="forget-pass">Forget Password?</a>
+                </form>
+                <footer>Terms of Conditions | Privacy Policy</footer>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- script  -->
+    <script>
+        function darkMode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+
+            var img = element.querySelector(".d-mode");
+            img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
+        }
+    </script>
+</body>
+
+</html>

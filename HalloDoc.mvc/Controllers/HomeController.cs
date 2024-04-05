@@ -1,10 +1,13 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using DataAccess.CustomModels;
 using DataAccess.Enums;
 using HalloDoc.mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -13,13 +16,14 @@ namespace HalloDoc.mvc.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IAdminService _adminService;
         private readonly INotyfService _notyf;
+        private readonly IJwtService _jwtService;
 
-
-        public HomeController(ILogger<HomeController> logger, IAdminService adminService,INotyfService notyfService)
+        public HomeController(ILogger<HomeController> logger, IAdminService adminService,INotyfService notyfService, IJwtService jwtService)
         {
             _logger = logger;
             _adminService = adminService;
             _notyf = notyfService;
+            _jwtService = jwtService;
         }
 
         public IActionResult Index()
@@ -41,6 +45,58 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public static string GenerateSHA256(string input)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+            using (var hashEngine = SHA256.Create())
+            {
+                var hashedBytes = hashEngine.ComputeHash(bytes, 0, bytes.Length);
+                var sb = new StringBuilder();
+                foreach (var b in hashedBytes)
+                {
+                    var hex = b.ToString("x2");
+                    sb.Append(hex);
+                }
+                return sb.ToString();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var aspnetuser = _adminService.GetAspnetuser(adminLoginModel.email);
+                if (aspnetuser != null)
+                {
+                    adminLoginModel.password = GenerateSHA256(adminLoginModel.password);
+                    if (aspnetuser.Passwordhash == adminLoginModel.password)
+                    {
+                        var jwtToken = _jwtService.GetJwtToken(aspnetuser);
+                        Response.Cookies.Append("jwt", jwtToken);
+                        return RedirectToAction("AdminDashboard", "Admin");
+                    }
+                    else
+                    {
+                        _notyf.Error("Password is incorrect");
+
+                        return View();
+                    }
+                }
+                _notyf.Error("Email is incorrect");
+                return View();
+            }
+            else
+            {
+                return View(adminLoginModel);
+            }
         }
 
         [HttpGet]

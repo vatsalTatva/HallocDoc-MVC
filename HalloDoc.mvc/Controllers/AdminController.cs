@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace HalloDoc.mvc.Controllers
 {
+    [CustomAuthorize("Admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
@@ -57,47 +58,47 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult AdminLogin()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var aspnetuser = _adminService.GetAspnetuser(adminLoginModel.email);
-                if (aspnetuser != null)
-                {
-                    adminLoginModel.password = GenerateSHA256(adminLoginModel.password);
-                    if (aspnetuser.Passwordhash == adminLoginModel.password)
-                    {
-                        var jwtToken = _jwtService.GetJwtToken(aspnetuser);
-                        Response.Cookies.Append("jwt", jwtToken);
-                        _notyf.Success("Logged in Successfully");
-                        return RedirectToAction("AdminDashboard", "Admin");
-                    }
-                    else
-                    {
-                        _notyf.Error("Password is incorrect");
+        //[HttpGet]
+        //public IActionResult AdminLogin()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var aspnetuser = _adminService.GetAspnetuser(adminLoginModel.email);
+        //        if (aspnetuser != null)
+        //        {
+        //            adminLoginModel.password = GenerateSHA256(adminLoginModel.password);
+        //            if (aspnetuser.Passwordhash == adminLoginModel.password)
+        //            {
+        //                var jwtToken = _jwtService.GetJwtToken(aspnetuser);
+        //                Response.Cookies.Append("jwt", jwtToken);
+        //                _notyf.Success("Logged in Successfully");
+        //                return RedirectToAction("AdminDashboard", "Admin");
+        //            }
+        //            else
+        //            {
+        //                _notyf.Error("Password is incorrect");
 
-                        return View();
-                    }
-                }
-                _notyf.Error("Email is incorrect");
-                return View();
-            }
-            else
-            {
-                return View(adminLoginModel);
-            }
-        }
+        //                return View();
+        //            }
+        //        }
+        //        _notyf.Error("Email is incorrect");
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return View(adminLoginModel);
+        //    }
+        //}
 
-        [CustomAuthorize("Admin")]
+        
         public IActionResult AdminDashboard()
         {
-           
+            _notyf.Success("Logged in Successfully");
             return View();
         }
 
@@ -105,7 +106,7 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult Logout()
         {
             Response.Cookies.Delete("jwt");
-            return RedirectToAction("AdminLogin", "Admin");
+            return RedirectToAction("AdminLogin", "Home");
         }
 
         public IActionResult GetCount()
@@ -1024,14 +1025,19 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_EditBusiness", obj);
         }
 
-        //[HttpPost]
-        //public IActionResult EditBusinessSubmit(EditBusinessModel model)
-        //{
-        //    _adminService.EditBusiness(model);
-        //    _notyf.Success("Data Updated!!");
-        //    return Partners();
-        //}
+        [HttpGet]
+        public IActionResult ShowUserAccess(short selectedValue)
+        {
+            var obj = _adminService.FetchAccess(selectedValue);
+            return PartialView("_UserAccess", obj);
+        }
 
+        public IActionResult EmailLogs(EmailSmsRecords2 recordsModel)
+        {
+            EmailSmsRecords2 _data = new EmailSmsRecords2();
+            _data = _adminService.EmailSmsLogs(0, recordsModel);
+            return PartialView("_EmailLogs", _data);
+        }
     }
 
 

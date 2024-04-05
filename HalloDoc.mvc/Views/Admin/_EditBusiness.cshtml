@@ -105,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" id="submitEditVendor"  class="btn btn-success float-end m-1 ">Save</button><br />
+                <button type="button" id="submitEditVendor"  class="btn btn-success float-end m-1 ">Save</button><br />
             </form>
         </div>
 
@@ -115,33 +115,57 @@
 <script>
 
 
-    $(function () {
-        $('#submitEditVendor').click(function () {
-            if ($("#EditBusinessDataFrom").valid()) {
-                $('#EditBusinessDataFrom').submit();
-            }
-            else {
-                return false;
-            }
-        });
+    //$(function () {
+    //    $('#submitEditVendor').click(function () {
+    //        if ($("#EditBusinessDataFrom").valid()) {
+    //            $('#EditBusinessDataFrom').submit();
+    //        }
+    //        else {
+    //            return false;
+    //        }
+    //    });
 
-        $("#EditBusinessDataFrom").on("submit", function (event) {
-            event.preventDefault();
-            var payloadMain = $("#EditBusinessDataFrom").serializeArray();
+    //    $("#EditBusinessDataFrom").on("submit", function (event) {
+    //        event.preventDefault();
+    //        var payloadMain = $("#EditBusinessDataFrom").serializeArray();
             
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/Admin/AddVendor",
+    //            data:payloadMain,
+    //            success: function (response) {
+    //                if(response.isAdded){
+    //                    toastr.success("Edited !!");
+    //                    showPartners();
+    //                }else{
+    //                    toastr.error("Something went wrong");
+    //                }
+    //            }
+    //        });
+    //    });
+        
+
+    //})
+    $('#submitEditVendor').click(function () {
+        if ($("#EditBusinessDataFrom").valid()) {
+            var payloadMain = $("#EditBusinessDataFrom").serializeArray();
+
             $.ajax({
                 type: "POST",
                 url: "/Admin/AddVendor",
-                data:payloadMain,
+                data: payloadMain,
                 success: function (response) {
-                    if(response.isAdded){
+                    if (response.isAdded) {
                         toastr.success("Edited !!");
                         showPartners();
-                    }else{
+                    } else {
                         toastr.error("Something went wrong");
                     }
                 }
             });
-        });
-    })
+        }
+        else {
+            return false;
+        }
+    });
 </script>

@@ -110,5 +110,7 @@ namespace BusinessLogic.Interfaces
         bool AddBusiness(AddBusinessModel obj);
         bool RemoveBusiness(int VendorId);
         AddBusinessModel GetEditBusiness(int VendorId);
+        List<UserAccess> FetchAccess(short selectedValue);
+        EmailSmsRecords2 EmailSmsLogs(int tempId, EmailSmsRecords2 recordsModel);
     }
 }

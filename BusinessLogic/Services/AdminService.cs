@@ -2373,7 +2373,166 @@ namespace BusinessLogic.Services
             return obj;
 
         }
+        public List<UserAccess> FetchAccess(short selectedValue)
+        {
+            if (selectedValue == 1)
+            {
+                var admin = from admins in _db.Admins
+                            join role in _db.Roles on admins.Roleid equals role.Roleid
+                            orderby admins.Createddate
+                            select new UserAccess
+                            {
+                                fname = admins.Firstname,
+                                lname = admins.Lastname,
+                                accType = role.Accounttype,
+                                phone = admins.Mobile,
+                                status = admins.Status,
+                            };
+                var result1 = admin.ToList();
+                return result1;
+            }
+            else if (selectedValue == 2)
+            {
+                var physician = from phy in _db.Physicians
+                                join role in _db.Roles on phy.Roleid equals role.Roleid
+                                orderby phy.Createddate
+                                select new UserAccess
+                                {
+                                    fname = phy.Firstname,
+                                    lname = phy.Lastname,
+                                    accType = role.Accounttype,
+                                    phone = phy.Mobile,
+                                    status = phy.Status,
+                                };
+                var result2 = physician.ToList();
+                return result2;
+            }
+            else
+            {
+                var r1 = FetchAccess(1);
+                var r2 = FetchAccess(2);
+                var r3 = r1.Union(r2).ToList();
+                return r3;
+            }
+        }
 
+        public EmailSmsRecords2 EmailSmsLogs(int tempId, EmailSmsRecords2 recordsModel)
+        {
+            EmailSmsRecords2 model = new EmailSmsRecords2();
+            model.tempid = tempId;
+            model.emailRecords = new List<EmailSmsRecords>();
+            if (tempId == 0)
+            {
+                var records = _db.Emaillogs.ToList();
+                foreach (var item in records)
+                {
+                    if (item.Requestid != null)
+                    {
+
+                        var newRecord = new EmailSmsRecords
+                        {
+                            email = item.Emailid,
+                            createddate = item.Createdate,
+                            sentdate = item.Sentdate,
+                            sent = item.Isemailsent[0] ? "Yes" : "No",
+                            recipient = _db.Requestclients.Where(i => i.Requestid == item.Requestid).Select(i => i.Firstname).First(),
+                            rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid.ToString()).Select(i => i.Name).First(),
+                            senttries = item.Senttries,
+                            confirmationNumber = item.Confirmationnumber,
+                        };
+
+                        model.emailRecords.Add(newRecord);
+                    }
+                    else
+                    {
+                        var newRecord = new EmailSmsRecords
+                        {
+                            email = item.Emailid,
+                            createddate = item.Createdate,
+                            sentdate = item.Sentdate,
+                            sent = item.Isemailsent[0] ? "Yes" : "No",
+                            recipient = _db.Physicians.Where(i => i.Physicianid == item.Physicianid).Select(i => i.Firstname).FirstOrDefault(),
+                            rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid.ToString()).Select(i => i.Name).First(),
+                            senttries = item.Senttries,
+                            confirmationNumber = item.Confirmationnumber,
+                        };
+
+                        model.emailRecords.Add(newRecord);
+                    }
+                }
+
+                if (recordsModel != null)
+                {
+                    if (recordsModel.searchRecordOne != null && recordsModel.searchRecordOne != "All")
+                    {
+                        model.emailRecords = model.emailRecords.Where(r => r.rolename.Contains(recordsModel.searchRecordOne)).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordTwo != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(r => r.recipient.Trim().ToLower().Contains(recordsModel.searchRecordTwo.Trim().ToLower())).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordThree != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(r => r.email.Trim().ToLower().Contains(recordsModel.searchRecordThree.Trim().ToLower())).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordFour != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(item => item.createddate >= recordsModel.searchRecordFour).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordFive != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(item => item.createddate <= recordsModel.searchRecordFive).Select(r => r).ToList();
+                    }
+                }
+            }
+
+            else
+            {
+                var records = _db.Smslogs.ToList();
+                foreach (var item in records)
+                {
+
+                    var newRecord = new EmailSmsRecords
+                    {
+                        contact = item.Mobilenumber,
+                        createddate = item.Createdate,
+                        sentdate = item.Sentdate,
+                        sent = item.Issmssent[0] ? "Yes" : "No",
+                        recipient = _db.Requestclients.Where(i => i.Requestid == item.Requestid).Select(i => i.Firstname).FirstOrDefault(),
+                        rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid.ToString()).Select(i => i.Name).First(),
+                        senttries = item.Senttries,
+                        confirmationNumber = item.Confirmationnumber,
+                    };
+
+                    model.emailRecords.Add(newRecord);
+                }
+                if (recordsModel != null)
+                {
+                    if (recordsModel.searchRecordOne != null && recordsModel.searchRecordOne != "All")
+                    {
+                        model.emailRecords = model.emailRecords.Where(r => r.rolename.Contains(recordsModel.searchRecordOne)).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordTwo != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(r => r.recipient.Trim().ToLower().Contains(recordsModel.searchRecordTwo.Trim().ToLower())).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordThree != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(r => r.contact.Trim().ToLower().Contains(recordsModel.searchRecordThree.Trim().ToLower())).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordFour != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(item => item.createddate >= recordsModel.searchRecordFour).Select(r => r).ToList();
+                    }
+                    if (recordsModel.searchRecordFive != null)
+                    {
+                        model.emailRecords = model.emailRecords.Where(item => item.createddate <= recordsModel.searchRecordFive).Select(r => r).ToList();
+                    }
+                }
+
+            }
+            return model;
+        }
     }
 
 }

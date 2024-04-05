@@ -156,7 +156,13 @@
                                         Account Access
                                     </button>
                                 </li>
-                                <li><a class="dropdown-item" href="#">User Access</a></li>
+                                <li>
+                                    <button class="nav-link mx-3" id="access-tab" data-bs-toggle="tab"
+                                            data-bs-target="#access-tab-pane" type="button" role="tab"
+                                            aria-controls="access-tab-pane" onclick="showUserAccess()" aria-selected="false">
+                                        User Access
+                                    </button>
+                                </li>
                                 <li>
                                     <button class="nav-link mx-3" id="access-tab" data-bs-toggle="tab"
                                             data-bs-target="#access-tab-pane" type="button" role="tab"
@@ -181,7 +187,11 @@
                                     </button>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Email Logs</a>
+                                    <button class="nav-link mx-3" id="record-tab" data-bs-toggle="tab"
+                                            data-bs-target="#record-tab-pane" type="button" role="tab"
+                                            aria-controls="record-tab-pane" onclick="emailLogs()" aria-selected="false">
+                                        Email Logs
+                                    </button>
 
                                 </li>
                                 <li><a class="dropdown-item" href="#">SMS Logs</a></li>
@@ -223,10 +233,10 @@
             
         </div>
         <div class="tab-pane fade" id="partner-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            partner......
+          
         </div>
         <div class="tab-pane fade" id="access-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            access......
+           
         </div>
         <div class="tab-pane fade" id="record-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
           
@@ -444,7 +454,7 @@
                 type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {
-
+                    
                     $("#modelContent").html(response);
 
                     $('#assignModal').modal('show');
@@ -662,6 +672,18 @@
                 }
             })
         }
+        function emailLogs() {
+            $.ajax({
+                url: '/Admin/EmailLogs',
+                type:'GET',
+                success:function(response){
+                    $("#record-tab-pane").html(response);
+                },
+                error:function(e){
+                    alert("Error loading partial view");
+                }
+            })
+        }
 
         function showPartners(){
             $.ajax({
@@ -674,6 +696,19 @@
                     alert("Error loading partial view");
                 }
             })
+        }
+
+        function showUserAccess(){
+            $.ajax({
+                url: '/Admin/ShowUserAccess',
+                type: 'GET',
+                success: function (response) {
+                    $("#access-tab-pane").html(response);
+                },
+                error: function (e) {
+                    alert("error loading partial view");
+                }
+            });
         }
     </script>
  
