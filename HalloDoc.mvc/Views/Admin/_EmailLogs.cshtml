@@ -288,7 +288,7 @@
         $.ajax({
             url: "/Admin/EmailLogs",
             data: arrayMain,
-            type: 'POST',
+            type: 'GET',
             success: function (result) {
                 $("#record-tab-pane").html(result);
             },

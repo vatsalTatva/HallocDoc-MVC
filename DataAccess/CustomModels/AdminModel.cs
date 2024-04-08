@@ -16,6 +16,8 @@ namespace DataAccess.CustomModels
         public string? email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+      ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digit, and one special character.")]
         public string? password { get; set; }
     }
 
@@ -83,6 +85,9 @@ namespace DataAccess.CustomModels
         public int? requestType { get; set; }
         public int? regionId { get; set; }
         public int tabNo { get; set; }
+        public int? TotalPage { get; set; }
+
+        public int CurrentPage { get; set; }
 
     }
     public class ViewCaseViewModel
@@ -621,6 +626,9 @@ namespace DataAccess.CustomModels
         public string? searchRecordThree { get; set; }
         public string? searchRecordFour { get; set; }
         public int? flag { get; set; }
+        public int? TotalPage { get; set; }
+
+        public int CurrentPage { get; set; }
     }
     public class BusinessTableModel
     {
@@ -673,7 +681,7 @@ namespace DataAccess.CustomModels
         public int? openReq { get; set; }
     }
 
-    public class blockHistory
+    public class BlockHistory
     {
         public string? patientname { get; set; }
         public string? phonenumber { get; set; }
@@ -683,16 +691,22 @@ namespace DataAccess.CustomModels
         public string? notes { get; set; }
 
         public int? blockId { get; set; }
-        public int? flag { get; set; }
-        public string? searchRecordOne { get; set; }
-        public DateTime searchRecordTwo { get; set; }
-        public string? searchRecordThree { get; set; }
-        public string? searchRecordFour { get; set; }
+       
 
         public bool indicate { get; set; }
 
     }
 
+    public class BlockHistory2
+    {
+        public List<BlockHistory>? blockHistories { get; set; }
+        public string? searchRecordOne { get; set; }
+        public DateTime searchRecordTwo { get; set; }
+        public string? searchRecordThree { get; set; }
+        public string? searchRecordFour { get; set; }
+        public int? flag { get; set; }
+
+    }
     public class EmailSmsRecords
     {
 
@@ -719,5 +733,63 @@ namespace DataAccess.CustomModels
         public DateTime? searchRecordFour { get; set; }
         public DateTime? searchRecordFive { get; set; }
     }
+
+    public class SchedulingViewModel
+    {
+
+        public List<Region> regions { get; set; }
+        public List<Physicianregion> physicianregionlist { get; set; }
+        [Required]
+        public int regionid { get; set; }
+        [Required]
+        public int providerid { get; set; }
+        public DateOnly shiftdateviewshift { get; set; }
+        [Required]
+        public DateOnly shiftdate { get; set; }
+        public TimeOnly starttime { get; set; }
+        public TimeOnly endtime { get; set; }
+        public int repeatcount { get; set; }
+        public int shiftid { get; set; }
+        public int shiftdetailid { get; set; }
+        public string physicianname { get; set; }
+        public string regionname { get; set; }
+
+    }
+    public class DayWiseScheduling
+    {
+        public int shiftid { get; set; }
+        public DateTime date { get; set; }
+        public List<Physician> physicians { get; set; }
+        public List<Shiftdetail> shiftdetails { get; set; }
+    }
+    public class MonthWiseScheduling
+    {
+        public DateTime date { get; set; }
+        public List<Shiftdetail> shiftdetails { get; set; }
+        public List<Physician> physicians { get; set; }
+
+    }
+    public class WeekWiseScheduling
+    {
+        public DateTime date { get; set; }
+        public List<Physician> physicians { get; set; }
+
+        public List<Shiftdetail> shiftdetails { get; set; }
+
+    }
+
+    public class ProviderOnCall
+    {
+        public IEnumerable<Shiftdetail> shiftdetaillist { get; set; }
+        public IEnumerable<Shift> shiftlist { get; set; }
+        public IEnumerable<Physician> ondutyphysicianlist { get; set; }
+        public IEnumerable<Physician> offdutyphysicianlist { get; set; }
+        public List<Region> regions { get; set; }
+
+    }    public class CreateNewShift    {        public List<Region>? RegionList { get; set; }        [Required(ErrorMessage = "Please Select Region")]        public int RegionId { get; set; }        public string? RegionName { get; set; }        [Required(ErrorMessage = "Please Select Physician")]        public int PhysicianId { get; set; }        public string PhysicianName { get; set; }        [Required(ErrorMessage = "ShiftDate is required")]        public DateOnly ShiftDate { get; set; }        [Required(ErrorMessage = "StartTime is required")]        public TimeOnly Start { get; set; }        [Required(ErrorMessage = "EndTime is required")]        public TimeOnly End { get; set; }        public List<int>? RepeatDays { get; set; }        public int RepeatEnd { get; set; }
+
+    }
+
+
 }
 

@@ -1,0 +1,115 @@
+﻿@using DataAccess.CustomModels;
+@model CreateNewShift;
+
+<div class="modal fade" id="ViewShiftModel" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border border-0 rounded-3">
+            <form asp-action="" method="post" id="myForm">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">Create Shift</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-row">
+                        <p class="text-secondary mr-1">To assign this request, search and select another physician.</p>
+                    </div>
+                    <div class=" gap-2">
+                        <div class="form-floating mb-3">
+                            <select asp-for="RegionId" disabled class="form-select text-secondary regionData" id="floatingSelect" aria-label="Floating label select example">
+                                <option value="@Model.RegionId" selected>@Model.RegionName</option>
+                            </select>
+                            <label for="floatingSelect">Narrow Search By Region</label>
+
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select asp-for="PhysicianName" disabled class="form-select text-secondary physician py-1" id="physelect" aria-label="Floating label select example">
+                                <option value="@Model.PhysicianId" selected>@Model.PhysicianName</option>
+                            </select>
+                            <label for="physelect"></label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="date" asp-for="ShiftDate" class="form-control" id="floatingInput" placeholder="shift date" disabled />
+                            <label for="floatingInput" class=""></label>
+                            <span asp-validation-for="ShiftDate" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class=" form-floating mb-3">
+                                    <input asp-for="Start" type="time" class="form-control" id="floatingInput" placeholder="start" disabled />
+                                    <label for="floatingInput" class="">Start</label>
+                                    <span asp-validation-for="Start" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="End" type="time" class="form-control" id="floatingInput" placeholder="end" disabled />
+                                    <label for="floatingInput" class="">End</label>
+                                    <span asp-validation-for="End" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn bg-info text-white assign">Return</button>
+                    <button type="button" class="btn border border-info text-info">Edit</button>
+                    <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    // $(document).ready(function () {
+    //     $('#myForm').submit(function (e) {
+    //         e.preventDefault();
+    //         if ($('#myForm').valid()) {
+    //             $.ajax({
+    //                 url: '/Admin/CreateShift/',
+    //                 type: 'post',
+    //                 data: $(this).serialize(),
+    //                 success: function (response) {
+    //                 },
+    //                 error: function (error) {
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
+    // $(document).ready(function () {
+
+    //     $('.regionData').on('change', function (e) {
+    //         var regionid = $(this).val();
+
+    //         $.ajax({
+    //             url: '/Admin/FilterData',
+    //             data: { "regionid": regionid },
+    //             success: function (response) {
+    //                 var physelect = $('#physelect');
+    //                 physelect.empty();
+    //                 physelect.append($('<option>', {
+    //                     value: "",
+    //                     text: "Select Physician"
+    //                 }))
+    //                 response.forEach(function (item) {
+    //                     physelect.append(
+    //                         $('<option>', {
+    //                             value: item.physicianId,
+    //                             text: item.name
+    //                         }));
+    //                 });
+    //             },
+    //             error: function (error) {
+    //                 console.error(error);
+    //             }
+    //         });
+    //     });
+    // });
+</script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

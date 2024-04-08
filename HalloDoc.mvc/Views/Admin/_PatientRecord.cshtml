@@ -69,44 +69,71 @@
                 </tbody>
             </table>
         </div>
+        @if (Model.TotalPage > 1)
+        {
+            <div class="page-container">
+                <ul class="pagination justify-content-center d-flex page-list">
+                    <li class="page-item @(Model.CurrentPage <= 1 ? "d-none" : "")">
+                        <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage - 1)"><i class="bi bi-chevron-double-left text-info page"></i></a>
+                    </li>
+                    @for (int CurrentPage = 1; CurrentPage <= Model.TotalPage; CurrentPage++)
+                    {
+                        <li class="m-2 btn @(CurrentPage == Model.CurrentPage ? "page-active" : "")" onclick="patientRecordSearch(@CurrentPage)"><a class="text-decoration-none text-black curent-page-index" data-page="@CurrentPage">@CurrentPage</a></li>
+                    }
+                    <li class="page-item  @(Model.CurrentPage == Model.TotalPage ? "d-none" : "")">
+                        <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage + 1)"><i class="bi bi-chevron-double-right text-info page"></i></a>
+                    </li>
+                </ul>
+
+            </div>
+        }
+        else if (Model.TotalPage == 1)
+        {
+        }
+        else
+        {
+            <div class="text-center text-danger fw-bold h5">No record found</div>
+        }
     </div>
 </div>
 <script>
 
-    $(document).ready(function () {
+    //$(document).ready(function () {
 
-        $('#recordTable').DataTable({
-            "initComplete": function (settings, json) {
+    //    $('#recordTable').DataTable({
+    //        "initComplete": function (settings, json) {
 
-                $('#my-search-input').val(settings.oPreviousSearch.sSearch);
+    //            $('#my-search-input').val(settings.oPreviousSearch.sSearch);
 
-                $('#my-search-input').on('keyup', function () {
-                    var searchValue = $(this).val();
-                    settings.oPreviousSearch.sSearch = searchValue;
-                    settings.oApi._fnReDraw(settings);
-                });
-            },
-            "lengthMenu": [[5, 10, -1], [5, 10, "All"]],
-            "pageLength": 5,
-            "order": [[3, "desc"]],
-            // "columns": [{ "searchable": true }, { "searchable": false }, { "searchable": true }, { "searchable": false }, { "searchable": false }, { "searchable": false }, { "searchable": false }, { "searchable": false }, { "searchable": false }],
-            language: {
-                oPaginate: {
-                    sNext: '<i class="bi bi-caret-right-fill text-info"></i>',
-                    sPrevious: '<i class="bi bi-caret-left-fill text-info"></i>'
+    //            $('#my-search-input').on('keyup', function () {
+    //                var searchValue = $(this).val();
+    //                settings.oPreviousSearch.sSearch = searchValue;
+    //                settings.oApi._fnReDraw(settings);
+    //            });
+    //        },
+    //        "lengthMenu": [[5, 10, -1], [5, 10, "All"]],
+    //        "pageLength": 5,
+    //        "order": [[3, "desc"]],
+    //        // "columns": [{ "searchable": true }, { "searchable": false }, { "searchable": true }, { "searchable": false }, { "searchable": false }, { "searchable": false }, { "searchable": false }, { "searchable": false }, { "searchable": false }],
+    //        language: {
+    //            oPaginate: {
+    //                sNext: '<i class="bi bi-caret-right-fill text-info"></i>',
+    //                sPrevious: '<i class="bi bi-caret-left-fill text-info"></i>'
 
-                }
-            }
-        });
-        // $('.dataTables_length').hide();
-        $('.dataTables_filter').hide();
-    });
+    //            }
+    //        }
+    //    });
+    //    // $('.dataTables_length').hide();
+    //    $('.dataTables_filter').hide();
+    //});
+    //}
 
-
-    function patientRecordSearch() {
+    function patientRecordSearch(currentPage) {
+        var payload = $("#patientRecordForm").serializeArray();
+        payload.push({ name: "CurrentPage",value:currentPage });
         $.ajax({
             url: "/Admin/PatientRecords",
-            data: $("#patientRecordForm").serializeArray(),
+            data: payload,
             type: 'GET',
             success: function (result) {
                 $("#record-tab-pane").html(result);
@@ -117,6 +144,9 @@
         });
     }
 
+
+
+    
     function clearAll() {
         let a = document.getElementsByTagName("input")
         for (let i = 0; i < a.length; i++) {
@@ -127,6 +157,7 @@
         for (let i = 0; i < b.length; i++) {
             b[i].value = "";
         }
+        patientRecord();
     }
 
 </script>

@@ -202,7 +202,13 @@
                                         Patient Records
                                     </button>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Block History</a></li>
+                                <li>
+                                    <button class="nav-link mx-3" id="record-tab" data-bs-toggle="tab"
+                                            data-bs-target="#record-tab-pane" type="button" role="tab"
+                                            aria-controls="record-tab-pane" onclick="showBlockHistory()" aria-selected="false">
+                                        Block History
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -431,7 +437,7 @@
         }
 
         
-
+       
         function showCancelCase(reqId) {
             $.ajax({
                 url: '/Admin/CancelCase',
@@ -684,6 +690,20 @@
                 }
             })
         }
+        function showBlockHistory() {
+            $.ajax({
+                url: '/Admin/BlockedHistory',
+                type:'GET',
+                success:function(response){
+                    $("#record-tab-pane").html(response);
+                },
+                error:function(e){
+                    alert("Error loading partial view");
+                }
+            })
+        }
+
+
 
         function showPartners(){
             $.ajax({
@@ -710,6 +730,17 @@
                 }
             });
         }
+
+        function ShowScheduling() {
+            $.ajax({
+                url: '/Admin/Scheduling',
+                type: 'GET',
+                success: function (response) {
+                    $("#provider-tab-pane").html(response);
+                }
+            });
+        }
+
     </script>
  
 
