@@ -19,12 +19,14 @@ namespace DataAccess.CustomModels
     public class CreateAccountModel
     {
         [Required(ErrorMessage = "Email is required")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string? email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
         public string? password { get; set; }
 
         [Required(ErrorMessage = "Confirm Password is required")]
+        [Compare("password", ErrorMessage = "Password Missmatch")]
         public string? confirmPassword { get; set; }
     }
 }

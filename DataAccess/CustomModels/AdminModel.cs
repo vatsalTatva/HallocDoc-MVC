@@ -787,7 +787,7 @@ namespace DataAccess.CustomModels
         public List<Region> regions { get; set; }
 
     }    public class CreateNewShift    {        public List<Region>? RegionList { get; set; }        [Required(ErrorMessage = "Please Select Region")]        public int RegionId { get; set; }        public string? RegionName { get; set; }        [Required(ErrorMessage = "Please Select Physician")]        public int PhysicianId { get; set; }        public string PhysicianName { get; set; }        [Required(ErrorMessage = "ShiftDate is required")]        public DateOnly ShiftDate { get; set; }        [Required(ErrorMessage = "StartTime is required")]        public TimeOnly Start { get; set; }        [Required(ErrorMessage = "EndTime is required")]        public TimeOnly End { get; set; }        public List<int>? RepeatDays { get; set; }        public int RepeatEnd { get; set; }
-
+        public int shiftdetailid { get; set; }
     }
 
 

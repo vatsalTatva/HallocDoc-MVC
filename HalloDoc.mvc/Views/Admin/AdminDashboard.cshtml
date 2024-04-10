@@ -28,12 +28,70 @@
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
     <link rel="stylesheet" href="~/css/AdminDashboard.css">
+
+    <style>
+        .dark-mode {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+
+        .dark-mode-two {
+            color: #fff !important;
+        }
+
+
+        html[data-bs-theme="dark"] nav.header {
+            background-color: rgb(42, 50, 56) !important;
+        }
+
+        html[data-bs-theme="dark"] .text-testing {
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .modal-dark {
+            color: #212529 !important;
+        }
+
+        html[data-bs-theme="dark"] .dark-mode1 {
+            background-color: rgb(42, 50, 56) !important;
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .dark-mode2 {
+            background-color: rgb(42, 50, 56) !important;
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .new {
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .Pending {
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .Active {
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .Conclude {
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .ToClose {
+            color: white !important;
+        }
+
+        html[data-bs-theme="dark"] .Unpaid {
+            color: white !important;
+        }
+    </style>
 </head>
 
 
 <body>
     <!-- navbar -->
-    <nav class="bg-white navbr navbar navbar-expand w-100 ">
+    <nav class="dark-mode1 navbr navbar navbar-expand w-100 ">
 
         <div class="container-fluid">
             <div class="d-flex align-items-center">
@@ -60,13 +118,18 @@
             </div>
             <li class="nav-item">
                 <a asp-conroller="Admin" asp-action="Logout">
-                <button id="logout" class="px-2">
+                <button id="logout" class="px-2 dark-mode1">
                     <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
                 </button>
                 </a>
             </li>
             <li class="nav-item">
-                <img onclick="darkMode()" class="light" src="/images/dark.png" alt="">
+                @*<img onclick="darkMode()" class="light" src="/images/dark.png" alt="">*@
+                <button type="button" class="btn shadow border-info ms-2"
+                        style="border-radius: 10px; border-color: aqua" id="colorButton">
+                    <i id="moon" class="bi bi-moon text-info fs-5"></i>
+                    <i id="sun" class="bi bi-sun text-info fs-5 d-none"></i>
+                </button>
             </li>
             </ul>
         </div>
@@ -80,7 +143,7 @@
     <nav class="navbr navbar navbar-expand-lg py-0 pt-2 bg-body" style="z-index: 10;">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class=" bg-white ps-5 nav nav-underline" id="myTab" role="tablist">
+                <ul class="  ps-5 nav nav-underline" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
                                 data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
@@ -303,53 +366,53 @@
 
 
           // Convert table rows to accordions in mobile view
-            if ($(window).width() < 768) {
-                $('.data-table tbody tr').each(function () {
-                    var name = $(this).find('td:eq(0)').text();
-                    var address = $(this).find('td:eq(5)').text();
-                    var requestor = $(this).find('td:eq(2)').text();
+            //if ($(window).width() < 768) {
+            //    $('.data-table tbody tr').each(function () {
+            //        var name = $(this).find('td:eq(0)').text();
+            //        var address = $(this).find('td:eq(5)').text();
+            //        var requestor = $(this).find('td:eq(2)').text();
 
-                    var accordionItem = `
-                                    <div class="accordion-item">
+            //        var accordionItem = `
+            //                        <div class="accordion-item">
 
-                                        <div class="accordion-content">
-                                            <p><strong>Name:</strong> ${name}</p>
-                                            <p><strong>Address:</strong> ${address}</p>
-                                            <p><strong>Requestor:</strong> ${requestor}</p>
-                                        </div>
-                                    </div>
-                                `;
+            //                            <div class="accordion-content">
+            //                                <p><strong>Name:</strong> ${name}</p>
+            //                                <p><strong>Address:</strong> ${address}</p>
+            //                                <p><strong>Requestor:</strong> ${requestor}</p>
+            //                            </div>
+            //                        </div>
+            //                    `;
 
-                    $('#accordionFlushExample').append(accordionItem);
-                });
-            }
+            //        $('#accordionFlushExample').append(accordionItem);
+            //    });
+            //}
         });
 
         // Resize event listener to update accordion on window resize
-        $(window).resize(function () {
-            $('#accordionFlushExample').empty();
-            if ($(window).width() < 768) {
-                $('.data-table tbody tr').each(function () {
-                    var name = $(this).find('td:eq(0)').text();
-                    var address = $(this).find('td:eq(5)').text();
-                    var requestor = $(this).find('td:eq(2)').text();
+        //$(window).resize(function () {
+        //    $('#accordionFlushExample').empty();
+        //    if ($(window).width() < 768) {
+        //        $('.data-table tbody tr').each(function () {
+        //            var name = $(this).find('td:eq(0)').text();
+        //            var address = $(this).find('td:eq(5)').text();
+        //            var requestor = $(this).find('td:eq(2)').text();
 
 
-                    var accordionItem = `
-                                    <div class="accordion-item">
+        //            var accordionItem = `
+        //                            <div class="accordion-item">
 
-                                        <div class="accordion-content">
-                                            <p><strong>Name:</strong> ${name}</p>
-                                            <p><strong>Address:</strong> ${address}</p>
-                                            <p><strong>Requestor:</strong> ${requestor}</p>
-                                        </div>
-                                    </div>
-                                `;
+        //                                <div class="accordion-content">
+        //                                    <p><strong>Name:</strong> ${name}</p>
+        //                                    <p><strong>Address:</strong> ${address}</p>
+        //                                    <p><strong>Requestor:</strong> ${requestor}</p>
+        //                                </div>
+        //                            </div>
+        //                        `;
 
-                    $('#accordionFlushExample').append(accordionItem);
-                });
-            }
-        });
+        //            $('#accordionFlushExample').append(accordionItem);
+        //        });
+        //    }
+        //});
 
         function changepage(CurrentPage, tabNo) {
             debugger

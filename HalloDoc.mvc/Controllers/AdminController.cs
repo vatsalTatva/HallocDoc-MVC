@@ -1074,11 +1074,7 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
-        //[HttpGet]
-        //public IActionResult WeekTable(string date, int regionid, int status)
-        //{
-
-        //}
+      
 
         [HttpPost]
         public async Task<IActionResult> AddShift(SchedulingViewModel model, List<int> repeatdays)
@@ -1088,13 +1084,35 @@ namespace HalloDoc.mvc.Controllers
             //var email = User.FindFirstValue(ClaimTypes.Email);
             await _adminService.CreateShift(model, email, repeatdays);
             TempData["Success"] = "Shift Created Successfully";
-            return RedirectToAction("AdminDashboard");
+            return Json(new {iaAdded=true});
         }
 
-        public async Task<IActionResult> ViewShift(int ShiftDetailId)
+        public IActionResult ViewShift(int ShiftDetailId)
         {
-            var data = await _adminService.ViewShift(ShiftDetailId);
-            return View("_ViewShift", data);
+            var data =  _adminService.ViewShift(ShiftDetailId);
+            return View("_SchedulingViewShift", data);
+        }
+
+        public IActionResult ReturnShift(int ShiftDetailId)
+        {
+            var email = GetTokenEmail();
+            var isReturned = _adminService.ReturnShift(ShiftDetailId, email);
+            return Json(new { isReturned });
+        }
+
+        public IActionResult DeleteShift(int ShiftDetailId)
+        {
+            var email = GetTokenEmail();
+            var isDeleted = _adminService.DeleteShift(ShiftDetailId, email);
+            return Json(new { isDeleted });
+        }
+
+        public IActionResult EditViewShift(CreateNewShift model)
+        {
+            var email = GetTokenEmail();
+            bool isEditted = _adminService.EditShift(model, email);
+
+            return Json(new { isEditted });
         }
     }
 

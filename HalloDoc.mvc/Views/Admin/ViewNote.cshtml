@@ -5,6 +5,13 @@
 @using DataAccess.CustomModels;
 @model ViewNotesModel;
 
+<style>
+    html[data-bs-theme="dark"] .dark-mode1 {
+        background-color: rgb(42, 50, 56) !important;
+        color: white !important;
+    }
+</style>
+
 <link rel="stylesheet" href="~/css/AdminViewNote.css" />
 <div class="container-fluid d-flex justify-content-center row ">
 
@@ -21,7 +28,7 @@
 
         <form method="post" asp-action="UpdateNotes" asp-controller="Admin" onsubmit="return ViewNoteValidation()">
 
-            <div class="shadow p-3 dashboard-card mt-4 bg-white">
+            <div class="shadow p-3 dashboard-card mt-4 bg-white dark-mode1">
 
                 <hr class="mt-3 mb-0" />
 

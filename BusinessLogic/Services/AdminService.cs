@@ -2642,6 +2642,7 @@ namespace BusinessLogic.Services
                 physician = _db.Physicians.ToList();
             }
 
+            BitArray deletedBit = new BitArray(new[] { false });
 
             DayWiseScheduling day = new DayWiseScheduling
             {
@@ -2664,7 +2665,7 @@ namespace BusinessLogic.Services
             }
             else
             {
-                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).ToList();
+                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(x => x.Isdeleted.Equals(deletedBit)).ToList();
             }
 
             return day;
@@ -2874,11 +2875,11 @@ namespace BusinessLogic.Services
             }
         }
 
-        public async Task<CreateNewShift> ViewShift(int ShiftDetailId)
+        public CreateNewShift ViewShift(int ShiftDetailId)
         {
-            Shiftdetail? shiftDetails = await _db.Shiftdetails.Include(a => a.Shift).Where(a => a.Shiftdetailid == ShiftDetailId).FirstOrDefaultAsync();
-            Physician? physicians = await _db.Physicians.Where(a => a.Physicianid == shiftDetails.Shift.Physicianid).FirstOrDefaultAsync();
-            Region? region = await _db.Regions.Where(a => a.Regionid == physicians!.Regionid).FirstOrDefaultAsync();
+            Shiftdetail? shiftDetails =  _db.Shiftdetails.Include(a => a.Shift).Where(a => a.Shiftdetailid == ShiftDetailId).FirstOrDefault();
+            Physician? physicians =  _db.Physicians.Where(a => a.Physicianid == shiftDetails.Shift.Physicianid).FirstOrDefault();
+            Region? region =  _db.Regions.Where(a => a.Regionid == physicians!.Regionid).FirstOrDefault();
             CreateNewShift model = new CreateNewShift()
             {
                 PhysicianId = physicians.Physicianid,
@@ -2891,6 +2892,57 @@ namespace BusinessLogic.Services
             };
             return model;
         }
+
+        public bool EditShift(CreateNewShift model, string email)
+        {
+            Aspnetuser? aspNetUser = _db.Aspnetusers.FirstOrDefault(a => a.Email == email);
+            Shiftdetail? shiftDetails = _db.Shiftdetails.Include(a => a.Shift).Where(a => a.Shiftdetailid == model.shiftdetailid).FirstOrDefault();
+
+            if (shiftDetails != null)
+            {
+                shiftDetails.Shiftdate = model.ShiftDate;
+                shiftDetails.Starttime = model.Start;
+                shiftDetails.Endtime = model.End;
+                shiftDetails.Modifieddate = DateTime.Now;
+                shiftDetails.Modifiedby = aspNetUser.Id;
+                _db.Shiftdetails.Update(shiftDetails);
+            }
+            _db.SaveChanges();
+            return true;
+        }
+
+        public bool ReturnShift(int ShiftDetailId, string email)
+        {
+            Aspnetuser? aspNetUser = _db.Aspnetusers.FirstOrDefault(a => a.Email == email);
+            Shiftdetail? shiftDetails = _db.Shiftdetails.Include(a => a.Shift).Where(a => a.Shiftdetailid == ShiftDetailId).FirstOrDefault();
+
+            if (shiftDetails != null)
+            {
+                shiftDetails!.Status = (int)StatusEnum.Unassigned;
+                shiftDetails.Modifieddate = DateTime.Now;
+                shiftDetails.Modifiedby = aspNetUser.Id;
+                _db.Shiftdetails.Update(shiftDetails);
+            }
+            _db.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteShift(int ShiftDetailId, string email)
+        {
+            Aspnetuser? aspNetUser = _db.Aspnetusers.FirstOrDefault(a => a.Email == email);
+            Shiftdetail? shiftDetails = _db.Shiftdetails.Include(a => a.Shift).Where(a => a.Shiftdetailid == ShiftDetailId).FirstOrDefault();
+            if (shiftDetails != null)
+
+            {
+                shiftDetails.Isdeleted = new BitArray(new[] { true });
+                shiftDetails.Modifieddate = DateTime.Now;
+                shiftDetails.Modifiedby = aspNetUser.Id;
+                _db.Shiftdetails.Update(shiftDetails);
+            }
+            _db.SaveChanges();
+            return true;
+        }
+
     }
 
 }

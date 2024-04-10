@@ -219,6 +219,12 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult CreateAccount()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult CreateAccount(CreateAccountModel createAccountModel)
         {

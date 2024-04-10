@@ -122,6 +122,9 @@ namespace BusinessLogic.Interfaces
 
         Task CreateShift(SchedulingViewModel model, string Email, List<int> repeatdays);
 
-        Task<CreateNewShift> ViewShift(int ShiftDetailId);
+        CreateNewShift ViewShift(int ShiftDetailId);
+        bool EditShift(CreateNewShift model, string email);
+        bool ReturnShift(int ShiftDetailId, string email);
+        bool DeleteShift(int ShiftDetailId, string email);
     }
 }

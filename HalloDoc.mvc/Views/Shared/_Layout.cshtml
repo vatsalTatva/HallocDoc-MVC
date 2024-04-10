@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
+
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,7 +19,7 @@
 
 
 </head>
-<body>
+<body onload="checkMode()" class="dark-mode1">
     @*<header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -50,6 +52,46 @@
             &copy; 2024 - HalloDoc.mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>*@
+    <script>
+        document.getElementById('colorButton').addEventListener('click', () => {
+            const mode = localStorage.getItem("mode");
+
+            if (mode == 'light' || mode == null) {
+                localStorage.setItem('mode', 'dark')
+                document.getElementById("moon").classList.add("d-none")
+                document.getElementById("sun").classList.remove("d-none")
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            }
+            else {
+                localStorage.setItem('mode', 'light')
+                document.getElementById("sun").classList.add("d-none")
+                document.getElementById("moon").classList.remove("d-none")
+                document.documentElement.setAttribute('data-bs-theme', 'light');
+            }
+        })
+
+
+        const checkMode = () => {
+            try {
+                const mode = localStorage?.getItem("mode");
+
+                if (mode == 'light' || mode == null) {
+                    document.getElementById("sun").classList.add("d-none")
+                    document.getElementById("moon").classList.remove("d-none")
+                    document.documentElement.setAttribute('data-bs-theme', 'light');
+                }
+                else {
+                    document.getElementById("moon").classList.add("d-none")
+                    document.getElementById("sun").classList.remove("d-none")
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+                }
+            }
+            catch (err) {
+                alert("there was some issue in changing mode")
+            }
+        }
+
+    </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
