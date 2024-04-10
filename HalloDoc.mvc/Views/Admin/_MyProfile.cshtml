@@ -58,7 +58,7 @@
                     </div>
                 </form>
 
-                <form >
+                <form id="myProfileSecondForm">
                     <div class="pt-4">
                         <h4 class="mb-4">Administrator Information</h4>
                         <div class="row mb-3">
@@ -66,27 +66,27 @@
                                 <input asp-for="fname" type="text" class="d1class form-control " id="floatingInputFirstAdmin"
                                        placeholder="First Name" aria-label="First Name" disabled>
                                 <label class="ms-2 " for="floatingInputFirstAdmin">First Name</label>
-                                <span asp-validation-for="fname" class="text-danger d-none"></span>
+                                <span asp-validation-for="fname" class="text-danger"></span>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12  form-floating mb-3 ">
                                 <input asp-for="lname" type="text" class="d1class form-control " id="floatingInputLastAdmin"
                                        placeholder="Last Name" aria-label="Last Name" disabled>
                                 <label class="ms-2  " for="floatingInputLastAdmin">Last Name</label>
-                                <span asp-validation-for="lname" class="text-danger d-none"></span>
+                                <span asp-validation-for="lname" class="text-danger"></span>
 
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
                                 <input asp-for="email" type="email" class="d1class form-control " id="floatingInputemailAdmin"
                                        placeholder="Email" aria-label="Email" disabled>
                                 <label class="ms-2 " for="floatingInputemailAdmin">Email</label>
-                                <span asp-validation-for="email" class="text-danger d-none"></span>
+                                <span asp-validation-for="email" class="text-danger"></span>
 
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
                                 <input asp-for="confirm_email" type="email" class="d1class form-control " id="floatingInputConfirmEmailAdmin"
                                        placeholder="ConfirmEmail" aria-label="ConfirmEmail" disabled>
                                 <label class="ms-2 " for="floatingInputConfirmEmailAdmin">Confirm Email</label>
-                                <span asp-validation-for="confirm_email" class="text-danger d-none"></span>
+                                <span asp-validation-for="confirm_email" class="text-danger"></span>
 
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
@@ -94,7 +94,7 @@
                                        class="d1class form-control contact"
                                        aria-label="Contact"
                                        type="number" disabled />
-                                <span asp-validation-for="mobile_no" class="text-danger d-none"></span>
+                                <span asp-validation-for="mobile_no" class="text-danger"></span>
 
                             </div>
                             <div class="d-flex col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
@@ -150,7 +150,7 @@
                     </div>
                 </form>
 
-                <form >
+                <form id="myProfileThirdForm">
                     <div class="pt-4">
                         <h4 class="mb-4">Mailing And Billing Information</h4>
                         <div class="row mb-3">
@@ -158,32 +158,38 @@
                                 <input asp-for="addr1" type="text" class="dclass form-control " id="floatingInputAddress1"
                                        placeholder="Address1" aria-label="Address1" disabled>
                                 <label class="ms-2 " for="floatingInputAddress1">Address1</label>
+                                <span asp-validation-for="addr1" class="text-danger"></span>
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
                                 <input asp-for="addr2" type="text" class="dclass form-control " id="floatingInputAddress2"
                                        placeholder="Address2" aria-label="Address2" disabled>
                                 <label class="ms-2 " for="floatingInputAddress2">Address2</label>
+                                <span asp-validation-for="addr2" class="text-danger"></span>
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
                                 <input asp-for="city" type="text" class="dclass form-control " id="floatingInputCity"
                                        placeholder="City" aria-label="City" disabled>
                                 <label class="ms-2 " for="floatingInputCity">City</label>
+                                <span asp-validation-for="city" class="text-danger"></span>
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
                                 <input asp-for="state" type="text" class="dclass form-control " id="floatingInputState"
                                        placeholder="State" aria-label="State" disabled>
                                 <label class="ms-2 " for="floatingInputState">State</label>
+                                <span asp-validation-for="state" class="text-danger"></span>
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
                                 <input asp-for="zip" type="text" class="dclass form-control " id="floatingInputZipCode"
                                        placeholder="Zip Code" aria-label="Zip Code" disabled>
                                 <label class="ms-2  " for="floatingInputZipCode">Zip</label>
+                                <span asp-validation-for="zip" class="text-danger"></span>
                             </div>
                             <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 form-floating mb-3">
-                                <input   id="phoneMyProfile2"
-                                       class="d1class form-control contact"
+                                <input  asp-for="altphone" id="phoneMyProfile2"
+                                       class="dclass form-control contact"
                                        aria-label="Contact"
                                        type="number" disabled />
+                                <span asp-validation-for="altphone" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-flex justify-content-center  justify-content-md-end mb-3">
@@ -205,12 +211,11 @@
         </form>
     </div>
 </div>
+<partial name="_ValidationScriptsPartial" />
+
 <script>
   
-    //$(document).ready(function () {
-    //    $("#myProfileSecondForm").validate();
-
-    //});
+    
 
     function disableFields() {
         document.querySelectorAll('.d1class').forEach(function (element) {
@@ -306,25 +311,25 @@
 
        
 
-        //if ($("#myProfileSecondForm").valid()) {
-        $.ajax({
-            url: '/Admin/SubmitAdminInfo',
-            type: 'POST',
-            data: payload,
-            success: function (response) {
-                if (response.isSubmit == true) {
-                    toastr.success("Data Updated")
+        if ($("#myProfileSecondForm").valid()) {
+            $.ajax({
+                url: '/Admin/SubmitAdminInfo',
+                type: 'POST',
+                data: payload,
+                success: function (response) {
+                    if (response.isSubmit == true) {
+                        toastr.success("Data Updated")
                        
-                    //document.getElementById("userNameMain").innerHTML = result.userChangeHeader;
-                } else {
-                    toastr.error("Change atleast one field");
-                }
-            },
-            error: function () {
-                alert("Error");
-            },
-        });
-        //}
+                        //document.getElementById("userNameMain").innerHTML = result.userChangeHeader;
+                    } else {
+                        toastr.error("Change atleast one field");
+                    }
+                },
+                error: function () {
+                    alert("Error");
+                },
+            });
+        }
     }
 
     function submitBillingInfo(){
@@ -337,7 +342,7 @@
         };
 
 
-        //if ($("#myProfileThirdForm").valid()) {
+        if ($("#myProfileThirdForm").valid()) {
             $.ajax({
                 url: "/Admin/SubmitBillingInfo",
                 type: 'POST',
@@ -357,7 +362,7 @@
                     alert("Error");
                 },
             });
-        //}
+        }
     }
 
 </script>

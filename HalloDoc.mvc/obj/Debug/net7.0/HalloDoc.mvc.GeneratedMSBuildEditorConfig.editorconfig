@@ -156,6 +156,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1Byb3ZpZGVyTG9jYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_ProviderOnCall.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1Byb3ZpZGVyT25DYWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_Scheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NjaGVkdWxpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -186,6 +190,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_SendLink.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NlbmRMaW5rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_ShiftForReview.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NoaWZ0Rm9yUmV2aWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Admin/_ToCloseRequest.cshtml]

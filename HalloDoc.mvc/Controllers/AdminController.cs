@@ -599,6 +599,16 @@ namespace HalloDoc.mvc.Controllers
             var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
             return emailClaim.Value;
         }
+        public string GetLoginId()
+        {
+            var token = HttpContext.Request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return "";
+            }
+            var loginId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "aspNetUserId");
+            return loginId.Value;
+        }
         [HttpPost]
         public IActionResult ResetPassword(string resetPassword)
         {
@@ -1113,6 +1123,41 @@ namespace HalloDoc.mvc.Controllers
             bool isEditted = _adminService.EditShift(model, email);
 
             return Json(new { isEditted });
+        }
+
+        public IActionResult MdOnCallData(int region)
+        {
+            var data = _adminService.GetOnCallDetails(region);
+            return PartialView("_ProviderOnCall", data);
+        }
+        public IActionResult ShiftReview(int regionId, int callId)
+        {
+            ShiftReview2 schedulingCm = new ShiftReview2()
+            {
+                regions = _adminService.RegionTable(),
+                ShiftReview = _adminService.GetShiftReview(regionId, callId),
+                regionId = regionId,
+                callId = callId,
+            };
+
+            return PartialView("_ShiftForReview", schedulingCm);
+        }
+
+        public IActionResult ApproveShift(int[] shiftDetailsId)
+        {
+            var Aspid = GetLoginId();
+            bool isApproved = _adminService.ApproveSelectedShift(shiftDetailsId, Aspid);
+
+            return Json(new { isApproved });
+        }
+
+        public IActionResult DeleteSelectedShift(int[] shiftDetailsId)
+        {
+            var Aspid = GetLoginId();
+
+            bool isDeleted = _adminService.DeleteShiftReview(shiftDetailsId, Aspid);
+
+            return Json(new { isDeleted });
         }
     }
 

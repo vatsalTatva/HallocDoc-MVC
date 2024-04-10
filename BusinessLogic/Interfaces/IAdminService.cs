@@ -126,5 +126,13 @@ namespace BusinessLogic.Interfaces
         bool EditShift(CreateNewShift model, string email);
         bool ReturnShift(int ShiftDetailId, string email);
         bool DeleteShift(int ShiftDetailId, string email);
+
+        OnCallModal GetOnCallDetails(int regionId);
+        List<ShiftReview> GetShiftReview(int regionId, int callId);
+        bool DeleteShiftReview(int[] shiftDetailsId, string Aspid);
+        bool ApproveSelectedShift(int[] shiftDetailsId, string Aspid);
+
+
+
     }
 }

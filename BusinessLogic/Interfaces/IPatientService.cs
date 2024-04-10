@@ -13,7 +13,9 @@ namespace BusinessLogic.Interfaces
     {
         void AddPatientInfo(PatientInfoModel patientInfoModel);
 
-        Task<bool> IsEmailExists(string email);  
+        bool IsEmailExists(string email);
+        bool IsPasswordExists(string email);
+        bool CreateAccount(CreateAccountModel model);
 
         void AddFamilyReq(FamilyReqModel familyReqModel);
 

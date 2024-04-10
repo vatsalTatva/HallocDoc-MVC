@@ -25,21 +25,21 @@
                     <label for="floatingInput">Email</label>
                 </div>
                     <span class="text-danger" asp-validation-for="email"></span>
-                <p id="isEmailExists" style="color: red; display: none;">EmailId already Exists</p>
-                <div id="passwordSection">
+@*                <p id="isEmailExists" style="color: red; display: none;">EmailId already Exists</p>
+*@              <div id="passwordSection">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="password" type="password" class="form-control password" id="password" placeholder="">
                         <label for="floatingPassword">Password</label>
                     </div>
-                    <span class="text-danger" asp-validation-for="password"></span>
                 </div>
-                <div id="confirmPasswordSec">
+                    <span class="text-danger" asp-validation-for="password"></span>
+                <div  id="confirmPasswordSec">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="confirmPassword" type="password" class="form-control password" id="confirmPassword" placeholder="">
                         <label for="floatingPassword">Confirm Password</label>
                     </div>
-                    <span class="text-danger" asp-validation-for="confirmPassword"></span>
                 </div>
+                    <span class="text-danger" asp-validation-for="confirmPassword"></span>
                 
                @* <p id="passwordMatchError" style="color: red; display: none;">Passwords do not match.</p>*@
             </div>
@@ -94,6 +94,7 @@
         //});
 
         function createAccEmailCheck(){
+            
             var email = $('#CreateAccEmail').val();
             $.ajax({
                 url: '/Patient/CheckEmailExists',
@@ -102,12 +103,14 @@
                 data: { email: email },
                 success: function (response) {
                     if (response.emailExists) {
-                        $('#isEmailExists').show();
-                        $('#passwordSection').hide();
-                        $('#confirmPasswordSec').hide();
+                        IsPasswordExists();
+                    }
+                        
+                        
+                        
 
-                    } else {
-                        $('#isEmailExists').hide();
+                    else {
+                        //$('#isEmailExists').hide();
                         $('#passwordSection').show();
                         $('#confirmPasswordSec').show();
 
@@ -115,6 +118,29 @@
                    
                 }
             });
+
+            function IsPasswordExists(){
+                var email = $('#CreateAccEmail').val();
+                $.ajax({
+                    url: '/Patient/CheckPasswordExists',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    data: { email: email },
+                    success: function (response) {
+                        if (response.passwordExists) {
+                            toastr.error("Account Already Exists on this Email Id!!");
+                            $('#passwordSection').hide();
+                            $('#confirmPasswordSec').hide();
+
+                        } else {
+                            $('#passwordSection').show();
+                              $('#confirmPasswordSec').show();
+
+                        }
+
+                    }
+                });
+            }
         }
 
         function CreateAccValidate(){

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BusinessLogic.Services
 {
@@ -22,44 +24,43 @@ namespace BusinessLogic.Services
        
         public void AddPatientInfo(PatientInfoModel patientInfoModel)
         {
+            var stateMain = _db.Regions.Where(r => r.Name.ToLower() == patientInfoModel.state.ToLower().Trim()).FirstOrDefault();
 
-         
-                var aspnetuser = _db.Aspnetusers.Where(m => m.Email == patientInfoModel.email).FirstOrDefault();
-                User u = new User();
-                if (aspnetuser == null)
-                {
-                    Aspnetuser aspnetuser1 = new Aspnetuser();
-                    aspnetuser1.Id = Guid.NewGuid().ToString();
-                    aspnetuser1.Passwordhash = patientInfoModel.password;
-                    aspnetuser1.Email = patientInfoModel.email;
-                    string username = patientInfoModel.firstName + patientInfoModel.lastName;
-                    aspnetuser1.Username = username;
-                    aspnetuser1.Phonenumber = patientInfoModel.phoneNo;
-                    aspnetuser1.Createddate = DateTime.Now;
-                    aspnetuser1.Modifieddate = DateTime.Now;
-                    _db.Aspnetusers.Add(aspnetuser1);
+            var aspnetuser = _db.Aspnetusers.Where(m => m.Email == patientInfoModel.email).FirstOrDefault();
+            User u = new User();
+            if (aspnetuser == null)
+            {
+                Aspnetuser aspnetuser1 = new Aspnetuser();
+                aspnetuser1.Id = Guid.NewGuid().ToString();
+                aspnetuser1.Passwordhash = patientInfoModel.password;
+                aspnetuser1.Email = patientInfoModel.email;
+                aspnetuser1.Username = patientInfoModel.firstName + "_" + patientInfoModel.lastName;
+                aspnetuser1.Phonenumber = patientInfoModel.phoneNo;
+                aspnetuser1.Createddate = DateTime.Now;
+                aspnetuser1.Modifieddate = DateTime.Now;
+                _db.Aspnetusers.Add(aspnetuser1);
              
                     
 
-                    u.Aspnetuserid = aspnetuser1.Id;
-                    u.Firstname = patientInfoModel.firstName;
-                    u.Lastname = patientInfoModel.lastName;
-                    u.Email = patientInfoModel.email;
-                    u.Mobile = patientInfoModel.phoneNo;
-                    u.Street = patientInfoModel.street;
-                    u.City = patientInfoModel.city;
-                    u.State = patientInfoModel.state;
-                    u.Zipcode = patientInfoModel.zipCode;
-                    u.Createdby = patientInfoModel.firstName + patientInfoModel.lastName;
-                    u.Intyear = int.Parse(patientInfoModel.dob.ToString("yyyy"));
-                    u.Intdate = int.Parse(patientInfoModel.dob.ToString("dd"));
-                    u.Strmonth = patientInfoModel.dob.ToString("MMM");
-                    u.Createddate = DateTime.Now;
-                    u.Modifieddate = DateTime.Now;
-                    u.Status = (int)StatusEnum.Unassigned;
-                    u.Regionid = 1;
+                u.Aspnetuserid = aspnetuser1.Id;
+                u.Firstname = patientInfoModel.firstName;
+                u.Lastname = patientInfoModel.lastName;
+                u.Email = patientInfoModel.email;
+                u.Mobile = patientInfoModel.phoneNo;
+                u.Street = patientInfoModel.street;
+                u.City = patientInfoModel.city;
+                u.State = patientInfoModel.state;
+                u.Zipcode = patientInfoModel.zipCode;
+                u.Createdby = patientInfoModel.firstName + patientInfoModel.lastName;
+                u.Intyear = int.Parse(patientInfoModel.dob.ToString("yyyy"));
+                u.Intdate = int.Parse(patientInfoModel.dob.ToString("dd"));
+                u.Strmonth = patientInfoModel.dob.ToString("MMM");
+                u.Createddate = DateTime.Now;
+                u.Modifieddate = DateTime.Now;
+                u.Status = (int)StatusEnum.Unassigned;
+                u.Regionid = stateMain.Regionid;
 
-                    _db.Users.Add(u);
+                _db.Users.Add(u);
                 _db.SaveChanges();
             }
                 else
@@ -72,7 +73,7 @@ namespace BusinessLogic.Services
                 request.Requesttypeid = (int)RequestTypeEnum.Patient;
                 request.Status = (int)StatusEnum.Unassigned;
                 request.Createddate = DateTime.Now;
-                request.Isurgentemailsent = new BitArray(1);
+                request.Isurgentemailsent = new BitArray(1,false);
                 request.Firstname = patientInfoModel.firstName;
                 request.Lastname = patientInfoModel.lastName;
                 request.Phonenumber = patientInfoModel.phoneNo;
@@ -139,16 +140,70 @@ namespace BusinessLogic.Services
             }
         }
 
-        public Task<bool> IsEmailExists(string email)
+        public bool IsEmailExists(string email)
         {
             bool isExist = _db.Aspnetusers.Any(x => x.Email == email);
-            if (isExist)
-            {
-                return Task.FromResult(true);
-            }
-            return Task.FromResult(false);
+            return isExist;
         }
 
+        public bool IsPasswordExists(string email)
+        {
+            bool isExist = _db.Aspnetusers.Any(x => x.Email == email && x.Passwordhash != null);
+            return isExist;
+        }
+        public static string GenerateSHA256(string input)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+            using (var hashEngine = SHA256.Create())
+            {
+                var hashedBytes = hashEngine.ComputeHash(bytes, 0, bytes.Length);
+                var sb = new StringBuilder();
+                foreach (var b in hashedBytes)
+                {
+                    var hex = b.ToString("x2");
+                    sb.Append(hex);
+                }
+                return sb.ToString();
+            }
+        }
+
+        public bool CreateAccount(CreateAccountModel model)
+        {
+            try
+            {
+                Aspnetuser asp = new();
+                User user = new();
+                var existUser = _db.Aspnetusers.FirstOrDefault(r => r.Email == model.email);
+
+                if (existUser == null)
+                {
+                    asp.Id = Guid.NewGuid().ToString();                    
+                    asp.Email = model.email;
+                    asp.Username = model.email.Split('@')[0];
+                    asp.Passwordhash = GenerateSHA256(model.password);
+                    asp.Createddate = DateTime.Now;
+                    _db.Aspnetusers.Add(asp);
+                  
+                    user.Aspnetuserid = asp.Id;                  
+                    user.Email = model.email;
+                    user.Firstname = asp.Username;
+                    user.Createdby = asp.Id;
+                    user.Createddate = DateTime.Now;                
+                    _db.Users.Add(user);
+                    _db.SaveChanges();               
+                }
+                else
+                {
+                    existUser.Passwordhash = GenerateSHA256(model.password);
+                    _db.Aspnetusers.Update(existUser);
+                    _db.SaveChanges();
+                }
+                return true;
+            }
+            catch {
+                return false;
+            }
+        }
         public void AddFamilyReq(FamilyReqModel familyReqModel)
         {
             Request request = new Request();

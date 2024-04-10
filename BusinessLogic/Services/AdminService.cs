@@ -1106,11 +1106,11 @@ namespace BusinessLogic.Services
             }
             else
             {
-                Request _req = new Request();
-                Requestclient _reqClient = new Requestclient();
-                User _user = new User();
-                Aspnetuser _asp = new Aspnetuser();
-                Requestnote _note = new Requestnote();
+                Request req = new ();
+                Requestclient reqClient = new();
+                User user = new User();
+                Aspnetuser asp = new Aspnetuser();
+                Requestnote note = new Requestnote();
 
                 var admin = _db.Admins.Where(r => r.Email == sessionEmail).Select(r => r).First();
 
@@ -1118,33 +1118,33 @@ namespace BusinessLogic.Services
 
                 if (existUser == null)
                 {
-                    _asp.Id = Guid.NewGuid().ToString();
-                    _asp.Username = model.firstname + "_" + model.lastname;
-                    _asp.Email = model.email;
-                    _asp.Phonenumber = model.phone;
-                    _asp.Createddate = DateTime.Now;
-                    _db.Aspnetusers.Add(_asp);
+                    asp.Id = Guid.NewGuid().ToString();
+                    asp.Username = model.firstname + "_" + model.lastname;
+                    asp.Email = model.email;
+                    asp.Phonenumber = model.phone;
+                    asp.Createddate = DateTime.Now;
+                    _db.Aspnetusers.Add(asp);
                     _db.SaveChanges();
 
-                    _user.Aspnetuserid = _asp.Id;
-                    _user.Firstname = model.firstname;
-                    _user.Lastname = model.lastname;
-                    _user.Email = model.email;
-                    _user.Mobile = model.phone;
-                    _user.City = model.city;
-                    _user.State = model.state;
-                    _user.Street = model.street;
-                    _user.Zipcode = model.zipcode;
-                    _user.Strmonth = model.dateofbirth.Substring(5, 2);
-                    _user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
-                    _user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
-                    _user.Createdby = _asp.Id;
-                    _user.Createddate = DateTime.Now;
-                    _user.Regionid = stateMain.Regionid;
-                    _db.Users.Add(_user);
+                    user.Aspnetuserid = asp.Id;
+                    user.Firstname = model.firstname;
+                    user.Lastname = model.lastname;
+                    user.Email = model.email;
+                    user.Mobile = model.phone;
+                    user.City = model.city;
+                    user.State = model.state;
+                    user.Street = model.street;
+                    user.Zipcode = model.zipcode;
+                    user.Strmonth = model.dateofbirth.Substring(5, 2);
+                    user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
+                    user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
+                    user.Createdby = asp.Id;
+                    user.Createddate = DateTime.Now;
+                    user.Regionid = stateMain.Regionid;
+                    _db.Users.Add(user);
                     _db.SaveChanges();
 
-                    string registrationLink = "http://localhost:5145/Home/CreateAccount?aspuserId=" + _asp.Id;
+                    string registrationLink = "http://localhost:5145/Home/CreateAccount?aspuserId=" + asp.Id;
 
                     try
                     {
@@ -1156,45 +1156,45 @@ namespace BusinessLogic.Services
                     }
                 }
 
-                _req.Requesttypeid = (int)RequestTypeEnum.Patient;
-                _req.Userid =_db.Users.Where(x=>x.Email==sessionEmail).Select(x=>x.Userid).First();
-                _req.Firstname = admin.Firstname;
-                _req.Lastname = admin.Lastname;
-                _req.Phonenumber = admin.Mobile;
-                _req.Email = admin.Email;
-                _req.Status = (int)StatusEnum.Unassigned;
-                _req.Confirmationnumber = admin.Firstname.Substring(0, 1) + DateTime.Now.ToString().Substring(0, 19);
-                _req.Createddate = DateTime.Now;
-                _req.Isurgentemailsent = new BitArray(1);
-                _req.Isurgentemailsent[0] = false;
-                _db.Requests.Add(_req);
+                req.Requesttypeid = (int)RequestTypeEnum.Patient;
+                req.Userid =_db.Users.Where(x=>x.Email==sessionEmail).Select(x=>x.Userid).First();
+                req.Firstname = admin.Firstname;
+                req.Lastname = admin.Lastname;
+                req.Phonenumber = admin.Mobile;
+                req.Email = admin.Email;
+                req.Status = (int)StatusEnum.Unassigned;
+                req.Confirmationnumber = admin.Firstname.Substring(0, 1) + DateTime.Now.ToString().Substring(0, 19);
+                req.Createddate = DateTime.Now;
+                req.Isurgentemailsent = new BitArray(1);
+                req.Isurgentemailsent[0] = false;
+                _db.Requests.Add(req);
                
                 _db.SaveChanges();
 
 
 
-                _reqClient.Requestid = _req.Requestid;
-                _reqClient.Firstname = model.firstname;
-                _reqClient.Lastname = model.lastname;
-                _reqClient.Phonenumber = model.phone;
-                _reqClient.Strmonth = model.dateofbirth.Substring(5, 2);
-                _reqClient.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
-                _reqClient.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
-                _reqClient.Street = model.street;
-                _reqClient.City = model.city;
-                _reqClient.State = model.state;
-                _reqClient.Zipcode = model.zipcode;
-                _reqClient.Regionid = stateMain.Regionid;
-                _reqClient.Email = model.email;
+                reqClient.Requestid = req.Requestid;
+                reqClient.Firstname = model.firstname;
+                reqClient.Lastname = model.lastname;
+                reqClient.Phonenumber = model.phone;
+                reqClient.Strmonth = model.dateofbirth.Substring(5, 2);
+                reqClient.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
+                reqClient.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
+                reqClient.Street = model.street;
+                reqClient.City = model.city;
+                reqClient.State = model.state;
+                reqClient.Zipcode = model.zipcode;
+                reqClient.Regionid = stateMain.Regionid;
+                reqClient.Email = model.email;
 
-                _db.Requestclients.Add(_reqClient);
+                _db.Requestclients.Add(reqClient);
                 _db.SaveChanges();
 
-                _note.Requestid = _req.Requestid;
-                _note.Adminnotes = model.admin_notes;
-                _note.Createdby = _db.Aspnetusers.Where(r => r.Email == sessionEmail).Select(r => r.Id).First();
-                _note.Createddate = DateTime.Now;
-                _db.Requestnotes.Add(_note);
+                note.Requestid = req.Requestid;
+                note.Adminnotes = model.admin_notes;
+                note.Createdby = _db.Aspnetusers.Where(r => r.Email == sessionEmail).Select(r => r.Id).First();
+                note.Createddate = DateTime.Now;
+                _db.Requestnotes.Add(note);
                 _db.SaveChanges();
 
                 return true;
@@ -2943,6 +2943,98 @@ namespace BusinessLogic.Services
             return true;
         }
 
+
+        public OnCallModal GetOnCallDetails(int regionId)
+        {
+            var currentTime = new TimeOnly(DateTime.Now.Hour, DateTime.Now.Minute);
+            BitArray deletedBit = new BitArray(new[] { false });
+
+            var onDutyQuery = _db.Shiftdetails
+                .Include(sd => sd.Shift.Physician)
+                .Where(sd => (regionId == 0 || sd.Shift.Physician.Physicianregions.Any(pr => pr.Regionid == regionId)) &&
+                             //sd.Shiftdate.Date == DateTime.Today &&
+                             currentTime >= sd.Starttime &&
+                             currentTime <= sd.Endtime &&
+                             sd.Isdeleted.Equals(deletedBit))
+                .Select(sd => sd.Shift.Physician)
+                .Distinct()
+                .ToList();
+
+
+            var offDutyQuery = _db.Physicians
+                .Include(p => p.Physicianregions)
+                .Where(p => (regionId == 0 || p.Physicianregions.Any(pr => pr.Regionid == regionId))
+                    && !_db.Shiftdetails.Any(sd =>
+                    sd.Shift.Physicianid == p.Physicianid &&
+                    //sd.Shiftdate.Date == DateTime.Today &&
+                    currentTime >= sd.Starttime &&
+                    currentTime <= sd.Endtime &&
+                    sd.Isdeleted.Equals(deletedBit)) && p.Isdeleted == null).ToList();
+            var onCallModal = new OnCallModal
+            {
+                OnCall = onDutyQuery,
+                OffDuty = offDutyQuery,
+                regions = RegionTable(),
+            };
+
+            return onCallModal;
+        }
+
+        public List<ShiftReview> GetShiftReview(int regionId, int callId)
+        {
+            BitArray deletedBit = new BitArray(new[] { false });
+
+            var shiftDetail = _db.Shiftdetails.Where(i => i.Isdeleted.Equals(deletedBit) && i.Status != 2);
+
+            DateTime currentDate = DateTime.Now;
+
+            if (regionId != 0)
+            {
+                shiftDetail = shiftDetail.Where(i => i.Regionid == regionId);
+            }
+
+            if (callId == 1)
+            {
+                shiftDetail = shiftDetail.Where(i => i.Shiftdate.Month == currentDate.Month);
+            }
+
+            var reviewList = shiftDetail.Select(x => new ShiftReview
+            {
+                shiftDetailId = x.Shiftdetailid,
+                PhysicianName = _db.Physicians.FirstOrDefault(y => y.Physicianid == _db.Shifts.FirstOrDefault(z => z.Shiftid == x.Shiftid).Physicianid).Firstname + ", " + _db.Physicians.FirstOrDefault(y => y.Physicianid == _db.Shifts.FirstOrDefault(z => z.Shiftid == x.Shiftid).Physicianid).Lastname,
+                ShiftDate = x.Shiftdate.ToString("MMM dd, yyyy"),
+                ShiftTime = x.Starttime.ToString("hh:mm tt") + " - " + x.Endtime.ToString("hh:mm tt"),
+                ShiftRegion = _db.Regions.Where(y => y.Regionid == x.Regionid).Select(x=>x.Name).First(),
+            }).ToList();
+            return reviewList;
+        }
+        public bool ApproveSelectedShift(int[] shiftDetailsId, string Aspid)
+        {
+            foreach (var shiftId in shiftDetailsId)
+            {
+                var shift = _db.Shiftdetails.FirstOrDefault(i => i.Shiftdetailid == shiftId);
+                shift.Status = 2;
+                shift.Modifieddate = DateTime.Now;
+                shift.Modifiedby = Aspid;
+            }
+            _db.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteShiftReview(int[] shiftDetailsId, string Aspid)
+        {
+            foreach (var shiftId in shiftDetailsId)
+            {
+                var shift = _db.Shiftdetails.FirstOrDefault(i => i.Shiftdetailid == shiftId);
+
+                shift.Isdeleted[0] = true;
+                shift.Modifieddate = DateTime.Now;
+                shift.Modifiedby = Aspid;
+
+            }
+            _db.SaveChanges();
+            return true;
+        }
     }
 
 }

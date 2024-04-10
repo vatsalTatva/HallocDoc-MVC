@@ -290,26 +290,28 @@
                     var bgColor = "He";
                     var role = "hello";
 
-                    @if (item.requestClientId == 1)
-                    {
-                        bgColor = "#60be5e";
-                        role = "Patient";
-                    }
-                    else if (item.requestClientId == 2)
-                    {
-                        bgColor = "#e69232";
-                        role = "FamilyFriend";
-                    }
-                    else if (item.requestClientId == 3)
-                    {
-                        bgColor = "#0b7ebf";
-
-                        role = "Concierge";
-                    }
-                    else if (item.requestClientId == 4)
+                    @if (item.requestTypeId == (int)RequestTypeEnum.Business)
                     {
                         bgColor = "#d76879";
                         role = "Business";
+                    }
+                    else if (item.requestTypeId == (int)RequestTypeEnum.Patient)
+                    {
+                        bgColor = "#60be5e";
+                        role = "Patient";
+
+
+                    }
+                    else if (item.requestTypeId == (int)RequestTypeEnum.Family)
+                    {
+                        bgColor = "#e69232";
+                        role = "FamilyFriend";
+
+                    }
+                    else if (item.requestTypeId == (int)RequestTypeEnum.Concierge)
+                    {
+                        bgColor = "#0b7ebf";
+                        role = "Concierge";
                     }
 
                     <tr style="display: flex;flex-direction: column" class="@role">
@@ -361,14 +363,14 @@
                                 <div class="accordion-body">
                                     <span class="d-flex flex-column">
                                         <span class="d-flex justify-content-between mt-1">
-                                            <button class=" accBtn me-2" style="background-color:purple!important;width:150px;color:white;border-radius:35px;" onclick="assignCase(@item.reqId)">Assign Case</button>
-                                            <button class=" accBtn" style="background-color:red!important;width:150px;color:white;border-radius:35px;" onclick="calcelCase(@item.reqId)">Cancel Case</button>
+                                            <button class=" accBtn me-2" style="background-color:purple!important;width:150px;color:white;border-radius:35px;" onclick="showAssignCase(@item.reqId)">Assign Case</button>
+                                            <button class=" accBtn" style="background-color:red!important;width:150px;color:white;border-radius:35px;" onclick="showCancelCase(@item.reqId)">Cancel Case</button>
                                         </span>
                                         <span class="d-flex justify-content-between mt-1">
-                                            <button class=" accBtn" style="background-color:red!important;width:150px;color:white;border-radius:35px;" onclick="window.location.href = '@Url.Action("newViewNote","adminDashboard",new {data = item.reqId})'">View Notes</button>
-                                            <button class=" accBtn" style="background-color:green!important;width:150px;color:white;border-radius:35px;" onclick="blockCase(@item.reqId)">Block Patient</button>
+                                            <button class=" accBtn" style="background-color:red!important;width:150px;color:white;border-radius:35px;" onclick="window.location.href = '@Url.Action("ViewNote","Admin",new {ReqId = item.reqId})'">View Notes</button>
+                                            <button class=" accBtn" style="background-color:green!important;width:150px;color:white;border-radius:35px;" onclick="showBlockCase(@item.reqId)">Block Patient</button>
                                         </span>
-                                        <button class="accBtn me-2" style="width:115px;border-radius:35px;position:absolute;top:-36px;right:0px;" onclick="window.location.href = '@Url.Action("newViewCase","adminDashboard",new {data = item.reqId})'">View Case</button>
+                                <button class="accBtn me-2" style="width:115px;border-radius:35px;position:absolute;top:-36px;right:0px;" onclick="window.location.href = '@Url.Action("ViewCase","Admin", new {Requestclientid = item.requestClientId , RequestTypeId = item.requestTypeId})'">View Case</button>
                                     </span>
                                 </div>
 

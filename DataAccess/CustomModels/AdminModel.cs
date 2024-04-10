@@ -280,10 +280,13 @@ namespace DataAccess.CustomModels
 
         [Required(ErrorMessage = "Please Enter Your City")]
         public string? city { get; set; }
+
+
         public int regionId { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Zipcode")]
         public string zip { get; set; }
+        [Required(ErrorMessage = "Please Enter Your Alternate phone")]
         public string? altphone { get; set; }
         public int? createdBy { get; set; }
         public DateTime createdDate { get; set; }
@@ -788,6 +791,43 @@ namespace DataAccess.CustomModels
 
     }    public class CreateNewShift    {        public List<Region>? RegionList { get; set; }        [Required(ErrorMessage = "Please Select Region")]        public int RegionId { get; set; }        public string? RegionName { get; set; }        [Required(ErrorMessage = "Please Select Physician")]        public int PhysicianId { get; set; }        public string PhysicianName { get; set; }        [Required(ErrorMessage = "ShiftDate is required")]        public DateOnly ShiftDate { get; set; }        [Required(ErrorMessage = "StartTime is required")]        public TimeOnly Start { get; set; }        [Required(ErrorMessage = "EndTime is required")]        public TimeOnly End { get; set; }        public List<int>? RepeatDays { get; set; }        public int RepeatEnd { get; set; }
         public int shiftdetailid { get; set; }
+    }
+
+    public class OnCallModal
+    {
+
+        public List<Physician> OnCall { get; set; }
+
+        public List<Physician> OffDuty { get; set; }
+
+        public List<Region> regions { get; set; }
+    }
+    public class ShiftReview
+    {
+        public int shiftDetailId { get; set; }
+
+        public string PhysicianName { get; set; }
+
+        public string ShiftDate { get; set; }
+
+        public string ShiftTime { get; set; }
+
+        public string ShiftRegion { get; set; }
+
+    }
+
+    public class ShiftReview2
+    {
+
+
+        public List<Region> regions { get; set; }
+
+
+        public List<ShiftReview> ShiftReview { get; set; }
+
+        public int regionId { get; set; }
+
+        public int callId { get; set; }
     }
 
 
