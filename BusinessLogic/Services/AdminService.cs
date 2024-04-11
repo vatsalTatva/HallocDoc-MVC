@@ -120,18 +120,89 @@ namespace BusinessLogic.Services
 
         public DashboardModel GetRequestByRegion(FilterModel filterModel)
         {
-            DashboardModel model = new DashboardModel();
-            model = GetRequestsByStatus(filterModel.tabNo, 1);
-            if (filterModel.regionId != 0)
+            
+            var query = from r in _db.Requests
+                        join rc in _db.Requestclients on r.Requestid equals rc.Requestid
+                        //where r.Status == status
+                        select new AdminDashTableModel
+                        {
+                            firstName = rc.Firstname,
+                            lastName = rc.Lastname,
+                            intDate = rc.Intdate,
+                            intYear = rc.Intyear,
+                            strMonth = rc.Strmonth,
+                            requestorFname = r.Firstname,
+                            requestorLname = r.Lastname,
+                            createdDate = r.Createddate,
+                            mobileNo = rc.Phonenumber,
+                            city = rc.City,
+                            state = rc.State,
+                            street = rc.Street,
+                            zipCode = rc.Zipcode,
+                            requestTypeId = r.Requesttypeid,
+                            status = r.Status,
+                            requestClientId = rc.Requestclientid,
+                            reqId = r.Requestid,
+                            regionId = rc.Regionid
+                        };
+
+
+            if (filterModel.tabNo == 1)
             {
-                model.adminDashTableList = model.adminDashTableList.Where(x => x.regionId == filterModel.regionId).ToList();
+
+                query = query.Where(x => x.status == (int)StatusEnum.Unassigned);
+            }
+
+            else if (filterModel.tabNo == 2)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Accepted);
+            }
+            else if (filterModel.tabNo == 3)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.MDEnRoute || x.status == (int)StatusEnum.MDOnSite);
+            }
+            else if (filterModel.tabNo == 4)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Conclude);
+            }
+            else if (filterModel.tabNo == 5)
+            {
+
+                query = query.Where(x => (x.status == (int)StatusEnum.Cancelled || x.status == (int)StatusEnum.CancelledByPatient) || x.status == (int)StatusEnum.Closed);
+            }
+            else if (filterModel.tabNo == 6)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Unpaid);
+            }
+
+            if (filterModel.regionId != null)
+            {
+                query = query.Where(x => x.regionId == filterModel.regionId);
             }
             if(filterModel.searchWord!=null)
             {
-                model.adminDashTableList = model.adminDashTableList.Where(r => r.firstName.Trim().ToLower().Contains(filterModel.searchWord.Trim().ToLower())).ToList();
+                query = query.Where(x => x.firstName.Trim().ToLower().Contains(filterModel.searchWord.Trim().ToLower()));
             }
-            
-            return model;
+            if (filterModel.requestTypeId != null)
+            {
+                query = query.Where(x => x.requestTypeId == filterModel.requestTypeId);
+            }
+
+            var result = query.ToList();
+            int count = result.Count();
+            int TotalPage = (int)Math.Ceiling(count / (double)5);
+            result = result.Skip((filterModel.CurrentPage - 1) * 5).Take(5).ToList();
+
+            DashboardModel dashboardModel = new DashboardModel();
+            dashboardModel.adminDashTableList = result;
+            dashboardModel.regionList = _db.Regions.ToList();
+            dashboardModel.TotalPage = TotalPage;
+            dashboardModel.CurrentPage = filterModel.CurrentPage;
+            return dashboardModel;
         }
         public StatusCountModel GetStatusCount()
         {
@@ -1094,7 +1165,34 @@ namespace BusinessLogic.Services
             }
         }
 
-        public bool CreateRequest(CreateRequestModel model, string sessionEmail)
+        public void SendRegistrationEmailCreateRequest(string email, string registrationLink)
+        {
+            string senderEmail = "tatva.dotnet.vatsalgadoya@outlook.com";
+            string senderPassword = "VatsalTatva@2024";
+            SmtpClient client = new SmtpClient("smtp.office365.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(senderEmail, senderPassword),
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false
+            };
+
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress(senderEmail, "HalloDoc"),
+                Subject = "Create Account",
+                IsBodyHtml = true,
+                Body = $"Click the following link to Create Account: <a href='{registrationLink}'>{registrationLink}</a>"
+            };
+
+
+
+            mailMessage.To.Add(email);
+
+            client.Send(mailMessage);
+        }
+        public bool CreateRequest(CreateRequestModel model, string sessionEmail,string createAccountLink)
         {
             CreateRequestModel _create = new CreateRequestModel();
 
@@ -1144,11 +1242,12 @@ namespace BusinessLogic.Services
                     _db.Users.Add(user);
                     _db.SaveChanges();
 
-                    string registrationLink = "http://localhost:5145/Home/CreateAccount?aspuserId=" + asp.Id;
+   
 
+                    
                     try
                     {
-                        //SendRegistrationEmailCreateRequest(data.email, registrationLink);
+                        SendRegistrationEmailCreateRequest(model.email, createAccountLink);
                     }
                     catch (Exception e)
                     {
@@ -1343,145 +1442,192 @@ namespace BusinessLogic.Services
             _db.SaveChanges();
         }
 
-
-      
-        public bool CreateProviderAccount(CreateProviderAccount model)
+        public CreateProviderAccount CreateProviderAccount(CreateProviderAccount obj, List<int> physicianRegions)
         {
-            List<string> validProfileExtensions = new() { ".jpeg", ".png", ".jpg" };
-            List<string> validDocumentExtensions = new() { ".pdf" };
+            CreateProviderAccount model = new CreateProviderAccount();
 
-            try
+            var aspUser = _db.Aspnetusers.FirstOrDefault(r => r.Email == obj.Email);
+
+
+            if (aspUser == null && obj.latitude != null)
             {
-                Guid generatedId = Guid.NewGuid();
 
-                Aspnetuser aspUser = new()
-                {
-                    Id = generatedId.ToString(),
-                    Username = model.UserName,
-                    Passwordhash = GenerateSHA256(model.Password),
-                    Email = model.Email,
-                    Phonenumber = model.Phone,
-                    Createddate = DateTime.Now,
-                }; _db.Aspnetusers.Add(aspUser);
+
+                Aspnetuser _user = new Aspnetuser();
+                Physician phy = new Physician();
+                Guid id = Guid.NewGuid();
+                _user.Id = id.ToString();
+                _user.Username = obj.username;
+                _user.Passwordhash = obj.password;
+                _user.Email = obj.Email;
+                _user.Phonenumber = obj.PhoneNumber;
+                _user.Createddate = DateTime.Now;
+
+                _db.Aspnetusers.Add(_user);
                 _db.SaveChanges();
 
 
-                Physician phy = new()
-                {
-                    Aspnetuserid = generatedId.ToString(),
-                    Firstname = model.FirstName,
-                    Lastname = model.LastName,
-                    Email = model.Email,
-                    Mobile = model.Phone,
-                    Medicallicense = model.MedicalLicenseNumber,
-                    Adminnotes = model.AdminNote,
-                    Address1 = model.Address1,
-                    Address2 = model.Address2,
-                    City = model.City,
-                    //Regionid = model.RegionId,
-                    Zip = model.Zip,
-                    Altphone = model.PhoneNumber,
-                    Createdby = "1",
-                    Createddate = DateTime.Now,
-                    Roleid = model.Role,
-                    Npinumber = model.NPINumber,
-                    Businessname = model.BusinessName,
-                    Businesswebsite = model.BusinessWebsite,
-                };
+
+                phy.Aspnetuserid = _user.Id;
+                phy.Firstname = obj.Firstname;
+                phy.Lastname = obj.Lastname;
+                phy.Email = obj.Email;
+                phy.Mobile = obj.PhoneNumber;
+                phy.Medicallicense = obj.MedicalLicesnse;
+                phy.Adminnotes = obj.Adminnotes;
+                phy.Address1 = obj.Address1;
+                phy.Address2 = obj.Address2;
+                phy.City = obj.city;
+                phy.Regionid = obj.Regionid;
+                phy.Zip = obj.zipcode;
+                phy.Altphone = obj.altPhone;
+                phy.Createdby = _user.Id;
+                phy.Createddate = _user.Createddate;
+                phy.Status = 1;
+                phy.Businessname = obj.Businessname;
+                phy.Businesswebsite = obj.BusinessWebsite;
+                phy.Roleid = obj.Roleid;
+                phy.Syncemailaddress = obj.SycnEmail;
 
                 _db.Physicians.Add(phy);
                 _db.SaveChanges();
 
 
-                Physiciannotification physiciannotification = new()
+
+                foreach (var item in physicianRegions)
                 {
-                    Pysicianid = phy.Physicianid,
-                    Isnotificationstopped = new BitArray(1, false),
-                };
-                _db.Physiciannotifications.Add(physiciannotification);
+                    var region = _db.Regions.FirstOrDefault(x => x.Regionid == item);
+
+                    _db.Physicianregions.Add(new Physicianregion
+                    {
+                        Physicianid = phy.Physicianid,
+                        Regionid = region.Regionid,
+                    });
+                }
+                _db.SaveChanges();
+
+                Physiciannotification notification = new Physiciannotification();
+                notification.Pysicianid = phy.Physicianid;
+                notification.Isnotificationstopped = new BitArray(1, false);
+                _db.Physiciannotifications.Add(notification);
+                _db.SaveChanges();
+
+                //Aspnetuserrole _userRole = new Aspnetuserrole();
+                //_userRole.Userid = "10";
+                //_userRole.Roleid = 3;
+
+                //_db.Aspnetuserroles.Add(_userRole);
+                //_db.SaveChanges();
+
+
+                Physicianlocation _phyLoc = new Physicianlocation();
+                _phyLoc.Physicianid = phy.Physicianid;
+                _phyLoc.Latitude = obj.latitude;
+                _phyLoc.Longitude = obj.longitude;
+                _phyLoc.Createddate = DateTime.Now;
+                _phyLoc.Physicianname = phy.Firstname;
+                _phyLoc.Address = phy.Address1;
+
+                _db.Physicianlocations.Add(_phyLoc);
                 _db.SaveChanges();
 
 
-                string path = Path.Combine(_environment.WebRootPath, "PhysicianImages", phy.Physicianid.ToString());
+                AddProviderDocuments(phy.Physicianid, obj.Photo, obj.ContractorAgreement, obj.BackgroundCheck, obj.HIPAA, obj.NonDisclosure);
 
-                if (model.Photo != null)
-                {
-                    string fileExtension = Path.GetExtension(model.Photo.FileName);
-                    if (validProfileExtensions.Contains(fileExtension))
-                    {
-                        InsertFileAfterRename(model.Photo, path, "ProfilePhoto");
-                        phy.Photo = Path.GetFileName(model.Photo.FileName);
-
-                    }
-                }
-                if (model.ICA != null)
-                {
-                    string fileExtension = Path.GetExtension(model.ICA.FileName);
-                    if (validDocumentExtensions.Contains(fileExtension))
-                    {
-                        phy.Isagreementdoc = new BitArray(1, true);
-                        InsertFileAfterRename(model.ICA, path, "ICA");
-                    }
-                }
-                if (model.BGCheck != null)
-                {
-                    string fileExtension = Path.GetExtension(model.BGCheck.FileName);
-                    if (validDocumentExtensions.Contains(fileExtension))
-                    {
-                        phy.Isbackgrounddoc = new BitArray(1, true);
-                        InsertFileAfterRename(model.BGCheck, path, "BackgroundCheck");
-                    }
-                }
-                if (model.HIPAACompliance != null)
-                {
-                    string fileExtension = Path.GetExtension(model.HIPAACompliance.FileName);
-                    if (validDocumentExtensions.Contains(fileExtension))
-                    {
-                        phy.Isnondisclosuredoc = new BitArray(1, true);
-                        InsertFileAfterRename(model.HIPAACompliance, path, "HipaaCompliance");
-                    }
-                }
-                if (model.NDA != null)
-                {
-                    string fileExtension = Path.GetExtension(model.NDA.FileName);
-                    if (validDocumentExtensions.Contains(fileExtension))
-                    {
-                        phy.Isnondisclosuredoc = new BitArray(1, true);
-                        InsertFileAfterRename(model.NDA, path, "NDA");
-                    }
-                }
-                _db.Physicians.Update(phy);
-                _db.SaveChanges();
-                return true;
+                model.flag = "done";
+                return model;
             }
-            catch (Exception e)
+            else if (aspUser != null)
             {
-                return false;
-            };
+                model.flag = "email";
+            }
+            else
+            {
+                model.flag = "zip";
+            }
 
-
+            return model;
         }
-        public void InsertFileAfterRename(IFormFile file, string path, string updateName)
+
+        public void AddProviderDocuments(int Physicianid, IFormFile Photo, IFormFile ContractorAgreement, IFormFile BackgroundCheck, IFormFile HIPAA, IFormFile NonDisclosure)
         {
-            if (!Directory.Exists(path))
+            var physicianData = _db.Physicians.FirstOrDefault(x => x.Physicianid == Physicianid);
+
+            string directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianFiles", Physicianid.ToString());
+            string photoDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianImages",Physicianid.ToString());
+
+            if (!Directory.Exists(directory))
             {
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(directory);
+            }
+            if (!Directory.Exists(photoDirectory))
+            {
+                Directory.CreateDirectory(photoDirectory);
             }
 
-            string[] oldfiles = Directory.GetFiles(path, updateName + ".*");
-            foreach (string f in oldfiles)
+            if (Photo != null)
             {
-                System.IO.File.Delete(f);
+                string path = Path.Combine(photoDirectory, Photo.FileName);
+                //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Documents", Photo.FileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    Photo.CopyTo(fileStream);
+                }
+
+                physicianData.Photo = Photo.FileName;
             }
 
-            string extension = Path.GetExtension(file.FileName);
 
-            string fileName = updateName + extension;
+            if (ContractorAgreement != null)
+            {
+                string path = Path.Combine(directory, "Independent_Contractor" + Path.GetExtension(ContractorAgreement.FileName));
 
-            string fullPath = Path.Combine(path, fileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    ContractorAgreement.CopyTo(fileStream);
+                }
 
-            using FileStream stream = new(fullPath, FileMode.Create);
-            file.CopyTo(stream);
+                physicianData.Isagreementdoc = new BitArray(1, true);
+            }
+
+            if (BackgroundCheck != null)
+            {
+                string path = Path.Combine(directory, "Background" + Path.GetExtension(BackgroundCheck.FileName));
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    BackgroundCheck.CopyTo(fileStream);
+                }
+
+                physicianData.Isbackgrounddoc = new BitArray(1, true);
+            }
+
+            if (HIPAA != null)
+            {
+                string path = Path.Combine(directory, "HIPAA" + Path.GetExtension(HIPAA.FileName));
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    HIPAA.CopyTo(fileStream);
+                }
+
+                physicianData.Istrainingdoc = new BitArray(1, true);
+            }
+
+            if (NonDisclosure != null)
+            {
+                string path = Path.Combine(directory, "Non_Disclosure" + Path.GetExtension(NonDisclosure.FileName));
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    NonDisclosure.CopyTo(fileStream);
+                }
+
+                physicianData.Isnondisclosuredoc = new BitArray(1, true);
+            }
+
+            _db.SaveChanges();
         }
 
 
@@ -1808,7 +1954,7 @@ namespace BusinessLogic.Services
 
             if (photo != null)
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", photo.FileName);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianImages", photo.FileName);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1820,7 +1966,7 @@ namespace BusinessLogic.Services
 
             if (signature != null)
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", signature.FileName);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianSign", signature.FileName);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2247,6 +2393,43 @@ namespace BusinessLogic.Services
             return model;
         }
 
+        public List<GetRecordExplore> GetPatientRecordExplore(int userId)
+        {
+
+            var dataMain = _db.Requests.Where(r => r.Userid == userId).Select(r => new GetRecordExplore()
+            {
+                requestid = r.Requestid,
+                requesttypeid = r.Requesttypeid,
+                requestclientid = _db.Requestclients.Where(x => x.Requestid == r.Requestid).Select(x => x.Requestclientid).First(),
+
+                createddate = r.Createddate.ToString("yyyy-MM-dd"),
+                confirmationnumber = r.Confirmationnumber,
+                providername = _db.Physicians.Where(x => x.Physicianid == r.Physicianid).Select(x => x.Firstname).First(),
+                status = r.Status,
+                fullname = r.Requestclients.Where(x => x.Requestid == r.Requestid).Select(r => r.Firstname).First() + " " + r.Requestclients.Where(x => x.Requestid == r.Requestid).Select(r => r.Lastname).First(),
+                concludedate = r.Status == 6 ? Convert.ToDateTime(r.Modifieddate).ToString("yyyy-MM-dd") : null, // Add this condition to check if the status is equal to 6,
+            }).ToList();
+
+            //var list = from t0 in _db.Users
+            //           join t1 in _db.Requests on t0.Userid equals t1.Userid
+            //           join t2 in _db.Requestclients on t1.Requestid equals t2.Requestid
+            //           join t3 in _db.Requestwisefiles on t1.Requestid equals t3.Requestid
+            //           where t0.Userid == userId
+            //           select new GetRecordExplore()
+            //           {
+            //               fullname = t0.Firstname + " " + t0.Lastname,
+            //               createddate= t1.Createddate,
+            //               confirmationnumber= t1.Confirmationnumber,
+            //               providername= _db.Physicians.FirstOrDefault(x => x.Physicianid == t1.Physicianid).Firstname ?? "-",
+            //               requestclientid= t2.Requestclientid,
+            //               requestid= t1.Requestid,
+            //               //DocumentCount = _context.Requestwisefiles.Where(x => x.Requestid == t2.Requestid).ToList().Count,
+            //           };
+
+
+            return dataMain;
+        }
+
         public List<BusinessTableModel> BusinessTable(string vendor,string profession)
         {
             BitArray deletedBit = new BitArray(1, false);
@@ -2641,9 +2824,7 @@ namespace BusinessLogic.Services
             {
                 physician = _db.Physicians.ToList();
             }
-
             BitArray deletedBit = new BitArray(new[] { false });
-
             DayWiseScheduling day = new DayWiseScheduling
             {
                 date = currentDate,
@@ -2651,16 +2832,16 @@ namespace BusinessLogic.Services
             };
             if (regionid != 0 && status != 0)
             {
-                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && m.Status == status).ToList();
+                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && (m.Status == status && m.Isdeleted.Equals(deletedBit))).ToList();
             }
             else if (regionid != 0)
             {
-                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid).ToList();
+                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else if (status != 0)
             {
-                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Status == status).ToList();
+                day.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Status == status && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else
@@ -2680,6 +2861,7 @@ namespace BusinessLogic.Services
             {
                 physician = _db.Physicians.ToList();
             }
+            BitArray deletedBit = new BitArray(new[] { false });
             WeekWiseScheduling week = new WeekWiseScheduling
             {
                 date = currentDate,
@@ -2688,21 +2870,21 @@ namespace BusinessLogic.Services
             };
             if (regionid != 0 && status != 0)
             {
-                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && m.Status == status).ToList();
+                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && (m.Status == status && m.Isdeleted.Equals(deletedBit))).ToList();
             }
             else if (regionid != 0)
             {
-                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid).ToList();
+                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else if (status != 0)
             {
-                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Status == status).ToList();
+                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Status == status && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else
             {
-                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).ToList();
+                week.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(x => x.Isdeleted.Equals(deletedBit)).ToList();
             }
 
             return week;
@@ -2716,6 +2898,7 @@ namespace BusinessLogic.Services
             {
                 physician = _db.Physicians.ToList();
             }
+            BitArray deletedBit = new BitArray(new[] { false });
             MonthWiseScheduling month = new MonthWiseScheduling
             {
                 date = currentDate,
@@ -2723,21 +2906,21 @@ namespace BusinessLogic.Services
             };
             if (regionid != 0 && status != 0)
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && m.Status == status).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && (m.Status == status && m.Isdeleted.Equals(deletedBit))).ToList();
             }
             else if (regionid != 0)
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else if (status != 0)
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Status == status).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Status == status && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(x => x.Isdeleted.Equals(deletedBit)).ToList();
             }
             return month;
         }
@@ -3010,15 +3193,23 @@ namespace BusinessLogic.Services
         }
         public bool ApproveSelectedShift(int[] shiftDetailsId, string Aspid)
         {
-            foreach (var shiftId in shiftDetailsId)
+            try
             {
-                var shift = _db.Shiftdetails.FirstOrDefault(i => i.Shiftdetailid == shiftId);
-                shift.Status = 2;
-                shift.Modifieddate = DateTime.Now;
-                shift.Modifiedby = Aspid;
+
+                foreach (var shiftId in shiftDetailsId)
+                {
+                    var shift = _db.Shiftdetails.FirstOrDefault(i => i.Shiftdetailid == shiftId);
+                    shift.Status = 2;
+                    shift.Modifieddate = DateTime.Now;
+                    shift.Modifiedby = Aspid;
+                }
+                _db.SaveChanges();
+                return true;
             }
-            _db.SaveChanges();
-            return true;
+            catch
+            {
+                return false;
+            }
         }
 
         public bool DeleteShiftReview(int[] shiftDetailsId, string Aspid)
@@ -3027,10 +3218,10 @@ namespace BusinessLogic.Services
             {
                 var shift = _db.Shiftdetails.FirstOrDefault(i => i.Shiftdetailid == shiftId);
 
-                shift.Isdeleted[0] = true;
+                shift.Isdeleted = new BitArray(1,true);
                 shift.Modifieddate = DateTime.Now;
                 shift.Modifiedby = Aspid;
-
+                _db.Shiftdetails.Update(shift);
             }
             _db.SaveChanges();
             return true;

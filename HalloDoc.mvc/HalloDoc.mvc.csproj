@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\PhysicianSign\" />
     <Folder Include="wwwroot\UploadedFiles\" />
   </ItemGroup>
 

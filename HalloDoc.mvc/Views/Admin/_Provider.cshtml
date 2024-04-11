@@ -5,7 +5,7 @@
                         {
                             <option value="@item.Regionid">@item.Name</option>
                         }
-                    }                </select>            </form>            <div class="d-flex justify-content-center  mb-3">                <button type="button" class="btn btn-info text-light " onclick="createProviderAccount()">Create Provider Account</button>            </div>        </div>        <div class="table-responsive d-lg-block d-none">            <table class="table">                <thead class="bg-body-tertiary ">                <thead>                    <tr>                        <th class="">Stop Notification </th>                        <th>Provider Name <span><i class="bi bi-arrow-up"></i></span></th>                        <th>Role</th>                        <th>On Call Status</th>                        <th>Status</th>                        <th>Actions</th>                    </tr>                </thead>                <tbody>                        @if(Model.providerModels != null && Model.providerModels.Count > 0)
+                    }                </select>            </form>            <div class="d-flex justify-content-center  mb-3">                <button type="button" class="btn btn-info text-light " onclick="CreateProviderAccount()">Create Provider Account</button>            </div>        </div>        <div class="table-responsive d-lg-block d-none">            <table class="table">                <thead class="bg-body-tertiary ">                <thead>                    <tr>                        <th class="">Stop Notification </th>                        <th>Provider Name <span><i class="bi bi-arrow-up"></i></span></th>                        <th>Role</th>                        <th>On Call Status</th>                        <th>Status</th>                        <th>Actions</th>                    </tr>                </thead>                <tbody>                        @if(Model.providerModels != null && Model.providerModels.Count > 0)
                         {
                             
                             @foreach (var item in Model.providerModels)
@@ -99,20 +99,19 @@
             }
         });
     }
-    function createProviderAccount(){
+    function CreateProviderAccount() {
         $.ajax({
-            url: '/Admin/CreateProviderAccount',
+            url: "/Admin/CreateProviderAccount",
             type: 'GET',
-            success: function (result) {
-                $('#provider-tab-pane').html(result);
+            success: function (response) {
+                console.log(response)
+                $("#provider-tab-pane").html(response);
             },
             error: function (e) {
-                console.log(e)
-                alert("Error");
+                console.log(e);
             },
         });
     }
-
     $('#ProviderRegion').on('change',function(){
         var regionId = $('#ProviderRegion').val();
         $.ajax({

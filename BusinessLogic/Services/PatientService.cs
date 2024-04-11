@@ -353,6 +353,7 @@ namespace BusinessLogic.Services
                                       document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
                                   }).ToList();
 
+
             MedicalHistoryList medicalHistoryList = new()
             {
                 medicalHistoriesList = medicalhistory,

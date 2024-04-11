@@ -60,7 +60,7 @@
                             }
                             <td class="text-center">@address</td>
                             <td>
-                                <button style="cursor : pointer" class="btn btn-outline-info rounded-2" aria-expanded="false" onclick="GetPatientRecordExplore(@obj.Userid)">
+                                <button style="cursor : pointer" class="btn btn-outline-info rounded-2" aria-expanded="false" onclick="getPatientRecordExplore(@obj.Userid)" >
                                     Explore
                                 </button>
                             </td>
@@ -160,4 +160,19 @@
         patientRecord();
     }
 
+
+    
+    function getPatientRecordExplore(userId) {
+        $.ajax({
+            url: '/Admin/GetPatientRecordExplore',
+            data: { userId: userId },
+            type: 'GET',
+            success: function (result) {
+                $("#record-tab-pane").html(result);
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    }
 </script>

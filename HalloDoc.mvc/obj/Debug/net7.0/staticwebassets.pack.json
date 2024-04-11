@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\HalloDoc.mvc.bundle.scp.css"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianFiles\\10\\Independent_Contractor.pdf",
+      "PackagePath": "staticwebassets\\PhysicianFiles\\10\\Independent_Contractor.pdf"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\10\\doc-portrait.jpg",
+      "PackagePath": "staticwebassets\\PhysicianImages\\10\\doc-portrait.jpg"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\4\\Background.pdf",
       "PackagePath": "staticwebassets\\UploadedFiles\\4\\Background.pdf"
     },

@@ -201,7 +201,10 @@
 
     function ApproveShift(shiftDetailsId, regionId) {
         event.preventDefault();
-
+        if(shiftDetailsId.length==0){
+            Swal.fire("Warning", "Atleast select 1 shift!!", "error");
+            return false;
+        }
         $.ajax({
             method: "POST",
             url: "/Admin/ApproveShift",

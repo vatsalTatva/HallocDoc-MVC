@@ -69,7 +69,7 @@ namespace BusinessLogic.Interfaces
         bool SubmitBillingInfo(MyProfileModel model, string tokenEmail);
         bool VerifyState(string state);
 
-        bool CreateRequest(CreateRequestModel model, string sessionEmail);
+        bool CreateRequest(CreateRequestModel model, string sessionEmail,string createAccountLink);
 
         List<ProviderModel> GetProvider();
         List<ProviderModel> GetProviderByRegion(int regionId);
@@ -78,7 +78,8 @@ namespace BusinessLogic.Interfaces
         public bool StopNotification(int phyId);
 
         bool ProviderContactEmail(int phyIdMain, string msg);
-        bool CreateProviderAccount(CreateProviderAccount model);
+        CreateProviderAccount CreateProviderAccount(CreateProviderAccount obj, List<int> physicianRegions);
+  
         EditProviderModel EditProviderProfile(int phyId, string tokenEmail);
         List<Region> RegionTable();
         List<PhysicianRegionTable> PhyRegionTable(int phyId);
@@ -104,6 +105,7 @@ namespace BusinessLogic.Interfaces
 
         List<RequestsRecordModel> SearchRecords(RecordsModel recordsModel);
         PatientRecordsModel PatientRecords(PatientRecordsModel patientRecordsModel,int currentPage);
+        List<GetRecordExplore> GetPatientRecordExplore(int userId);
         List<BusinessTableModel> BusinessTable(string vendor, string profession);
         List<Healthprofessionaltype> GetProfession();
         bool AddBusiness(AddBusinessModel obj);

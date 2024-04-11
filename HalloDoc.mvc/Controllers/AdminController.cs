@@ -682,8 +682,10 @@ namespace HalloDoc.mvc.Controllers
                 _notyf.Error("Token Expired,Login Again");
                 return View(model);
             }
-            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
-            var isSaved = _adminService.CreateRequest(model, emailClaim.Value);
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+            var email = GetTokenEmail();
+            var isSaved = _adminService.CreateRequest(model, email, createAccountLink);
             if (isSaved)
             {
                 _notyf.Success("Request Created");
@@ -722,23 +724,22 @@ namespace HalloDoc.mvc.Controllers
         }
 
 
-
-        [HttpGet]
         public IActionResult CreateProviderAccount()
         {
-            CreateProviderAccount obj = new CreateProviderAccount();
-            obj.RegionList = _adminService.RegionTable();
-            obj.RolesList = _adminService.GetRoles();
-            return PartialView("_CreateProviderAccount",obj );
+            CreateProviderAccount data = new();
+            data.regions = _adminService.RegionTable();
+            data.roles = _adminService.GetRoles();
+            return PartialView("_CreateProviderAccount", data);
         }
 
         [HttpPost]
-        public IActionResult CreateProviderAccount(CreateProviderAccount model)
+        public IActionResult CreateProviderAccount(CreateProviderAccount obj, List<int> physicianregions)
         {
-
-            bool isCreated = _adminService.CreateProviderAccount(model);
-            return Json(new {isCreated=isCreated});
+            CreateProviderAccount data = new();
+            var createprovideraccount = _adminService.CreateProviderAccount(obj, physicianregions);
+            return Json(new { flag = createprovideraccount.flag });
         }
+
 
         [HttpGet]
         public IActionResult ProviderContactModal(int phyId)
@@ -940,7 +941,14 @@ namespace HalloDoc.mvc.Controllers
 
             return PartialView("_PatientRecord", model);
         }
+        [HttpGet]
+        public IActionResult GetPatientRecordExplore(int userId)
+        {
 
+            var _data = _adminService.GetPatientRecordExplore(userId);
+
+            return PartialView("_PatientRecordExplore", _data);
+        }
         public IActionResult Partners()
         {
             return PartialView("_Partners");
