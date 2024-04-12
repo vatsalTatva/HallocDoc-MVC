@@ -59,7 +59,7 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "Patient First name is required")]
         public string? patientFirstName { get; set; }
         public string? patientLastName { get; set; }
-        public DateTime? patientDob { get; set; }
+        public DateOnly patientDob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
@@ -89,7 +89,8 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "Patient First name is required")]
         public string? patientFirstName { get; set; }
         public string? patientLastName { get; set; }
-        public DateTime? patientDob { get; set; }
+        [Required(ErrorMessage = "Patient Date of Birth is required")]
+        public DateOnly patientDob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
@@ -126,7 +127,8 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "Patient First name is required")]
         public string? patientFirstName { get; set; }
         public string? patientLastName { get; set; }
-        public DateTime? patientDob { get; set; }
+        [Required(ErrorMessage = "Patient Date of Birth is required")]
+        public DateOnly patientDob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]

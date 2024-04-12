@@ -22,6 +22,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using OfficeOpenXml;
 
 namespace BusinessLogic.Services
 {
@@ -118,6 +119,69 @@ namespace BusinessLogic.Services
             return dashboardModel;
         }
 
+
+        public List<AdminDashTableModel> Export(int tabNo)
+        {
+            var query = from r in _db.Requests
+                        join rc in _db.Requestclients on r.Requestid equals rc.Requestid
+                        select new AdminDashTableModel
+                        {
+                            firstName = rc.Firstname,
+                            lastName = rc.Lastname,
+                            intDate = rc.Intdate,
+                            intYear = rc.Intyear,
+                            strMonth = rc.Strmonth,
+                            requestorFname = r.Firstname,
+                            requestorLname = r.Lastname,
+                            createdDate = r.Createddate,
+                            mobileNo = rc.Phonenumber,
+                            city = rc.City,
+                            state = rc.State,
+                            street = rc.Street,
+                            zipCode = rc.Zipcode,
+                            requestTypeId = r.Requesttypeid,
+                            status = r.Status,
+                            requestClientId = rc.Requestclientid,
+                            reqId = r.Requestid,
+                            regionId = rc.Regionid
+                        };
+
+
+            if (tabNo == 1)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Unassigned);
+            }
+
+            else if (tabNo == 2)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Accepted);
+            }
+            else if (tabNo == 3)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.MDEnRoute || x.status == (int)StatusEnum.MDOnSite);
+            }
+            else if (tabNo == 4)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Conclude);
+            }
+            else if (tabNo == 5)
+            {
+
+                query = query.Where(x => (x.status == (int)StatusEnum.Cancelled || x.status == (int)StatusEnum.CancelledByPatient) || x.status == (int)StatusEnum.Closed);
+            }
+            else if (tabNo == 6)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Unpaid);
+            }
+            var result = query.ToList();
+            return result;
+
+        }
         public DashboardModel GetRequestByRegion(FilterModel filterModel)
         {
             
@@ -1236,7 +1300,7 @@ namespace BusinessLogic.Services
                     user.Strmonth = model.dateofbirth.Substring(5, 2);
                     user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
                     user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
-                    user.Createdby = asp.Id;
+                    user.Createdby = admin.Adminid.ToString();
                     user.Createddate = DateTime.Now;
                     user.Regionid = stateMain.Regionid;
                     _db.Users.Add(user);
@@ -1306,12 +1370,13 @@ namespace BusinessLogic.Services
 
         public List<ProviderModel> GetProvider()
         {
-            
+            BitArray deletedBit = new BitArray(1, false);
 
             var provider = from phy in _db.Physicians
                            join role in _db.Roles on phy.Roleid equals role.Roleid
                            join phynoti in _db.Physiciannotifications on phy.Physicianid equals phynoti.Pysicianid
                            orderby phy.Physicianid
+                           where phy.Isdeleted == deletedBit
                            select new ProviderModel
                            {
                                phyId = phy.Physicianid,
@@ -1954,7 +2019,17 @@ namespace BusinessLogic.Services
 
             if (photo != null)
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianImages", photo.FileName);
+                string photoDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianImages", phyId.ToString());
+                if (!Directory.Exists(photoDirectory))
+                {
+                    Directory.CreateDirectory(photoDirectory);
+                }
+
+                string path = Path.Combine(photoDirectory, photo.FileName);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1966,7 +2041,18 @@ namespace BusinessLogic.Services
 
             if (signature != null)
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianSign", signature.FileName);
+                string signDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianSign", phyId.ToString());
+                if (!Directory.Exists(signDirectory))
+                {
+                    Directory.CreateDirectory(signDirectory);
+                }
+
+                string path = Path.Combine(signDirectory, signature.FileName);
+
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1985,7 +2071,7 @@ namespace BusinessLogic.Services
 
             var physicianData = _db.Physicians.FirstOrDefault(x => x.Physicianid == dataMain.editPro.PhyID);
 
-            string directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", physicianData.Physicianid.ToString());
+            string directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PhysicianFiles", physicianData.Physicianid.ToString());
 
             if (!Directory.Exists(directory))
             {
@@ -2303,59 +2389,60 @@ namespace BusinessLogic.Services
             return requestList;
         }
 
-        //public void DeleteRecords(int reqId)
-        //{
-        //    var reqClient = _context.Requests.Where(r => r.Requestid == reqId).Select(r => r).First();
+        public bool DeleteRecords(int reqId)
+        {
+            var reqClient = _db.Requests.Where(r => r.Requestid == reqId).Select(r => r).First();
 
-        //    if (reqClient.Isdeleted == null)
-        //    {
-        //        reqClient.Isdeleted = new BitArray(1, true);
-        //        _context.SaveChanges();
-        //    }
-        //}
+            if (reqClient.Isdeleted == null)
+            {
+                reqClient.Isdeleted = new BitArray(1, true);
+                _db.SaveChanges();
+            }
+            return true;
+        }
 
-        //public byte[] GenerateExcelFile(List<requestsRecordModel> recordsModel)
-        //{
-        //    ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; using (var excelPackage = new ExcelPackage())
-        //    {
-        //        var worksheet = excelPackage.Workbook.Worksheets.Add("Requests");
+        public byte[] GenerateExcelFile(List<RequestsRecordModel> recordsModel)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; using (var excelPackage = new ExcelPackage())
+            {
+                var worksheet = excelPackage.Workbook.Worksheets.Add("Requests");
 
-        //        // Add headers
-        //        worksheet.Cells[1, 1].Value = "Patient Name";
-        //        worksheet.Cells[1, 2].Value = "Requestor";
-        //        worksheet.Cells[1, 3].Value = "Date Of Service";
-        //        worksheet.Cells[1, 4].Value = "Close Case Date";
-        //        worksheet.Cells[1, 5].Value = "Email";
-        //        worksheet.Cells[1, 6].Value = "Phone Number";
-        //        worksheet.Cells[1, 7].Value = "Address";
-        //        worksheet.Cells[1, 8].Value = "Zip";
-        //        worksheet.Cells[1, 9].Value = "Physician";
-        //        worksheet.Cells[1, 10].Value = "Physician Notes";
-        //        worksheet.Cells[1, 11].Value = "Admin Note";
-        //        worksheet.Cells[1, 12].Value = "Patient Notes";
+                // Add headers
+                worksheet.Cells[1, 1].Value = "Patient Name";
+                worksheet.Cells[1, 2].Value = "Requestor";
+                worksheet.Cells[1, 3].Value = "Date Of Service";
+                worksheet.Cells[1, 4].Value = "Close Case Date";
+                worksheet.Cells[1, 5].Value = "Email";
+                worksheet.Cells[1, 6].Value = "Phone Number";
+                worksheet.Cells[1, 7].Value = "Address";
+                worksheet.Cells[1, 8].Value = "Zip";
+                worksheet.Cells[1, 9].Value = "Physician";
+                worksheet.Cells[1, 10].Value = "Physician Notes";
+                worksheet.Cells[1, 11].Value = "Admin Note";
+                worksheet.Cells[1, 12].Value = "Patient Notes";
 
-        //        // Populate data
-        //        for (int i = 0; i < recordsModel.Count; i++)
-        //        {
-        //            var rowData = recordsModel[i];
-        //            worksheet.Cells[i + 2, 1].Value = rowData.patientname;
-        //            worksheet.Cells[i + 2, 2].Value = rowData.requestor;
-        //            worksheet.Cells[i + 2, 3].Value = rowData.dateOfService;
-        //            worksheet.Cells[i + 2, 4].Value = rowData.closeCaseDate;
-        //            worksheet.Cells[i + 2, 5].Value = rowData.email;
-        //            worksheet.Cells[i + 2, 6].Value = rowData.contact;
-        //            worksheet.Cells[i + 2, 7].Value = rowData.address;
-        //            worksheet.Cells[i + 2, 8].Value = rowData.zip;
-        //            worksheet.Cells[i + 2, 9].Value = rowData.physician;
-        //            worksheet.Cells[i + 2, 10].Value = rowData.physicianNote;
-        //            worksheet.Cells[i + 2, 11].Value = rowData.AdminNote;
-        //            worksheet.Cells[i + 2, 12].Value = rowData.pateintNote;
-        //        }
+                // Populate data
+                for (int i = 0; i < recordsModel.Count; i++)
+                {
+                    var rowData = recordsModel[i];
+                    worksheet.Cells[i + 2, 1].Value = rowData.patientname;
+                    worksheet.Cells[i + 2, 2].Value = rowData.requestor;
+                    worksheet.Cells[i + 2, 3].Value = rowData.dateOfService;
+                    worksheet.Cells[i + 2, 4].Value = rowData.closeCaseDate;
+                    worksheet.Cells[i + 2, 5].Value = rowData.email;
+                    worksheet.Cells[i + 2, 6].Value = rowData.contact;
+                    worksheet.Cells[i + 2, 7].Value = rowData.address;
+                    worksheet.Cells[i + 2, 8].Value = rowData.zip;
+                    worksheet.Cells[i + 2, 9].Value = rowData.physician;
+                    worksheet.Cells[i + 2, 10].Value = rowData.physicianNote;
+                    worksheet.Cells[i + 2, 11].Value = rowData.AdminNote;
+                    worksheet.Cells[i + 2, 12].Value = rowData.pateintNote;
+                }
 
-        //        // Convert package to bytes for download
-        //        return excelPackage.GetAsByteArray();
-        //    }
-        //}
+                // Convert package to bytes for download
+                return excelPackage.GetAsByteArray();
+            }
+        }
         public PatientRecordsModel PatientRecords(PatientRecordsModel patientRecordsModel,int CurrentPage)
         {
 

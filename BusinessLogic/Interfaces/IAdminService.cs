@@ -15,6 +15,7 @@ namespace BusinessLogic.Interfaces
     {
         Aspnetuser GetAspnetuser(string email);
         DashboardModel GetRequestsByStatus(int status, int CurrentPage);
+        List<AdminDashTableModel> Export(int tabNo);
         DashboardModel GetRequestByRegion(FilterModel filterModel);
 
         StatusCountModel GetStatusCount();
@@ -104,6 +105,8 @@ namespace BusinessLogic.Interfaces
         void CreateNewShiftSubmit(string selectedDays, CreateShiftModel obj, int adminId);
 
         List<RequestsRecordModel> SearchRecords(RecordsModel recordsModel);
+        public bool DeleteRecords(int reqId);
+        byte[] GenerateExcelFile(List<RequestsRecordModel> recordsModel);
         PatientRecordsModel PatientRecords(PatientRecordsModel patientRecordsModel,int currentPage);
         List<GetRecordExplore> GetPatientRecordExplore(int userId);
         List<BusinessTableModel> BusinessTable(string vendor, string profession);

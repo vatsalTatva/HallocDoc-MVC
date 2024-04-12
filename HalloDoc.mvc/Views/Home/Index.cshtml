@@ -14,8 +14,11 @@
 </head>
 <body>
     <div class="container d-flex flex-column justify-content-between min-vh-100 ">
-        <img class="float-right" onclick="toggleDarkMode()" id="d-mode" src="/images/dark.png" alt="dark">
-        <div class="registration d-flex flex-column justify-content-center align-items-center" >
+        <button type="button" class="btn shadow border-info align-self-end mt-5 me-5"
+                style="border-radius: 10px; border-color: aqua; width:2.8rem" id="colorButton">
+            <i id="moon" class="bi bi-moon text-info fs-5"></i>
+            <i id="sun" class="bi bi-sun text-info fs-5 d-none"></i>
+        </button>        <div class="registration d-flex flex-column justify-content-center align-items-center">
             <img id="logo" src="/images/logo.png" alt="logo">
 
             <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" class="light-blue">Submit A Request</button>

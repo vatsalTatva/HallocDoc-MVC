@@ -4,7 +4,7 @@
 *@
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <style>
-    .dark-mode {
+    /*.dark-mode {
         background-color: rgb(46, 44, 44);
         color: white;
     }
@@ -12,10 +12,10 @@
     #navbar {
         background-color: #FFFFFF;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-    }
+    }*/
 
-    .light {
-        width: 2rem;
+    .dMode-logo {
+        width: 2.8rem;
         float: right;
         margin: 1.5rem;
     }
@@ -31,14 +31,18 @@
     }
 
 </style>
-<link rel="stylesheet" href="~/css/DarkMode.css" />
-
-<nav id="navbar">
+@*<link rel="stylesheet" href="~/css/DarkMode.css" />
+*@
+<nav id="navbar" class="dark-mode2">
     <img id="nav-logo" src="/images/logo.png" alt="logo">
-    <img onclick="toggleDarkMode()" class="light" src="/images/dark.png" alt="">
+    <button type="button" class="btn shadow border-info dMode-logo"
+            style="border-radius: 10px; border-color: aqua" id="colorButton">
+        <i id="moon" class="bi bi-moon text-info fs-5"></i>
+        <i id="sun" class="bi bi-sun text-info fs-5 d-none"></i>
+    </button>
 </nav>
-<script src="~/js/DarkMode.js"></script>
-
+@*<script src="~/js/DarkMode.js"></script>
+*@@*
 <script>
     function darkMode() {
         var e1 = document.body;
@@ -78,4 +82,4 @@
 
     }
 </script>
-
+*@

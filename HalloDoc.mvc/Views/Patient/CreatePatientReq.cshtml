@@ -34,20 +34,20 @@
         </div>
 
 
-        <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="AddPatient" class="container mb-5 p-4" id="main-cont">
+        <form method="post" enctype="multipart/form-data" class="container mb-5 p-4 shadow dark-mode1" id="main-cont">
             
             <div class="row">
                 <h5 class="col-12">Patient Information</h5>
                 <div class="col-12 mb-3">
                     <div class="form-floating">
-                        <textarea  asp-for="symptoms" class="form-control" placeholder="" id="floatingTextarea2"
+                        <textarea  asp-for="symptoms" class="form-control dark-mode1" placeholder="" id="floatingTextarea2"
                                   style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Enter Brief Details Of Symptoms (Optional)</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="firstName" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="firstName" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">First Name *</label>
                         <span asp-validation-for="firstName" class="text-danger"></span>
                     </div>
@@ -55,13 +55,13 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" >
+                        <input asp-for="lastName" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Last Name</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="dob" type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="dob" type="date" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Date Of Birth *</label>
                         <span asp-validation-for="dob" class="text-danger"></span>
                     </div>
@@ -74,28 +74,28 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="email" name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <input asp-for="email" name="email" type="email" class="form-control dark-mode1" id="email" placeholder="name@example.com">
                         <label for="floatingInput">Email *</label>
                         <span asp-validation-for="email" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="phoneNo" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+                        <input asp-for="phoneNo" type="tel" name="phone" class="form-control dark-mode1 p-3 ps-5" id="floatingInput">
                         
                     </div>
                     <span asp-validation-for="phoneNo" class="text-danger"></span>
                 </div>
                 <div id="passwordSection" class="col-6 " style="display:none" >
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="password" type="password" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Password *</label>
                         <span asp-validation-for="password" class="text-danger"></span>
                     </div>
                 </div>
                 <div id="confirmPasswordSec" class="col-6" style="display:none">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="confirmPassword"  type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="confirmPassword" type="password" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Confirm Password *</label>
                         <span asp-validation-for="confirmPassword" class="text-danger"></span>
                     </div>
@@ -108,31 +108,31 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="street" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="street" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">Street</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="city" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="city" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">City</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="state" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="state" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">State</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="zipCode" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="zipCode" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">Zip Code</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="roomNo" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="roomNo" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">Room # / Suite (Optional)</label>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                     <h5>(Optional) Upload Photo Or Document</h5>
                 </div>
                 <div class="col-12 mb-4">
-                    <input asp-for="file" class="form-control form-control-lg " id="formFileLg" type="file" multiple >
+                    <input asp-for="file" class="form-control form-control-lg dark-mode1" id="formFileLg" type="file" multiple >
                 </div>
                 <div class="col-12">
                     <button id="cancel" type="reset" class="btn my-2">Cancel</button>

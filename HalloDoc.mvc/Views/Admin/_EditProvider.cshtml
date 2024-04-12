@@ -345,7 +345,7 @@
                                 @if (Model.editPro.SignatureValue != null)
                                 {
                                     <div class="d-flex justify-content-center w-100 mt-2 mb-2">
-                                        <img src="~/UploadedFiles/@Model.editPro.SignatureValue" width="200px" alt="Signature">
+                                        <img src="~/PhysicianSign/@Model.editPro.PhyID/@Model.editPro.SignatureValue" width="200px" alt="Signature">
                                     </div>
                                 }
                             </div>
@@ -390,7 +390,7 @@
                         </div>
                         <span class="text-danger" id="errorSpan1"></span>
                         <div class="d-flex justify-content-center">
-                            <a type="button" href="~/UploadedFiles/@Model.editPro.PhyID/Independent_Contractor.pdf" target="_blank" id="OnboardingView1" class="btn btn-info text-white me-2" style="display:none">
+                            <a type="button" href="~/PhysicianFiles/@Model.editPro.PhyID/Independent_Contractor.pdf" target="_blank" id="OnboardingView1" class="btn btn-info text-white me-2" style="display:none">
                                 View
                             </a>
                             <input type="file" hidden class="form-control onBoardInpFile" asp-for="editPro.ContractorAgreement" id="inputOnboardFile1" onchange="checkOnboardingFiles(1)">
@@ -406,7 +406,7 @@
                         </div>
                         <span class="text-danger" id="errorSpan2"></span>
                         <div class="d-flex justify-content-center">
-                            <a type="button" href="~/UploadedFiles/@Model.editPro.PhyID/Background.pdf" target="_blank" id="OnboardingView2" class="btn btn-info text-white me-2" style="display:none">
+                            <a type="button" href="~/PhysicianFiles/@Model.editPro.PhyID/Background.pdf" target="_blank" id="OnboardingView2" class="btn btn-info text-white me-2" style="display:none">
                                 View
                             </a>
                             <input type="file" hidden class="form-control onBoardInpFile" asp-for="editPro.BackgroundCheck" id="inputOnboardFile2" onchange="checkOnboardingFiles(2)">
@@ -422,7 +422,7 @@
                         </div>
                         <span class="text-danger" id="errorSpan3"></span>
                         <div class="d-flex justify-content-center">
-                            <a type="button" href="~/UploadedFiles/@Model.editPro.PhyID/HIPAA.pdf" target="_blank" id="OnboardingView3" class="btn btn-info text-white me-2" style="display:none">
+                            <a type="button" href="~/PhysicianFiles/@Model.editPro.PhyID/HIPAA.pdf" target="_blank" id="OnboardingView3" class="btn btn-info text-white me-2" style="display:none">
                                 View
                             </a>
                             <input type="file" hidden class="form-control onBoardInpFile" asp-for="editPro.HIPAA" id="inputOnboardFile3" onchange="checkOnboardingFiles(3)">
@@ -438,7 +438,7 @@
                         </div>
                         <span class="text-danger" id="errorSpan4"></span>
                         <div class="d-flex justify-content-center">
-                            <a type="button" href="~/UploadedFiles/@Model.editPro.PhyID/Non_Disclosure.pdf" target="_blank" id="OnboardingView4" class="btn btn-info text-white me-2" style="display:none">
+                            <a type="button" href="~/PhysicianFiles/@Model.editPro.PhyID/Non_Disclosure.pdf" target="_blank" id="OnboardingView4" class="btn btn-info text-white me-2" style="display:none">
                                 View
                             </a>
                             <input type="file" hidden class="form-control onBoardInpFile" asp-for="editPro.NonDisclosure" id="inputOnboardFile4" onchange="checkOnboardingFiles(4)">
@@ -454,7 +454,7 @@
                         </div>
                         <span class="text-danger" id="errorSpan5"></span>
                         <div class="d-flex justify-content-center">
-                            <a type="button" href="~/UploadedFiles/@Model.editPro.PhyID/Licence.pdf" target="_blank" id="OnboardingView5" class="btn btn-info text-white me-2" style="display:none">
+                            <a type="button" href="~/PhysicianFiles/@Model.editPro.PhyID/Licence.pdf" target="_blank" id="OnboardingView5" class="btn btn-info text-white me-2" style="display:none">
                                 View
                             </a>
                             <input type="file" hidden class="form-control onBoardInpFile" asp-for="editPro.LicenseDocument" id="inputOnboardFile5" onchange="checkOnboardingFiles(5)">

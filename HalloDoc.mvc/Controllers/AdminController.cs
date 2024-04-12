@@ -155,6 +155,12 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_NewRequest", list);
         }
 
+
+        public IActionResult GetRequest(int tabNo)
+        {
+            var list = _adminService.Export(tabNo);
+            return Json(list);
+        }
         [HttpPost]
         public string ExportReq(List<AdminDashTableModel> reqList)
         {
@@ -926,6 +932,20 @@ namespace HalloDoc.mvc.Controllers
 
             
         }
+        [HttpPost]
+        public IActionResult recordDltBtn(int reqId)
+        {
+            bool isDeleted = _adminService.DeleteRecords(reqId);
+            
+            return Json(new {isDeleted});
+        }
+
+        public IActionResult ScheduleExportAll(RecordsModel recordsModel)
+        {
+            var exportAll = _adminService.GenerateExcelFile(_adminService.SearchRecords(recordsModel));
+            return File(exportAll, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Requests.xlsx");
+        }
+
 
         [HttpGet]
         public IActionResult PatientRecords(PatientRecordsModel patientRecordsModel)

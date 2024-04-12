@@ -98,25 +98,30 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult CreatePatientReq()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult AddPatient(PatientInfoModel patientInfoModel)
+        public IActionResult CreatePatientReq(PatientInfoModel patientInfoModel)
         {
 
-            if (ModelState.IsValid)
+            
+            if(patientInfoModel.password != null)
             {
-                if(patientInfoModel.password != null)
-                {
-                    patientInfoModel.password = GenerateSHA256(patientInfoModel.password);
-                }
-                _patientService.AddPatientInfo(patientInfoModel);
-                _notyf.Success("Submit Successfully !!");
-                return RedirectToAction("RequestScreen", "Patient");
+                patientInfoModel.password = GenerateSHA256(patientInfoModel.password);
             }
-            else
+            bool isValid = _patientService.AddPatientInfo(patientInfoModel);
+            if (!isValid)
             {
+                _notyf.Error("Service is not available in entered Region");
                 return View(patientInfoModel);
             }
+            _notyf.Success("Submit Successfully !!");
+            return RedirectToAction("RequestScreen", "Patient");
+            
         }
 
 
@@ -132,89 +137,89 @@ namespace HalloDoc.mvc.Controllers
             var passwordExists =  _patientService.IsPasswordExists(email);
             return Json(new { passwordExists });
         }
-
-        [HttpPost]
-        public IActionResult AddFamilyRequest(FamilyReqModel familyReqModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _patientService.AddFamilyReq(familyReqModel);
-                _notyf.Success("Submit Successfully !!");
-                return RedirectToAction("RequestScreen", "Patient");
-            }
-            else
-            {
-                return View(familyReqModel);
-            }
-        }
-
-        [HttpPost]
-        public IActionResult AddConciergeRequest(ConciergeReqModel conciergeReqModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _patientService.AddConciergeReq(conciergeReqModel);
-                _notyf.Success("Submit Successfully !!");
-                return RedirectToAction("RequestScreen", "Patient");
-            }
-            else
-            {
-                return View(conciergeReqModel);
-            }
-        }
-
-        [HttpPost]
-        public IActionResult AddBusinessRequest(BusinessReqModel businessReqModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _patientService.AddBusinessReq(businessReqModel);
-                _notyf.Success("Submit Successfully !!");
-                return RedirectToAction("RequestScreen", "Patient");
-            }
-            else
-            {
-                return View(businessReqModel) ;
-            }
-        }
-        public IActionResult RequestScreen()
-        {
-            return View();
-        }
-
-        public IActionResult CreatePatientReq()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult CreatePatientReq( PatientInfoModel patientInfoModel)
-        {
-            if (ModelState.IsValid)
-            {
-                // Save patient data to database
-                return RedirectToAction("RequestScreen");
-            }
-            return View(patientInfoModel);
-        }
-
-
-
+        [HttpGet]
         public IActionResult CreateFamilyFrndReq()
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult CreateFamilyFrndReq(FamilyReqModel familyReqModel)
+        {
+            //if (ModelState.IsValid)
+            //{
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+            bool isValid = _patientService.AddFamilyReq(familyReqModel,createAccountLink);
+            if (!isValid)
+            {
+                _notyf.Error("Service is not available in entered Region");
+                return View(familyReqModel);
+            }
+            _notyf.Success("Submit Successfully !!");
+            return RedirectToAction("RequestScreen", "Patient");
+            //}
+            //else
+            //{
+            //    return View(familyReqModel);
+            //}
+        }
 
+        [HttpGet]
         public IActionResult CreateConciergeReq()
         {
             return View();
         }
 
+
+        [HttpPost]
+        public IActionResult CreateConciergeReq(ConciergeReqModel conciergeReqModel)
+        {
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+            bool isValid = _patientService.AddConciergeReq(conciergeReqModel, createAccountLink);
+            if (!isValid)
+            {
+                _notyf.Error("Service is not available in entered Region");
+                return View(conciergeReqModel);
+            }
+            _notyf.Success("Submit Successfully !!");
+            return RedirectToAction("RequestScreen", "Patient");
+        }
+
+        [HttpGet]
         public IActionResult CreateBusinessPartnerReq()
         {
             return View();
         }
 
+        [HttpPost]
+        public IActionResult CreateBusinessPartnerReq(BusinessReqModel businessReqModel)
+        {
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+            bool isValid = _patientService.AddBusinessReq(businessReqModel, createAccountLink);
+            if (!isValid)
+            {
+                _notyf.Error("Service is not available in entered Region");
+                return View(businessReqModel);
+            }
+            _notyf.Success("Submit Successfully !!");
+            return RedirectToAction("RequestScreen", "Patient");
+        }
+
+        
+        public IActionResult RequestScreen()
+        {
+            return View();
+        }
+
+      
+       
+
+
+       
+
+      
         public IActionResult Login()
         {
             return View();

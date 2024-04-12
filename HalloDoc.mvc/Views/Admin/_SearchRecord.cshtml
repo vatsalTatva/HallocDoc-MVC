@@ -187,17 +187,25 @@
 
     function recordDltBtn(reqId) {
         $.ajax({
-            url: "/adminDashboard/recordDltBtn",
+            url: "/Admin/recordDltBtn",
             data: { reqId: reqId },
             type: 'POST',
             success: function (result) {
-                searchRecords();
+                if(result.isDeleted){
+                    searchRecords();
+                    toastr.success("Deleted");
+                }
+                else{
+                    toastr.error("Something went wrong");
+                }
+                
             },
             error: function () {
                 alert("Error");
             },
         });
     }
+
 
     function searchRecordSearchBtn() {
         var arrayMain = $("#searchRecordForm").serializeArray();
@@ -223,7 +231,7 @@
         event.preventDefault();
 
         $.ajax({
-            url: "/adminDashboard/ScheduleExportAll",
+            url: "/Admin/ScheduleExportAll",
             data: arrayMain,
             type: 'POST',
             xhrFields: {

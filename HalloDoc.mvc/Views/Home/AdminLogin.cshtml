@@ -19,23 +19,28 @@
 </head>
 
 <body>
-    <div class="contianer-fluid">
+    <div class="contianer-fluid overflow-hidden">
         <div class="row">
 
             <!-- left -->
             <div class="col-lg-6 col-md-6 col-sm-12 left">
-                <img class="w-100 vh-100" src="/images/banner.jpg" alt="banner">
+                <img class="w-100 vh-100" src="/images/bg-image.png" alt="banner">
             </div>
 
             <!-- right  -->
             <div class="col-lg-6 col-md-6 col-sm-12 right">
-                <img onclick="darkMode()" class="d-mode" src="/images/dark.png" alt="dark">
+                @*<img onclick="darkMode()" class="d-mode" src="/images/dark.png" alt="dark">*@
+                <button type="button" class="btn d-mode shadow border-info"
+                        style="border-radius: 10px; border-color: aqua" id="colorButton">
+                    <i id="moon" class="bi bi-moon text-info fs-5"></i>
+                    <i id="sun" class="bi bi-sun text-info fs-5 d-none"></i>
+                </button>
                 <form method="post" class="login">
                     <img id="logo" src="/images/logo.png" alt="logo">
                     <h3>Login to your account</h3>
                     <div class="d-flex flex-column justify-content-center align-items-center  w-100">
                         <div class="input-div form-floating mb-3">
-                            <input asp-for="email" type="email" class="form-control email" id="floatingInput" placeholder="name@example.com">
+                            <input asp-for="email" type="email" class="form-control dark-mode1 email" id="floatingInput" placeholder="name@example.com">
                             <label for="floatingInput">Email</label>
                         </div>
                         <span asp-validation-for="email" class="text-danger"></span>
@@ -43,7 +48,7 @@
 
                     <div class="d-flex flex-column justify-content-center align-items-center w-100">
                         <div class="input-div form-floating">
-                            <input asp-for="password" type="password" class="form-control password" id="floatingPassword" placeholder="Password">
+                            <input asp-for="password" type="password" class="form-control dark-mode1 password" id="floatingPassword" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
                         <span class="text-danger" asp-validation-for="password"></span>

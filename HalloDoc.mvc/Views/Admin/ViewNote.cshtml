@@ -5,13 +5,11 @@
 @using DataAccess.CustomModels;
 @model ViewNotesModel;
 
-<style>
-    html[data-bs-theme="dark"] .dark-mode1 {
-        background-color: rgb(42, 50, 56) !important;
-        color: white !important;
-    }
-</style>
-
+<button hidden type="button" class="btn shadow border-info ms-2"
+        style="border-radius: 10px; border-color: aqua" id="colorButton">
+    <i id="moon" class="bi bi-moon text-info fs-5"></i>
+    <i id="sun" class="bi bi-sun text-info fs-5 d-none"></i>
+</button>
 <link rel="stylesheet" href="~/css/AdminViewNote.css" />
 <div class="container-fluid d-flex justify-content-center row ">
 
@@ -36,8 +34,8 @@
                 <div class="row">
 
                     <div class="col-md-6 col-12">
-                        <div class="dropdown mt-3 ">
-                            <button class="btn  dropdown-toggle w-100 text-start notes text-black border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="dropdown  mt-3 ">
+                            <button class="btn dark-mode1 shadow dropdown-toggle w-100 text-start notes text-black border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="~/images/transfer-horizontal-svgrepo-com.svg" class="svg mx-2" />
                                 Transfer Notes
                             </button>
@@ -55,14 +53,14 @@
                     </div>
 
                     <div class="col-md-6 col-12">
-                        <div class="form-floating mt-3 notes">
+                        <div class="form-floating dark-mode1 shadow mt-3 notes">
                             <img src="~/images/doctor.svg" class="svg mx-2" />
                             Physician Notes :
                             <span>@Model.PhysicianNotes</span>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
-                        <div class="form-floating mt-3 notes">
+                        <div class="form-floating shadow dark-mode1 mt-3 notes">
                             <img src="~/images/admin.svg" class="svg mx-2" />
                             Admin Notes :
                             <span>@Model.AdminNotes</span>
@@ -71,8 +69,8 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="form-floating mt-3">
-                                <textarea style="height:100px" class="form-control" placeholder="Leave a comment here" id="notes" asp-for="AdditionalNotes"></textarea>
+                            <div class="form-floating  mt-3">
+                                <textarea style="height:100px" class="form-control dark-mode1" placeholder="Leave a comment here" id="notes" asp-for="AdditionalNotes"></textarea>
                                 <label for="floatingTextarea2">
                                     Admin Notes
 

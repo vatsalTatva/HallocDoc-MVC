@@ -11,17 +11,17 @@ namespace BusinessLogic.Interfaces
 {
     public interface IPatientService
     {
-        void AddPatientInfo(PatientInfoModel patientInfoModel);
+        bool AddPatientInfo(PatientInfoModel patientInfoModel);
 
         bool IsEmailExists(string email);
         bool IsPasswordExists(string email);
         bool CreateAccount(CreateAccountModel model);
 
-        void AddFamilyReq(FamilyReqModel familyReqModel);
+        bool AddFamilyReq(FamilyReqModel familyReqModel, string createAccountLink);
 
-        void AddConciergeReq(ConciergeReqModel conciergeReqModel);  
+        bool AddConciergeReq(ConciergeReqModel conciergeReqModel, string createAccountLink);  
 
-        void AddBusinessReq(BusinessReqModel businessReqModel);
+        bool AddBusinessReq(BusinessReqModel businessReqModel, string createAccountLink);
 
 
         MedicalHistoryList GetMedicalHistory(int userid);

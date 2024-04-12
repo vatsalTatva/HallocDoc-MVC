@@ -31,63 +31,7 @@
 
     <link rel="stylesheet" href="~/css/AdminDashboard.css">
 
-    <style>
-        .dark-mode {
-            background-color: #333 !important;
-            color: #fff !important;
-        }
-
-        .dark-mode-two {
-            color: #fff !important;
-        }
-
-
-        html[data-bs-theme="dark"] nav.header {
-            background-color: rgb(42, 50, 56) !important;
-        }
-
-        html[data-bs-theme="dark"] .text-testing {
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .modal-dark {
-            color: #212529 !important;
-        }
-
-        html[data-bs-theme="dark"] .dark-mode1 {
-            background-color: rgb(42, 50, 56) !important;
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .dark-mode2 {
-            background-color: rgb(42, 50, 56) !important;
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .new {
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .Pending {
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .Active {
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .Conclude {
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .ToClose {
-            color: white !important;
-        }
-
-        html[data-bs-theme="dark"] .Unpaid {
-            color: white !important;
-        }
-    </style>
+    
 </head>
 
 
@@ -193,7 +137,7 @@
                                     </button>
 
                                 </li>
-                                <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                                
                             </ul>
                         </div>
                     </li>
@@ -592,7 +536,17 @@
                 }
             });
         }
-
+        function ExpertDataTabWise(tabNo) {
+            $.ajax({
+                url: '/Admin/GetRequest',
+                type: 'GET',
+                data: { tabNo: tabNo },
+                success: function (response) {
+                    console.log(response);
+                    Export(response);
+                }
+            });
+        }
         function Export(reqList) 
         {
            $.ajax({
@@ -627,17 +581,17 @@
         }
 
 
-        function ExportAll() {
-            $.ajax({
-                url: '/Admin/GetRequestsByStatus',
-                type: 'GET',
-                data: { tabNo: 0 },
-                success: function (response) {
-                    console.log(response);
-                    Export(response);
-                }
-            });
-        }
+        //function ExportAll() {
+        //    $.ajax({
+        //        url: '/Admin/GetRequestsByStatus',
+        //        type: 'GET',
+        //        data: { tabNo: 0 },
+        //        success: function (response) {
+        //            console.log(response);
+        //            Export(response);
+        //        }
+        //    });
+        //}
 
         function showMyProfile(){
             $.ajax({

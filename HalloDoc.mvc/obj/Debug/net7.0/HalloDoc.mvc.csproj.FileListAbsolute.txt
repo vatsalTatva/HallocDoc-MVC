@@ -215,9 +215,6 @@ D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\ru\Microsoft.CodeAnalysis.Workspac
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\obj\Debug\net7.0\HalloDoc.mvc.csproj.CopyComplete
@@ -253,3 +250,9 @@ D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\EPPlus.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\EPPlus.Interfaces.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\EPPlus.System.Drawing.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+D:\HalloDoc.mvc\HalloDoc.mvc\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
