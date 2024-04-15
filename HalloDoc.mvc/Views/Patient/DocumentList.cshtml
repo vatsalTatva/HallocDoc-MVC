@@ -28,10 +28,14 @@
 <link rel="stylesheet" href="~/css/PatientDashboard.css">
 
 
+<button  type="button" class=" btn shadow border-info float-end mt-0 me-5 ms-2"
+        style="border-radius: 10px; border-color: aqua" id="colorButton">
+    <i id="moon" class="bi bi-moon text-info fs-5"></i>
+    <i id="sun" class="bi bi-sun text-info fs-5 d-none"></i>
+</button>
+<div class="container my-5 bg-white dark-mode1">
 
-<div class="container my-5 bg-white">
-
-    <div class="container bg-white p-4 ">
+    <div class="container bg-white dark-mode1 p-4 ">
         <div class="d-flex justify-content-between mb-4">
             <h2>Documents</h2>
             <button onclick="location.href='@Url.Action("PatientDashboard", "Patient")'" id="back-btn">&lt; Back</button>
@@ -52,7 +56,7 @@
 
     <form method="post" asp-action="UploadDocuments" asp-controller="Patient" class="input-group my-5 mt-3" enctype="multipart/form-data">
         @*<input name="file" type="file" class="form-control" id="formFileLg" multiple>*@
-        <input asp-for="uploadedFiles" type="file" class="form-control" id="formFileLg" multiple>
+        <input asp-for="uploadedFiles" type="file" class="form-control dark-mode1" id="formFileLg" multiple>
         <button type="submit" class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
         <br />
     </form>
@@ -60,7 +64,7 @@
         <div class="col-12 d-flex justify-content-between">
 
             <h3>Documents</h3>
-            <button class="px-3" id="downloadSelected" onclick="downloadSelectedFiles()">Download All</button>
+            <button class="px-3 dark-mode1" id="downloadSelected" onclick="downloadSelectedFiles()">Download All</button>
         </div>
     </div>
     <div class="table-responsive">

@@ -87,7 +87,10 @@ namespace BusinessLogic.Interfaces
 
         List<AccountAccess> AccountAccess();
         bool DeleteRole(int roleId);
-
+        List<AccountMenu> GetAccountMenu(int accounttype, int roleid);
+        AccountAccess GetEditAccessData(int roleid);
+        bool SetEditAccessAccount(AccountAccess accountAccess, List<int> AccountMenu, string sessionEmail);
+        List<Aspnetrole> GetAccountType();
         CreateAccess FetchRole(short selectedValue);
         bool CreateRole(List<int> menuIds, string roleName, short accountType);
 

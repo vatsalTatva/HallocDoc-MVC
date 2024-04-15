@@ -437,14 +437,14 @@
 
         function pShowTransferCase(reqId) {
             $.ajax({
-                url: '/Provider/TransferCase',
+                url: '/Provider/TranferRequest',
                 type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {
 
-                    $("#modelContent2").html(response);
+                    $("#pmodelContent2").html(response);
 
-                    $('#transferModal').modal('show');
+                    $('#providerTransferModal').modal('show');
 
                 }
             });

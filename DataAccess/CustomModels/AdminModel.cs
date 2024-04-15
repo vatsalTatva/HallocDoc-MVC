@@ -153,6 +153,11 @@ namespace DataAccess.CustomModels
         public string? firstName { get; set; }
         public string lastName { get; set; }    
     }
+    public class TransferRequest
+    {
+        public int? ReqId { get; set; }
+        public string? description { get; set; }
+    }
     public class ViewUploadModel
     {
         public List<Requestwisefile>? files { get; set; }
@@ -499,6 +504,39 @@ namespace DataAccess.CustomModels
         public string Name { get; set; }
         public short AccountType { get; set; }
 
+    }
+    public class AccountMenu
+    {
+        public int menuid { get; set; }
+
+        public int roleid { get; set; }
+
+        public string name { get; set; }
+
+        public int accounttype { get; set; }
+
+        public bool ExistsInTable { get; set; }
+
+    }
+    public class accessModel
+    {
+        public List<AccountAccess> AccountAccess { get; set; }
+
+        public AccountAccess CreateAccountAccess { get; set; }
+
+        public List<Aspnetrole> Aspnetroles { get; set; }
+
+        public List<Menu> Menus { get; set; }
+
+        public List<AccountMenu> AccountMenu { get; set; }
+
+        public List<UserAccess> UserAccess { get; set; }
+
+        public List<Aspnetrole> AspnetUserroles { get; set; }
+
+        public int Aspid { get; set; }
+
+        public int? flag { get; set; }
     }
 
     public class CreateAccess

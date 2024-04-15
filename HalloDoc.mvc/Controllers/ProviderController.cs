@@ -18,15 +18,17 @@ namespace HalloDoc.mvc.Controllers
         private readonly IAdminService _adminService;
         private readonly IPatientService _patientService;
         private readonly IJwtService _jwtService;
+        private readonly IProviderService _providerService;
 
 
-        public ProviderController(ILogger<AdminController> logger, INotyfService notyfService, IAdminService adminService, IPatientService patientService, IJwtService jwtService)
+        public ProviderController(ILogger<AdminController> logger, INotyfService notyfService, IAdminService adminService, IPatientService patientService, IJwtService jwtService,IProviderService providerService)
         {
             _logger = logger;
             _notyf = notyfService;
             _adminService = adminService;
             _patientService = patientService;
             _jwtService = jwtService;
+            _providerService = providerService;
         }
 
 
@@ -229,24 +231,26 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
-        public IActionResult BlockCase(int reqId)
+        [HttpGet]
+        public IActionResult TranferRequest(int reqId)
         {
 
-            var model = _adminService.BlockCase(reqId);
-            return PartialView("_BlockCase", model);
+            TransferRequest model = new();
+            model.ReqId = reqId;
+            return PartialView("_PTransferRequest",model);
         }
 
         [HttpPost]
-        public IActionResult SubmitBlockCase(BlockCaseModel blockCaseModel, int reqId)
+        public IActionResult TranferRequest(TransferRequest model)
         {
-            blockCaseModel.ReqId = reqId;
-            bool isBlocked = _adminService.SubmitBlockCase(blockCaseModel);
-            if (isBlocked)
+
+            bool isTranferred = _providerService.TransferRequest(model);
+            if (isTranferred)
             {
-                _notyf.Success("Blocked Successfully");
+                _notyf.Success("Tranferred Successfully");
                 return RedirectToAction("ProviderDashboard", "Provider");
             }
-            _notyf.Error("BlockCase Failed");
+            _notyf.Error("Tranferred Failed");
             return RedirectToAction("ProviderDashboard", "Provider");
         }
 

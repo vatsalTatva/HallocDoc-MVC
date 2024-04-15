@@ -847,6 +847,38 @@ namespace HalloDoc.mvc.Controllers
         }
 
 
+        public IActionResult GetEditAccess(int accounttypeid, int roleid)
+        {
+            var roledata = _adminService.GetEditAccessData(roleid);
+            var Accounttype = _adminService.GetAccountType();
+            var menu = _adminService.GetAccountMenu(accounttypeid, roleid);
+            accessModel adminAccessCm = new accessModel
+            {
+                Aspnetroles = Accounttype,
+                AccountMenu = menu,
+                CreateAccountAccess = roledata,
+            };
+            return PartialView("_EditAccessRole", adminAccessCm);
+        }
+        public IActionResult FilterEditRolesMenu(int accounttypeid, int roleid)
+        {
+            var menu = _adminService.GetAccountMenu(accounttypeid, roleid);
+            var htmlcontent = "";
+            foreach (var obj in menu)
+            {
+                htmlcontent += $"<div class='form-check form-check-inline px-2 mx-3'><input class='form-check-input d2class' {(obj.ExistsInTable ? "checked" : "")} name='AccountMenu' type='checkbox' id='{obj.menuid}' value='{obj.menuid}'/><label class='form-check-label' for='{obj.menuid}'>{obj.name}</label></div>";
+            }
+            return Content(htmlcontent);
+        }
+
+        [HttpPost]
+        public IActionResult SetEditAccessAccount(accessModel adminAccessCm, List<int> AccountMenu)
+        {
+            var sessionEmail = GetTokenEmail();
+            bool isEdited = _adminService.SetEditAccessAccount(adminAccessCm.CreateAccountAccess, AccountMenu, sessionEmail);
+
+            return Json(new { isEdited});
+        }
         [HttpGet]
         public IActionResult CreateAccess()
         {

@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\PhysicianImages\\10\\doc-portrait.jpg"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\11\\images-modified2.jfif",
+      "PackagePath": "staticwebassets\\PhysicianImages\\11\\images-modified2.jfif"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\favicon.ico",
       "PackagePath": "staticwebassets\\PhysicianSign\\10\\favicon.ico"
     },
