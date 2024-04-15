@@ -292,7 +292,7 @@ namespace BusinessLogic.Services
 
         }
 
-        public bool UpdateAdminNotes(string additionalNotes, int reqId)
+        public bool UpdateAdminNotes(string additionalNotes, int reqId, int aspNetRole)
         {
             var reqNotes = _db.Requestnotes.FirstOrDefault(x => x.Requestid == reqId);
             try
@@ -302,8 +302,17 @@ namespace BusinessLogic.Services
                 {
                     Requestnote rn = new Requestnote();
                     rn.Requestid = reqId;
-                    rn.Adminnotes = additionalNotes;
-                    rn.Createdby = "admin";
+                    if (aspNetRole == 1)
+                    {
+                        rn.Adminnotes = additionalNotes;
+                        rn.Createdby = "admin";
+                    }
+                    else
+                    {
+                        rn.Physiciannotes = additionalNotes;
+                        rn.Createdby = "Physician";
+                    }
+                   
                     //here instead of admin , add id of the admin through which admin is loggedIn 
                     rn.Createddate = DateTime.Now;
                     _db.Requestnotes.Add(rn);
@@ -311,9 +320,17 @@ namespace BusinessLogic.Services
                 }
                 else
                 {
-                    reqNotes.Adminnotes = additionalNotes;
+                    if (aspNetRole == 1)
+                    {
+                        reqNotes.Adminnotes = additionalNotes;
+                        reqNotes.Modifiedby = "admin";
+                    }
+                    else
+                    {
+                        reqNotes.Physiciannotes = additionalNotes;
+                        reqNotes.Modifiedby = "Physician";
+                    }
                     reqNotes.Modifieddate = DateTime.Now;
-                    reqNotes.Modifiedby = "admin";
                     //here instead of admin , add id of the admin through which admin is loggedIn 
                     _db.Requestnotes.Update(reqNotes);
                     _db.SaveChanges();
@@ -1523,7 +1540,7 @@ namespace BusinessLogic.Services
                 Guid id = Guid.NewGuid();
                 _user.Id = id.ToString();
                 _user.Username = obj.username;
-                _user.Passwordhash = obj.password;
+                _user.Passwordhash = GenerateSHA256(obj.password);
                 _user.Email = obj.Email;
                 _user.Phonenumber = obj.PhoneNumber;
                 _user.Createddate = DateTime.Now;
@@ -1577,12 +1594,12 @@ namespace BusinessLogic.Services
                 _db.Physiciannotifications.Add(notification);
                 _db.SaveChanges();
 
-                //Aspnetuserrole _userRole = new Aspnetuserrole();
-                //_userRole.Userid = "10";
-                //_userRole.Roleid = 3;
+                Aspnetuserrole userRole = new Aspnetuserrole();
+                userRole.Userid = _user.Id;
+                userRole.Roleid = 3;
 
-                //_db.Aspnetuserroles.Add(_userRole);
-                //_db.SaveChanges();
+                _db.Aspnetuserroles.Add(userRole);
+                _db.SaveChanges();
 
 
                 Physicianlocation _phyLoc = new Physicianlocation();
@@ -2174,16 +2191,12 @@ namespace BusinessLogic.Services
         public void editProviderDeleteAccount(int phyId)
         {
             var phy = _db.Physicians.Where(r => r.Physicianid == phyId).Select(r => r).First();
-
-            if (phy.Isdeleted == null)
-            {
-                phy.Isdeleted = new BitArray(1);
-                phy.Isdeleted[0] = true;
-
+            BitArray deletedBit = new BitArray(1, true);
+           
+                phy.Isdeleted = deletedBit;
+                _db.Physicians.Update(phy);
                 _db.SaveChanges();
-            }
-
-
+          
         }
 
         public bool CreateAdminAccount(CreateAdminAccount obj, string email)
@@ -2708,7 +2721,7 @@ namespace BusinessLogic.Services
                             sentdate = item.Sentdate,
                             sent = item.Isemailsent[0] ? "Yes" : "No",
                             recipient = _db.Requestclients.Where(i => i.Requestid == item.Requestid).Select(i => i.Firstname).First(),
-                            rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid.ToString()).Select(i => i.Name).First(),
+                            rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid).Select(i => i.Name).First(),
                             senttries = item.Senttries,
                             confirmationNumber = item.Confirmationnumber,
                         };
@@ -2724,7 +2737,7 @@ namespace BusinessLogic.Services
                             sentdate = item.Sentdate,
                             sent = item.Isemailsent[0] ? "Yes" : "No",
                             recipient = _db.Physicians.Where(i => i.Physicianid == item.Physicianid).Select(i => i.Firstname).FirstOrDefault(),
-                            rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid.ToString()).Select(i => i.Name).First(),
+                            rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid).Select(i => i.Name).First(),
                             senttries = item.Senttries,
                             confirmationNumber = item.Confirmationnumber,
                         };
@@ -2771,7 +2784,7 @@ namespace BusinessLogic.Services
                         sentdate = item.Sentdate,
                         sent = item.Issmssent[0] ? "Yes" : "No",
                         recipient = _db.Requestclients.Where(i => i.Requestid == item.Requestid).Select(i => i.Firstname).FirstOrDefault(),
-                        rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid.ToString()).Select(i => i.Name).First(),
+                        rolename = _db.Aspnetroles.Where(i => i.Id == item.Roleid).Select(i => i.Name).First(),
                         senttries = item.Senttries,
                         confirmationNumber = item.Confirmationnumber,
                     };

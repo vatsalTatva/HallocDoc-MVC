@@ -16,8 +16,8 @@ namespace DataAccess.CustomModels
         public string? email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-      ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digit, and one special character.")]
+      //  [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+      //ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digit, and one special character.")]
         public string? password { get; set; }
     }
 
@@ -118,6 +118,8 @@ namespace DataAccess.CustomModels
         public string? PhysicianNotes { get; set; }
 
         public string? AdminNotes { get; set; }
+
+        [Required(ErrorMessage ="Note is required")]
         public string? AdditionalNotes { get; set; }
 
         public int ReqId { get; set; }

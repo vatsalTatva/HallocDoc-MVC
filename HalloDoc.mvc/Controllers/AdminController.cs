@@ -98,7 +98,7 @@ namespace HalloDoc.mvc.Controllers
         
         public IActionResult AdminDashboard()
         {
-            _notyf.Success("Logged in Successfully");
+          
             return View();
         }
 
@@ -227,7 +227,7 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult UpdateNotes(ViewNotesModel model)
         {
             int? reqId = HttpContext.Session.GetInt32("RNId");
-            bool isUpdated = _adminService.UpdateAdminNotes(model.AdditionalNotes, (int)reqId);
+            bool isUpdated = _adminService.UpdateAdminNotes(model.AdditionalNotes, (int)reqId,1);
             if (isUpdated)
             {
                 _notyf.Success("Saved Changes !!");

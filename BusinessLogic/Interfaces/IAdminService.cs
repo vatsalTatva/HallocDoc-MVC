@@ -24,7 +24,7 @@ namespace BusinessLogic.Interfaces
 
         ViewNotesModel ViewNotes(int ReqId);
 
-        bool UpdateAdminNotes(string additionalNotes, int reqId);
+        bool UpdateAdminNotes(string additionalNotes, int reqId,int aspNetRole);
 
         CancelCaseModel CancelCase(int reqId);
 

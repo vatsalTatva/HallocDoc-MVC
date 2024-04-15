@@ -81,7 +81,18 @@ namespace HalloDoc.mvc.Controllers
                     {
                         var jwtToken = _jwtService.GetJwtToken(aspnetuser);
                         Response.Cookies.Append("jwt", jwtToken);
-                        return RedirectToAction("AdminDashboard", "Admin");
+                        int role = aspnetuser.Aspnetuserroles.Where(x => x.Userid == aspnetuser.Id).Select(x => x.Roleid).First();
+                        if (role == 1)
+                        {
+                            _notyf.Success("Logged in Successfully");
+                            return RedirectToAction("AdminDashboard", "Admin");
+                        }
+                        else
+                        {
+                            _notyf.Success("Logged in Successfully");
+                            return RedirectToAction("ProviderDashboard", "Provider");
+
+                        }
                     }
                     else
                     {
