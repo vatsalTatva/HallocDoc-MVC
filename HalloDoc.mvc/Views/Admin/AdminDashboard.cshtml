@@ -474,6 +474,13 @@
 
                     $('#assignModal').modal('show');
 
+                },
+                        error: function (xhr, status, error) {
+                    if (xhr.status === 401) {
+
+                        window.location.reload();
+                    }
+                    console.error(error);
                 }
             });
         }
@@ -657,8 +664,12 @@
                 success: function(response){
                     $("#provider-location-tab-pane").html(response);
                 },
-                error: function (e) {
-                    alert("error loading partial view");
+                error: function (xhr, status, error) {
+                    if (xhr.status === 401) {
+                        
+                        window.location.reload();
+                    }
+                    console.error(error);
                 }
             })
         }

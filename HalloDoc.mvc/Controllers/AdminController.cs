@@ -932,7 +932,7 @@ namespace HalloDoc.mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdminAccount(CreateAdminAccount model)
+        public IActionResult AdminAccount(CreateAdminAccount model,List<int> AdminRegion)
         {
             var email = GetTokenEmail();
             var isCreated = _adminService.CreateAdminAccount(model, email);
@@ -1147,14 +1147,14 @@ namespace HalloDoc.mvc.Controllers
       
 
         [HttpPost]
-        public async Task<IActionResult> AddShift(SchedulingViewModel model, List<int> repeatdays)
+        public  IActionResult AddShift(SchedulingViewModel model, List<int> repeatdays)
         {
             var email = GetTokenEmail();
 
             //var email = User.FindFirstValue(ClaimTypes.Email);
-            await _adminService.CreateShift(model, email, repeatdays);
+            var isAdded =  _adminService.CreateShift(model, email, repeatdays);
             TempData["Success"] = "Shift Created Successfully";
-            return Json(new {iaAdded=true});
+            return Json(new {isAdded});
         }
 
         public IActionResult ViewShift(int ShiftDetailId)

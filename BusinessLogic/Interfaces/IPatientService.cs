@@ -11,6 +11,8 @@ namespace BusinessLogic.Interfaces
 {
     public interface IPatientService
     {
+        public Aspnetuser GetAspnetuser(string email);
+       
         bool AddPatientInfo(PatientInfoModel patientInfoModel);
 
         bool IsEmailExists(string email);
@@ -24,11 +26,13 @@ namespace BusinessLogic.Interfaces
         bool AddBusinessReq(BusinessReqModel businessReqModel, string createAccountLink);
 
 
-        MedicalHistoryList GetMedicalHistory(int userid);
+        MedicalHistoryList GetMedicalHistory(string email);
         DocumentModel GetAllDocById(int requestId);
         Profile GetProfile(int userid);
         bool EditProfile(Profile profile);
 
         bool UploadDocuments(List<IFormFile> files, int reqId);
+
+        public PatientInfoModel FetchData(string email);
     }
 }

@@ -6,11 +6,11 @@
         <h4>
             Create Admin Account
         </h4>
-        <button onclick="location.href='@Url.Action("AdminDashboard", "Admin")'" id="back-btn">&lt; Back</button>
+        <button onclick="ShowAllRequests()" id="back-btn">&lt; Back</button>
     </div>
     <div class="justify-content-center shadow bg-white dark-mode1 my-4">
         <div class="viewCaseForm form-floating patient-request-form p-3">
-            <form method="post" asp-controller="Admin" asp-action="AdminAccount" class="mb-4">
+            <form id="CreateAdminAccountForm" class="mb-4">
                 <h5>Account Information</h5>
                 <div class="row g-2 m-1">
                     <div class="col-4">
@@ -30,8 +30,8 @@
                         <div class="form-floating phone-div w-100 h-100 ">
                             <select class="form-select mb-3" id="role">
                                 <option>Active</option>
-                                <option>Out</option>
-                                <option>Died</option>
+                                <option>InActive</option>
+                                <option>Pending</option>
                             </select>
                             <label for="">Role</label>
                         </div>
@@ -158,20 +158,20 @@
 
     function createAdminPostFor() {
 
-        var payload2 = $("#CreateAdminAccountForm").serializeArray();
-        var RegionArray = [];
-        var checkedBoxes = $('.region-checkbox:checkbox:checked');
-        console.log(RegionArray);
-        ; $.each(checkedBoxes, function () {
-            RegionArray.push(parseInt(this.value))
-        });
-        console.log(payload2);
-        payload2.push({ name: 'RegionArray', value: RegionArray });
+        var payload = $("#CreateAdminAccountForm").serializeArray();
+        //var RegionArray = [];
+        //var checkedBoxes = $('.region-checkbox:checkbox:checked');
+        //console.log(RegionArray);
+        //; $.each(checkedBoxes, function () {
+        //    RegionArray.push(parseInt(this.value))
+        //});
+        //console.log(payload2);
+        //payload2.push({ name: 'RegionArray', value: RegionArray });
         //if ($("#myProfileThirdForm").valid()) {
         $.ajax({
             url: "/Admin/AdminAccount",
             type: 'POST',
-            data: payload2,
+            data: payload,
             success: function (response) {
                 //     if (response.isRegionExists == false) {
                 //         toastr.error("State doesn't exists !!");

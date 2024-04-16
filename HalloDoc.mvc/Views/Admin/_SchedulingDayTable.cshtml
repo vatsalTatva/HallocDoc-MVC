@@ -156,7 +156,6 @@
     // });
 
         function viewshift(ShiftDetailId) {
-            console.log("abcd");
         $.ajax({
             url: "/Admin/ViewShift",
             type: "GET",
@@ -165,8 +164,7 @@
                 $("#viewshift").html(data);
                 $('#ViewShiftModel').modal('show');
 
-                // const myModal = new bootstrap.Modal("#ViewShiftModel", {});
-                // myModal.show();
+                
             },
             error: function () {
                 alert("No Projects Found");

@@ -61,7 +61,7 @@
                     </li>
             </div>
             <li class="nav-item">
-                <button id="logout" onclick="location.href='@Url.Action("Login", "Patient")'" class="px-3 dark-mode1">
+                <button id="logout" onclick="location.href='@Url.Action("Logout", "Patient")'" class="px-3 dark-mode1">
                     <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
                 </button>
 
@@ -352,7 +352,7 @@
                 location.assign('SubmitMeInfo');
             }
             else if (buttonId == 'button2') {
-                location.assign('patientsomeoneelse');
+                location.assign('SubmitElseInfo');
             } else {
                 // Default redirection if buttonId is not set or unexpected
             }

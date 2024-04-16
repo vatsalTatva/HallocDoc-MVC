@@ -3111,7 +3111,7 @@ namespace BusinessLogic.Services
             return month;
         }
 
-        public async Task CreateShift(SchedulingViewModel model, string Email, List<int> repeatdays)
+        public bool CreateShift(SchedulingViewModel model, string Email, List<int> repeatdays)
         {
             Aspnetuser? aspNetUser = _db.Aspnetusers.FirstOrDefault(a => a.Email == Email);
 
@@ -3161,7 +3161,7 @@ namespace BusinessLogic.Services
                 shift.Isrepeat = new BitArray(new[] { false });
             }
             _db.Shifts.Add(shift);
-            await _db.SaveChangesAsync();
+             _db.SaveChanges();
             DateOnly curdate = model.shiftdate;
 
             Shiftdetail shiftdetail = new Shiftdetail();
@@ -3172,7 +3172,7 @@ namespace BusinessLogic.Services
             shiftdetail.Endtime = model.endtime;
             shiftdetail.Isdeleted = new BitArray(new[] { false });
             _db.Shiftdetails.Add(shiftdetail);
-            await _db.SaveChangesAsync();
+             _db.SaveChanges();
 
             var dayofweek = model.shiftdate.DayOfWeek.ToString();
             int valueforweek;
@@ -3237,11 +3237,12 @@ namespace BusinessLogic.Services
                             Isdeleted = new BitArray(new[] { false })
                         };
                         _db.Shiftdetails.Add(shiftdetailnew);
-                        await _db.SaveChangesAsync();
+                         _db.SaveChanges();
                         newcurdate = newcurdate.AddDays(7);
                     }
                 }
             }
+            return true;
         }
 
         public CreateNewShift ViewShift(int ShiftDetailId)

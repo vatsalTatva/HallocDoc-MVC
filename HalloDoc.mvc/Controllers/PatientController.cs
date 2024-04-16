@@ -12,6 +12,9 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using BusinessLogic.Services;
+using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -61,43 +64,111 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Login(LoginModel loginModel)
+        //[HttpPost]
+        //public IActionResult Login(LoginModel loginModel)
+        //{
+
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        string passwordhash = GenerateSHA256(loginModel.password);
+        //        loginModel.password = passwordhash;
+        //        var user = _loginService.Login(loginModel);
+
+        //        //var userId = user.Userid;
+        //        HttpContext.Session.SetInt32("UserId", user.Userid);
+
+        //        //the above data is coming from user table and storing in user object
+        //        if (user != null)
+        //        {
+        //            //TempData["username"] = user.Firstname;
+        //            //TempData["id"] = user.Lastname;
+                  
+        //            _notyf.Success("Logged In Successfully !!");
+        //            return RedirectToAction("PatientDashboard","Patient");
+        //        }
+        //        else
+        //        {
+        //            _notyf.Error("Invalid Credentials");
+
+        //            //ViewBag.AuthFailedMessage = "Please enter valid username and password !!";
+        //        }
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return View(loginModel);
+        //    }
+        //}
+
+
+        [HttpGet]
+        public IActionResult Login()
         {
-
-
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(LoginModel model)
+        
+        {
             if (ModelState.IsValid)
             {
-                string passwordhash = GenerateSHA256(loginModel.password);
-                loginModel.password = passwordhash;
-                var user = _loginService.Login(loginModel);
-
-                //var userId = user.Userid;
-                HttpContext.Session.SetInt32("UserId", user.Userid);
-
-                //the above data is coming from user table and storing in user object
-                if (user != null)
+                var aspnetuser = _patientService.GetAspnetuser(model.email);
+                if (aspnetuser != null)
                 {
-                    //TempData["username"] = user.Firstname;
-                    //TempData["id"] = user.Lastname;
-                  
-                    _notyf.Success("Logged In Successfully !!");
-                    return RedirectToAction("PatientDashboard","Patient");
-                }
-                else
-                {
-                    _notyf.Error("Invalid Credentials");
+                    model.password = GenerateSHA256(model.password);
+                    if (aspnetuser.Passwordhash == model.password)
+                    {
+                        var jwtToken = _jwtService.GetJwtToken(aspnetuser);
+                        Response.Cookies.Append("PatientJwt", jwtToken);
+                       
+                            _notyf.Success("Logged in Successfully");
+                            return RedirectToAction("PatientDashboard", "Patient");
+                      
+                    }
+                    else
+                    {
+                        _notyf.Error("Password is incorrect");
 
-                    //ViewBag.AuthFailedMessage = "Please enter valid username and password !!";
+                        return View();
+                    }
                 }
+                _notyf.Error("Email is incorrect");
                 return View();
             }
             else
             {
-                return View(loginModel);
+                return View(model);
             }
         }
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("PatientJwt");
+            return RedirectToAction("Login", "Patient");
+        }
+
+        public string GetTokenEmail()
+        {
+            var token = HttpContext.Request.Cookies["PatientJwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return "";
+            }
+            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+            return emailClaim.Value;
+        }
+        public string GetLoginId()
+        {
+            var token = HttpContext.Request.Cookies["PatientJwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return "";
+            }
+            var loginId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "aspNetUserId");
+            return loginId.Value;
+        }
         [HttpGet]
         public IActionResult CreatePatientReq()
         {
@@ -209,18 +280,6 @@ namespace HalloDoc.mvc.Controllers
 
         
         public IActionResult RequestScreen()
-        {
-            return View();
-        }
-
-      
-       
-
-
-       
-
-      
-        public IActionResult Login()
         {
             return View();
         }
@@ -342,9 +401,12 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult PatientDashboard()
         {
-            int? userid = HttpContext.Session.GetInt32("UserId");
-
-            var infos = _patientService.GetMedicalHistory((int)userid);
+            var email = GetTokenEmail();
+            if(email == "")
+            {
+                return RedirectToAction("Login");
+            }
+            var infos = _patientService.GetMedicalHistory(email);
 
             return View(infos);
         }
@@ -405,8 +467,27 @@ namespace HalloDoc.mvc.Controllers
         }
         public IActionResult SubmitMeInfo()
         {
+            var email = GetTokenEmail();
+            PatientInfoModel Reqobj = _patientService.FetchData(email);
+
+            return View(Reqobj);
+        }
+        public IActionResult SubmitElseInfo()
+        {
             return View();
         }
 
+        //[HttpPost]
+        //public IActionResult SubmitElseInfo(FamilyReqModel familyFriendRequestForm)
+        //{
+
+        //    //try
+        //    //{
+        //    //    _patientService.ReqforSomeoneElse(familyFriendRequestForm, userid);
+        //    //    return RedirectToAction("patientdashboard");
+        //    //}
+        //    //catch { return View(); }
+
+        //}
     }
 }

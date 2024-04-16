@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -47,7 +49,26 @@ namespace HalloDoc.mvc.Controllers
             Response.Cookies.Delete("jwt");
             return RedirectToAction("AdminLogin", "Home");
         }
-
+        public string GetTokenEmail()
+        {
+            var token = HttpContext.Request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return "";
+            }
+            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+            return emailClaim.Value;
+        }
+        public string GetLoginId()
+        {
+            var token = HttpContext.Request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return "";
+            }
+            var loginId = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "aspNetUserId");
+            return loginId.Value;
+        }
         public IActionResult GetCount()
         {
             var statusCountModel = _adminService.GetStatusCount();
@@ -204,33 +225,14 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("ProviderDashboard");
         }
 
-        [HttpGet]
-        public IActionResult AssignCase(int reqId)
-        {
-            HttpContext.Session.SetInt32("AssignReqId", reqId);
-            var model = _adminService.AssignCase(reqId);
-            return PartialView("_AssignCase", model);
-        }
-
+   
         public IActionResult GetPhysician(int selectRegion)
         {
             List<Physician> physicianlist = _adminService.GetPhysicianByRegion(selectRegion);
             return Json(new { physicianlist });
         }
 
-        [HttpPost]
-        public IActionResult SubmitAssignCase(AssignCaseModel assignCaseModel)
-        {
-            assignCaseModel.ReqId = HttpContext.Session.GetInt32("AssignReqId");
-            bool isAssigned = _adminService.SubmitAssignCase(assignCaseModel);
-            if (isAssigned)
-            {
-                _notyf.Success("Assigned successfully");
-                return RedirectToAction("ProviderDashboard", "Provider");
-            }
-            return View();
-        }
-
+      
         [HttpGet]
         public IActionResult TranferRequest(int reqId)
         {
@@ -357,6 +359,52 @@ namespace HalloDoc.mvc.Controllers
             var order = _adminService.FetchProfession();
             order.ReqId = reqId;
             return View(order);
+        }
+
+        public IActionResult Scheduling(SchedulingViewModel model)
+        {
+
+            model.regions = _adminService.RegionTable().ToList();
+            return PartialView("_MyScheduling", model);
+        }
+
+        public IActionResult LoadSchedulingPartial( string date, int regionid, int status)
+        {
+            var aspnetuserid = GetLoginId();
+                var month = _providerService.PhysicianMonthlySchedule(date, status, aspnetuserid);
+                return PartialView("_MonthlySchedule", month);
+            
+        }
+
+        [HttpPost]
+        public IActionResult AddShift(SchedulingViewModel model, List<int> repeatdays)
+        {
+            var email = GetTokenEmail();
+
+            //var email = User.FindFirstValue(ClaimTypes.Email);
+            var isAdded = _adminService.CreateShift(model, email, repeatdays);
+            return Json(new { isAdded });
+        }
+
+        public IActionResult ViewShift(int ShiftDetailId)
+        {
+            var data = _adminService.ViewShift(ShiftDetailId);
+            return View("_PViewShift", data);
+        }
+
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+            var userid = GetLoginId();
+            var tokenemail = GetTokenEmail();
+            int phyId = _providerService.GetPhysicianId(userid);
+            EditProviderModel2 model = new EditProviderModel2();
+            model.editPro = _adminService.EditProviderProfile(phyId, tokenemail);
+            model.regions = _adminService.RegionTable();
+            model.physicianregiontable = _adminService.PhyRegionTable(phyId);
+            model.roles = _adminService.GetRoles();
+            return PartialView("_PMyProfile", model);
+          
         }
     }
 }

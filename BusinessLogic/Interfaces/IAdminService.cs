@@ -128,7 +128,7 @@ namespace BusinessLogic.Interfaces
         WeekWiseScheduling GetWeekTable(string date, int regionid, int status);
         MonthWiseScheduling GetMonthTable(string date, int regionid, int status);
 
-        Task CreateShift(SchedulingViewModel model, string Email, List<int> repeatdays);
+        bool CreateShift(SchedulingViewModel model, string Email, List<int> repeatdays);
 
         CreateNewShift ViewShift(int ShiftDetailId);
         bool EditShift(CreateNewShift model, string email);

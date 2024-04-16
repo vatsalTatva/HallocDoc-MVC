@@ -16,7 +16,10 @@ namespace HalloDoc.mvc.Auth
             _role = role;
         }
 
-
+        private bool isAjaxRequest(HttpRequest request)
+        {
+            return request.Headers["X-Requested-With"] == "XMLHttpRequest";
+        }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var jwtServices = context.HttpContext.RequestServices.GetService<IJwtService>();
@@ -27,12 +30,24 @@ namespace HalloDoc.mvc.Auth
             }
 
 
+
             var request = context.HttpContext.Request;
             var token = request.Cookies["jwt"];
 
             if (token == null || !jwtServices.ValidateToken(token, out JwtSecurityToken jwtToken))
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "AdminLogin" }));
+                if (isAjaxRequest(request))
+                {
+                    context.Result = new JsonResult(new { error = "Failed to Authenticate User" })
+                    {
+                        StatusCode = 401
+                    };
+                }
+                else
+                {
+
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "AdminLogin" }));
+                }
                 return;
             }
             var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role);

@@ -23,7 +23,11 @@ namespace BusinessLogic.Services
             _db = db;
         }
 
-       
+        public Aspnetuser GetAspnetuser(string email)
+        {
+            var aspNetUser = _db.Aspnetusers.Include(x => x.Aspnetuserroles).FirstOrDefault(x => x.Email == email);
+            return aspNetUser;
+        }
         public bool AddPatientInfo(PatientInfoModel patientInfoModel)
         {
             var stateMain = _db.Regions.Where(r => r.Name.ToLower() == patientInfoModel.state.ToLower().Trim()).FirstOrDefault();
@@ -543,9 +547,9 @@ namespace BusinessLogic.Services
 
 
 
-        public MedicalHistoryList GetMedicalHistory(int userid)
+        public MedicalHistoryList GetMedicalHistory(string email)
         {
-            var user = _db.Users.FirstOrDefault(x => x.Userid == userid);
+            var user = _db.Users.FirstOrDefault(x => x.Email == email);
 
 
             var medicalhistory = (from request in _db.Requests
@@ -566,7 +570,7 @@ namespace BusinessLogic.Services
             MedicalHistoryList medicalHistoryList = new()
             {
                 medicalHistoriesList = medicalhistory,
-                id = userid,
+                id = user.Userid,
                 firstName = user.Firstname,
                 lastName = user.Lastname
             };
@@ -684,6 +688,22 @@ namespace BusinessLogic.Services
                 }
             }
             catch (Exception ex) { return false; }
+        }
+
+        public PatientInfoModel FetchData(string email)
+        {
+            User? user = _db.Users.FirstOrDefault(i => i.Email == email);
+            var BirthDay = Convert.ToInt32(user.Intdate);
+            var BirthMonth = user.Strmonth;
+            var BirthYear = Convert.ToInt32(user.Intyear);
+            var userdata = new PatientInfoModel()
+            {
+                firstName = user.Firstname,
+                lastName = user.Lastname,
+                email = user.Email,
+                phoneNo = user.Mobile,
+            };
+            return userdata;
         }
     }
 }
