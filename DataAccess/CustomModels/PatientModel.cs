@@ -13,8 +13,9 @@ namespace DataAccess.CustomModels
     {
         public string? symptoms { get; set; }
 
-        [Required(ErrorMessage = "First name is required")]
+        [Required(ErrorMessage = "Firstname is required")]
         public string firstName { get; set; }
+        [Required(ErrorMessage = "Lastname name is required")]
         public string? lastName { get; set; }
 
         [Required(ErrorMessage ="Date of Birth is required")]
@@ -24,16 +25,20 @@ namespace DataAccess.CustomModels
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string email { get; set; }
 
+        [Required(ErrorMessage = "Phone number is required.")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone number must be 10 digits long")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? phoneNo { get; set; }
         public string? street { get; set; }
         public string? city { get; set; }
+
+        [Required(ErrorMessage ="State is required")]
         public string? state { get; set; }
         public string? zipCode { get; set; }
         public string? roomNo { get; set; }
         public string? country { get; set; }
 
+        [Required(ErrorMessage ="Password is required")]
         public string? password { get; set; }
 
         [Compare("password", ErrorMessage = "Password Missmatch")]
@@ -46,9 +51,12 @@ namespace DataAccess.CustomModels
 
     public class FamilyReqModel
     {
-        [Required(ErrorMessage = "First name is required")]
+        [Required(ErrorMessage = "Firstname is required")]
         public string firstName { get; set; }
+
         public string? lastName { get; set; }
+        [Required(ErrorMessage = "Please enter the email address.")]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
         public string? email { get; set; }
         public string? phoneNo { get; set; }
 
@@ -58,15 +66,19 @@ namespace DataAccess.CustomModels
 
         [Required(ErrorMessage = "Patient First name is required")]
         public string? patientFirstName { get; set; }
+        [Required(ErrorMessage = "Patient Last name is required")]
         public string? patientLastName { get; set; }
+        [Required(ErrorMessage = "Date of Birth is required")]
         public DateOnly patientDob { get; set; }
 
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
         public string? patientEmail { get; set; }
+        [Required(ErrorMessage ="Phone number is required")]
         public string? patientPhoneNo { get; set; }
         public string? street { get; set; }
         public string? city { get; set; }
+        [Required(ErrorMessage = "State is required")]
         public string? state { get; set; }
         public string? zipCode { get; set; }
         public int? roomNo { get; set; }
@@ -79,6 +91,8 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "First name is required")]
         public string? firstName { get; set; }
         public string? lastName { get; set; }
+        [Required(ErrorMessage = "Please enter the email address.")]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
         public string? email { get; set; }
         public string? phoneNo { get; set; }
 
@@ -88,6 +102,7 @@ namespace DataAccess.CustomModels
 
         [Required(ErrorMessage = "Patient First name is required")]
         public string? patientFirstName { get; set; }
+        [Required(ErrorMessage = "Patient Last name is required")]
         public string? patientLastName { get; set; }
         [Required(ErrorMessage = "Patient Date of Birth is required")]
         public DateOnly patientDob { get; set; }
@@ -95,18 +110,16 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "Please enter the patient's email address.")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
         public string? patientEmail { get; set; }
+        [Required(ErrorMessage = "Phone number is required")]
         public string? patientPhoneNo { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Street")]
         public string street { get; set; }
-        [Required(ErrorMessage = "Please Enter City")]
         public string city { get; set; }
         [Required(ErrorMessage = "Please Enter State")]
         public string state { get; set; }
         [Required(ErrorMessage = "Please Enter ZipCode")]
         public string? zipCode { get; set; }
         public int? roomNo { get; set; }
-
 
     }
 
@@ -116,6 +129,8 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "First name is required")]
         public string? firstName { get; set; }
         public string? lastName { get; set; }
+        [Required(ErrorMessage = "Please enter the email address.")]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Please enter a valid email address.")]
         public string? email { get; set; }
         public string? phoneNo { get; set; }
 
@@ -126,6 +141,7 @@ namespace DataAccess.CustomModels
 
         [Required(ErrorMessage = "Patient First name is required")]
         public string? patientFirstName { get; set; }
+        [Required(ErrorMessage = "Patient Last name is required")]
         public string? patientLastName { get; set; }
         [Required(ErrorMessage = "Patient Date of Birth is required")]
         public DateOnly patientDob { get; set; }
@@ -136,6 +152,7 @@ namespace DataAccess.CustomModels
         public string? patientPhoneNo { get; set; }
         public string? street { get; set; }
         public string? city { get; set; }
+        [Required(ErrorMessage = "Please Enter State")]
         public string? state { get; set; }
         public string? zipCode { get; set; }
         public int? roomNo { get; set; }
@@ -150,7 +167,7 @@ namespace DataAccess.CustomModels
         public DateTime createdDate { get; set; }
         public int currentStatus { get; set; }
         public List<string> document { get; set; }
-
+        public int docCount { get; set; }
 
     }
     public class MedicalHistoryList

@@ -267,7 +267,7 @@ namespace BusinessLogic.Services
 
                 user.Aspnetuserid = asp.Id;
                 user.Firstname = familyReqModel.patientFirstName;
-                user.Lastname = familyReqModel.patientFirstName;
+                user.Lastname = familyReqModel.patientLastName;
                 user.Email = familyReqModel.patientEmail;
                 user.Mobile = familyReqModel.patientPhoneNo;
                 user.City = familyReqModel.city;
@@ -284,10 +284,14 @@ namespace BusinessLogic.Services
                 _db.SaveChanges();
 
 
-
-
+                Aspnetuserrole aspnetuserrole = new Aspnetuserrole();   
+                aspnetuserrole.Userid = asp.Id;
+                aspnetuserrole.Roleid = 2;
+                _db.Aspnetuserroles.Add(aspnetuserrole);
+                _db.SaveChanges();
                 try
                 {
+                    createAccountLink = createAccountLink+"/"+asp.Id;
                     SendRegistrationEmailCreateRequest(familyReqModel.patientEmail, createAccountLink);
                 }
                 catch (Exception e)
@@ -329,6 +333,39 @@ namespace BusinessLogic.Services
 
             _db.Requestclients.Add(info);
             _db.SaveChanges();
+
+
+            if (familyReqModel.file != null)
+            {
+                foreach (IFormFile file in familyReqModel.file)
+                {
+                    if (file != null && file.Length > 0)
+                    {
+                        //get file name
+                        var fileName = Path.GetFileName(file.FileName);
+
+                        //define path
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+
+                        // Copy the file to the desired location
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(stream)
+                   ;
+                        }
+
+                        Requestwisefile requestwisefile = new()
+                        {
+                            Filename = fileName,
+                            Requestid = request.Requestid,
+                            Createddate = DateTime.Now
+                        };
+
+                        _db.Requestwisefiles.Add(requestwisefile);
+                        _db.SaveChanges();
+                    };
+                }
+            }
             return true;
         }
 
@@ -547,36 +584,54 @@ namespace BusinessLogic.Services
 
 
 
+        //public MedicalHistoryList GetMedicalHistory(string email)
+        //{
+        //    var user = _db.Users.FirstOrDefault(x => x.Email == email);
+
+
+        //    var medicalhistory = (from request in _db.Requests
+        //                          join requestfile in _db.Requestwisefiles
+        //                          on request.Requestid equals requestfile.Requestid
+        //                          where request.Email == user.Email && request.Email != null
+        //                          group requestfile by request.Requestid into groupedFiles
+        //                          select new MedicalHistory
+        //                          {
+
+        //                              reqId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
+        //                              createdDate = groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
+        //                              currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault(),
+        //                              document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
+        //                          }).ToList();
+
+
+        //    MedicalHistoryList medicalHistoryList = new()
+        //    {
+        //        medicalHistoriesList = medicalhistory,
+        //        id = user.Userid,
+        //        firstName = user.Firstname,
+        //        lastName = user.Lastname
+        //    };
+
+        //    return medicalHistoryList;
+        //}
         public MedicalHistoryList GetMedicalHistory(string email)
         {
             var user = _db.Users.FirstOrDefault(x => x.Email == email);
-
-
-            var medicalhistory = (from request in _db.Requests
-                                  join requestfile in _db.Requestwisefiles
-                                  on request.Requestid equals requestfile.Requestid
-                                  where request.Email == user.Email && request.Email != null
-                                  group requestfile by request.Requestid into groupedFiles
-                                  select new MedicalHistory
-                                  {
-
-                                      reqId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
-                                      createdDate = groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
-                                      currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault(),
-                                      document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
-                                  }).ToList();
-
-
-            MedicalHistoryList medicalHistoryList = new()
+            List<MedicalHistory> list = new();
+            MedicalHistoryList model = new();
+            model.id = user.Userid; 
+            model.firstName = user.Firstname; 
+            model.lastName = user.Lastname;
+            var requests = _db.Requests.Where(m => m.Userid == user.Userid).ToList();
+            foreach (var item in requests)
             {
-                medicalHistoriesList = medicalhistory,
-                id = user.Userid,
-                firstName = user.Firstname,
-                lastName = user.Lastname
-            };
-
-            return medicalHistoryList;
+                int count = _db.Requestwisefiles.Where(m => m.Requestid == item.Requestid).Count();
+                list.Add(new MedicalHistory{ createdDate = item.Createddate, currentStatus = item.Status, docCount = count, reqId = item.Requestid });
+            }
+            model.medicalHistoriesList = list;
+            return model;
         }
+
 
         public DocumentModel GetAllDocById(int requestId)
         {

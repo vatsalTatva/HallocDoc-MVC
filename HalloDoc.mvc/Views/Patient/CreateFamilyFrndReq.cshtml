@@ -24,7 +24,7 @@
 
 
 
-        <form method="post"  class="container my-5 p-4 shadow dark-mode1" id="main-cont">
+        <form method="post" enctype="multipart/form-data"  class="container my-5 p-4 shadow dark-mode1" id="main-cont">
 
             <div class="row">
                 <h5 class="col-12">Family/Friend Information</h5>
@@ -32,7 +32,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="firstName" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
-                        <label for="floatingInput">Your First Name</label>
+                        <label for="floatingInput">Your First Name *</label>
                         <span asp-validation-for="firstName" class="text-danger"></span>
                     </div>
                 </div>
@@ -52,13 +52,15 @@
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="email" type="email" class="form-control  dark-mode1" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Email</label>
+                        <label for="floatingInput">Email *</label>
+                        <span asp-validation-for="email" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="relation" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
-                        <label for="floatingInput">Relation With Patient</label>
+                        <label for="floatingInput">Relation With Patient *</label>
                         <span asp-validation-for="relation" class="text-danger"></span>
                     </div>
                 </div>
@@ -77,20 +79,24 @@
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="patientFirstName" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
-                        <label for="floatingInput">First Name</label>
+                        <label for="floatingInput">First Name *</label>
                         <span asp-validation-for="patientFirstName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="patientLastName" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
-                        <label for="floatingInput">Last Name</label>
+                        <label for="floatingInput">Last Name *</label>
+                        <span asp-validation-for="patientLastName" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="patientDob" type="date" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">Date Of Birth</label>
+                        <span asp-validation-for="patientDob" class="text-danger"></span>
+
                     </div>
                 </div>
             </div>
@@ -134,7 +140,9 @@
                 <div class="col-12 col-sm-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="state" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
-                        <label for="floatingInput">State</label>
+                        <label for="floatingInput">State *</label>
+                        <span asp-validation-for="state" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -156,7 +164,8 @@
                     <h5>(Optional) Upload Photo Or Document</h5>
                 </div>
                 <div class="col-12 mb-4">
-                    <input class="form-control form-control-lg dark-mode1 " id="formFileLg" type="file">
+                    <input asp-for="file" class="form-control form-control-lg dark-mode1" id="formFileLg" type="file" multiple>
+
                 </div>
                 <div class="col-12">
                     <button id="cancel" type="reset" class="btn my-2">Cancel</button>

@@ -30,5 +30,7 @@ namespace DataAccess.CustomModels
         [Required(ErrorMessage = "Confirm Password is required")]
         [Compare("password", ErrorMessage = "Password Missmatch")]
         public string? confirmPassword { get; set; }
+
+        public string? id { get; set; }
     }
 }

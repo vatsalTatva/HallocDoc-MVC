@@ -79,16 +79,19 @@ namespace HalloDoc.mvc.Controllers
                     adminLoginModel.password = GenerateSHA256(adminLoginModel.password);
                     if (aspnetuser.Passwordhash == adminLoginModel.password)
                     {
-                        var jwtToken = _jwtService.GetJwtToken(aspnetuser);
-                        Response.Cookies.Append("jwt", jwtToken);
+                       
                         int role = aspnetuser.Aspnetuserroles.Where(x => x.Userid == aspnetuser.Id).Select(x => x.Roleid).First();
                         if (role == 1)
                         {
+                            var jwtToken = _jwtService.GetJwtToken(aspnetuser);
+                            Response.Cookies.Append("jwt", jwtToken);
                             _notyf.Success("Logged in Successfully");
                             return RedirectToAction("AdminDashboard", "Admin");
                         }
                         else
                         {
+                            var jwtToken = _jwtService.GetJwtToken(aspnetuser);
+                            Response.Cookies.Append("jwt", jwtToken);
                             _notyf.Success("Logged in Successfully");
                             return RedirectToAction("ProviderDashboard", "Provider");
 

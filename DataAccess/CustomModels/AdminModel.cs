@@ -67,6 +67,7 @@ namespace DataAccess.CustomModels
 
         public int? reqId { get; set; }
         public int? regionId { get; set; }
+        public int? callType { get; set; }
     }
 
    

@@ -12,5 +12,7 @@ namespace BusinessLogic.Interfaces
         bool TransferRequest(TransferRequest model);
         MonthWiseScheduling PhysicianMonthlySchedule(string date, int status, string aspnetuserid);
         int GetPhysicianId(string userid);
+        void AcceptCase(int requestId, string loginUserId);
+        void CallType(int requestId, short callType);
     }
 }

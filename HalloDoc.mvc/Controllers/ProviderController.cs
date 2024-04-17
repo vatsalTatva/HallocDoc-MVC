@@ -108,35 +108,7 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_PNewRequest", list);
         }
 
-        [HttpPost]
-        public string ExportReq(List<AdminDashTableModel> reqList)
-        {
-            StringBuilder stringbuild = new StringBuilder();
-
-            string header = "\"No\"," + "\"Name\"," + "\"DateOfBirth\"," + "\"Requestor\"," +
-                "\"RequestDate\"," + "\"Phone\"," + "\"Notes\"," + "\"Address\","
-                 + "\"Physician\"," + "\"DateOfService\"," + "\"Region\"," +
-                "\"Status\"," + "\"RequestTypeId\"," + "\"OtherPhone\"," + "\"Email\"," + "\"RequestId\"," + Environment.NewLine + Environment.NewLine;
-
-            stringbuild.Append(header);
-            int count = 1;
-
-            foreach (var item in reqList)
-            {
-                string content = $"\"{count}\"," + $"\"{item.firstName}\"," + $"\"{item.intDate}\"," + $"\"{item.requestorFname}\"," +
-                    $"\"{item.intDate}\"," + $"\"{item.mobileNo}\"," + $"\"{item.notes}\"," + $"\"{item.street}\"," +
-                    $"\"{item.lastName}\"," + $"\"{item.intDate}\"," + $"\"{item.street}\"," +
-                    $"\"{item.status}\"," + $"\"{item.requestTypeId}\"," + $"\"{item.mobileNo}\"," + $"\"{item.firstName}\"," + $"\"{item.reqId}\"," + Environment.NewLine;
-
-                count++;
-                stringbuild.Append(content);
-            }
-
-            string finaldata = stringbuild.ToString();
-
-            return finaldata;
-
-        }
+       
 
         [HttpGet]
         public IActionResult SendLink()
@@ -200,7 +172,12 @@ namespace HalloDoc.mvc.Controllers
             ViewNotesModel data = _adminService.ViewNotes(ReqId);
             return PartialView("_PViewNotes",data);
         }
-
+        public IActionResult AcceptCase(int requestId)
+        {
+            var loginUserId = GetLoginId();
+            _providerService.AcceptCase(requestId, loginUserId);
+            return Ok();
+        }
         public IActionResult CancelCase(int reqId)
         {
 
@@ -208,6 +185,8 @@ namespace HalloDoc.mvc.Controllers
             model.reqId = reqId;
             return PartialView("_CancelCase", model);
         }
+
+
 
 
         [HttpPost]
@@ -405,6 +384,17 @@ namespace HalloDoc.mvc.Controllers
             model.roles = _adminService.GetRoles();
             return PartialView("_PMyProfile", model);
           
+        }
+        public IActionResult pcaremodal(int reqId)
+        {
+            ViewBag.reqid = reqId;
+            return PartialView("_PCareModal");
+        }
+        [HttpPost]
+        public IActionResult EncounterTypeModalSubmit(int requestId, short encounterType)
+        {
+            _providerService.CallType(requestId, encounterType);
+            return RedirectToAction("ProviderDashboard");
         }
     }
 }

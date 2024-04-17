@@ -56,7 +56,8 @@
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="lastName" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Last Name</label>
+                        <label for="floatingInput">Last Name *</label>
+                        <span asp-validation-for="lastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-6">
@@ -81,7 +82,7 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="phoneNo" type="tel" name="phone" class="form-control dark-mode1 p-3 ps-5" id="floatingInput">
+                        <input asp-for="phoneNo" type="number" name="phone" class="form-control dark-mode1 p-3 ps-5" id="phoneNo">
                         
                     </div>
                     <span asp-validation-for="phoneNo" class="text-danger"></span>
@@ -121,7 +122,8 @@
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="state" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
-                        <label for="floatingInput">State</label>
+                        <label for="floatingInput">State *</label>
+                        <span asp-validation-for="state" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-6">
@@ -161,13 +163,13 @@
  
 
     <script>
-        const phoneInputField = document.querySelectorAll("input[type='tel']");
-        for (var i = 0; i < phoneInputField.length; i++) {
-            const phoneInput = window.intlTelInput(phoneInputField[i], {
+        const phoneInputField = document.getElementById("phoneNo");
+        
+            const phoneInput = window.intlTelInput(phoneInputField, {
                 utilsScript:
                     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
             });
-        }
+      
 
         $('#email').focusout(function () {
        

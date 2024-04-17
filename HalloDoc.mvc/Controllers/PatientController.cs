@@ -218,8 +218,10 @@ namespace HalloDoc.mvc.Controllers
         {
             //if (ModelState.IsValid)
             //{
+            string resetPasswordPath = Url.Action("ResetPassword");
             string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+
+            string createAccountLink = baseUrl + resetPasswordPath;
             bool isValid = _patientService.AddFamilyReq(familyReqModel,createAccountLink);
             if (!isValid)
             {
@@ -334,33 +336,35 @@ namespace HalloDoc.mvc.Controllers
 
 
 
-        public IActionResult PatientResetPasswordEmail(Aspnetuser user)
+        public IActionResult PatientResetPasswordEmail(CreateAccountModel user)
 
         {
 
-            var usr = _db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email);
+            var usr = _db.Aspnetusers.FirstOrDefault(x => x.Email == user.email);
             if (usr != null)
             {
-                string Id = _db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email).Id;
-                string resetPasswordUrl = GenerateResetPasswordUrl(Id);
-                SendEmail(user.Email, "Reset Your Password", $"Hello, reset your password using this link: {resetPasswordUrl}");
+                string Id = usr.Id;
+                string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                string resetPasswordPath = Url.Action("ResetPassword", new { id = Id });
+                string resetPasswordUrl = baseUrl + resetPasswordPath;
+                SendEmail(user.email, "Reset Your Password", $"Hello, reset your password using this link: {resetPasswordUrl}");
             }
             else
             {
                 _notyf.Error("Email Id Not Registered");
-                return RedirectToAction("ForgotPassword", "Patient");
+                return RedirectToAction("ForgetPassword", "Patient");
             }
 
-
+            _notyf.Success("Reset Link Sent Successfully");
             return RedirectToAction("Login");
         }
 
-        private string GenerateResetPasswordUrl(string userId)
-        {
-            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            string resetPasswordPath = Url.Action("ResetPassword", new { id = userId });
-            return baseUrl + resetPasswordPath;
-        }
+        //private string GenerateResetPasswordUrl(string userId)
+        //{
+        //    string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+        //    string resetPasswordPath = Url.Action("ResetPassword", new { id = userId });
+        //    return baseUrl + resetPasswordPath;
+        //}
 
         private Task SendEmail(string email, string subject, string message)
         {
@@ -375,20 +379,23 @@ namespace HalloDoc.mvc.Controllers
             return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
         }
 
-        // Handle the reset password URL in the same controller or in a separate one
         public IActionResult ResetPassword(string id)
         {
             var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == id);
-            return View(aspuser);
+            CreateAccountModel model = new CreateAccountModel();
+            model.id = id;
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult ResetPassword(Aspnetuser aspnetuser)
+        public IActionResult ResetPassword(CreateAccountModel aspnetuser)
         {
-            var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == aspnetuser.Id);
-            aspuser.Passwordhash = aspnetuser.Passwordhash;
+            var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == aspnetuser.id);
+
+            aspuser.Passwordhash = GenerateSHA256(aspnetuser.password);
             _db.Aspnetusers.Update(aspuser);
             _db.SaveChanges();
+            _notyf.Success("Password reset successfully");
             return RedirectToAction("Login");
         }
 
@@ -402,7 +409,7 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult PatientDashboard()
         {
             var email = GetTokenEmail();
-            if(email == "")
+            if(string.IsNullOrEmpty(email))
             {
                 return RedirectToAction("Login");
             }

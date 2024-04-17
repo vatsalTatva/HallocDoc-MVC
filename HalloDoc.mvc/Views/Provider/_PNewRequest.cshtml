@@ -159,7 +159,7 @@
                                         </button>
                                         <ul class="dropdown-menu table_dropdowns">
                                             <li>
-                                                <button class="dropdown-item" onclick="pShowAssignCase(@item.reqId)">
+                                                <button class="dropdown-item" onclick="ConfirmAccept(@item.reqId)">
                                                     <i class="bi bi-card-checklist"></i>
                                                     Accept
                                                 </button>
@@ -576,7 +576,53 @@ else
     //    $('.dataTables_filter').hide();
     //});
 
+    function ConfirmAccept(requestId) {
+        Swal.fire({
+            title: "Are you sure want to accept the request?",
+            showDenyButton: true,
+            confirmButtonText: "Accept",
+            confirmButtonColor: "#198754",
+            denyButtonText: `Cancel`
+        }).then((result) => {
+            if (result.isConfirmed) {
 
+                $.ajax({
+                    method: "GET",
+                    url: "/Provider/AcceptCase",
+                    data: { requestId: requestId },
+
+                    success: function (res) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Request accepted succesfully !",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        ProviderDashboard(res);
+
+                    },
+
+                    error: function (xhr, status, error) {
+                        if (xhr.status === 401) {
+
+                            window.location.reload();
+                        }
+                        console.error(error);
+                    }
+                });
+            }
+            else if (result.isDenied) {
+                Swal.fire({
+                    position: "top-end",
+                    title: "Changes are not saved",
+                    icon: "info",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            }
+        });
+    }
 
 
 

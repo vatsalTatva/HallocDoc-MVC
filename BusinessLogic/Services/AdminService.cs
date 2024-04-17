@@ -68,7 +68,8 @@ namespace BusinessLogic.Services
                             status = r.Status,
                             requestClientId = rc.Requestclientid,
                             reqId = r.Requestid,
-                            regionId=rc.Regionid
+                            regionId=rc.Regionid,
+                            callType = r.Calltype
                         };
 
 
@@ -143,7 +144,8 @@ namespace BusinessLogic.Services
                             status = r.Status,
                             requestClientId = rc.Requestclientid,
                             reqId = r.Requestid,
-                            regionId = rc.Regionid
+                            regionId = rc.Regionid,
+                            callType = r.Calltype,
                         };
 
 
@@ -207,7 +209,8 @@ namespace BusinessLogic.Services
                             status = r.Status,
                             requestClientId = rc.Requestclientid,
                             reqId = r.Requestid,
-                            regionId = rc.Regionid
+                            regionId = rc.Regionid,
+                            callType = r.Calltype
                         };
 
 

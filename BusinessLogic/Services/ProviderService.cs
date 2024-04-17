@@ -87,5 +87,45 @@ namespace BusinessLogic.Services
             int phyid = _db.Physicians.Where(x => x.Aspnetuserid == userid).Select(x => x.Physicianid).First();
             return phyid;   
         }
+
+        public void AcceptCase(int requestId, string loginUserId)
+        {
+            
+            Request? req = _db.Requests.Where(i => i.Requestid == requestId).FirstOrDefault();
+            var reqStatLog = _db.Requeststatuslogs.Where(i => i.Requestid == requestId).FirstOrDefault();
+
+            int phyId = _db.Physicians.Where(x => x.Aspnetuserid == loginUserId).Select(x => x.Physicianid).FirstOrDefault();
+            Requeststatuslog requestList = new Requeststatuslog()
+            {
+                Requestid = requestId,
+                Status = (int)StatusEnum.Accepted,
+                Physicianid = phyId,
+                Createddate = DateTime.Now,
+                Notes = "Req Accepted By physicion ",
+            };
+            _db.Add(requestList);
+            req.Status = (int)StatusEnum.Accepted;
+
+            _db.SaveChanges();
+
+        }
+        public void CallType(int requestId, short callType)
+        {
+            Request? req = _db.Requests.FirstOrDefault(x => x.Requestid == requestId);
+            req.Calltype = callType;
+
+            if (callType == 1)
+            {
+                req.Status = (int)StatusEnum.MDOnSite;
+               
+            }
+            else
+            {
+                req.Status = (int)StatusEnum.Conclude;
+            }
+            _db.Requests.Update(req);
+            _db.SaveChanges();
+
+        }
     }
 }
