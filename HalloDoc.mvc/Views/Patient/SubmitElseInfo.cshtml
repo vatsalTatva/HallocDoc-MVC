@@ -27,7 +27,7 @@
 </div>
 
 <div class="container dark-mode1 bg-white dark-mode1">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <h3 class="dark-mode1">Patient Information</h3>
         <div class="form-floating col-12 ">
             <textarea asp-for="symptoms" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
@@ -36,15 +36,15 @@
         </div>
         <div class="row mt-3">
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12">
-                <input asp-for="firstName" type="text" class="form-control" id="floatingInput" mailto:placeholder="name@example.com">
+                <input asp-for="patientFirstName" type="text" class="form-control" id="floatingInput" placeholder="First Name">
                 <label for="floatingInput" class="email">Your First Name</label>
             </div>
             <div class="form-floating col-lg-6 col-md-12 col-sm-12">
-                <input asp-for="lastName" type="text" class="form-control" id="floatingPassword" placeholder="Password">
+                <input asp-for="patientLastName" type="text" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword" class="email">Your Last Name</label>
             </div>
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12 mt-2">
-                <input asp-for="patientDob" type="date" class="form-control" id="floatingInput" mailto:placeholder="name@example.com">
+                <input asp-for="patientDob" type="date" class="form-control" id="floatingInput" placeholder="date">
                 <label for="floatingInput" class="email">Date of Birth</label>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <h4>Patient Contact Information</h4>
         <div class="row mt-2">
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12">
-                <input asp-for="patientEmail" type="email" class="form-control" id="floatingInput" mailto:placeholder="name@example.com">
+                <input asp-for="patientEmail" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput" class="email">Email</label>
             </div>
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12">
@@ -63,25 +63,25 @@
         <h4>Patient Location</h4>
         <div class="row mt-2">
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12">
-                <input asp-for="street" type="text" class="form-control" id="floatingInput" mailto:placeholder="name@example.com">
+                <input asp-for="street" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput" class="email">Street</label>
             </div>
             <div class="form-floating col-lg-6 col-md-12 col-sm-12">
                 <input asp-for="city" type="text" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword" class="email">City</label>
+                <label for="floatingInput" class="email">City</label>
             </div>
         </div>
         <div class="row mt-2">
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12">
-                <input asp-for="state" type="text" class="form-control" id="floatingInput" mailto:placeholder="name@example.com">
+                <input asp-for="state" type="text" class="form-control" id="floatingInput" placeholder="State">
                 <label for="floatingInput" class="email">State</label>
             </div>
             <div class="form-floating col-lg-6 col-md-12 col-sm-12">
-                <input asp-for="zipCode" type="text" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword" class="email">Zip Code</label>
+                <input asp-for="zipCode" type="text" class="form-control" id="floatingPassword" placeholder="Zipcode">
+                <label for="floatingInput" class="email">Zip Code</label>
             </div>
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12 mt-2">
-                <input asp-for="roomNo" type="text" class="form-control" id="floatingInput" mailto:placeholder="name@example.com">
+                <input asp-for="roomNo" type="text" class="form-control" id="floatingInput" placeholder="Roomm">
                 <label for="floatingInput" class="email">Room # / Suite (optional)</label>
             </div>
             <div class="form-floating mb-3 col-lg-6 col-md-12 col-sm-12 mt-2">
@@ -92,7 +92,7 @@
         <h4>(Optional)Upload Photo Or Document</h4>
         <div class="form mb-3 col-lg-12 col-md-12 col-sm-12 d-flex">
             <div class="input-group mb-3">
-                <input type="file" class="form-control form-control-lg id="fromFilelg" multiple>
+                <input asp-for="file" class="form-control form-control-lg dark-mode1" id="formFileLg" type="file" multiple>
                 <label class="input-group-text bg-primary text-white" for="inputGroupFile02">
                     <i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload
                 </label>

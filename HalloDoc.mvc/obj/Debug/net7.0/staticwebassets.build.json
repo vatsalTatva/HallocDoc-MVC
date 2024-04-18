@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZzB0QlRCZwtez/aLOqa693gUIN2+JywAJtAz6AnsXnQ=",
+  "Hash": "47QsZp/3BQsbmYSn2EYqG4Zjf7I0XAlRwsa676WhEZc=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -1700,6 +1700,23 @@
       "OriginalItemSpec": "wwwroot\\PhysicianImages\\10\\doc-portrait.jpg"
     },
     {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\10\\portrait.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianImages/10/portrait.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianImages\\10\\portrait.png"
+    },
+    {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\11\\images-modified2.jfif",
       "SourceId": "HalloDoc.mvc",
       "SourceType": "Discovered",
@@ -1715,6 +1732,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PhysicianImages\\11\\images-modified2.jfif"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\dark.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianSign/10/dark.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianSign\\10\\dark.png"
     },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\favicon.ico",

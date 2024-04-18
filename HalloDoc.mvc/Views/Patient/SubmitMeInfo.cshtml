@@ -3,10 +3,11 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "SubmitMeInfo";
+    ViewData["Title"] = "patient_newrequest";
 }
 
-@model PatientInfoModel
+@model PatientInfoModel;
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,27 +15,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/CreatePatientReq.css">
+    <link rel="stylesheet" href="~/css/patient_request.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-    <title>Create Patient Request</title>
+
+
+    <title>Create ME Request</title>
 </head>
 
 <body>
-   
+
     <div class="d-flex flex-column justify-content-between min-vh-100">
 
 
-       <div class="container d-flex justify-content-between my-4">
+        <div class="container  d-flex justify-content-between my-4">
             <h3>Submit Information</h3>
             <button onclick="location.href='@Url.Action("PatientDashboard", "Patient")'" id="back-btn">&lt; Back</button>
-       </div>
+        </div>
 
 
-        <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="AddPatient" class="container mb-5 p-4" id="main-cont">
+        <form method="post" enctype="multipart/form-data" class="bg-white dark-mode1 container mb-5 p-4" id="main-cont">
 
             <div class="row">
                 <h5 class="col-12">Patient Information</h5>
@@ -47,7 +52,7 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="firstName" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="firstName" name="@Model.firstName" type="text" class="form-control" id="floatingInput" placeholder="First Name" disabled>
                         <label for="floatingInput">First Name</label>
                         <span asp-validation-for="firstName" class="text-danger"></span>
                     </div>
@@ -55,14 +60,15 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="lastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="lastName" name="@Model.lastName" type="text" class="form-control" id="floatingInput" placeholder="Last Name" disabled>
                         <label for="floatingInput">Last Name</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="dob" type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="dob" type="date" class="form-control" id="floatingInput" placeholder="Date Of Birth">
                         <label for="floatingInput">Date Of Birth</label>
+                        <span asp-validation-for="dob" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -73,18 +79,18 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="email" name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <input asp-for="email" name="@Model.email" type="email" value="@Model.email" class="form-control" id="email" placeholder="name@example.com" disabled>
                         <label for="floatingInput">Email</label>
                         <span asp-validation-for="email" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="phoneNo" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+                        <input asp-for="phoneNo" type="tel" value="@Model.phoneNo" name="phone" class="form-control p-3 ps-5" id="floatingInput" disabled>
 
                     </div>
                 </div>
-               
+
             </div>
 
             <div class="row">
@@ -93,31 +99,32 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="street" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="street" type="text" class="form-control" id="floatingInput" placeholder="Street">
                         <label for="floatingInput">Street</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="city" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="city" type="text" class="form-control" id="floatingInput" placeholder="City">
                         <label for="floatingInput">City</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="state" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="state" type="text" class="form-control" id="floatingInput" placeholder="State">
                         <label for="floatingInput">State</label>
+                        <span asp-validation-for="state" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="zipCode" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="zipCode" type="text" class="form-control" id="floatingInput" placeholder="Zip">
                         <label for="floatingInput">Zip Code</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="roomNo" type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input asp-for="roomNo" type="text" class="form-control" id="floatingInput" placeholder="room">
                         <label for="floatingInput">Room # / Suite (Optional)</label>
                     </div>
                 </div>
@@ -132,11 +139,11 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input  type="text" class="form-control" id="floatingInput" placeholder="">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="">
                         <label for="floatingInput">Relation</label>
                     </div>
                 </div>
-               
+
             </div>
 
             <div class="row">
@@ -146,10 +153,13 @@
                 <div class="col-12 mb-4">
                     <input asp-for="file" class="form-control form-control-lg " id="formFileLg" type="file" multiple>
                 </div>
-                <div class="col-12">
-                    <button id="cancel" type="reset" class="btn my-2">Cancel</button>
-                    <button id="submit" type="submit" class="btn m-2">Submit</button>
+                <div class="d-flex justify-content-end gap-2">
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-outline-primary">Cancel</button>
+
                 </div>
+
             </div>
 
         </form>
@@ -170,7 +180,7 @@
             });
         }
 
-       
+
     </script>
 </body>
 

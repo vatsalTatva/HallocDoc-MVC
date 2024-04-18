@@ -289,8 +289,8 @@
 
 </div>
 
-@* <partial name="_ValidationScriptsPartial" />
- *@
+ <partial name="_ValidationScriptsPartial" />
+ 
 <script>
 
     $(document).ready(function () {
@@ -431,6 +431,7 @@
         var payload = $('#CreatePhysicianAccountForm');
         event.preventDefault();
         //setTimeout(() => {
+        if ($('#CreatePhysicianAccountForm').valid()){
             $.ajax({
                 url: "/Admin/CreateProviderAccount",
                 type: 'POST',
@@ -452,6 +453,8 @@
                     alert("Error");
                 },
             });
+        }
+           
        // }, 1000);
     }
 

@@ -69,7 +69,8 @@ namespace BusinessLogic.Services
                             requestClientId = rc.Requestclientid,
                             reqId = r.Requestid,
                             regionId=rc.Regionid,
-                            callType = r.Calltype
+                            callType = r.Calltype,
+                            phyId = r.Physicianid??null
                         };
 
 
@@ -146,6 +147,7 @@ namespace BusinessLogic.Services
                             reqId = r.Requestid,
                             regionId = rc.Regionid,
                             callType = r.Calltype,
+                            phyId = r.Physicianid ?? null
                         };
 
 
@@ -210,7 +212,8 @@ namespace BusinessLogic.Services
                             requestClientId = rc.Requestclientid,
                             reqId = r.Requestid,
                             regionId = rc.Regionid,
-                            callType = r.Calltype
+                            callType = r.Calltype,
+                            phyId = r.Physicianid ?? null
                         };
 
 
@@ -492,7 +495,6 @@ namespace BusinessLogic.Services
             {
 
                 var req  = _db.Requests.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
-                req.Status = (int)StatusEnum.Accepted;
                 req.Physicianid = assignCaseModel.selectPhysicianId;
                 req.Modifieddate = DateTime.Now;
                 
@@ -501,7 +503,7 @@ namespace BusinessLogic.Services
                 //{
                 Requeststatuslog rsl = new Requeststatuslog();
                 rsl.Requestid = (int)assignCaseModel.ReqId;
-                rsl.Status = (int)StatusEnum.Accepted;
+                rsl.Status = (int)StatusEnum.Unassigned;
                 rsl.Notes = assignCaseModel.description;
                 rsl.Physicianid = assignCaseModel.selectPhysicianId;
                 rsl.Createddate = DateTime.Now;
@@ -1599,7 +1601,7 @@ namespace BusinessLogic.Services
 
                 Aspnetuserrole userRole = new Aspnetuserrole();
                 userRole.Userid = _user.Id;
-                userRole.Roleid = 3;
+                userRole.Roleid = (int)AspNetRole.physician;
 
                 _db.Aspnetuserroles.Add(userRole);
                 _db.SaveChanges();

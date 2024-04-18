@@ -218,10 +218,10 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                ViewNotes
-                                            </a>
+                                                <a class="dropdown-item" href="@Url.Action("ViewNote", new {ReqId = item.reqId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    ViewNotes
+                                                </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="@Url.Action("Order", new {reqId = item.reqId})">
@@ -236,10 +236,10 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                Encounter
-                                            </a>
+                                                <a class="dropdown-item" href="@Url.Action("EncounterForm",new {ReqId=@item.reqId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    Encounter
+                                                </a>
                                         </li>
                                     </ul>
                                 </div>

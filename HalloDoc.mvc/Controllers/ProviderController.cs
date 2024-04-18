@@ -71,12 +71,16 @@ namespace HalloDoc.mvc.Controllers
         }
         public IActionResult GetCount()
         {
-            var statusCountModel = _adminService.GetStatusCount();
+            var aspid = GetLoginId();
+            var phyid = _providerService.GetPhysicianId(aspid);
+            var statusCountModel = _providerService.GetStatusCount(phyid);
             return PartialView("_PAllRequests", statusCountModel);
         }
         public IActionResult GetRequestsByStatus(int tabNo, int CurrentPage)
         {
-            var list = _adminService.GetRequestsByStatus(tabNo, CurrentPage);
+            var aspid = GetLoginId();
+            var phyid = _providerService.GetPhysicianId(aspid);
+            var list = _providerService.GetRequestsByStatus(tabNo, CurrentPage,phyid);
 
             if (tabNo == 0)
             {
@@ -395,6 +399,27 @@ namespace HalloDoc.mvc.Controllers
         {
             _providerService.CallType(requestId, encounterType);
             return RedirectToAction("ProviderDashboard");
+        }
+        [HttpGet]
+        public IActionResult PEncounterForm(int reqId)
+        {
+            ViewBag.reqId = reqId;
+            var form = _adminService.EncounterForm(reqId);
+            return View(form);
+        }
+        [HttpPost]
+        public IActionResult PEncounterForm(EncounterFormModel model)
+        {
+            bool isSaved = _adminService.SubmitEncounterForm(model);
+            if (isSaved)
+            {
+                _notyf.Success("Saved!!");
+            }
+            else
+            {
+                _notyf.Error("Failed");
+            }
+            return RedirectToAction("PEncounterForm", new { ReqId = model.reqid });
         }
     }
 }

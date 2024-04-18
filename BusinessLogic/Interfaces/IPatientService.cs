@@ -25,7 +25,7 @@ namespace BusinessLogic.Interfaces
 
         bool AddBusinessReq(BusinessReqModel businessReqModel, string createAccountLink);
 
-
+        bool SomeElseReq(FamilyReqModel model, string createAccountLink, string loginid);
         MedicalHistoryList GetMedicalHistory(string email);
         DocumentModel GetAllDocById(int requestId);
         Profile GetProfile(int userid);

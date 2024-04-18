@@ -247,8 +247,10 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult CreateConciergeReq(ConciergeReqModel conciergeReqModel)
         {
+            string resetPasswordPath = Url.Action("ResetPassword");
             string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+
+            string createAccountLink = baseUrl + resetPasswordPath;
             bool isValid = _patientService.AddConciergeReq(conciergeReqModel, createAccountLink);
             if (!isValid)
             {
@@ -268,8 +270,10 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult CreateBusinessPartnerReq(BusinessReqModel businessReqModel)
         {
+            string resetPasswordPath = Url.Action("ResetPassword");
             string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+
+            string createAccountLink = baseUrl + resetPasswordPath;
             bool isValid = _patientService.AddBusinessReq(businessReqModel, createAccountLink);
             if (!isValid)
             {
@@ -479,22 +483,45 @@ namespace HalloDoc.mvc.Controllers
 
             return View(Reqobj);
         }
+        [HttpPost]
+        public IActionResult SubmitMeInfo(PatientInfoModel model)
+        {
+            bool isValid = _patientService.AddPatientInfo(model);
+            if (!isValid)
+            {
+                _notyf.Error("Service Is Not Available In Entered Region");
+                return View(model);
+            }
+            _notyf.Success("Submit Successfully !!");
+            return RedirectToAction("PatientDashboard", "Patient");
+        }
         public IActionResult SubmitElseInfo()
         {
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult SubmitElseInfo(FamilyReqModel familyFriendRequestForm)
-        //{
+        [HttpPost]
+        public IActionResult SubmitElseInfo(FamilyReqModel model)
+        {
+            string resetPasswordPath = Url.Action("ResetPassword");
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
 
-        //    //try
-        //    //{
-        //    //    _patientService.ReqforSomeoneElse(familyFriendRequestForm, userid);
-        //    //    return RedirectToAction("patientdashboard");
-        //    //}
-        //    //catch { return View(); }
+            string createAccountLink = baseUrl + resetPasswordPath;
+            var loginid = GetLoginId();
+            bool issubmitted = _patientService.SomeElseReq(model, createAccountLink, loginid);
+            if(issubmitted)
+            {
+                _notyf.Success("Submitted Successfully");
+                return RedirectToAction("PatientDashboard");
+            }
+            else
+            {
+                _notyf.Error("Something wrong");
+                return View(model);
+            }
+           
+            
 
-        //}
+        }
     }
 }

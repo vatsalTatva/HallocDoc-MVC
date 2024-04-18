@@ -30,12 +30,14 @@ namespace BusinessLogic.Services
             {
                 req.Status = (int)StatusEnum.Unassigned;
                 req.Modifieddate = DateTime.Now;
+                req.Physicianid = null;
                 _db.Requests.Update(req);
            
                 Requeststatuslog rsl = new Requeststatuslog();
                 rsl.Requestid = (int)model.ReqId;
                 rsl.Status = (int)StatusEnum.Unassigned;
                 rsl.Notes = model.description;
+                rsl.Transtoadmin = new BitArray(1, true);
                 rsl.Createddate = DateTime.Now;
                 _db.Requeststatuslogs.Add(rsl);
                 _db.SaveChanges();
@@ -125,6 +127,95 @@ namespace BusinessLogic.Services
             }
             _db.Requests.Update(req);
             _db.SaveChanges();
+
+        }
+
+        public DashboardModel GetRequestsByStatus(int tabNo, int CurrentPage,int phyid)
+        {
+            var query = from r in _db.Requests
+                        join rc in _db.Requestclients on r.Requestid equals rc.Requestid
+                        where r.Physicianid == phyid
+                        select new AdminDashTableModel
+                        {
+                            firstName = rc.Firstname,
+                            lastName = rc.Lastname,
+                            intDate = rc.Intdate,
+                            intYear = rc.Intyear,
+                            strMonth = rc.Strmonth,
+                            requestorFname = r.Firstname,
+                            requestorLname = r.Lastname,
+                            createdDate = r.Createddate,
+                            mobileNo = rc.Phonenumber,
+                            city = rc.City,
+                            state = rc.State,
+                            street = rc.Street,
+                            zipCode = rc.Zipcode,
+                            requestTypeId = r.Requesttypeid,
+                            status = r.Status,
+                            requestClientId = rc.Requestclientid,
+                            reqId = r.Requestid,
+                            regionId = rc.Regionid,
+                            callType = r.Calltype
+                        };
+
+
+            if (tabNo == 1)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Unassigned);
+            }
+
+            else if (tabNo == 2)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Accepted);
+            }
+            else if (tabNo == 3)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.MDEnRoute || x.status == (int)StatusEnum.MDOnSite);
+            }
+            else if (tabNo == 4)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Conclude);
+            }
+         
+
+
+            var result = query.ToList();
+            int count = result.Count();
+            int TotalPage = (int)Math.Ceiling(count / (double)5);
+            result = result.Skip((CurrentPage - 1) * 5).Take(5).ToList();
+
+            DashboardModel dashboardModel = new DashboardModel();
+            dashboardModel.adminDashTableList = result;
+            dashboardModel.regionList = _db.Regions.ToList();
+            dashboardModel.TotalPage = TotalPage;
+            dashboardModel.CurrentPage = CurrentPage;
+            return dashboardModel;
+        }
+
+        public StatusCountModel GetStatusCount(int phyid)
+        {
+            var requestsWithClients = _db.Requests
+     .Join(_db.Requestclients,
+         r => r.Requestid,
+         rc => rc.Requestid,
+         (r, rc) => new { Request = r, RequestClient = rc })
+     .Where(r=>r.Request.Physicianid==phyid).ToList();
+
+            StatusCountModel statusCount = new StatusCountModel
+            {
+                NewCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.Unassigned),
+                PendingCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.Accepted),
+                ActiveCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.MDEnRoute || x.Request.Status == (int)StatusEnum.MDOnSite),
+                ConcludeCount = requestsWithClients.Count(x => x.Request.Status == (int)StatusEnum.Conclude),
+               
+            };
+
+            return statusCount;
+
 
         }
     }

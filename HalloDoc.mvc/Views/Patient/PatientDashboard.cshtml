@@ -4,8 +4,8 @@
 
 }
 @{
-    string[] Status = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDEnRoute" , "MDOnSite" ,
-                "Conclude" , "CancelledByPatient" , "Closed" , "Unpaid" , "Clear"   };
+    string[] Status = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDOnSite" ,
+                "Conclude" , "CancelledByPatient" , "Closed" , "Unpaid" , "Clear" ,"Assigned"  };
 }
 
 @model MedicalHistoryList;
@@ -143,7 +143,7 @@
 
                                             <tr>
                                                 <td>@items.createdDate.ToString("MMM dd, yyyy")</td>
-                                                <td>@Status[items.currentStatus]</td>
+                                                <td>@Status[items.currentStatus-1]</td>
                                                 <td>
                                                     <a class="btn btn-outline-info fw-bold" asp-controller="Patient" asp-action="DocumentList" asp-route-reqId=@items.reqId>
                                                         <span><i class="bi bi-file-earmark fw-bold"></i></span>

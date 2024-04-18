@@ -14,5 +14,7 @@ namespace BusinessLogic.Interfaces
         int GetPhysicianId(string userid);
         void AcceptCase(int requestId, string loginUserId);
         void CallType(int requestId, short callType);
+        public DashboardModel GetRequestsByStatus(int tabNo, int CurrentPage, int phyid);
+        public StatusCountModel GetStatusCount(int phyid);
     }
 }

@@ -210,7 +210,7 @@
                                                     Doctors Notes
                                                 </a>
                                             </li>
-                                            <li>
+                                           
                                                 @if (item.callType == 0)
                                                 {
                                                 <li>
@@ -222,12 +222,14 @@
                                                 }
                                                 else
                                                 {
-                                                <a class="dropdown-item" href="@Url.Action("PEncounterForm", new {ReqId = item.reqId})">
-                                                    <i class="bi bi-file-earmark-text"></i>
-                                                    Encounter
-                                                </a>
+                                                <li>
+                                                    <a class="dropdown-item" href="@Url.Action("PEncounterForm", new {ReqId = item.reqId})">
+                                                        <i class="bi bi-file-earmark-text"></i>
+                                                        Encounter
+                                                    </a>
+                                                </li>
                                                 }
-                                            </li>
+                                            
                                         </ul>
                                     </div>
                                 </div>

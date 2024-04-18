@@ -46,7 +46,7 @@
         </div>
         <div class="col-4">
             <div class="input-div form-floating mb-3">
-                <input type="tel" asp-for="PhoneNo" name="phone" class="form-control dark-mode1 p-3 ps-5" id="floatingInput" disabled>
+                <input type="text" asp-for="PhoneNo" name="phone" class="form-control dark-mode1 p-3 ps-5" id="phoneNo" disabled>
 
             </div>
         </div>
@@ -101,6 +101,10 @@
     </div>
 
     <div class="col w-auto">
+        <button type="reset" id="profileCancelBtn" class="btn btn-outline-info CancelBtn"
+              hidden>
+            Cancel
+        </button>
         <button class="back btn btn-outline-info" type="submit" id="saveButton" hidden>
             Save
         </button>
@@ -119,10 +123,29 @@
 
             $('input[type="date"]').removeAttr('disabled', false);
             $('input[type="tel"]').removeAttr('disabled', false);
+           
 
             // Hide the edit button after clicking it
             $(this).hide();
             $('#saveButton').removeAttr('hidden', false);
+            $('#profileCancelBtn').removeAttr('hidden', false);
         });
+      
+
     });
+    $('#profileCancelBtn').click(function () {
+
+
+        $('input[type="text"]').removeAttr('disabled', true);
+
+        $('input[type="date"]').removeAttr('disabled', true);
+        $('input[type="tel"]').removeAttr('disabled', true);
+
+        // Hide the edit button after clicking it
+        $(this).hide();
+        $('#saveButton').removeAttr('hidden', false);
+        $('#editButton').removeAttr('hidden', false);
+    });
+
+
 </script>
