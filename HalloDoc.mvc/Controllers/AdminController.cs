@@ -251,7 +251,6 @@ namespace HalloDoc.mvc.Controllers
             model.reqId = reqId;
             return PartialView("_CancelCase", model);
         }
-
         
         [HttpPost]
         public IActionResult SubmitCancelCase(CancelCaseModel cancelCaseModel,int reqId)

@@ -26,10 +26,12 @@ namespace HalloDoc.mvc.Controllers
             _jwtService = jwtService;
         }
 
+        #region Login
         public IActionResult Index()
         {
             return View();
         }
+        #endregion
 
         public IActionResult Privacy()
         {

@@ -162,8 +162,7 @@
             <div class="d-grid gap-2 d-flex justify-content-center  justify-content-md-end mt-4 pt-4 mb-3">
 
                 <button type="submit" onclick="encounterBtn()" class="btn btn-info text-white">Save Changes</button>
-                <button type="submit" class="btn text-white" style="background-color:purple" name="finalizeBtn" value="finalize">Finalize</button>
-
+                <button type="button" class="btn text-white" style="background-color:purple" onclick="finalize(@Model.reqid)" name="finalizeBtn" value="finalize">Finalize</button>
                 <button type="button" id="cancelEncounterBtn" class="btn btn-outline-info" onclick="disableFields()">Cancel</button>
             </div>
         </div>
@@ -188,4 +187,18 @@
         document.getElementById('editBtn').style.display = 'none';
     }
     disableFields();
+
+    function finalize(reqid) {
+        $.ajax({
+            url: '/Provider/Finalizesubmit',
+            type: 'POST',
+            data: { reqid: reqid },
+            success: function (result) {
+
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+    }
 </script>

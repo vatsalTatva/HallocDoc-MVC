@@ -155,7 +155,8 @@ namespace BusinessLogic.Services
                             requestClientId = rc.Requestclientid,
                             reqId = r.Requestid,
                             regionId = rc.Regionid,
-                            callType = r.Calltype
+                            callType = r.Calltype,
+                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null
                         };
 
 
@@ -218,5 +219,54 @@ namespace BusinessLogic.Services
 
 
         }
+
+        public void housecall(int requestId)
+        {
+            Request? req = _db.Requests.FirstOrDefault(x => x.Requestid == requestId);
+            req.Status = (int)StatusEnum.Conclude;
+            _db.Requests.Update(req);
+            _db.SaveChanges();
+        }
+
+        public bool finalizesubmit(int reqid)
+        {
+            try
+            {
+                var enc = _db.Encounterforms.FirstOrDefault(x => x.Requestid == reqid);
+                enc.Isfinalized = true;
+                _db.Encounterforms.Update(enc);
+                _db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool concludecaresubmit(int ReqId, string ProviderNote)
+        {
+            try
+            {
+                var req1 = _db.Requests.FirstOrDefault(x => x.Requestid == ReqId);
+                var ise = new BitArray(1, false);
+                req1.Status = (int)StatusEnum.Closed;
+                req1.Isurgentemailsent = ise;
+                _db.Requests.Update(req1);
+
+                Requeststatuslog rsl = new Requeststatuslog();
+                rsl.Requestid = ReqId;
+                rsl.Status = (int)StatusEnum.Closed;
+                rsl.Notes = ProviderNote;
+                rsl.Createddate = DateTime.Now;
+                _db.Requeststatuslogs.Add(rsl);
+
+                _db.SaveChanges();
+                return true;
+
+            }
+
+            catch { return false; }
+        }
+
     }
 }

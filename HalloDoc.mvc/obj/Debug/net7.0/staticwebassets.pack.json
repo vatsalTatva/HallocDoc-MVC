@@ -33,6 +33,14 @@
       "PackagePath": "staticwebassets\\PhysicianSign\\10\\favicon.ico"
     },
     {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\Rotativa\\wkhtmltoimage.exe",
+      "PackagePath": "staticwebassets\\Rotativa\\wkhtmltoimage.exe"
+    },
+    {
+      "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\Rotativa\\wkhtmltopdf.exe",
+      "PackagePath": "staticwebassets\\Rotativa\\wkhtmltopdf.exe"
+    },
+    {
       "Id": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\4\\Background.pdf",
       "PackagePath": "staticwebassets\\UploadedFiles\\4\\Background.pdf"
     },

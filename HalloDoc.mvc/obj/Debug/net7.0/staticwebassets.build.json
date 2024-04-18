@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "47QsZp/3BQsbmYSn2EYqG4Zjf7I0XAlRwsa676WhEZc=",
+  "Hash": "fl7qExhjc9orj70ZoJh+ASehk6cagrfBEsYtnA+ABnI=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -1766,6 +1766,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PhysicianSign\\10\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\Rotativa\\wkhtmltoimage.exe",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "Rotativa/wkhtmltoimage.exe",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Rotativa\\wkhtmltoimage.exe"
+    },
+    {
+      "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\Rotativa\\wkhtmltopdf.exe",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "Rotativa/wkhtmltopdf.exe",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Rotativa\\wkhtmltopdf.exe"
     },
     {
       "Identity": "D:\\HalloDoc.mvc\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\4\\Background.pdf",

@@ -316,12 +316,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxfUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/ConcludeCare.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcQ29uY2x1ZGVDYXJlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/PdfPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUGRmUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/PEncounterForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUEVuY291bnRlckZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/ProviderDashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUHJvdmlkZXJEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/_ConcludeCare.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX0NvbmNsdWRlQ2FyZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/_MonthLySchedule.cshtml]
@@ -346,6 +358,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/_PConcludeRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BDb25jbHVkZVJlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/_PDownloadModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BEb3dubG9hZE1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HalloDoc.mvc/HalloDoc.mvc/Views/Provider/_PMyProfile.cshtml]

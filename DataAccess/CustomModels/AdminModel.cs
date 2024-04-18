@@ -69,6 +69,7 @@ namespace DataAccess.CustomModels
         public int? regionId { get; set; }
         public int? callType { get; set; }
         public int? phyId { get; set; }
+        public bool? isFinalized { get; set; }
     }
 
    
@@ -168,6 +169,8 @@ namespace DataAccess.CustomModels
         public int? ReqId { get; set; }
 
         public List<IFormFile>? uploadedFiles { get; set; }
+        public string? ProviderNote { get; set; }
+
 
     }
     public class Order
