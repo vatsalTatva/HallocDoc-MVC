@@ -248,9 +248,7 @@ namespace BusinessLogic.Services
             try
             {
                 var req1 = _db.Requests.FirstOrDefault(x => x.Requestid == ReqId);
-                var ise = new BitArray(1, false);
                 req1.Status = (int)StatusEnum.Closed;
-                req1.Isurgentemailsent = ise;
                 _db.Requests.Update(req1);
 
                 Requeststatuslog rsl = new Requeststatuslog();

@@ -43,9 +43,10 @@
                         <textarea  asp-for="symptoms" class="form-control dark-mode1" placeholder="" id="floatingTextarea2"
                                   style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Enter Brief Details Of Symptoms (Optional)</label>
+                        <span asp-validation-for="symptoms" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="firstName" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">First Name *</label>
@@ -53,16 +54,16 @@
                     </div>
                    
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="lastName" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Last Name *</label>
                         <span asp-validation-for="lastName" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="dob" type="date" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
+                        <input asp-for="dob" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control dark-mode1" id="floatingInput" placeholder="Date">
                         <label for="floatingInput">Date Of Birth *</label>
                         <span asp-validation-for="dob" class="text-danger"></span>
                     </div>
@@ -70,31 +71,31 @@
             </div>
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 ">
                     <h5>Patient Contact Information</h5>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="email" name="email" type="email" class="form-control dark-mode1" id="email" placeholder="name@example.com">
                         <label for="floatingInput">Email *</label>
                         <span asp-validation-for="email" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="phoneNo" type="number" name="phone" class="form-control dark-mode1 p-3 ps-5" id="phoneNo">
+                        <input asp-for="phoneNo" type="number"  class="form-control dark-mode1 p-3 ps-5">
                         
                     </div>
                     <span asp-validation-for="phoneNo" class="text-danger"></span>
                 </div>
-                <div id="passwordSection" class="col-6 " style="display:none" >
+                <div id="passwordSection" class="col-12 col-md-6 " style="display:none">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="password" type="password" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Password *</label>
                         <span asp-validation-for="password" class="text-danger"></span>
                     </div>
                 </div>
-                <div id="confirmPasswordSec" class="col-6" style="display:none">
+                <div id="confirmPasswordSec" class="col-12 col-md-6" style="display:none">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="confirmPassword" type="password" class="form-control dark-mode1" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Confirm Password *</label>
@@ -107,35 +108,39 @@
                 <div class="col-12">
                     <h5>Patient Location</h5>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="street" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">Street</label>
+                        <span asp-validation-for="street" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="city" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">City</label>
+                        <span asp-validation-for="city" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="state" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">State *</label>
                         <span asp-validation-for="state" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="zipCode" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">Zip Code</label>
+                        <span asp-validation-for="zipCode" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="input-div form-floating mb-3">
                         <input asp-for="roomNo" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                         <label for="floatingInput">Room # / Suite (Optional)</label>
+                        <span asp-validation-for="roomNo" class="text-danger"></span>
                     </div>
                 </div>
             </div>

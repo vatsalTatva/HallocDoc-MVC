@@ -34,12 +34,13 @@
                 <div class="input-div form-floating mb-3">
                     <input asp-for="lastName" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                     <label for="floatingInput">Your Last Name</label>
+                    <span asp-validation-for="lastName" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
                 <div class="input-div form-floating mb-3">
-                    <input asp-for="phoneNo" type="tel" name="phone" class="form-control dark-mode1 p-3 ps-5" id="floatingInput">
-                    
+                    <input asp-for="phoneNo" type="tel" class="form-control dark-mode1 p-3 ps-5" id="phone1">
+                    <span asp-validation-for="phoneNo" class="text-danger"></span>
                 </div>
             </div>
 
@@ -69,12 +70,14 @@
                 <div class="input-div form-floating mb-3">
                     <input asp-for="street" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                     <label for="floatingInput">Street</label>
+                    <span asp-validation-for="street" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
                 <div class="input-div form-floating mb-3">
                     <input asp-for="city" type="text" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                     <label for="floatingInput">City</label>
+                    <span asp-validation-for="city" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -101,6 +104,7 @@
                     <textarea asp-for="symptoms" class="form-control  dark-mode1" placeholder="" id="floatingTextarea2"
                               style="height: 100px"></textarea>
                     <label id="symptom-label" for="floatingTextarea2">Symptoms(Optional)</label>
+                    <span asp-validation-for="symptoms" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -120,7 +124,7 @@
             </div>
             <div class="col-12 col-sm-6">
                 <div class="input-div form-floating mb-3">
-                    <input asp-for="patientDob" type="date" class="form-control  dark-mode1" id="floatingInput" placeholder="">
+                    <input asp-for="patientDob" max="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" class="form-control  dark-mode1" id="floatingInput" placeholder="">
                     <label for="floatingInput">Date Of Birth *</label>
                     <span asp-validation-for="patientDob" class="text-danger"></span>
 
@@ -141,7 +145,7 @@
             </div>
             <div class="col-12 col-sm-6">
                 <div class="input-div form-floating mb-3">
-                    <input asp-for="patientPhoneNo" type="tel" name="phone" class="form-control dark-mode1 p-3 ps-5" id="floatingInput" placeholder="">
+                    <input asp-for="patientPhoneNo" type="tel"  class="form-control dark-mode1 p-3 ps-5" id="phone2" placeholder="">
                     <span asp-validation-for="patientPhoneNo" class="text-danger"></span>
 
                 </div>
@@ -177,13 +181,19 @@
     <partial name="RequestModal" />
 
     <script>
-        const phoneInputField = document.querySelectorAll("input[type='tel']");
-        for (var i = 0; i < phoneInputField.length; i++) {
-            const phoneInput = window.intlTelInput(phoneInputField[i], {
-                utilsScript:
-                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-            });
-        }
+        const phoneInputField = document.getElementById("phone1");
+
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        const phoneInputField2 = document.getElementById("phone2");
+
+        const phoneInput2 = window.intlTelInput(phoneInputField2, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
     </script>
 </body>
 

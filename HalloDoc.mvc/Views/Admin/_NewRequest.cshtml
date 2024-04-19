@@ -169,7 +169,19 @@
                             }
 
                             @*7*@
-                            <td style="background:@bgColor">-</td>
+                            <td style="background:@bgColor">
+                               @* @if (item.notes.Count() != 0 && item.phyId != null)
+                                {
+                                    @if (item.notes.Last().Transtophysicianid != null || item.notes.Last().Transtoadmin != null)
+                                    {
+                                        <span>@item.notes.Last().Notes </span>
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                }*@
+                            </td>
                             @*8*@
                             <td style="background:@bgColor">
 

@@ -365,7 +365,7 @@ namespace BusinessLogic.Services
         }
         public ViewCaseViewModel ViewCaseViewModel(int Requestclientid ,int RequestTypeId)
         {
-            Requestclient obj = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == Requestclientid);
+            Requestclient obj = _db.Requestclients.Include(x=>x.Request).FirstOrDefault(x => x.Requestclientid == Requestclientid);
             ViewCaseViewModel viewCaseViewModel = new()
             {
                 Requestid=obj.Requestid,
@@ -380,7 +380,8 @@ namespace BusinessLogic.Services
                 Zipcode = obj.Zipcode,
                 Room = obj.Address,
                 Notes = obj.Notes,
-                RequestTypeId = RequestTypeId
+                RequestTypeId = RequestTypeId,
+              status = obj.Request.Status  
             };
             return viewCaseViewModel;
         }

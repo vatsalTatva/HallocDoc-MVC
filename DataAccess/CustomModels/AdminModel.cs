@@ -113,6 +113,7 @@ namespace DataAccess.CustomModels
         public string? Zipcode { get; set; }
         public string? Room { get; set; }
         public string? ConfirmationNumber { get; set; }
+        public int? status { get; set; }
     }
 
     public class ViewNotesModel

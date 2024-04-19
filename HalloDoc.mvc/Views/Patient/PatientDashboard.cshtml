@@ -230,11 +230,11 @@
                         Here, I Want to create new request for...
                         <br />
                         <div class="d-flex justify-content-center gap-3 my-3">
-                            <button class="px-3 modal-b" id="button1" onclick="passId(event)">
-                                <span class="">Me</span>
+                            <button class="px-3 modal-b meElseBtn" id="button1" data-meelse="1">
+                               Me
                             </button>
-                            <button class="px-3 modal-b" id="button2" onclick="passId(event)">
-                                <span class="">Some one Else</span>
+                            <button class="px-3 modal-b meElseBtn" id="button2" data-meelse="2">
+                               Some one Else
                             </button>
                         </div>
                     </div>
@@ -342,20 +342,37 @@
 
         let buttonId = null;
 
-        function passId(event) {
-            buttonId = event.target.id;
+        //function passId(event) {
+        //    buttonId = event.target.id;
 
-        }
+        //}
+
+        var meelse = 0;
+        $(".meElseBtn").click(function () {
+            meelse = $(this).data("meelse");
+         
+        })
 
         function redirect() {
-            if (buttonId == 'button1') {
+            if(meelse==0){
+                return false;
+            }
+            else if(meelse==1){
                 location.assign('SubmitMeInfo');
+                return;
             }
-            else if (buttonId == 'button2') {
+            else{
                 location.assign('SubmitElseInfo');
-            } else {
-                // Default redirection if buttonId is not set or unexpected
+                return;
             }
+            //if (buttonId == 'button1') {
+            //    location.assign('SubmitMeInfo');
+            //}
+            //else if (buttonId == 'button2') {
+            //    location.assign('SubmitElseInfo');
+            //} else {
+            //    // Default redirection if buttonId is not set or unexpected
+            //}
         }
 
 

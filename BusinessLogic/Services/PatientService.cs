@@ -152,9 +152,9 @@ namespace BusinessLogic.Services
                         };
 
                         _db.Requestwisefiles.Add(requestwisefile);
-                        _db.SaveChanges();
                     };
                 }
+                _db.SaveChanges();
             }
 
             return true;
@@ -387,7 +387,7 @@ namespace BusinessLogic.Services
             return true;
         }
 
-        public bool SomeElseReq(FamilyReqModel model,string createAccountLink, string loginid)
+        public bool SomeElseReq(FamilyReqModel model, string createAccountLink, string loginid)
         {
             var stateMain = _db.Regions.Where(x => x.Name.ToLower() == model.state.ToLower().Trim()).FirstOrDefault();
 
@@ -448,7 +448,7 @@ namespace BusinessLogic.Services
                 user = _db.Users.Where(m => m.Email == model.patientEmail).FirstOrDefault();
             }
 
-            var loginPatient = _db.Users.Where(x=>x.Aspnetuserid==loginid).FirstOrDefault();
+            var loginPatient = _db.Users.Where(x => x.Aspnetuserid == loginid).FirstOrDefault();
 
             Request request = new Request();
             request.Requesttypeid = (int)RequestTypeEnum.Family;
@@ -876,7 +876,7 @@ namespace BusinessLogic.Services
                 Street = user.Street,
                 ZipCode = user.Zipcode,
                 DateOfBirth = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate)),
-                
+
 
             };
             return profile;
