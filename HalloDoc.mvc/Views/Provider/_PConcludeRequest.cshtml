@@ -170,22 +170,23 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="@Url.Action("ViewCase", new {Requestclientid = item.requestClientId , RequestTypeId = item.requestTypeId})">
+                                                <button class="dropdown-item" onclick="pShowViewCase(@item.requestClientId,@item.requestTypeId)">
                                                     <i class="bi bi-file-earmark-text"></i>
                                                     ViewCase
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" asp-controller="Provider" asp-action="PViewDocument" asp-route-reqId=@item.reqId>
-                                                    <i class="bi bi-file-earmark-text"></i>
-                                                    View Uploads
-                                                </a>
+                                                </button>
                                             </li>
                                             <li>
                                                 <button class="dropdown-item" onclick="pShowViewNotes(@item.reqId)">
                                                     <i class="bi bi-file-earmark-text"></i>
                                                     ViewNotes
                                                 </button>
+                                            </li>
+
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Provider" asp-action="PViewUploads" asp-route-reqId=@item.reqId>
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    View Uploads
+                                                </a>
                                             </li>
                                             <li>
                                                 @if (item.isFinalized == false || item.isFinalized == null)
@@ -198,7 +199,8 @@
                                                 else
                                                 {
                                                     <button class="dropdown-item" onclick="encounterDownload(@item.reqId)">
-                                                        Encounter
+                                                        <i class="bi bi-file-earmark-text"></i>
+                                                        Download Encounter
                                                     </button>
                                                 }
 
@@ -215,7 +217,7 @@
             else
             {
                 <tr>
-                    <td colspan="3" style="text-align: center;">No records found.</td>
+                    <td colspan="4" style="text-align: center;">No records found.</td>
                 </tr>
             }
         </tbody>
@@ -244,7 +246,6 @@ else if (Model.TotalPage == 1)
 }
 else
 {
-    <div class="text-center text-danger fw-bold h5">No record found</div>
 }
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">

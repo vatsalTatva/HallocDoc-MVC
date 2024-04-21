@@ -175,6 +175,9 @@ namespace DataAccess.CustomModels
         public int? ReqId { get; set; }
 
         public List<IFormFile>? uploadedFiles { get; set; }
+
+        [Required(ErrorMessage ="Provider note is required")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "It cannot be null or whitespace.")]
         public string? ProviderNote { get; set; }
 
 

@@ -189,9 +189,11 @@ namespace HalloDoc.mvc.Controllers
             var list = _adminService.Export(tabNo);
             return Json(list);
         }
-        [HttpPost]
-        public string ExportReq(List<AdminDashTableModel> reqList)
+        public string ExportReq(int tabNo)
         {
+            var reqList = _adminService.Export(tabNo);
+
+
             StringBuilder stringbuild = new StringBuilder();
 
             string header = "\"No\"," + "\"Name\"," + "\"DateOfBirth\"," + "\"Requestor\"," +
@@ -216,8 +218,9 @@ namespace HalloDoc.mvc.Controllers
             string finaldata = stringbuild.ToString();
 
             return finaldata;
-           
+
         }
+
 
         [HttpGet]
         public IActionResult SendLink()

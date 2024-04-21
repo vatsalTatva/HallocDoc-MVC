@@ -463,7 +463,8 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult Finalizesubmit(int reqid)
         {
             _providerService.finalizesubmit(reqid);
-            return RedirectToAction("ProviderDashboard");
+            _notyf.Success("Finalized");
+            return Ok();
         }
         public IActionResult DownloadEncounterPopUp(int reqId)
         {

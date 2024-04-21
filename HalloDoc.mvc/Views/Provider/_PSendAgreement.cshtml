@@ -31,9 +31,9 @@
         role = "Concierge";
     }
 }
-<div class="modal fade" id="sendAgreementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="psendAgreementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="post" class="modal-content" asp-action="SendAgreement">
+        <form method="post" class="modal-content" asp-action="SendAgreement" asp-controller="Provider" >
             <div class="modal-header" style="background-color:#00B7FF">
                 <h5 class="modal-title text-light" id="exampleModalLabel">Send Agreement</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

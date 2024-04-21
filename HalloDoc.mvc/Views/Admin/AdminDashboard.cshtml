@@ -546,7 +546,8 @@
             });
         }
         
-        function showSendAgreement(reqId,reqType) {
+        function showSendAgreement
+        (reqId,reqType) {
             var role = null;
             if(reqType == 1){
                 role='Business';
@@ -582,30 +583,11 @@
             });
         }
         function ExpertDataTabWise(tabNo) {
+
             $.ajax({
-                url: '/Admin/GetRequest',
+                url: '/Admin/ExportReq',
                 type: 'GET',
                 data: { tabNo: tabNo },
-                success: function (response) {
-                    console.log(response);
-                    Export(response);
-                },
-                error: function (xhr, status, error) {
-                    if (xhr.status === 401) {
-
-                        window.location.reload();
-                    }
-                    console.error(error);
-                }
-            });
-        }
-        function Export(reqList) 
-        {
-           $.ajax({
-                method: "POST",
-                url: "/Admin/ExportReq",
-                data: { reqList: reqList },
-
                 success: function (resp) {
 
                     const blob = new Blob([resp], { type: 'text/csv' });
@@ -616,7 +598,7 @@
 
                     anchor.style.display = 'none';
                     anchor.href = url;
-                    anchor.download = 'Exported-Requests.csv';
+                    anchor.download = 'ExportedRequests.csv';
 
                     document.body.appendChild(anchor);
                     anchor.click();
@@ -624,17 +606,48 @@
                     document.body.removeChild(anchor);
                 },
 
-                error: function (xhr, status, error) {
-                    if (xhr.status === 401) {
-
-                        window.location.reload();
-                    }
-                    console.error(error);
+                error: function (e) {
+                    alert(e);
+                    console.log(e);
                 }
-
             });
-
         }
+        // function Export(reqList) 
+        // {
+        //    $.ajax({
+        //         method: "POST",
+        //         url: "/Admin/ExportReq",
+        //         data: { reqList: reqList },
+
+        //         success: function (resp) {
+
+        //             const blob = new Blob([resp], { type: 'text/csv' });
+
+        //             var url = window.URL.createObjectURL(blob);
+
+        //             var anchor = document.createElement('a');
+
+        //             anchor.style.display = 'none';
+        //             anchor.href = url;
+        //             anchor.download = 'Exported-Requests.csv';
+
+        //             document.body.appendChild(anchor);
+        //             anchor.click();
+        //             window.URL.revokeObjectURL(url);
+        //             document.body.removeChild(anchor);
+        //         },
+
+        //         error: function (xhr, status, error) {
+        //             if (xhr.status === 401) {
+
+        //                 window.location.reload();
+        //             }
+        //             console.error(error);
+        //         }
+
+        //     });
+
+        // }
 
 
         //function ExportAll() {
