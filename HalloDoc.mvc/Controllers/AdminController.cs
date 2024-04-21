@@ -16,6 +16,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -98,8 +99,9 @@ namespace HalloDoc.mvc.Controllers
         
         public IActionResult AdminDashboard()
         {
-          
-            return View();
+            var email = GetTokenEmail();
+            var model = _adminService.GetLoginDetail(email);
+            return View(model);
         }
 
         [HttpGet]
@@ -152,7 +154,33 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult FilterRegion(FilterModel filterModel)
         {
             var list = _adminService.GetRequestByRegion(filterModel);
-            return PartialView("_NewRequest", list);
+            int tabNo = filterModel.tabNo;
+            if (tabNo == 1)
+            {
+                return PartialView("_NewRequest", list);
+
+            }
+            else if (tabNo == 2)
+            {
+                return PartialView("_PendingRequest", list);
+            }
+            else if (tabNo == 3)
+            {
+                return PartialView("_ActiveRequest", list);
+            }
+            else if (tabNo == 4)
+            {
+                return PartialView("_ConcludeRequest", list);
+            }
+            else if (tabNo == 5)
+            {
+                return PartialView("_ToCloseRequest", list);
+            }
+            else if (tabNo == 6)
+            {
+                return PartialView("_UnpaidRequest", list);
+            }
+            return View();
         }
 
 
@@ -482,7 +510,7 @@ namespace HalloDoc.mvc.Controllers
         {
             var model = _adminService.SendAgreementCase(reqId);
             model.reqType = reqType;
-            return PartialView("_sendagreement", model);
+            return PartialView("_SendAgreement", model);
         }
 
         public Task SendEmail(string email, string subject, string message)
@@ -680,15 +708,15 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult CreateRequest(CreateRequestModel model)
         {
-            var request = HttpContext.Request;
-            var token = request.Cookies["jwt"];
-            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
-            {
-                _notyf.Error("Token Expired,Login Again");
-                return View(model);
-            }
+            //var request = HttpContext.Request;
+            //var token = request.Cookies["jwt"];
+            //if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            //{
+            //    _notyf.Error("Token Expired,Login Again");
+            //    return View(model);
+            //}
             string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            string createAccountLink = baseUrl + Url.Action("CreateAccount", "Patient");
+            string createAccountLink = baseUrl + Url.Action("ResetPassword", "Patient");
             var email = GetTokenEmail();
             var isSaved = _adminService.CreateRequest(model, email, createAccountLink);
             if (isSaved)
@@ -927,6 +955,7 @@ namespace HalloDoc.mvc.Controllers
         {
             CreateAdminAccount obj = new CreateAdminAccount();
             obj.RegionList = _adminService.RegionTable();
+            
             return PartialView("_CreateAdminAccount", obj);
         }
 
@@ -934,17 +963,8 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult AdminAccount(CreateAdminAccount model,List<int> AdminRegion)
         {
             var email = GetTokenEmail();
-            var isCreated = _adminService.CreateAdminAccount(model, email);
-            if (isCreated)
-            {
-                _notyf.Success("Account Created!!");
-                return RedirectToAction("AdminDashboard");
-            }
-            else
-            {
-                _notyf.Error("Somethng Went Wrong!!");
-                return PartialView("_createadminaccount");
-            }
+            var isCreated = _adminService.CreateAdminAccount(model,AdminRegion, email);
+            return Json(new { isCreated });
         }
 
         [HttpGet]

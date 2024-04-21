@@ -29,17 +29,7 @@
             </div>
         </div>
         <div class="col-12 col-md-2 pt-2">
-            <div class="form-floating">
-                <select class="form-select" id="newRegionFilter" onchange="FilterData(1)" aria-label="Floating label select example">
-                    <option disabled selected>Regions</option>
-                    @foreach (var item in Model.regionList)
-                    {
-                        <option value="@item.Regionid">@item.Name</option>
-
-                    }
-                </select>
-                <label for="floatingSelect"><i class="bi bi-search"></i> All Regions</label>
-            </div>
+           
         </div>
         <div class="col-md-4">
         </div>
@@ -353,7 +343,6 @@ else if (Model.TotalPage == 1)
 }
 else
 {
-    <div class="text-center text-danger fw-bold h5">No record found</div>
 }
 <div id="modelContent"></div>
 

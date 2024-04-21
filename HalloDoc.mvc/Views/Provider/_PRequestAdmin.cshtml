@@ -1,0 +1,59 @@
+﻿@using DataAccess.CustomModels
+@model RequestAdmin;
+
+<div class="modal fade" id="EditPremissionModalBox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="EditPremissionModalBoxLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top: 22%;">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h1 class="modal-title fs-5 text-white" id="EditPremissionModalBoxLabel">Request To Administrator</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="EditPremissionForm">
+                <div class="modal-body text-secondary">
+                    Need To Send Message To Edit !!!
+                </div>
+                <div class="form-floating m-3 text-secondary">
+                    <textarea asp-for="Note" class="form-control" placeholder="Description"
+                              id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Message</label>
+                    <span class="text-danger" asp-validation-for="Note"></span>
+                </div>
+                <div class="m-3 d-flex justify-content-end">
+                    <button type="button" onclick="RequestAdminMail()" class="btn btn-info confirm-btn text-white">Send</button>
+                    <button type="button" class="btn cancel-btn border-info text-info ms-3"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<partial name="_ValidationScriptsPartial" />
+
+
+<script>
+    function RequestAdminMail() {
+        if ($('#EditPremissionForm').valid()) {
+            $.ajax({
+                url: "/Provider/RequestAdmin",
+                method: "POST",
+                data: $("#EditPremissionForm").serialize(),
+                success: function (result) {
+                    pMyProfile();
+                    $('#EditPremissionModalBox').modal('hide');
+                    toastr.success("Mail Sent Successfully");
+                },
+                error: function () {
+                    toastr.error("Error");
+                },
+            });
+        }
+    }
+
+
+</script>

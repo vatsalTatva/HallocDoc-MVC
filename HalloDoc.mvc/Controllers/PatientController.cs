@@ -114,6 +114,12 @@ namespace HalloDoc.mvc.Controllers
             if (ModelState.IsValid)
             {
                 var aspnetuser = _patientService.GetAspnetuser(model.email);
+                int role = aspnetuser.Aspnetuserroles.Where(x => x.Userid == aspnetuser.Id).Select(x => x.Roleid).First();
+                if (role != 2)
+                {
+                    _notyf.Warning("Only Patient can login");
+                    return RedirectToAction("Login");
+                }
                 if (aspnetuser != null)
                 {
                     model.password = GenerateSHA256(model.password);
@@ -159,6 +165,18 @@ namespace HalloDoc.mvc.Controllers
             var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
             return emailClaim.Value;
         }
+        //public string GetLoginRole()
+        //{
+
+        //    var token = HttpContext.Request.Cookies["PatientJwt"];
+        //    if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+        //    {
+        //        return "";
+        //    }
+        //    var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role);
+        //    return roleClaim.Value;
+
+        //}
         public string GetLoginId()
         {
             var token = HttpContext.Request.Cookies["PatientJwt"];
@@ -412,6 +430,7 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult PatientDashboard()
         {
+            
             var email = GetTokenEmail();
             if(string.IsNullOrEmpty(email))
             {
@@ -455,15 +474,12 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult ShowProfile(int userid)
         {
-            HttpContext.Session.SetInt32("EditUserId", userid);
             var profile = _patientService.GetProfile(userid);
             return PartialView("_Profile", profile);
         }
 
         public IActionResult SaveEditProfile(Profile profile)
         {
-            int EditUserId = (int)HttpContext.Session.GetInt32("EditUserId");
-            profile.userId = EditUserId;
             bool isEdited = _patientService.EditProfile(profile);
             if (isEdited)
             {

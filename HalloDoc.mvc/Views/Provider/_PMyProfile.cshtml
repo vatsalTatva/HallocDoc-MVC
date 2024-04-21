@@ -63,14 +63,19 @@
 <div class="container">
     <div class=" mt-2 d-flex justify-content-between align-items-center">
         <h4>My Profile</h4>
-        <button id="back-btn">&lt; Back</button>
-
+@*         <button id="back-btn">&lt; Back</button>
+ *@
     </div>
     @*  <form action="" class="shadow border rounded my-3" method="post"> *@
     <div class="shadow border rounded my-3 dark-mode1 bg-white">
         <div class="mx-3 my-4 ">
             <form action=" " method="post" id="ResetPasswordForm">
                 <input type="hidden" id="providerEditOne" asp-for="editPro.PhyID" value="@Model.editPro.PhyID" />
+                <div style="float:right;">
+                    <button onclick="providerReqeustAdminMain()" type="button" id="providerReqeustAdmin" class="btn btn-outline-secondary border-info text-info ms-2">
+                        Request To Admin
+                    </button>
+                </div>
                 <div class="mt-3">
                     <h4 class="my-4 pt-4">Account Information</h4>
 
@@ -375,6 +380,8 @@
 
         </div>
     </div>
+    <div id="RequestToAdminMain">
+    </div>
 </div>
 
 @*<partial name="_ValidationScriptsPartial" />*@
@@ -506,6 +513,21 @@
             },
             error: function () {
                 alert("Error");
+            },
+        });
+    }
+
+     function providerReqeustAdminMain(){
+         let action = "/Provider/RequestAdmin";
+        $.ajax({
+            url: action,
+            type: 'GET',
+            success: function (result) {
+                $('#RequestToAdminMain').html(result);
+                $('#EditPremissionModalBox').modal('show');
+            },
+            error: function () {
+                toastr.error("Error To Load Partial View");
             },
         });
     }

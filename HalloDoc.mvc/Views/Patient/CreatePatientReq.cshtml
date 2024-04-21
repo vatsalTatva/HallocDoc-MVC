@@ -179,6 +179,9 @@
         $('#email').focusout(function () {
        
             var email = $(this).val();
+            if(email==""){
+                return false;
+            }
             $.ajax({
                 url: '/Patient/CheckEmailExists',
                 type: 'GET',

@@ -13,6 +13,7 @@ namespace BusinessLogic.Interfaces
 {
     public interface IAdminService
     {
+        LoginDetail GetLoginDetail(string email);
         Aspnetuser GetAspnetuser(string email);
         DashboardModel GetRequestsByStatus(int status, int CurrentPage);
         List<AdminDashTableModel> Export(int tabNo);
@@ -104,7 +105,7 @@ namespace BusinessLogic.Interfaces
         bool PhysicianBusinessInfoUpdate(EditProviderModel2 dataMain);
         bool EditOnBoardingData(EditProviderModel2 dataMain);
         void editProviderDeleteAccount(int phyId);
-        bool CreateAdminAccount(CreateAdminAccount obj, string email);
+        bool CreateAdminAccount(CreateAdminAccount obj, List<int> AdminRegion, string email);
         void CreateNewShiftSubmit(string selectedDays, CreateShiftModel obj, int adminId);
 
         List<RequestsRecordModel> SearchRecords(RecordsModel recordsModel);

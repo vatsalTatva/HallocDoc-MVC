@@ -38,6 +38,11 @@
         role = "Concierge";
     }
 }
+
+@{
+    string[] Status = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDOnSite" ,
+                "Conclude" , "CancelledByPatient" , "Closed" , "Unpaid" , "Clear"  };
+}
 <div class=" container-fluid    ">
     <!-- main part -->
     <div class="container flex-column bg-body-dark d-flex align-items-center justify-content-center ">
@@ -48,7 +53,7 @@
             <div class="d-flex justify-content-between">
                 <div class="col-6 d-flex justify-content-start">
                     <p class="d-flex">
-                        <span class="fw-bold fs-4"> New Request</span>
+                        <span class="fw-bold fs-4"> @Status[Model.status-1] Request</span>
                         <span class=" text-white boder rounded p-1 mx-2" style="background:@bgColor">@role</span>
                     </p>
                 </div>

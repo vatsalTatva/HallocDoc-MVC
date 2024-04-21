@@ -44,7 +44,20 @@
             <p class="col-12">Patient Name</p>
             <p class="col-12">
                 <span class="fw-bolder fs-4">@Model.firstName @Model.lastName </span>
-                <span>(f34r34t5gvr44)</span>
+                
+                    @if (Model.confirmationNo != null)
+                    {
+                    <span>
+                       ( @Model.confirmationNo )
+                    </span>
+                    }
+                    else
+                    {
+                        <span>
+                        (f34r34t5gvr44)
+                        </span>
+                    }
+               
             </p>
             <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
 
@@ -90,7 +103,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model != null && Model.files.Count() > 0)
+                @if (Model != null && Model.files.Count > 0)
                 {
                     @foreach (var item in Model.files)
                     {
@@ -119,7 +132,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="3" style="text-align: center;">No records found.</td>
+                        <td colspan="5" style="text-align: center;">No records found.</td>
                     </tr>
                 }
             </tbody>

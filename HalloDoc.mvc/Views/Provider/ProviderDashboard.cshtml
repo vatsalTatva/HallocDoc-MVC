@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "ProviderDashboard";
 }
-
+@model LoginDetail;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -114,8 +114,8 @@
                     </li>
                     <li class="nav-item p-2 fw-bolder">
                         <span class="d-flex gap-1">
-                            <span>Physician</span>
-                            <span></span>
+                            <span>@Model.firstName</span>
+                            <span>@Model.lastName</span>
                         </span>
                     </li>
             </div>

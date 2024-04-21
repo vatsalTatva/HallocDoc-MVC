@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.CustomModels
 {
+    public class LoginDetail
+    {
+        public string? firstName { get; set; }
+        public string? lastName { get; set; }
+    }
     public class AdminLoginModel
     {
         [Required(ErrorMessage = "Email is required")]
@@ -113,7 +118,7 @@ namespace DataAccess.CustomModels
         public string? Zipcode { get; set; }
         public string? Room { get; set; }
         public string? ConfirmationNumber { get; set; }
-        public int? status { get; set; }
+        public int status { get; set; }
     }
 
     public class ViewNotesModel
@@ -192,7 +197,11 @@ namespace DataAccess.CustomModels
     public class SendAgreementModel
     {
         public int? Reqid { get; set; }
+        [Required(ErrorMessage = "Phone number is required")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Please enter the patient's email address.")]
+        [RegularExpression(@"^\S+@\S+\.\S{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string? Email { get; set; }
 
         public int? reqType { get; set; }
@@ -321,12 +330,16 @@ namespace DataAccess.CustomModels
     public class SendLinkModel
     {
         [Required(ErrorMessage = "FirstName is required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name should contain only letters")]
         public string? fName { get; set; }
-        [Required(ErrorMessage = "LastName is required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name should contain only letters")]
         public string? lName { get; set;}
+
         [Required(ErrorMessage = "Phone No. is required")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? phoneNo { get; set;}
         [Required(ErrorMessage ="Email is required")]
+        [RegularExpression(@"^\S+@\S+\.\S{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string? email { get; set;}
 
     }
@@ -335,41 +348,45 @@ namespace DataAccess.CustomModels
     {
 
         public int? requesttypeid { get; set; }
-
         public int? userid { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Your Street Name")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Street is invalid.")]
         public string? street { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Your City Name")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "City is invalid.")]
         public string? city { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Your State Name")]
+        [Required(ErrorMessage = "State is required")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "State is invalid.")]
         public string? state { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Your Zipcode")]
+        [RegularExpression(@"^\d{6}$", ErrorMessage = "Zipcode must be 6 digits long.")]
         public string? zipcode { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Name")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name should contain only letters.")]
         public string? firstname { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Last Name")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name should contain only letters.")]
         public string? lastname { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Date Of Birth")]
-        public string? dateofbirth { get; set; }
+        public DateOnly dateofbirth { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Email")]
+        [RegularExpression(@"^\S+@\S+\.\S{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string? email { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Phone Number")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? phone { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Your Room")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "Room number is invalid.")]
         public string? room { get; set; }
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Symptoms cannot be null or whitespace.")]
 
         public string? admin_notes { get; set; }
-
         public bool? indicate { get; set; }
     }
 
@@ -583,47 +600,69 @@ namespace DataAccess.CustomModels
     public class CreateProviderAccount
     {
         [Required(ErrorMessage ="Usernaame is required")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "User is invalid.")]
         public string? username { get; set; }
         [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digit, and one special character.)")]
         public string? password { get; set; }
         [Required(ErrorMessage = "Email is required")]
+        [RegularExpression(@"^\S+@\S+\.\S{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string? Email { get; set; }
         [Compare("Email", ErrorMessage = "Email Missmatch")]
         public string? Con_Email { get; set; }
-        [Required(ErrorMessage = "Usernaame is required")]
+        [Required(ErrorMessage = "PhoneNumber is required")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? PhoneNumber { get; set; }
 
         public string? Status { get; set; }
 
         [Required(ErrorMessage = "city is required")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "City is invalid.")]
         public string? city { get; set; }
 
         public string? country { get; set; }
         [Required(ErrorMessage = "zipcode is required")]
+        [RegularExpression(@"^\d{6}$", ErrorMessage = "Zipcode must be 6 digits long.")]
         public string? zipcode { get; set; }
-        [Required(ErrorMessage = "Firstname is required")]
+        [Required(ErrorMessage = "First Name is required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name should contain only letters")]
         public string? Firstname { get; set; }
-        [Required(ErrorMessage = "Lastname is required")]
+        [Required(ErrorMessage = "Last Name name is required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name should contain only letters")]
         public string? Lastname { get; set; }
 
+        [Required(ErrorMessage = "Region is required")]
         public int? Regionid { get; set; }
 
+        [Required(ErrorMessage ="Role is required")]
         public int? Roleid { get; set; }
         [Required(ErrorMessage = "MedicalLicense no is required")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Cannot be null or whitespace.")]
         public string? MedicalLicesnse { get; set; }
         [Required(ErrorMessage = "NPInumber is required")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Cannot be null or whitespace.")]
         public string? NPInumber { get; set; }
 
         public string? SycnEmail { get; set; }
 
+        [Required(ErrorMessage = "Business Name is required")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "Businessname is invalid.")]
         public string? Businessname { get; set; }
 
+        [Required(ErrorMessage = "Business Website is required")]
+        [RegularExpression(@"^(https?://)?(www\.)?([a-zA-Z0-9\-]+)\.([a-zA-Z]{2,63})(:\d{1,5})?(/.*)?$",
+       ErrorMessage = "Invalid Website URL")]
         public string? BusinessWebsite { get; set; }
 
+        [Required(ErrorMessage ="Admin notes is required")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Cannot be null or whitespace.")]
         public string? Adminnotes { get; set; }
         [Required(ErrorMessage = "Address1 is required")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Address is invalid.")]
         public string? Address1 { get; set; }
         [Required(ErrorMessage = "Address2 is required")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Address is invalid.")]    
         public string? Address2 { get; set; }
 
         public int PhyID { get; set; }
@@ -635,6 +674,8 @@ namespace DataAccess.CustomModels
 
         //public List<Physicianregion> physicianregions { get; set; }
 
+        [Required(ErrorMessage = "PhoneNumber is required")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? altPhone { get; set; }
         public string? State { get; set; }
         public int? StateId { get; set; }
@@ -673,9 +714,9 @@ namespace DataAccess.CustomModels
         public bool? indicate { get; set; }
         public string? indicateTwo { get; set; }
 
-        public decimal? longitude { get; set; }
+        public decimal longitude { get; set; }
 
-        public decimal? latitude { get; set; }
+        public decimal latitude { get; set; }
 
         public DateTime? created_date { get; set; }
 
@@ -688,27 +729,60 @@ namespace DataAccess.CustomModels
 
     public class CreateAdminAccount
     {
+        [Required(ErrorMessage ="Username is required")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "User is invalid.")]
         public string? UserName { get; set; }
+
+        [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+    ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digit, and one special character.)")]
         public string? AdminPassword { get; set; }
+
+
         public short? Status { get; set; }
         public string? Role { get; set; }
+
+        [Required(ErrorMessage = "First Name is required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First name should contain only letters")]
         public string? FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name name is required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last name should contain only letters")]
         public string? LastName { get; set; }
+
+
+        [Required(ErrorMessage = "Phone Number is required")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? AdminPhone { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
+
+        [Required(ErrorMessage = "Please enter the email address.")]
+        [RegularExpression(@"^\S+@\S+\.\S{2,}$", ErrorMessage = "Please enter a valid email address.")]
         public string? Email { get; set; }
+
         [Compare("Email", ErrorMessage = "Email Missmatch")]
         public string? ConfirmEmail { get; set; }
         public List<Region>? RegionList { get; set; }
         public IEnumerable<int> AdminRegion { get; set; }
+
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Address is invalid.")]
         public string? Address1 { get; set; }
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Address is invalid.")]
         public string? Address2 { get; set; }
+        [RegularExpression(@"^\S*$", ErrorMessage = "City is invalid.")]
         public string? City { get; set; }
+        [RegularExpression(@"^\S*$", ErrorMessage = "State is invalid.")]
         public string? State { get; set; }
+        [RegularExpression(@"^\d{6}$", ErrorMessage = "Zipcode must be 6 digits long.")]
         public string? Zip { get; set; }
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits long.")]
         public string? BillingPhone { get; set; }
         public int[] RegionArray { get; set; }
+
+        [Required(ErrorMessage ="Role is required")]
+        public int roleId { get; set; }
+        [Required(ErrorMessage ="Region is required")]
+        public int regionId { get; set; }
     }
     public class RecordsModel
     {
@@ -970,6 +1044,14 @@ namespace DataAccess.CustomModels
 
 
     }
+    public class RequestAdmin
+    {
+        public int? reqId { get; set; }
 
+        [Required(ErrorMessage = "Please Enter Description")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "Note cannot be null or whitespace.")]
+        public string? Note { get; set; }
+
+    }
 }
 

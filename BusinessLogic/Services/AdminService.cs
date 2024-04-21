@@ -38,6 +38,14 @@ namespace BusinessLogic.Services
             _environment = environment;
         }
 
+        public LoginDetail GetLoginDetail(string email)
+        {
+            var admin = _db.Admins.Where(x => x.Email == email).FirstOrDefault();
+            LoginDetail model = new();
+            model.firstName = admin.Firstname;
+            model.lastName = admin.Lastname;
+            return model;
+        }
         public Aspnetuser GetAspnetuser(string email)
         {
             var aspNetUser = _db.Aspnetusers.Include(x => x.Aspnetuserroles).FirstOrDefault(x => x.Email == email);
@@ -70,7 +78,9 @@ namespace BusinessLogic.Services
                             reqId = r.Requestid,
                             regionId=rc.Regionid,
                             callType = r.Calltype,
-                            phyId = r.Physicianid??null
+                            phyId = r.Physicianid??null,
+                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null
+
                         };
 
 
@@ -147,7 +157,9 @@ namespace BusinessLogic.Services
                             reqId = r.Requestid,
                             regionId = rc.Regionid,
                             callType = r.Calltype,
-                            phyId = r.Physicianid ?? null
+                            phyId = r.Physicianid ?? null,
+                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null
+
                         };
 
 
@@ -213,7 +225,9 @@ namespace BusinessLogic.Services
                             reqId = r.Requestid,
                             regionId = rc.Regionid,
                             callType = r.Calltype,
-                            phyId = r.Physicianid ?? null
+                            phyId = r.Physicianid ?? null,
+                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null
+
                         };
 
 
@@ -249,7 +263,7 @@ namespace BusinessLogic.Services
                 query = query.Where(x => x.status == (int)StatusEnum.Unpaid);
             }
 
-            if (filterModel.regionId != null)
+            if (filterModel.regionId != null && filterModel.regionId!=0)
             {
                 query = query.Where(x => x.regionId == filterModel.regionId);
             }
@@ -554,22 +568,28 @@ namespace BusinessLogic.Services
                 var request = _db.Requests.FirstOrDefault(r => r.Requestid == blockCaseModel.ReqId);
                 if(request != null)
                 {
-                    if (request.Isdeleted == null)
-                    {
-                        request.Isdeleted = new BitArray(1);
-                        request.Isdeleted[0] = true;
+                    
+                        request.Isdeleted = new BitArray(1,true);
                         request.Status = (int)StatusEnum.Clear;
                         request.Modifieddate = DateTime.Now;
 
                         _db.Requests.Update(request);
-                       
-                    }
+
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Requestid = (int)blockCaseModel.ReqId;
+                    rsl.Status = (int)StatusEnum.Clear;
+                    rsl.Notes = blockCaseModel.reason;
+                    rsl.Createddate = DateTime.Now;
+                    _db.Requeststatuslogs.Add(rsl);
+
+
                     Blockrequest blockrequest = new Blockrequest();
 
                     blockrequest.Phonenumber = request.Phonenumber==null?"+91":request.Phonenumber;
                     blockrequest.Email = request.Email;
                     blockrequest.Reason = blockCaseModel.reason;
                     blockrequest.Requestid = (int)blockCaseModel.ReqId;
+                    blockrequest.Isactive = new BitArray(1, false);
                     blockrequest.Createddate = DateTime.Now;
                    
                     _db.Blockrequests.Add(blockrequest);
@@ -1298,13 +1318,13 @@ namespace BusinessLogic.Services
                 Requestnote note = new Requestnote();
 
                 var admin = _db.Admins.Where(r => r.Email == sessionEmail).Select(r => r).First();
-
+                var adminAspId = _db.Aspnetusers.Where(r => r.Email == sessionEmail).Select(r => r.Id).First();
                 var existUser = _db.Aspnetusers.FirstOrDefault(r => r.Email == model.email);
 
                 if (existUser == null)
                 {
                     asp.Id = Guid.NewGuid().ToString();
-                    asp.Username = model.firstname + "_" + model.lastname;
+                    asp.Username = model.firstname + " " + model.lastname;
                     asp.Email = model.email;
                     asp.Phonenumber = model.phone;
                     asp.Createddate = DateTime.Now;
@@ -1320,20 +1340,27 @@ namespace BusinessLogic.Services
                     user.State = model.state;
                     user.Street = model.street;
                     user.Zipcode = model.zipcode;
-                    user.Strmonth = model.dateofbirth.Substring(5, 2);
-                    user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
-                    user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
-                    user.Createdby = admin.Adminid.ToString();
+                    user.Intyear = int.Parse(model.dateofbirth.ToString("yyyy"));
+                    user.Intdate = int.Parse(model.dateofbirth.ToString("dd"));
+                    user.Strmonth = model.dateofbirth.ToString("MMM");
+                    user.Createdby = adminAspId;
                     user.Createddate = DateTime.Now;
                     user.Regionid = stateMain.Regionid;
                     _db.Users.Add(user);
                     _db.SaveChanges();
 
-   
 
-                    
+                    Aspnetuserrole aspnetuserrole = new Aspnetuserrole();
+                    aspnetuserrole.Userid = asp.Id;
+                    aspnetuserrole.Roleid = (int)AspNetRole.user;
+                    _db.Aspnetuserroles.Add(aspnetuserrole);
+                    _db.SaveChanges();
+
+
                     try
                     {
+                        createAccountLink = createAccountLink + "/" + asp.Id;
+
                         SendRegistrationEmailCreateRequest(model.email, createAccountLink);
                     }
                     catch (Exception e)
@@ -1351,8 +1378,7 @@ namespace BusinessLogic.Services
                 req.Status = (int)StatusEnum.Unassigned;
                 req.Confirmationnumber = admin.Firstname.Substring(0, 1) + DateTime.Now.ToString().Substring(0, 19);
                 req.Createddate = DateTime.Now;
-                req.Isurgentemailsent = new BitArray(1);
-                req.Isurgentemailsent[0] = false;
+                req.Isurgentemailsent = new BitArray(1,false);
                 _db.Requests.Add(req);
                
                 _db.SaveChanges();
@@ -1363,9 +1389,9 @@ namespace BusinessLogic.Services
                 reqClient.Firstname = model.firstname;
                 reqClient.Lastname = model.lastname;
                 reqClient.Phonenumber = model.phone;
-                reqClient.Strmonth = model.dateofbirth.Substring(5, 2);
-                reqClient.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
-                reqClient.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
+                reqClient.Intyear = int.Parse(model.dateofbirth.ToString("yyyy"));
+                reqClient.Intdate = int.Parse(model.dateofbirth.ToString("dd"));
+                reqClient.Strmonth = model.dateofbirth.ToString("MMM");
                 reqClient.Street = model.street;
                 reqClient.City = model.city;
                 reqClient.State = model.state;
@@ -1378,7 +1404,7 @@ namespace BusinessLogic.Services
 
                 note.Requestid = req.Requestid;
                 note.Adminnotes = model.admin_notes;
-                note.Createdby = _db.Aspnetusers.Where(r => r.Email == sessionEmail).Select(r => r.Id).First();
+                note.Createdby = adminAspId;
                 note.Createddate = DateTime.Now;
                 _db.Requestnotes.Add(note);
                 _db.SaveChanges();
@@ -1537,7 +1563,7 @@ namespace BusinessLogic.Services
             var aspUser = _db.Aspnetusers.FirstOrDefault(r => r.Email == obj.Email);
 
 
-            if (aspUser == null && obj.latitude != null)
+            if (aspUser == null && obj.latitude != 0)
             {
 
 
@@ -1572,6 +1598,7 @@ namespace BusinessLogic.Services
                 phy.Createdby = _user.Id;
                 phy.Createddate = _user.Createddate;
                 phy.Status = 1;
+                phy.Isdeleted = new BitArray(1, false);
                 phy.Businessname = obj.Businessname;
                 phy.Businesswebsite = obj.BusinessWebsite;
                 phy.Roleid = obj.Roleid;
@@ -2291,7 +2318,7 @@ namespace BusinessLogic.Services
           
         }
 
-        public bool CreateAdminAccount(CreateAdminAccount obj, string email)
+        public bool CreateAdminAccount(CreateAdminAccount obj, List<int> AdminRegion,string email)
         {
             var emailExists = _db.Aspnetusers.Where(x => x.Email == obj.Email).Any();
             if (emailExists)
@@ -2315,6 +2342,13 @@ namespace BusinessLogic.Services
                 _db.Aspnetusers.Add(aspnetuser);
                 _db.SaveChanges();
 
+
+                Aspnetuserrole aspnetuserrole = new Aspnetuserrole();
+                aspnetuserrole.Userid = aspnetuser.Id;
+                aspnetuserrole.Roleid = (int)AspNetRole.admin;
+                _db.Aspnetuserroles.Add(aspnetuserrole);
+                _db.SaveChanges();
+
                 var aspnetId = _db.Aspnetusers.Where(x => x.Email == email).Select(x => x.Id).First();
                 Admin admin = new Admin();
 
@@ -2323,10 +2357,11 @@ namespace BusinessLogic.Services
                 admin.Firstname = obj.FirstName;
                 admin.Lastname = obj.LastName;
                 admin.Email = obj.Email;
-
+                admin.Status = 1;
                 admin.Mobile = obj.AdminPhone;
                 admin.Address1 = obj.Address1;
-
+                admin.Regionid = obj.regionId;
+                admin.Roleid = obj.roleId;
                 admin.Address2 = obj.Address2;
                 admin.Zip = obj.Zip;
                 admin.Altphone = obj.BillingPhone;
@@ -2341,7 +2376,7 @@ namespace BusinessLogic.Services
 
 
 
-                var AdminRegions = obj.AdminRegion.ToList();
+                var AdminRegions = AdminRegion.ToList();
                 for (int i = 0; i < AdminRegions.Count; i++)
                 {
                     Adminregion adminregion = new()
@@ -2970,7 +3005,7 @@ namespace BusinessLogic.Services
                 var request = _db.Requests.Where(r => r.Requestid == block.Requestid).Select(r => r).First();
 
                 request.Status = (int)StatusEnum.Unassigned;
-                request.Isdeleted = null;
+                request.Isdeleted = new BitArray(1,false);
                 request.Modifieddate = DateTime.Now;
                 _db.Requests.Update(request);
                 _db.SaveChanges();

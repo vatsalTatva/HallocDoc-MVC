@@ -6,6 +6,11 @@
 
 @model ViewCaseViewModel;
 
+@{
+    string[] Status = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDOnSite" ,
+                "Conclude" , "CancelledByPatient" , "Closed" , "Unpaid" , "Clear"  };
+}
+
 <link rel="stylesheet" href="~/css/AdminDashboard.css">
 <nav class="bg-white dark-mode1 navbr navbar navbar-expand w-100 ">
 
@@ -93,7 +98,7 @@
             <div class="d-flex justify-content-between">
                 <div class="col-6 d-flex justify-content-start">
                     <p class="d-flex">
-                        <span class="fw-bold fs-4"> New Request</span>
+                        <span class="fw-bold fs-4"> @Status[Model.status - 1] Request</span>
                         <span class=" text-white boder rounded p-1 mx-2" style="background:@bgColor">@role</span>
                     </p>
                 </div>

@@ -19,18 +19,7 @@
             <button class="action-btn">
                 <i class="bi bi-journal-text"></i> <span class="d-none d-md-block">Create Requests</span>
             </button>
-            <button class="action-btn" id="exportPendingReq">
-                <i class="bi bi-reply"></i> <span class="d-none d-md-block">Export</span>
-            </button>
-            <button class="action-btn" onclick="ExportAll()">
-                <i class="bi bi-reply-all"></i> <span class="d-none d-md-block">Export All</span>
-            </button>
-            <button class="action-btn">
-                <i class="bi bi-person"></i> <span class="d-none d-md-block">
-                    Request
-                    DTY Support
-                </span>
-            </button>
+          
         </span>
     </div>
     <div class="row mt-3 ">
@@ -41,17 +30,7 @@
             </div>
         </div>
         <div class="col-12 col-md-2 pt-2">
-            <div class="form-floating">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                    <option disabled selected>Regions</option>
-                    @foreach (var item in Model.regionList)
-                    {
-                        <option value=@item.Regionid>@item.Name</option>
-
-                    }
-                </select>
-                <label for="floatingSelect"><i class="bi bi-search"></i> All Regions</label>
-            </div>
+           
         </div>
         <div class="col-md-4">
         </div>
@@ -77,13 +56,10 @@
         <thead class="table-secondary">
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Date Of Birth</th>
-                <th scope="col">Requestor</th>
-                <th scope="col">Requested Date</th>
+              
                 <th scope="col">Phone</th>
                 <th scope="col">Address</th>
-                <th scope="col">Notes</th>
-                <th scope="col">Chats With</th>
+              
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -131,13 +107,7 @@
                                     </a>
                                 </div>
                             </td>
-                            @*2*@
-                            <td style="background:@bgColor">Jun 16, 2023(0)</td>
-                            @*3*@
-                            <td style="background:@bgColor">@item.requestorFname @item.requestorLname</td>
-                            @*4*@
-                            <td style="background:@bgColor">Nov 20, 2023 335h 1m 01m</td>
-                            @*@item.strMonth @item.intDate , @item.intYear*@
+                       
                             @*5*@
                             <td style="background:@bgColor">
                                 <div class="table_phone">
@@ -160,39 +130,7 @@
 
                             }
 
-                            @*7*@
-                            <td style="background:@bgColor">-</td>
-                            @*8*@
-                            <td style="background:@bgColor">
-
-                                <div class="d-flex">
-                                    <div class="dropdown mb-1 w-75">
-                                        <button class="btn text-white border border-white py-1"
-                                                type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <i class="bi bi-person-fill"></i>
-                                            <span>
-                                                Patient
-                                            </span>
-                                        </button>
-
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div class="dropdown w-75">
-                                        <button class="btn text-white border border-white py-1"
-                                                type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <i class="bi bi-person-badge-fill"></i>
-                                            <span>
-                                                Provider
-                                            </span>
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </td>
+                        
                             @*9*@
                             <td style="background:@bgColor">
                                 <div>
@@ -206,35 +144,32 @@
                                         </button>
                                         <ul class="dropdown-menu table_dropdowns">
                                             <li>
-                                                <a class="dropdown-item" href="@Url.Action("ViewCase","Provider",  new {Requestclientid = item.requestClientId , RequestTypeId = item.requestTypeId})">
+                                                <button class="dropdown-item" onclick="pShowViewCase(@item.requestClientId,@item.requestTypeId)">
                                                     <i class="bi bi-file-earmark-text"></i>
-                                                    View Case
-                                                </a>
+                                                    ViewCase
+                                                </button>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" asp-controller="Provider" asp-action="ViewUploads" asp-route-reqId=@item.reqId>
+                                                <button class="dropdown-item" onclick="pShowViewNotes(@item.reqId)">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    ViewNotes
+                                                </button>
+                                            </li>
+
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Provider" asp-action="PViewUploads" asp-route-reqId=@item.reqId>
                                                     <i class="bi bi-file-earmark-text"></i>
                                                     View Uploads
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item" href="@Url.Action("ViewNote","Provider", new {ReqId = item.reqId})">
-                                                    <i class="bi bi-file-earmark-text"></i>
-                                                    View Notes
-                                                </a>
-                                            </li>
+                                      
                                             <li>
                                                 <button class="dropdown-item" onclick="pShowTransferCase(@item.reqId)">
                                                     <i class="bi bi-card-checklist"></i>
                                                     Transfer
                                                 </button>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    <i class="bi bi-x-circle"></i>
-                                                    Cancel Case
-                                                </a>
-                                            </li>
+                                     
                                             <li>
                                                 <a class="dropdown-item" style="cursor:pointer" onclick="pShowSendAgreement(@item.reqId,@item.requestTypeId)">
                                                     <i class="bi bi-file-earmark-text"></i>
@@ -253,7 +188,7 @@
             else
             {
                 <tr>
-                    <td colspan="3" style="text-align: center;">No records found.</td>
+                    <td colspan="4" style="text-align: center;">No records found.</td>
                 </tr>
             }
 
@@ -283,7 +218,6 @@ else if (Model.TotalPage == 1)
 }
 else
 {
-    <div class="text-center text-danger fw-bold h5">No record found</div>
 }
 <div id="pmodelContent2"></div>
 

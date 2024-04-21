@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <title>Create Concierge Request</title>
+  
 </head>
 
 <body>
@@ -39,7 +40,7 @@
             </div>
             <div class="col-12 col-sm-6">
                 <div class="input-div form-floating mb-3">
-                    <input asp-for="phoneNo" type="tel" class="form-control dark-mode1 p-3 ps-5" id="phone1">
+                    <input asp-for="phoneNo" type="number" class="form-control dark-mode1 p-3 ps-5" id="phone1">
                     <span asp-validation-for="phoneNo" class="text-danger"></span>
                 </div>
             </div>
@@ -145,7 +146,7 @@
             </div>
             <div class="col-12 col-sm-6">
                 <div class="input-div form-floating mb-3">
-                    <input asp-for="patientPhoneNo" type="tel"  class="form-control dark-mode1 p-3 ps-5" id="phone2" placeholder="">
+                    <input asp-for="patientPhoneNo" type="number"  class="form-control dark-mode1 p-3 ps-5" id="phone2" placeholder="">
                     <span asp-validation-for="patientPhoneNo" class="text-danger"></span>
 
                 </div>

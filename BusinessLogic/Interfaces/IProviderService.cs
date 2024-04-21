@@ -9,6 +9,8 @@ namespace BusinessLogic.Interfaces
 {
     public interface IProviderService
     {
+        LoginDetail GetLoginDetail(string email);
+
         bool TransferRequest(TransferRequest model);
         MonthWiseScheduling PhysicianMonthlySchedule(string date, int status, string aspnetuserid);
         int GetPhysicianId(string userid);
@@ -19,5 +21,6 @@ namespace BusinessLogic.Interfaces
         void housecall(int requestId);
         bool finalizesubmit(int reqid);
         bool concludecaresubmit(int ReqId, string ProviderNote);
+        void RequestAdmin(RequestAdmin model, string sessionEmail);
     }
 }

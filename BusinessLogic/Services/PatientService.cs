@@ -45,7 +45,7 @@ namespace BusinessLogic.Services
                 aspnetuser1.Id = Guid.NewGuid().ToString();
                 aspnetuser1.Passwordhash = patientInfoModel.password;
                 aspnetuser1.Email = patientInfoModel.email;
-                aspnetuser1.Username = patientInfoModel.firstName + "_" + patientInfoModel.lastName;
+                aspnetuser1.Username = patientInfoModel.firstName + " " + patientInfoModel.lastName;
                 aspnetuser1.Phonenumber = patientInfoModel.phoneNo;
                 aspnetuser1.Createddate = DateTime.Now;
                 aspnetuser1.Modifieddate = DateTime.Now;
@@ -62,7 +62,7 @@ namespace BusinessLogic.Services
                 u.City = patientInfoModel.city;
                 u.State = patientInfoModel.state;
                 u.Zipcode = patientInfoModel.zipCode;
-                u.Createdby = patientInfoModel.firstName + patientInfoModel.lastName;
+                u.Createdby = aspnetuser1.Id;
                 u.Intyear = int.Parse(patientInfoModel.dob.ToString("yyyy"));
                 u.Intdate = int.Parse(patientInfoModel.dob.ToString("dd"));
                 u.Strmonth = patientInfoModel.dob.ToString("MMM");
@@ -808,8 +808,8 @@ namespace BusinessLogic.Services
                 files = list,
                 firstName = reqClient.Firstname,
                 lastName = reqClient.Lastname,
-
-            };
+                confirmationNo = _db.Requests.Where(x => x.Requestid == requestId).Select(x=>x.Confirmationnumber).First()??null
+        };
 
             return result;
         }
@@ -865,20 +865,24 @@ namespace BusinessLogic.Services
         public Profile GetProfile(int userid)
         {
             var user = _db.Users.FirstOrDefault(x => x.Userid == userid);
-            Profile profile = new()
+            Profile profile = new();
+
+            profile.FirstName = user.Firstname ?? null;
+            profile.LastName = user.Lastname ?? null;
+            profile.Email = user.Email;
+            profile.PhoneNo = user.Mobile ?? null;
+            profile.State = user.State ?? null;
+            profile.City = user.City ?? null;
+            profile.Street = user.Street ?? null;
+            profile.ZipCode = user.Zipcode ?? null;
+            if(user.Intdate!=null && user.Strmonth!=null && user.Intyear != null)
             {
-                FirstName = user.Firstname,
-                LastName = user.Lastname,
-                Email = user.Email,
-                PhoneNo = user.Mobile,
-                State = user.State,
-                City = user.City,
-                Street = user.Street,
-                ZipCode = user.Zipcode,
-                DateOfBirth = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate)),
 
+                profile.DateOfBirth = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate));
+            }
+            profile.userId = userid;
 
-            };
+            
             return profile;
         }
 
@@ -898,6 +902,9 @@ namespace BusinessLogic.Services
                     existingUser.City = profile.City;
                     existingUser.State = profile.State;
                     existingUser.Zipcode = profile.ZipCode;
+                    existingUser.Intyear = int.Parse(profile.DateOfBirth.ToString("yyyy"));
+                    existingUser.Intdate = int.Parse(profile.DateOfBirth.ToString("dd"));
+                    existingUser.Strmonth = profile.DateOfBirth.ToString("MMM");
                     _db.Users.Update(existingUser);
                     _db.SaveChanges();
 
