@@ -1761,19 +1761,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\VATSAL\\.nuget\\packages\\": {}
+    "C:\\Users\\pce159\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "D:\\HalloDoc FInal\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\DataAccess.csproj",
-      "packagesPath": "C:\\Users\\VATSAL\\.nuget\\packages\\",
-      "outputPath": "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\obj\\",
+      "projectPath": "D:\\HalloDoc FInal\\DataAccess\\DataAccess.csproj",
+      "packagesPath": "C:\\Users\\pce159\\.nuget\\packages\\",
+      "outputPath": "D:\\HalloDoc FInal\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\VATSAL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pce159\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1844,7 +1844,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

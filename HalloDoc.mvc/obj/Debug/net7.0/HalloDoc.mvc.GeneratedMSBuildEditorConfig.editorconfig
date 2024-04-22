@@ -9,427 +9,433 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HalloDoc.mvc
 build_property.RootNamespace = HalloDoc.mvc
-build_property.ProjectDir = D:\HalloDocMVC\HallocDoc-MVC\HalloDoc.mvc\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = D:\HalloDoc FInal\HalloDoc.mvc\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\HalloDocMVC\HallocDoc-MVC\HalloDoc.mvc
+build_property.MSBuildProjectDirectory = D:\HalloDoc FInal\HalloDoc.mvc
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/AdminDashboard.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/AdminDashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5EYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/AdminLogin.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/AdminLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/CloseCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/CloseCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ2xvc2VDYXNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/CreateRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/CreateRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/EncounterForm.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/EncounterForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRW5jb3VudGVyRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/Order.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/Order.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cT3JkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/ViewCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/ViewCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld0Nhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/ViewNote.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/ViewNote.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld05vdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/ViewUploads.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/ViewUploads.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld1VwbG9hZHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_AccountAccess.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_AccountAccess.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FjY291bnRBY2Nlc3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ActiveRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ActiveRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FjdGl2ZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_AddVendor.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_AddVendor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FkZFZlbmRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_AllRequests.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_AllRequests.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FsbFJlcXVlc3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_AssignCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_AssignCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0Fzc2lnbkNhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_BlockCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_BlockCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0Jsb2NrQ2FzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_BlockHistory.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_BlockHistory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0Jsb2NrSGlzdG9yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_BusinessTable.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_BusinessTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0J1c2luZXNzVGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_CancelCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_CancelCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NhbmNlbENhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ClearCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ClearCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NsZWFyQ2FzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ConcludeRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ConcludeRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NvbmNsdWRlUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ContactProvider.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ContactProvider.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NvbnRhY3RQcm92aWRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_CreateAccess.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_CreateAccess.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NyZWF0ZUFjY2Vzcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_CreateAdminAccount.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_CreateAdminAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NyZWF0ZUFkbWluQWNjb3VudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_CreateProviderAccount.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_CreateProviderAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NyZWF0ZVByb3ZpZGVyQWNjb3VudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_CreateShift.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_CreateShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NyZWF0ZVNoaWZ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_EditAccessRole.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_EditAccessRole.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRBY2Nlc3NSb2xlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_EditBusiness.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_EditBusiness.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRCdXNpbmVzcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_EditProvider.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_EditProvider.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRQcm92aWRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_EmailLogs.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_EditUserAccessAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRVc2VyQWNjZXNzQWRtaW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_EditUserAccessPhysician.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VkaXRVc2VyQWNjZXNzUGh5c2ljaWFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_EmailLogs.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0VtYWlsTG9ncy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_MyProfile.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_MyProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX015UHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_NewRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_NewRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX05ld1JlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_Partners.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_Partners.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1BhcnRuZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_PatientRecord.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_PatientRecord.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1BhdGllbnRSZWNvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_PatientRecordExplore.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_PatientRecordExplore.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1BhdGllbnRSZWNvcmRFeHBsb3JlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_PendingRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_PendingRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1BlbmRpbmdSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_Provider.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_Provider.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1Byb3ZpZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ProviderLocation.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ProviderLocation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1Byb3ZpZGVyTG9jYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ProviderOnCall.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ProviderOnCall.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1Byb3ZpZGVyT25DYWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_Scheduling.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_Scheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NjaGVkdWxpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_SchedulingDayTable.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_SchedulingDayTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NjaGVkdWxpbmdEYXlUYWJsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_SchedulingMonthTable.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_SchedulingMonthTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NjaGVkdWxpbmdNb250aFRhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_SchedulingViewShift.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_SchedulingViewShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NjaGVkdWxpbmdWaWV3U2hpZnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_SchedulingWeekTable.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_SchedulingWeekTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NjaGVkdWxpbmdXZWVrVGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_SearchRecord.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_SearchRecord.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NlYXJjaFJlY29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_SendAgreement.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_SendAgreement.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NlbmRBZ3JlZW1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_SendLink.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_SendLink.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NlbmRMaW5rLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ShiftForReview.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ShiftForReview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1NoaWZ0Rm9yUmV2aWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ToCloseRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ToCloseRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1RvQ2xvc2VSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_TransferCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_TransferCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1RyYW5zZmVyQ2FzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_UnpaidRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_UnpaidRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1VucGFpZFJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_UserAccess.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_UserAccess.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1VzZXJBY2Nlc3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ViewCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ViewCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1ZpZXdDYXNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Admin/_ViewNotes.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Admin/_ViewNotes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1ZpZXdOb3Rlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Home/AccessDenied.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Home/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Home/AdminLogin.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Home/AdminLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pbkxvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Home/AgreementStatus.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Home/AgreementStatus.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZ3JlZW1lbnRTdGF0dXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Home/Index.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Home/Privacy.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Home/ReviewAgreement.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Home/ReviewAgreement.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXZpZXdBZ3JlZW1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Home/_CancelAgreement.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Home/_CancelAgreement.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfQ2FuY2VsQWdyZWVtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/CreateAccount.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/CreateAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGVBY2NvdW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/CreateBusinessPartnerReq.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/CreateBusinessPartnerReq.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGVCdXNpbmVzc1BhcnRuZXJSZXEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/CreateConciergeReq.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/CreateConciergeReq.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGVDb25jaWVyZ2VSZXEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/CreateFamilyFrndReq.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/CreateFamilyFrndReq.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGVGYW1pbHlGcm5kUmVxLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/CreatePatientReq.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/CreatePatientReq.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGVQYXRpZW50UmVxLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/DocumentList.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/DocumentList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEb2N1bWVudExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/ForgetPassword.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/ForgetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxGb3JnZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/Login.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/PatientDashboard.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/PatientDashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQYXRpZW50RGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/RequestModal.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/RequestModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxSZXF1ZXN0TW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/RequestScreen.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/RequestScreen.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxSZXF1ZXN0U2NyZWVuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/ResetPassword.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/SubmitElseInfo.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/SubmitElseInfo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxTdWJtaXRFbHNlSW5mby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/SubmitMeInfo.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/SubmitMeInfo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxTdWJtaXRNZUluZm8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Patient/_Profile.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Patient/_Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxfUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/ConcludeCare.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/ConcludeCare.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcQ29uY2x1ZGVDYXJlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/PdfPartial.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/PdfPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUGRmUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/PEncounterForm.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/PEncounterForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUEVuY291bnRlckZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/ProviderDashboard.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/ProviderDashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUHJvdmlkZXJEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/PViewUploads.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/PViewUploads.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUFZpZXdVcGxvYWRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_ConcludeCare.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_ConcludeCare.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX0NvbmNsdWRlQ2FyZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_MonthLySchedule.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_MonthLySchedule.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX01vbnRoTHlTY2hlZHVsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_MyScheduling.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_MyScheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX015U2NoZWR1bGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PActiveRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PActiveRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BBY3RpdmVSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PAllRequests.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PAllRequests.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BBbGxSZXF1ZXN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PCareModal.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PCareModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BDYXJlTW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PConcludeRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PConcludeRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BDb25jbHVkZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PDownloadModal.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PDownloadModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BEb3dubG9hZE1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PMyProfile.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PMyProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BNeVByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PNewRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PNewRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BOZXdSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PPendingRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PPendingRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BQZW5kaW5nUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PRequestAdmin.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PRequestAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BSZXF1ZXN0QWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PSendAgreement.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PSendAgreement.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BTZW5kQWdyZWVtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PTransferRequest.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PTransferRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BUcmFuc2ZlclJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PViewCase.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PViewCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BWaWV3Q2FzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PViewNotes.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PViewNotes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BWaWV3Tm90ZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Provider/_PViewShift.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Provider/_PViewShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcX1BWaWV3U2hpZnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Shared/Error.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Shared/_footer.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Shared/_footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9mb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Shared/_navbar.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Shared/_navbar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9uYXZiYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/_ViewImports.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/_ViewStart.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDocMVC/HallocDoc-MVC/HalloDoc.mvc/Views/Shared/_Layout.cshtml]
+[D:/HalloDoc FInal/HalloDoc.mvc/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-7dcre0k7zr

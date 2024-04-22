@@ -114,14 +114,15 @@ namespace HalloDoc.mvc.Controllers
             if (ModelState.IsValid)
             {
                 var aspnetuser = _patientService.GetAspnetuser(model.email);
-                int role = aspnetuser.Aspnetuserroles.Where(x => x.Userid == aspnetuser.Id).Select(x => x.Roleid).First();
-                if (role != 2)
-                {
-                    _notyf.Warning("Only Patient can login");
-                    return RedirectToAction("Login");
-                }
+                
                 if (aspnetuser != null)
                 {
+                    int role = aspnetuser.Aspnetuserroles.Where(x => x.Userid == aspnetuser.Id).Select(x => x.Roleid).First();
+                    if (role != 2)
+                    {
+                        _notyf.Warning("Only Patient can login");
+                        return RedirectToAction("Login");
+                    }
                     model.password = GenerateSHA256(model.password);
                     if (aspnetuser.Passwordhash == model.password)
                     {

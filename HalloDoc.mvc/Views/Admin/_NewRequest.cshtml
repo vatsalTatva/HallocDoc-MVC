@@ -35,7 +35,7 @@
     <div class="row mt-3 ">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="searchword" onkeypress="newReqSearch(event)" placeholder="Search">
+                <input type="text" class="form-control " id="newSearch"  onkeypress="newReqSearch(event)" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
@@ -86,8 +86,8 @@
                 <th scope="col">Phone</th>
                 <th scope="col">Address</th>
                 <th scope="col">Notes</th>
-                <th scope="col">Chats With</th>
-                <th scope="col">Actions</th>
+@*                <th scope="col">Chats With</th>
+*@                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -140,11 +140,18 @@
                                 </div>
                             </td>
                             @*2*@
-                            <td style="background:@bgColor">Jun 16, 2023(0)</td>
+                            @if (item.intDate != null)
+                            {
+                                <td style="background:@bgColor;"> @item.intDate @item.strMonth , @item.intYear </td>
+                            }
+                            else
+                            {
+                                <td style="background:@bgColor"> - </td>
+                            }
                             @*3*@
                             <td style="background:@bgColor">@item.requestorFname @item.requestorLname</td>
                             @*4*@
-                            <td style="background:@bgColor">Nov 20, 2023 335h 1m 01m</td>
+                            <td style="background:@bgColor;"> @item.reqDate</td>
                             @*@item.strMonth @item.intDate , @item.intYear*@
                             @*5*@
                             <td style="background:@bgColor">
@@ -170,20 +177,10 @@
 
                             @*7*@
                             <td style="background:@bgColor">
-                               @* @if (item.notes.Count() != 0 && item.phyId != null)
-                                {
-                                    @if (item.notes.Last().Transtophysicianid != null || item.notes.Last().Transtoadmin != null)
-                                    {
-                                        <span>@item.notes.Last().Notes </span>
-                                    }
-                                    else
-                                    {
-                                        <span>-</span>
-                                    }
-                                }*@
+                              @item.notes
                             </td>
                             @*8*@
-                            <td style="background:@bgColor">
+                        @*    <td style="background:@bgColor">
 
                                 <div class="d-flex">
                                     <div class="dropdown mb-1 w-75">
@@ -212,7 +209,7 @@
 
                                     </div>
                                 </div>
-                            </td>
+                            </td>*@
                             @*9*@
                             <td style="background:@bgColor">
                                 <div>
@@ -419,14 +416,14 @@
     <div class="page-container">
         <ul class="pagination justify-content-center d-flex page-list">
             <li class="page-item @(Model.CurrentPage <= 1 ? "d-none" : "")">
-                <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage - 1)"><i class="bi bi-chevron-double-left text-info page"></i></a>
+                <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage - 1,1)"><i class="bi bi-chevron-double-left text-info page"></i></a>
             </li>
             @for (int CurrentPage = 1; CurrentPage <= Model.TotalPage; CurrentPage++)
             {
                 <li class="m-2 btn @(CurrentPage == Model.CurrentPage ? "page-active" : "")" onclick="changepage(@CurrentPage,1)"><a class="text-decoration-none text-black curent-page-index" data-page="@CurrentPage">@CurrentPage</a></li>
             }
             <li class="page-item  @(Model.CurrentPage == Model.TotalPage ? "d-none" : "")">
-                <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage + 1)"><i class="bi bi-chevron-double-right text-info page"></i></a>
+                <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage + 1,1)"><i class="bi bi-chevron-double-right text-info page"></i></a>
             </li>
         </ul>
 
@@ -462,177 +459,14 @@ else
     //);
     function newReqSearch(event) {
         var x = event.code;
+        var searchword = $("#newSearch").val();
         if (x == "Enter") {
-            FilterData(1);
+            FilterData(1,searchword);
         }
 
     }
-   
-    function FilterData(tabNo,reqType) {
-
-        var searchRegion = $('#newRegionFilter').val();
-        var searchword = $('#searchword').val();
-        
-        let payload = {
-            regionId: searchRegion,
-            tabNo:tabNo,
-            searchWord:searchword,
-            requestTypeId:reqType
-        }
-        $.ajax({
-            url: '/Admin/FilterRegion',
-            type: 'GET',
-            data:payload,
-            success: function (response) {
-                $("#tab1").html(response);
-              
-                $('#newRegionFilter').val(searchRegion);
-                $('#searchword').val(searchword);
-               
-                
-            }
-        })
-    }
-   
-    //function allElements() {
-
-    //    let a = document.getElementsByClassName("Patient");
-    //    console.log(a)
-
-    //    for (let i = 0; i < a.length; i++) {
-    //        a[i].style.display = "table-row";
-    //    }
-
-    //    let b = document.getElementsByClassName("FamilyFriend");
-
-    //    for (let i = 0; i < b.length; i++) {
-    //        b[i].style.display = "table-row";
-    //    }
-
-    //    let c = document.getElementsByClassName("Concierge");
-
-    //    for (let i = 0; i < c.length; i++) {
-    //        c[i].style.display = "table-row";
-    //    }
-
-
-    //    let d = document.getElementsByClassName("Business");
-
-
-    //    for (let i = 0; i < d.length; i++) {
-    //        d[i].style.display = "table-row";
-    //    }
-    //}
-
-    //function patientElements() {
-    //    let b = document.getElementsByClassName("FamilyFriend");
-    //    let c = document.getElementsByClassName("Concierge");
-    //    let d = document.getElementsByClassName("Business");
-
-    //    for (let i = 0; i < b.length; i++) {
-    //        b[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < c.length; i++) {
-    //        c[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < d.length; i++) {
-    //        d[i].style.display = "none";
-    //    }
-
-
-    //    let a = document.getElementsByClassName("Patient");
-
-    //    for (let i = 0; i < a.length; i++) {
-    //        a[i].style.display = "table-row";
-    //    }
-
-
-    //}
-
-
-    //function familyFriendElements() {
-    //    let a = document.getElementsByClassName("Patient");
-    //    let c = document.getElementsByClassName("Concierge");
-    //    let d = document.getElementsByClassName("Business");
-
-    //    for (let i = 0; i < a.length; i++) {
-    //        a[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < c.length; i++) {
-    //        c[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < d.length; i++) {
-    //        d[i].style.display = "none";
-    //    }
-
-    //    let b = document.getElementsByClassName("FamilyFriend");
-
-    //    for (let i = 0; i < b.length; i++) {
-    //        b[i].style.display = "table-row";
-    //    }
-
-    //}
-
-
-    //function conciergeElements() {
-    //    let a = document.getElementsByClassName("Patient");
-    //    let b = document.getElementsByClassName("FamilyFriend");
-    //    let d = document.getElementsByClassName("Business");
-
-    //    for (let i = 0; i < a.length; i++) {
-    //        a[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < b.length; i++) {
-    //        b[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < d.length; i++) {
-    //        d[i].style.display = "none";
-    //    }
-
-
-    //    let c = document.getElementsByClassName("Concierge");
-
-    //    for (let i = 0; i < c.length; i++) {
-    //        c[i].style.display = "table-row";
-    //    }
-
-    //}
-
-    //function businessElements() {
-
-    //    let a = document.getElementsByClassName("Patient");
-    //    let b = document.getElementsByClassName("FamilyFriend");
-    //    let c = document.getElementsByClassName("Concierge");
-
-    //    for (let i = 0; i < a.length; i++) {
-    //        a[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < b.length; i++) {
-    //        b[i].style.display = "none";
-    //    }
-
-    //    for (let i = 0; i < c.length; i++) {
-    //        c[i].style.display = "none";
-    //    }
-
-
-
-    //    let d = document.getElementsByClassName("Business");
-
-
-    //    for (let i = 0; i < d.length; i++) {
-    //        d[i].style.display = "table-row";
-    //    }
-
-
-    //}
+  
+  
 
     //client side pagination
     //$(document).ready(function () {

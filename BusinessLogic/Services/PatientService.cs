@@ -12,6 +12,7 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BusinessLogic.Services
 {
@@ -921,16 +922,20 @@ namespace BusinessLogic.Services
         public PatientInfoModel FetchData(string email)
         {
             User? user = _db.Users.FirstOrDefault(i => i.Email == email);
-            var BirthDay = Convert.ToInt32(user.Intdate);
-            var BirthMonth = user.Strmonth;
-            var BirthYear = Convert.ToInt32(user.Intyear);
-            var userdata = new PatientInfoModel()
+           
+            var userdata = new PatientInfoModel();
+
+            userdata.firstName = user.Firstname;
+            userdata.lastName = user.Lastname;
+            userdata.email = user.Email;
+            userdata.phoneNo = user.Mobile;
+
+            
+            if (user.Intdate != null && user.Strmonth != null && user.Intyear != null)
             {
-                firstName = user.Firstname,
-                lastName = user.Lastname,
-                email = user.Email,
-                phoneNo = user.Mobile,
-            };
+
+                //userdata.dob = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate));
+            }
             return userdata;
         }
     }

@@ -395,7 +395,7 @@ namespace HalloDoc.mvc.Controllers
             model.editPro = _adminService.EditProviderProfile(phyId, tokenemail);
             model.regions = _adminService.RegionTable();
             model.physicianregiontable = _adminService.PhyRegionTable(phyId);
-            model.roles = _adminService.GetRoles();
+            model.roles = _adminService.GetPhyRoles();
             return PartialView("_PMyProfile", model);
           
         }

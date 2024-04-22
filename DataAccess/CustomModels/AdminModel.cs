@@ -75,9 +75,10 @@ namespace DataAccess.CustomModels
         public int? callType { get; set; }
         public int? phyId { get; set; }
         public bool? isFinalized { get; set; }
+        public string? reqDate { get; set; }
     }
 
-   
+
     public class DashboardModel
     {
         public List<AdminDashTableModel>? adminDashTableList { get; set; }
@@ -158,6 +159,8 @@ namespace DataAccess.CustomModels
     public class BlockCaseModel
     {
         public int? ReqId { get; set; }
+        [Required(ErrorMessage ="Reason is required")]
+        [RegularExpression(@"^\S.*$", ErrorMessage = "It cannot be null or whitespace.")]
         public string? reason { get; set; }
         public string? firstName { get; set; }
         public string lastName { get; set; }    
@@ -328,6 +331,7 @@ namespace DataAccess.CustomModels
         public int? flag { get; set; }
 
         public bool indicate { get; set; }
+        public List<AdminRegionTable> adminregions { get; set; }
     }
 
     public class SendLinkModel
@@ -508,6 +512,16 @@ namespace DataAccess.CustomModels
     public class PhysicianRegionTable
     {
         public int? PhysicianId { get; set; }
+
+        public int? Regionid { get; set; }
+
+        public string? Name { get; set; }
+
+        public bool ExistsInTable { get; set; }
+    }
+    public class AdminRegionTable
+    {
+        public int? AdminId { get; set; }
 
         public int? Regionid { get; set; }
 
@@ -786,6 +800,9 @@ ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digi
         public int roleId { get; set; }
         [Required(ErrorMessage ="Region is required")]
         public int regionId { get; set; }
+        public List<Role> roles { get; set; }
+        public List<AdminRegionTable> adminRegions { get; set; } 
+        public List<Region> regions { get; set; } 
     }
     public class RecordsModel
     {
@@ -885,6 +902,8 @@ ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digi
         public string? phone { get; set; }
         public short? status { get; set; }
         public int? openReq { get; set; }
+        public int? phyId { get; set; }
+        public int? adminId { get; set;}
     }
 
     public class BlockHistory

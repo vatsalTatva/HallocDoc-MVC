@@ -10,13 +10,13 @@
             <span style="color: darkblue;">(To Close)</span>
         </span>
         <span class="d-flex gap-1 gap-md-3">
-            <button class="action-btn">
+            <button class="action-btn" onclick="sendLink()">
                 <i class="bi bi-send"></i> <span class="d-none d-md-block">
                     Send
                     Link
                 </span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" onclick="location.href='@Url.Action("CreateRequest", "Admin")'">
                 <i class="bi bi-journal-text"></i> <span class="d-none d-md-block">Create Requests</span>
             </button>
             <button class="action-btn" id="exportToCLoseReq" onclick="ExpertDataTabWise(5)">
@@ -36,7 +36,7 @@
     <div class="row mt-3 ">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="my-search-input" placeholder="Search">
+                <input type="text" class="form-control" id="toclosesearch" onkeypress="tocloseReqSearch(event)" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
@@ -210,24 +210,24 @@
                                                 ViewCase
                                             </a>
                                         </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                ViewUploads
-                                            </a>
-                                        </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Admin" asp-action="ViewUploads" asp-route-reqId=@item.reqId>
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    View Uploads
+                                                </a>
+                                            </li>
                                         <li>
                                             <a class="dropdown-item" href="@Url.Action("ViewNote", new {ReqId = item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewNotes
                                             </a>
                                         </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                Orders
-                                            </a>
-                                        </li>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Order", new {reqId = item.reqId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    Orders
+                                                </a>
+                                            </li>
                                         <li>
                                             <a class="dropdown-item" href="@Url.Action("CloseCase", new {ReqId = item.reqId})">
                                                 <i class="bi bi-x-circle"></i>
@@ -247,10 +247,10 @@
                                             </button>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("EncounterForm",new {ReqId=@item.reqId})">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                Encounter
-                                            </a>
+                                                <a class="dropdown-item" href="@Url.Action("EncounterForm",new {ReqId=@item.reqId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    Encounter
+                                                </a>
                                         </li>
                                     </ul>
 
@@ -323,4 +323,12 @@ else
       
     //    Export(request);
     //});
+    function tocloseReqSearch(event) {
+        var x = event.code;
+        var searchword = $("#toclosesearch").val();
+        if (x == "Enter") {
+            FilterData(5, searchword);
+        }
+
+    }
 </script>

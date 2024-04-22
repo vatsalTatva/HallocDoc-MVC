@@ -10,13 +10,13 @@
             <span style="color: darkblue;">(Pending)</span>
         </span>
         <span class="d-flex gap-1 gap-md-3">
-            <button class="action-btn">
+            <button class="action-btn" onclick="sendLink()">
                 <i class="bi bi-send"></i> <span class="d-none d-md-block">
                     Send
                     Link
                 </span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" onclick="location.href='@Url.Action("CreateRequest", "Admin")'">
                 <i class="bi bi-journal-text"></i> <span class="d-none d-md-block">Create Requests</span>
             </button>
             <button class="action-btn" id="exportPendingReq" onclick="ExpertDataTabWise(2)">
@@ -36,7 +36,7 @@
     <div class="row mt-3 ">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" placeholder="Search">
+                <input type="text" class="form-control " id="pendingSearch" onkeypress="pendingReqSearch(event)" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
@@ -205,9 +205,9 @@
                                         </button>
                                         <ul class="dropdown-menu table_dropdowns">
                                             <li>
-                                                <a class="dropdown-item" href="@Url.Action("ViewCase",  new {Requestclientid = item.requestClientId , RequestTypeId = item.requestTypeId})">
+                                                <a class="dropdown-item" href="@Url.Action("ViewCase", new {Requestclientid = item.requestClientId , RequestTypeId = item.requestTypeId})">
                                                     <i class="bi bi-file-earmark-text"></i>
-                                                    View Case
+                                                    ViewCase
                                                 </a>
                                             </li>
                                             <li>
@@ -229,10 +229,10 @@
                                                 </button>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#">
+                                                <button class="dropdown-item" onclick="showCancelCase(@item.reqId)">
                                                     <i class="bi bi-x-circle"></i>
                                                     Cancel Case
-                                                </a>
+                                                </button>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item" style="cursor:pointer" onclick="showSendAgreement(@item.reqId,@item.requestTypeId)">
@@ -297,4 +297,12 @@ else
        
     //    Export(request);
     //});
+    function pendingReqSearch(event) {
+        var x = event.code;
+        var searchword = $("#pendingSearch").val();
+        if (x == "Enter") {
+            FilterData(2, searchword);
+        }
+
+    }
 </script>

@@ -85,7 +85,8 @@ namespace BusinessLogic.Interfaces
         EditProviderModel EditProviderProfile(int phyId, string tokenEmail);
         List<Region> RegionTable();
         List<PhysicianRegionTable> PhyRegionTable(int phyId);
-
+        List<AdminRegionTable> AdminRegionTable(string email);
+        List<AdminRegionTable> AdminRegionTableById(int adminid);
         List<AccountAccess> AccountAccess();
         bool DeleteRole(int roleId);
         List<AccountMenu> GetAccountMenu(int accounttype, int roleid);
@@ -97,7 +98,9 @@ namespace BusinessLogic.Interfaces
 
         bool RoleExists(string roleName, short accountType);
         List<Physicianlocation> GetPhysicianlocations();
-        List<Role> GetRoles();
+        List<Role> GetPhyRoles();
+        List<Role> GetAdminRoles();
+
         bool providerResetPass(string email, string password);
         bool editProviderForm1(int phyId,int roleId,int statusId);
         bool editProviderForm2(string fname, string lname, string email, string phone, string medical, string npi, string sync, int phyId, int[] phyRegionArray);

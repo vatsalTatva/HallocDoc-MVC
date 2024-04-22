@@ -404,7 +404,61 @@
             });
         }
 
-       
+     
+
+        function FilterData(tabNo,searchword, reqType) {
+
+            var searchRegion = $('#newRegionFilter').val();
+            
+            let payload = {
+                regionId: searchRegion,
+                tabNo: tabNo,
+                searchWord: searchword,
+                requestTypeId: reqType
+            }
+            $.ajax({
+                url: '/Admin/FilterRegion',
+                type: 'GET',
+                data: payload,
+                success: function (response) {
+                    if (tabNo == 1) {
+                        $("#tab1").html(response);
+                        $('#newSearch').val(searchword);
+                        $('#newRegionFilter').val(searchRegion);
+                    }
+                    if (tabNo == 2) {
+                        $("#tab2").html(response);
+                        $('#pendingSearch').val(searchword);
+                    }
+                    if (tabNo == 3) {
+                        $("#tab3").html(response);
+                        $('#activeSearch').val(searchword);
+
+                    }
+                    if (tabNo == 4) {
+                        $("#tab4").html(response);
+                        $('#concludeSearch').val(searchword);
+
+                    }
+                    if (tabNo == 5) {
+                        $("#tab5").html(response);
+                        $('#toclosesearch').val(searchword);
+
+                    }
+                    if (tabNo == 6) {
+                        $("#tab6").html(response);
+                        $('#unpaidSearch').val(searchword);
+
+                    }
+
+                  
+
+
+
+                }
+            })
+        }
+
 
         function showNewRequests(status) {
             $.ajax({
@@ -464,7 +518,7 @@
                 data: { reqId: reqId },
                 success: function (response) {
 
-                    $("#modelContent").html(response);
+                    $("#dashboardmodel").html(response);
                     
                     $('#cancelModal').modal('show');
                     
@@ -612,55 +666,7 @@
                 }
             });
         }
-        // function Export(reqList) 
-        // {
-        //    $.ajax({
-        //         method: "POST",
-        //         url: "/Admin/ExportReq",
-        //         data: { reqList: reqList },
-
-        //         success: function (resp) {
-
-        //             const blob = new Blob([resp], { type: 'text/csv' });
-
-        //             var url = window.URL.createObjectURL(blob);
-
-        //             var anchor = document.createElement('a');
-
-        //             anchor.style.display = 'none';
-        //             anchor.href = url;
-        //             anchor.download = 'Exported-Requests.csv';
-
-        //             document.body.appendChild(anchor);
-        //             anchor.click();
-        //             window.URL.revokeObjectURL(url);
-        //             document.body.removeChild(anchor);
-        //         },
-
-        //         error: function (xhr, status, error) {
-        //             if (xhr.status === 401) {
-
-        //                 window.location.reload();
-        //             }
-        //             console.error(error);
-        //         }
-
-        //     });
-
-        // }
-
-
-        //function ExportAll() {
-        //    $.ajax({
-        //        url: '/Admin/GetRequestsByStatus',
-        //        type: 'GET',
-        //        data: { tabNo: 0 },
-        //        success: function (response) {
-        //            console.log(response);
-        //            Export(response);
-        //        }
-        //    });
-        //}
+      
 
         function showMyProfile(){
             $.ajax({
@@ -758,22 +764,22 @@
             })
         }
 
-        function ShowScheduling() {
-            $.ajax({
-                url: '/Admin/Scheduling',
-                type: 'GET',
-                success: function (response) {
-                    $("#provider-tab-pane").html(response);
-                },
-                error: function (xhr, status, error) {
-                    if (xhr.status === 401) {
+        //function ShowScheduling() {
+        //    $.ajax({
+        //        url: '/Admin/Scheduling',
+        //        type: 'GET',
+        //        success: function (response) {
+        //            $("#provider-tab-pane").html(response);
+        //        },
+        //        error: function (xhr, status, error) {
+        //            if (xhr.status === 401) {
 
-                        window.location.reload();
-                    }
-                    console.error(error);
-                }
-            });
-        }
+        //                window.location.reload();
+        //            }
+        //            console.error(error);
+        //        }
+        //    });
+        //}
 
         function searchRecords(){
             $.ajax({
@@ -889,6 +895,147 @@
             });
         }
 
+
+
+        function allElements() {
+
+            let a = document.getElementsByClassName("Patient");
+            console.log(a)
+
+            for (let i = 0; i < a.length; i++) {
+                a[i].style.display = "table-row";
+            }
+
+            let b = document.getElementsByClassName("FamilyFriend");
+
+            for (let i = 0; i < b.length; i++) {
+                b[i].style.display = "table-row";
+            }
+
+            let c = document.getElementsByClassName("Concierge");
+
+            for (let i = 0; i < c.length; i++) {
+                c[i].style.display = "table-row";
+            }
+
+
+            let d = document.getElementsByClassName("Business");
+
+
+            for (let i = 0; i < d.length; i++) {
+                d[i].style.display = "table-row";
+            }
+        }
+
+        function patientElements() {
+            let b = document.getElementsByClassName("FamilyFriend");
+            let c = document.getElementsByClassName("Concierge");
+            let d = document.getElementsByClassName("Business");
+
+            for (let i = 0; i < b.length; i++) {
+                b[i].style.display = "none";
+            }
+
+            for (let i = 0; i < c.length; i++) {
+                c[i].style.display = "none";
+            }
+
+            for (let i = 0; i < d.length; i++) {
+                d[i].style.display = "none";
+            }
+
+
+            let a = document.getElementsByClassName("Patient");
+
+            for (let i = 0; i < a.length; i++) {
+                a[i].style.display = "table-row";
+            }
+
+
+        }
+
+
+        function familyFriendElements() {
+            let a = document.getElementsByClassName("Patient");
+            let c = document.getElementsByClassName("Concierge");
+            let d = document.getElementsByClassName("Business");
+
+            for (let i = 0; i < a.length; i++) {
+                a[i].style.display = "none";
+            }
+
+            for (let i = 0; i < c.length; i++) {
+                c[i].style.display = "none";
+            }
+
+            for (let i = 0; i < d.length; i++) {
+                d[i].style.display = "none";
+            }
+
+            let b = document.getElementsByClassName("FamilyFriend");
+
+            for (let i = 0; i < b.length; i++) {
+                b[i].style.display = "table-row";
+            }
+
+        }
+
+
+        function conciergeElements() {
+            let a = document.getElementsByClassName("Patient");
+            let b = document.getElementsByClassName("FamilyFriend");
+            let d = document.getElementsByClassName("Business");
+
+            for (let i = 0; i < a.length; i++) {
+                a[i].style.display = "none";
+            }
+
+            for (let i = 0; i < b.length; i++) {
+                b[i].style.display = "none";
+            }
+
+            for (let i = 0; i < d.length; i++) {
+                d[i].style.display = "none";
+            }
+
+
+            let c = document.getElementsByClassName("Concierge");
+
+            for (let i = 0; i < c.length; i++) {
+                c[i].style.display = "table-row";
+            }
+
+        }
+
+        function businessElements() {
+
+            let a = document.getElementsByClassName("Patient");
+            let b = document.getElementsByClassName("FamilyFriend");
+            let c = document.getElementsByClassName("Concierge");
+
+            for (let i = 0; i < a.length; i++) {
+                a[i].style.display = "none";
+            }
+
+            for (let i = 0; i < b.length; i++) {
+                b[i].style.display = "none";
+            }
+
+            for (let i = 0; i < c.length; i++) {
+                c[i].style.display = "none";
+            }
+
+
+
+            let d = document.getElementsByClassName("Business");
+
+
+            for (let i = 0; i < d.length; i++) {
+                d[i].style.display = "table-row";
+            }
+
+
+        }
     </script>
  
 

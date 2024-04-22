@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="dob" type="date" class="form-control dark-mode1" id="floatingInput" placeholder="Date Of Birth">
+                        <input asp-for="dob" type="date" class="form-control dark-mode1" max="@DateTime.Now.ToString("yyyy-MM-dd")" id="floatingInput" placeholder="Date Of Birth">
                         <label for="floatingInput">Date Of Birth</label>
                         <span asp-validation-for="dob" class="text-danger"></span>
                     </div>
@@ -90,7 +90,8 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="phoneNo" type="number" value="@Model.phoneNo" name="phone" class="form-control dark-mode1 p-3 ps-5" id="floatingInput" >
+                        <input asp-for="phoneNo" type="number" class="form-control dark-mode1 p-3 ps-5" id="phone1" >
+                        <span asp-validation-for="phoneNo" class="text-danger"></span>
 
                     </div>
                 </div>
@@ -103,27 +104,33 @@
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="street" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="Street">
+                        <input asp-for="street" type="text" class="form-control dark-mode1" id="floatingInputStreet" placeholder="Street">
                         <label for="floatingInput">Street</label>
+                        <span asp-validation-for="street" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="city" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="City">
+                        <input asp-for="city" type="text" class="form-control dark-mode1" id="floatingInputCity" placeholder="City">
                         <label for="floatingInput">City</label>
+                        <span asp-validation-for="city" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="state" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="State">
+                        <input asp-for="state" type="text" class="form-control dark-mode1" id="floatingInputState" placeholder="State">
                         <label for="floatingInput">State</label>
                         <span asp-validation-for="state" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-div form-floating mb-3">
-                        <input asp-for="zipCode" type="text" class="form-control dark-mode1" id="floatingInput" placeholder="Zip">
+                        <input asp-for="zipCode" type="text" class="form-control dark-mode1" id="floatingInputZipcode" placeholder="Zip">
                         <label for="floatingInput">Zip Code</label>
+                        <span asp-validation-for="zipCode" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="col-6">
@@ -133,7 +140,7 @@
                     </div>
                 </div>
                 <div class="form-floating mb-3 col-6 ">
-                    <button type="button" class="btn btn-outline-primary" style="height:3.3rem ; width:6rem"> <i class="bi bi-geo-alt"></i> Map</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="createReqMap()" style="height:3.3rem ; width:6rem"> <i class="bi bi-geo-alt"></i> Map</button>
                 </div>
             </div>
 
@@ -176,15 +183,24 @@
 
 
     <script>
-        const phoneInputField = document.querySelectorAll("input[type='tel']");
-        for (var i = 0; i < phoneInputField.length; i++) {
-            const phoneInput = window.intlTelInput(phoneInputField[i], {
-                utilsScript:
-                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-            });
+        const phoneInputField = document.getElementById("phone1");
+
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+
+        function createReqMap() {
+            var street = $("#floatingInputStreet").val();
+            var city = $("#floatingInputCity").val();
+            var state = $("#floatingInputState").val();
+            var zipcode = $("#floatingInputZipcode").val();
+
+            var url = "https://www.google.com/maps/search/?api=1&query=" + street + city + state + zipcode;
+
+            window.open(url, '_blank');
         }
-
-
     </script>
 </body>
 

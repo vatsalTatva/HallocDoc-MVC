@@ -79,7 +79,13 @@ namespace BusinessLogic.Services
                             regionId=rc.Regionid,
                             callType = r.Calltype,
                             phyId = r.Physicianid??null,
-                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null
+                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null,
+                            reqDate = r.Createddate.ToString("yyyy-MMM-dd"),
+                            notes = _db.Requeststatuslogs
+                                     .Where(x => x.Requestid == r.Requestid)
+                                     .OrderBy(x => x.Requeststatuslogid)
+                                     .Select(x => x.Notes)
+                                     .LastOrDefault() ?? null,
 
                         };
 
@@ -511,6 +517,7 @@ namespace BusinessLogic.Services
 
                 var req  = _db.Requests.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
                 req.Physicianid = assignCaseModel.selectPhysicianId;
+                req.Status = (int)StatusEnum.Unassigned;
                 req.Modifieddate = DateTime.Now;
                 
                 //var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
@@ -1793,10 +1800,16 @@ namespace BusinessLogic.Services
 
      
 
-        public List<Role> GetRoles()
+        public List<Role> GetPhyRoles()
         {
             BitArray deletedBit = new BitArray(new[] { false });
-            var roles = _db.Roles.Where(x=> x.Isdeleted.Equals(deletedBit)).ToList();
+            var roles = _db.Roles.Where(x=> x.Isdeleted.Equals(deletedBit) && x.Accounttype==2).ToList();
+            return roles;
+        }
+        public List<Role> GetAdminRoles()
+        {
+            BitArray deletedBit = new BitArray(new[] { false });
+            var roles = _db.Roles.Where(x=> x.Isdeleted.Equals(deletedBit) && x.Accounttype==1).ToList();
             return roles;
         }
         public List<Region> RegionTable()
@@ -1815,6 +1828,36 @@ namespace BusinessLogic.Services
                 Regionid = r1.Regionid,
                 Name = r1.Name,
                 ExistsInTable = phyRegion.Any(r2 => r2.Physicianid == phyId && r2.Regionid == r1.Regionid),
+            }).ToList();
+
+            return checkedRegion;
+        }
+        public List<AdminRegionTable> AdminRegionTable(string email)
+        {
+            int adminid = _db.Admins.Where(x => x.Email == email).Select(x => x.Adminid).First();
+            var region = _db.Regions.ToList();
+            var adminRegion = _db.Adminregions.ToList();
+
+            var checkedRegion = region.Select(r1 => new AdminRegionTable
+            {
+                Regionid = r1.Regionid,
+                Name = r1.Name,
+                ExistsInTable = adminRegion.Any(r2 => r2.Adminid == adminid && r2.Regionid == r1.Regionid),
+            }).ToList();
+
+            return checkedRegion;
+        }
+        public List<AdminRegionTable> AdminRegionTableById(int adminid)
+        {
+         
+            var region = _db.Regions.ToList();
+            var adminRegion = _db.Adminregions.ToList();
+
+            var checkedRegion = region.Select(r1 => new AdminRegionTable
+            {
+                Regionid = r1.Regionid,
+                Name = r1.Name,
+                ExistsInTable = adminRegion.Any(r2 => r2.Adminid == adminid && r2.Regionid == r1.Regionid),
             }).ToList();
 
             return checkedRegion;
@@ -2790,15 +2833,17 @@ namespace BusinessLogic.Services
             if (selectedValue == 1)
             {
                 var admin = from admins in _db.Admins
-                            join role in _db.Roles on admins.Roleid equals role.Roleid
+                            //join role in _db.Roles on admins.Roleid equals role.Roleid
                             orderby admins.Createddate
                             select new UserAccess
                             {
                                 fname = admins.Firstname,
                                 lname = admins.Lastname,
-                                accType = role.Accounttype,
+                                accType = 1,
                                 phone = admins.Mobile,
                                 status = admins.Status,
+                                openReq= _db.Requests.Where(x => x.Status != 10 ).Count(),
+                                adminId = admins.Adminid,
                             };
                 var result1 = admin.ToList();
                 return result1;
@@ -2806,15 +2851,17 @@ namespace BusinessLogic.Services
             else if (selectedValue == 2)
             {
                 var physician = from phy in _db.Physicians
-                                join role in _db.Roles on phy.Roleid equals role.Roleid
+                                    //join role in _db.Roles on phy.Roleid equals role.Roleid
                                 orderby phy.Createddate
                                 select new UserAccess
                                 {
                                     fname = phy.Firstname,
                                     lname = phy.Lastname,
-                                    accType = role.Accounttype,
+                                    accType = 2,
                                     phone = phy.Mobile,
                                     status = phy.Status,
+                                    openReq = _db.Requests.Where(x => x.Status != 10 && x.Physicianid == phy.Physicianid).Count(),
+                                    phyId=phy.Physicianid,
                                 };
                 var result2 = physician.ToList();
                 return result2;
@@ -2827,7 +2874,44 @@ namespace BusinessLogic.Services
                 return r3;
             }
         }
+        //public CreateAdminAccount adminEditPage(int adminId)
+        //{
+        //    BitArray bitArray = new BitArray(1, true);
 
+        //    var query = _db.Admins.Where(x => x.Adminid == adminId).Select(r => new CreateAdminAccount()
+        //    {
+        //        UserName = r.Aspnetuser.Username,
+        //        Email = r.Email,
+        //        ConfirmEmail = r.Email,
+        //        AdminPassword = r.Aspnetuser.Passwordhash,
+        //        adminId = adminId,
+        //        aspnetUserId = r.Aspnetuserid,
+        //        Firstname = r.Firstname,
+        //        Lastname = r.Lastname,
+        //        PhoneNumber = r.Mobile,
+
+        //        Address1 = r.Address1,
+        //        Address2 = r.Address2,
+        //        city = r.City,
+        //        Regionid = r.Regionid,
+        //        zipcode = r.Zip,
+        //        altPhone = r.Altphone,
+        //        createdBy = r.Createdby,
+        //        created_date = r.Createddate,
+        //        modifiedBy = r.Modifiedby,
+        //        modified_date = r.Modifieddate,
+        //        Status = r.Status.ToString(),
+        //        Roleid = r.Roleid,
+
+        //        roles = _context.Roles.Where(x => x.Accounttype == 1).Select(x => x).ToList(),//1 for admin
+
+
+
+        //    }).ToList().First();
+        //    query.State = _context.Regions.Where(x => x.Regionid == query.Regionid).Select(x => x.Name).FirstOrDefault();
+
+        //    return query;
+        //}
         public EmailSmsRecords2 EmailSmsLogs(int tempId, EmailSmsRecords2 recordsModel)
         {
             EmailSmsRecords2 model = new EmailSmsRecords2();
@@ -3046,12 +3130,13 @@ namespace BusinessLogic.Services
         public DayWiseScheduling GetDayTable(string PartialName, string date, int regionid, int status)
         {
             var currentDate = DateTime.Parse(date);
-            List<Physician> physician = _db.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid).Select(u => u.Physician).ToList();
+            BitArray deletedBit = new BitArray(new[] { false });
+
+            List<Physician> physician = _db.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid && u.Physician.Isdeleted.Equals(deletedBit)).Select(u => u.Physician).ToList();
             if (regionid == 0)
             {
-                physician = _db.Physicians.ToList();
+                physician = _db.Physicians.Where(x=>x.Isdeleted.Equals(deletedBit)).ToList();
             }
-            BitArray deletedBit = new BitArray(new[] { false });
             DayWiseScheduling day = new DayWiseScheduling
             {
                 date = currentDate,
@@ -3083,12 +3168,13 @@ namespace BusinessLogic.Services
         public WeekWiseScheduling GetWeekTable(string date, int regionid, int status)
         {
             var currentDate = DateTime.Parse(date);
-            List<Physician> physician = _db.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid).Select(u => u.Physician).ToList();
+            BitArray deletedBit = new BitArray(new[] { false });
+
+            List<Physician> physician = _db.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid && u.Physician.Isdeleted.Equals(deletedBit)).Select(u => u.Physician).ToList();
             if (regionid == 0)
             {
-                physician = _db.Physicians.ToList();
+                physician = _db.Physicians.Where(x => x.Isdeleted.Equals(deletedBit)).ToList();
             }
-            BitArray deletedBit = new BitArray(new[] { false });
             WeekWiseScheduling week = new WeekWiseScheduling
             {
                 date = currentDate,
@@ -3120,12 +3206,13 @@ namespace BusinessLogic.Services
         public MonthWiseScheduling GetMonthTable(string date, int regionid, int status)
         {
             var currentDate = DateTime.Parse(date);
-            List<Physician> physician = _db.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid).Select(u => u.Physician).ToList();
+            BitArray deletedBit = new BitArray(new[] { false });
+
+            List<Physician> physician = _db.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid && u.Physician.Isdeleted.Equals(deletedBit)).Select(u => u.Physician).ToList();
             if (regionid == 0)
             {
-                physician = _db.Physicians.ToList();
+                physician = _db.Physicians.Where(x => x.Isdeleted.Equals(deletedBit)).ToList();
             }
-            BitArray deletedBit = new BitArray(new[] { false });
             MonthWiseScheduling month = new MonthWiseScheduling
             {
                 date = currentDate,
@@ -3173,6 +3260,7 @@ namespace BusinessLogic.Services
                             {
                                 //TempData["error"] = "Shift is already assigned in this time";
                                 //return RedirectToAction("Scheduling");
+                                return false;
                             }
                         }
                     }
@@ -3195,11 +3283,11 @@ namespace BusinessLogic.Services
             }
             if (model.repeatcount > 0)
             {
-                shift.Isrepeat = new BitArray(new[] { true });
+                shift.Isrepeat = new BitArray(1,false);
             }
             else
             {
-                shift.Isrepeat = new BitArray(new[] { false });
+                shift.Isrepeat = new BitArray(1,false);
             }
             _db.Shifts.Add(shift);
              _db.SaveChanges();
@@ -3211,7 +3299,7 @@ namespace BusinessLogic.Services
             shiftdetail.Regionid = model.regionid;
             shiftdetail.Starttime = model.starttime;
             shiftdetail.Endtime = model.endtime;
-            shiftdetail.Isdeleted = new BitArray(new[] { false });
+            shiftdetail.Isdeleted = new BitArray(1,false);
             _db.Shiftdetails.Add(shiftdetail);
              _db.SaveChanges();
 
@@ -3345,7 +3433,7 @@ namespace BusinessLogic.Services
             if (shiftDetails != null)
 
             {
-                shiftDetails.Isdeleted = new BitArray(new[] { true });
+                shiftDetails.Isdeleted = new BitArray(1, true );
                 shiftDetails.Modifieddate = DateTime.Now;
                 shiftDetails.Modifiedby = aspNetUser.Id;
                 _db.Shiftdetails.Update(shiftDetails);

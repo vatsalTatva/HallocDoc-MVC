@@ -14,7 +14,7 @@
 
     <form method="post" id="AccountEditForm" onsubmit="SetEditAccessAccount(document.getElementById('Role').value,document.getElementById('inputroleid').value)">
 
-        <div class="m-3 p-3 border rounded shadow">
+        <div class="m-3 p-3 border rounded shadow bg-white dark-mode1">
             <h5>Details</h5>
             <div class="row mt-1">
                 <div class="form-floating mb-3 col-12 col-sm-6 ">
@@ -27,13 +27,10 @@
                 <input type="text" value="@Model.CreateAccountAccess.RoleId" id="inputroleid" asp-for="@Model.CreateAccountAccess.RoleId" hidden />
                 <div class="form-floating mb-3 col-12 col-sm-6 ">
                     <select class="form-select form-control dark-mode1   d1class" id="Role" value="this.value" asp-for="@Model.CreateAccountAccess.AccountType" onchange="FilterEditRolesMenu(this.value,document.getElementById('inputroleid').value)">
-                        <option value="" disabled selected>All</option>
-                        @foreach (var obj in Model.Aspnetroles)
-                        {
-                            <option value="@obj.Id">
-                                @obj.Name
-                            </option>
-                        }
+                        <option value="0" selected>All</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Physician</option>
+                        <option value="3">Patient</option>
                     </select>
                     <span class="text-danger" asp-validation-for="@Model.CreateAccountAccess.AccountType"></span>
 
@@ -79,7 +76,7 @@
         event.preventDefault();
         $.ajax({
             method: "GET",
-            url: "/adminDashboard/FilterEditRolesMenu",
+            url: "/Admin/FilterEditRolesMenu",
             data: { accounttypeid: accounttypeid, roleid: roleid },
             success: function (result) {
                 $("#EditRoleMenu").html(result);
@@ -94,7 +91,7 @@
         if ($("#AccountEditForm").valid()) {
             $.ajax({
                 method: "POST",
-                url: "/adminDashboard/SetEditAccessAccount",
+                url: "/Admin/SetEditAccessAccount",
                 data: $("#AccountEditForm").serialize(),
 
                 success: function (result) {

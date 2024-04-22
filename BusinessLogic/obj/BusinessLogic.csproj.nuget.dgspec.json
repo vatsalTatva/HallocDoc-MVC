@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HalloDocMVC\\HallocDoc-MVC\\BusinessLogic\\BusinessLogic.csproj": {}
+    "D:\\HalloDoc FInal\\BusinessLogic\\BusinessLogic.csproj": {}
   },
   "projects": {
-    "D:\\HalloDocMVC\\HallocDoc-MVC\\BusinessLogic\\BusinessLogic.csproj": {
+    "D:\\HalloDoc FInal\\BusinessLogic\\BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HalloDocMVC\\HallocDoc-MVC\\BusinessLogic\\BusinessLogic.csproj",
+        "projectUniqueName": "D:\\HalloDoc FInal\\BusinessLogic\\BusinessLogic.csproj",
         "projectName": "BusinessLogic",
-        "projectPath": "D:\\HalloDocMVC\\HallocDoc-MVC\\BusinessLogic\\BusinessLogic.csproj",
-        "packagesPath": "C:\\Users\\VATSAL\\.nuget\\packages\\",
-        "outputPath": "D:\\HalloDocMVC\\HallocDoc-MVC\\BusinessLogic\\obj\\",
+        "projectPath": "D:\\HalloDoc FInal\\BusinessLogic\\BusinessLogic.csproj",
+        "packagesPath": "C:\\Users\\pce159\\.nuget\\packages\\",
+        "outputPath": "D:\\HalloDoc FInal\\BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\VATSAL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pce159\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\DataAccess.csproj"
+              "D:\\HalloDoc FInal\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "D:\\HalloDoc FInal\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -69,21 +69,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\DataAccess.csproj": {
+    "D:\\HalloDoc FInal\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\HalloDoc FInal\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\VATSAL\\.nuget\\packages\\",
-        "outputPath": "D:\\HalloDocMVC\\HallocDoc-MVC\\DataAccess\\obj\\",
+        "projectPath": "D:\\HalloDoc FInal\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\pce159\\.nuget\\packages\\",
+        "outputPath": "D:\\HalloDoc FInal\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\VATSAL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pce159\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -154,7 +154,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
