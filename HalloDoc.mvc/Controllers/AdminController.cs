@@ -790,10 +790,26 @@ namespace HalloDoc.mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult ContactProviderEmail(int phyId, string msg)
+        public IActionResult ContactProviderEmail(int phyId, string msg,string type)
         {
-            var isSend = _adminService.ProviderContactEmail(phyId, msg);
-            return Json(new { isSend = isSend });
+            var email = GetTokenEmail();
+            if (type == "sms")
+            {
+                var isSmsSend = _adminService.ProviderContactSms(phyId, msg, email);
+                return Json(new { isSend = isSmsSend });
+            }
+            else if (type == "email")
+            {
+                var isSend = _adminService.ProviderContactEmail(phyId, msg,email);
+                return Json(new { isSend = isSend });
+            }
+            else
+            {
+                var isSmsSend = _adminService.ProviderContactSms(phyId, msg, email);
+                var isSend = _adminService.ProviderContactEmail(phyId, msg,email);
+                return Json(new { isSend = isSend,isSmsSend = isSmsSend });
+            }
+           
         }
 
         public IActionResult ProviderCheckbox(int phyId)
@@ -1105,12 +1121,12 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult EditUserAccessAdmin(int adminid)
         {
             CreateAdminAccount data = new();
-            //data._providerEdit = _IAdminDash.adminEditPage(adminId);
+            data = _adminService.adminEditPage(adminid);
             data.adminRegions = _adminService.AdminRegionTableById(adminid);
-            data.regions = _adminService.RegionTable();
+            data.RegionList = _adminService.RegionTable();
             data.roles = _adminService.GetAdminRoles();
 
-            return View("adminEdit", data);
+            return View("_EditUserAccessAdmin", data);
         }
         public IActionResult EditUserAccessPhysician(int phyid)
         {
@@ -1122,11 +1138,20 @@ namespace HalloDoc.mvc.Controllers
             model.roles = _adminService.GetPhyRoles();
             return PartialView("_EditUserAccessPhysician", model);
         }
+
+        [HttpPost]
+        public IActionResult EditAdminAccount(CreateAdminAccount model, List<int> AdminRegion)
+        {
+            var email = GetTokenEmail();
+            var isEdited = _adminService.EditAdminDetailsDb(model, email, AdminRegion);
+            return Json(new { isEdited });
+        }
+
         [HttpGet]
         public IActionResult EmailLogs(EmailSmsRecords2 recordsModel)
         {
             EmailSmsRecords2 _data = new EmailSmsRecords2();
-            _data = _adminService.EmailSmsLogs(0, recordsModel);
+            _data = _adminService.EmailSmsLogs((int)recordsModel.tempid, recordsModel);
             return PartialView("_EmailLogs", _data);
         }
 

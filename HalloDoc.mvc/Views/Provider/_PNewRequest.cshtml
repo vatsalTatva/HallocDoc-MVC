@@ -24,7 +24,7 @@
     <div class="row mt-3 ">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="searchword" onkeypress="newReqSearch(event)" placeholder="Search">
+                <input type="text" class="form-control" id="pnewSearch" onkeypress="pnewReqSearch(event)" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
@@ -365,38 +365,15 @@ else
     //    FilterData
 
     //);
-    function newReqSearch(event) {
+    function pnewReqSearch(event) {
         var x = event.code;
+        var searchword = $("#pnewSearch").val();
         if (x == "Enter") {
-            FilterData(1);
+            pFilterData(1,searchword);
         }
 
     }
-    function FilterData(tabNo) {
-
-        var searchRegion = $('#newRegionFilter').val();
-        var searchword = $('#searchword').val();
-        let payload = {
-            regionId: searchRegion,
-            tabNo: tabNo,
-            searchWord: searchword,
-
-        }
-        $.ajax({
-            url: '/Admin/FilterRegion',
-            type: 'GET',
-            data: payload,
-            success: function (response) {
-                $("#tab1").html(response);
-
-                $('#newRegionFilter').val(searchRegion);
-                $('#searchword').val(searchword);
-
-
-            }
-        })
-    }
-
+  
     function allElements() {
 
         let a = document.getElementsByClassName("Patient");

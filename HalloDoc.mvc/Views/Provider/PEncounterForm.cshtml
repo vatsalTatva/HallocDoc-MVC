@@ -202,8 +202,13 @@
             type: 'POST',
             data: { reqid: reqid },
             success: function (result) {
-                toastr.success("Finalized");
-                window.location.href = "/Provider/ProviderDashboard";
+                if (result.isFinalized){
+                    toastr.success("Finalized");
+                    window.location.href = "/Provider/ProviderDashboard";
+                }else{
+
+                    toastr.error("First Save the form");
+                }
 
             },
             error: function () {

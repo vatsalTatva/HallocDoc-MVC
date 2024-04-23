@@ -25,7 +25,7 @@
     <div class="row mt-3 ">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" placeholder="Search">
+                <input type="text" class="form-control " id="ppendingSearch" onkeypress="ppendingReqSearch(event)" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
@@ -226,10 +226,12 @@ else
 </div>
 
 <script>
-    $("#exportPendingReq").click(function () {
-        //alert("exportbtn was clicked.");
-        var request = @Html.Raw(Json.Serialize(Model));
+    function ppendingReqSearch(event) {
+        var x = event.code;
+        var searchword = $("#ppendingSearch").val();
+        if (x == "Enter") {
+            pFilterData(2, searchword);
+        }
 
-        Export(request);
-    });
+    }
 </script>

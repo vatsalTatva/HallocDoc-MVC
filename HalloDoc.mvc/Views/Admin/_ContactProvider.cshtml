@@ -8,8 +8,8 @@
                 <div class="modal-title text-light" id="exampleModalLongTitle">Contact Your Provider</div>
                 <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
             </div>
-            <form class="p-3" method="post" id="ContactProviderForm" >
-                <input type="hidden" asp-for="@Model.phyId" value="@Model.phyId" /> 
+            <form class="p-3" method="post" id="ContactProviderForm">
+                <input type="hidden" asp-for="@Model.phyId" value="@Model.phyId" />
                 <input type="text" hidden />
                 <div class="text-secondary">
                     Choose communication to send message
@@ -66,7 +66,7 @@
 
         console.log(checkboxes[0].id)
 
-        
+
         if (msg != "") {
             $("#msgReq").addClass('d-none');
         }
@@ -75,47 +75,65 @@
         }
 
 
-        if(msg !== ""){
-        //if ($("#ContactProviderForm").valid()) {
+        if (msg !== "") {
+            //if ($("#ContactProviderForm").valid()) {
             if (checkboxes[0].id == "SMS") {
-                toastr.error("SMS Service Is Not Available!")
-            } else if (checkboxes[0].id == "Email") {
                 $.ajax({
                     url: "/Admin/ContactProviderEmail",
-                    data: { phyId: physicianid, msg: msg },
+                    data: { phyId: physicianid, msg: msg, type: "sms" },
                     type: 'POST',
                     success: function (result) {
-                        toastr.success("Email Sent Successfully")
-                    },
-                    error: function () {
-                        alert("Error");
-                    },
-                });
-            } else if (checkboxes[0].id == "Both") {
-
-                toastr.error("SMS Service Is Not Available!")
-
-                $.ajax({
-                url: "/Admin/ContactProviderEmail",
-                    data: { phyId: physicianid, msg: msg },
-                    type: 'POST',
-                    success: function (result) {
-                        if(result.isSend){
-                            toastr.success("Email Sent Successfully");
-                            var button = document.getElementById("cancelContactProvider");
-                            button.click();
-                        }
-                        else{
-                            toastr.error("Something went wrong");
-                        }
+                        toastr.success("Sms Sent Successfully");
+                        var button = document.getElementById("cancelContactProvider");
+                        button.click();
                     },
                     error: function () {
                         alert("Error");
                     },
                 });
             }
+            else if (checkboxes[0].id == "Email") {
+                $.ajax({
+                    url: "/Admin/ContactProviderEmail",
+                    data: { phyId: physicianid, msg: msg, type: "email" },
+                    type: 'POST',
+                    success: function (result) {
+                        toastr.success("Email Sent Successfully");
+                        var button = document.getElementById("cancelContactProvider");
+                        button.click();
+                    },
+                    error: function () {
+                        alert("Error");
+                    },
+                });
+            }
+            else if (checkboxes[0].id == "Both") {
 
-        //}
+                $.ajax({
+                    url: "/Admin/ContactProviderEmail",
+                    data: { phyId: physicianid, msg: msg, type: "both" },
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.isSend) {
+                            toastr.success("Email Sent Successfully");
+
+                        }
+                        if (result.isSmsSend) {
+                            toastr.success("Sms Sent Successfully");
+                        } else {
+                            toastr.error("Something went wrong");
+                        }
+                        var button = document.getElementById("cancelContactProvider");
+                        button.click();
+                            
+                    },
+                    error: function () {
+                        alert("Error");
+                    },
+                });
+
+
+            }
         }
     }
 </script>

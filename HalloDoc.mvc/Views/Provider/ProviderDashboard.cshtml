@@ -325,7 +325,7 @@
             });
         }
 
-
+      
 
         function ProviderShowNewRequests(status) {
             $.ajax({
@@ -364,6 +364,46 @@
             });
         }
 
+        function pFilterData(tabNo, searchword) {
+
+
+            let payload = {
+
+                tabNo: tabNo,
+                searchWord: searchword,
+
+            }
+            $.ajax({
+                url: '/Provider/FilterRegion',
+                type: 'GET',
+                data: payload,
+                success: function (response) {
+                    if (tabNo == 1) {
+                        $("#tab1").html(response);
+                        $('#pnewSearch').val(searchword);
+                    }
+                    if (tabNo == 2) {
+                        $("#tab2").html(response);
+                        $('#ppendingSearch').val(searchword);
+
+
+                    }
+                    if (tabNo == 3) {
+                        $("#tab3").html(response);
+                        $('#pactiveSearch').val(searchword);
+
+
+                    }
+                    if (tabNo == 4) {
+                        $("#tab4").html(response);
+                        $('#pconcludeSearch').val(searchword);
+
+
+                    }
+
+                    }
+                });
+        }
 
 
         function pShowCancelCase(reqId) {

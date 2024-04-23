@@ -37,7 +37,7 @@
 
 <body>
     <!-- navbar -->
-    <nav class="dark-mode1 navbr navbar navbar-expand w-100 ">
+    <nav class="dark-mode2 navbr navbar navbar-expand w-100 ">
 
         <div class="container-fluid">
             <div class="d-flex align-items-center">
@@ -86,7 +86,7 @@
     </nav>
 
     <hr class="m-0 hr_line d-none d-lg-block">
-    <nav class="navbr navbar navbar-expand-lg py-0 pt-2 bg-body" style="z-index: 10;">
+    <nav class="navbr navbar navbar-expand-lg py-0 pt-2 bg-white dark-mode2" style="z-index: 10;">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="  ps-5 nav nav-underline" id="myTab" role="tablist">
@@ -198,12 +198,18 @@
                                 <li>
                                     <button class="nav-link mx-3" id="record-tab" data-bs-toggle="tab"
                                             data-bs-target="#record-tab-pane" type="button" role="tab"
-                                            aria-controls="record-tab-pane" onclick="emailLogs()" aria-selected="false">
+                                            aria-controls="record-tab-pane" onclick="emailSmsLogs(0)" aria-selected="false">
                                         Email Logs
                                     </button>
 
                                 </li>
-                                <li><a class="dropdown-item" href="#">SMS Logs</a></li>
+                                <li>
+                                    <button class="nav-link mx-3" id="record-tab" data-bs-toggle="tab"
+                                            data-bs-target="#record-tab-pane" type="button" role="tab"
+                                            aria-controls="record-tab-pane" onclick="emailSmsLogs(1)" aria-selected="false">
+                                        Sms Logs
+                                    </button>
+                                </li>
                                 <li>
                                     <button class="nav-link mx-3" id="record-tab" data-bs-toggle="tab"
                                             data-bs-target="#record-tab-pane" type="button" role="tab"
@@ -407,8 +413,25 @@
      
 
         function FilterData(tabNo,searchword, reqType) {
-
-            var searchRegion = $('#newRegionFilter').val();
+            if(tabNo==1){
+                var searchRegion = $('#newRegionFilter').val();
+            }
+            if(tabNo==2){
+                var searchRegion = $('#pendingRegionFilter').val();
+            }
+            if(tabNo==3){
+                var searchRegion = $('#activeRegionFilter').val();
+            }
+            if(tabNo==4){
+                var searchRegion = $('#concludeRegionFilter').val();
+            }
+            if(tabNo==5){
+                var searchRegion = $('#tocloseRegionFilter').val();
+            }
+            if(tabNo==6){
+                var searchRegion = $('#unpaidRegionFilter').val();
+            }
+            
             
             let payload = {
                 regionId: searchRegion,
@@ -429,25 +452,31 @@
                     if (tabNo == 2) {
                         $("#tab2").html(response);
                         $('#pendingSearch').val(searchword);
+                        $('#pendingRegionFilter').val(searchRegion);
+
                     }
                     if (tabNo == 3) {
                         $("#tab3").html(response);
                         $('#activeSearch').val(searchword);
+                        $('#activeRegionFilter').val(searchRegion);
 
                     }
                     if (tabNo == 4) {
                         $("#tab4").html(response);
                         $('#concludeSearch').val(searchword);
+                        $('#concludeRegionFilter').val(searchRegion);
 
                     }
                     if (tabNo == 5) {
                         $("#tab5").html(response);
                         $('#toclosesearch').val(searchword);
+                        $('#tocloseRegionFilter').val(searchRegion);
 
                     }
                     if (tabNo == 6) {
                         $("#tab6").html(response);
                         $('#unpaidSearch').val(searchword);
+                        $('#unpaidRegionFilter').val(searchRegion);
 
                     }
 
@@ -813,10 +842,14 @@
                 }
             })
         }
-        function emailLogs() {
+        function emailSmsLogs(tempId) {
+            var payload = {
+                tempid: tempId
+            }
             $.ajax({
                 url: '/Admin/EmailLogs',
                 type:'GET',
+                data:payload,
                 success:function(response){
                     $("#record-tab-pane").html(response);
                 },

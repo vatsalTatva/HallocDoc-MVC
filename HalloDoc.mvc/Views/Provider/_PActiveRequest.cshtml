@@ -24,7 +24,7 @@
     <div class="row mt-3 ">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="my-search-input" placeholder="Search">
+                <input type="text" class="form-control" id="pactiveSearch" onkeypress="pactiveReqSearch(event)" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
@@ -325,5 +325,14 @@ else
                 alert('Error Fetching Request')
             },
         });
+    }
+
+    function pactiveReqSearch(event) {
+        var x = event.code;
+        var searchword = $("#pactiveSearch").val();
+        if (x == "Enter") {
+            pFilterData(3, searchword);
+        }
+
     }
 </script>

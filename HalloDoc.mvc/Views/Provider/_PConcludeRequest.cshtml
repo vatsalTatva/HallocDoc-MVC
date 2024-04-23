@@ -35,7 +35,7 @@
     <div class="row mt-3 ">
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="my-search-input" placeholder="Search">
+                <input type="text" class="form-control" id="pconcludeSearch" onkeypress="pconcludeReqSearch(event)" placeholder="Search">
                 <label for="floatingInput"><i class="bi bi-search"></i> Search</label>
             </div>
         </div>
@@ -272,13 +272,7 @@ else
     }
 </script>
 <script>
-    $("#exportConcludeReq").click(function () {
-        //alert("exportbtn was clicked.");
-        var request = @Html.Raw(Json.Serialize(Model));
-
-        Export(request);
-    });
-
+ 
     function activeEncounter(reqid) {
         console.log(reqid)
         $.ajax({
@@ -315,11 +309,20 @@ else
         $.ajax({
             url: '/Provider/Cancludecare',
             type: 'GET',
-            Data: { reqId: reqId }
-                success: function (response) {
+            data: { reqId: reqId },
+            success: function (response) {
                 $("#displayModalse").html(response);
             }
         });
     }
 
+
+    function pconcludeReqSearch(event) {
+        var x = event.code;
+        var searchword = $("#pconcludeSearch").val();
+        if (x == "Enter") {
+            pFilterData(4, searchword);
+        }
+
+    }
 </script>

@@ -32,7 +32,7 @@
                     </select>
                     <label class="text-muted ms-2">Search By Role</label>
                 </div>
-
+                <input asp-for="tempid" hidden/>
                 @*TWO*@
                 <div class="form-floating mb-3 col-sm-6 col-md-2 col-lg-2 col-xl-2">
                     <input class="form-control" type="search" placeholder=" " aria-label="Search" id="patient_name" asp-for="searchRecordTwo">
@@ -58,7 +58,7 @@
                     <label for="datePickerId" class="ms-2 text-muted">To Date of Service</label>
                 </div>
                 <div class="form-floating mb-3  col-sm-6 col-md-2 col-lg-2 col-xl-2">
-                    <button id="resetButton" type="button" onclick="emailLogs()" class="btn btn-outline-info rounded-2 me-2" style="height: 55px;width: 80px;">
+                    <button id="resetButton" type="button" onclick="emailSmsLogs(@Model.tempid)" class="btn btn-outline-info rounded-2 me-2" style="height: 55px;width: 80px;">
                         Clear
                     </button>
                     <button id="search_button" type="button" onclick="smsLogSearchBtnOne()" class="btn btn-info text-white rounded-2 ms-2" style="height: 55px;width: 80px;">Search</button>
@@ -281,7 +281,7 @@
 
     function smsLogSearchBtnOne() {
         var arrayMain = $("#smsLogForm").serializeArray();
-        console.log(arrayMain);
+       
 
         event.preventDefault();
 

@@ -76,6 +76,7 @@ namespace DataAccess.CustomModels
         public int? phyId { get; set; }
         public bool? isFinalized { get; set; }
         public string? reqDate { get; set; }
+        public string? email { get; set; }
     }
 
 
@@ -755,7 +756,8 @@ ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digi
     ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digit, and one special character.)")]
         public string? AdminPassword { get; set; }
 
-
+        public string? aspnetUserId { get; set; }
+        public int? adminId { get; set; }
         public short? Status { get; set; }
         public string? Role { get; set; }
 
@@ -802,7 +804,6 @@ ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digi
         public int regionId { get; set; }
         public List<Role> roles { get; set; }
         public List<AdminRegionTable> adminRegions { get; set; } 
-        public List<Region> regions { get; set; } 
     }
     public class RecordsModel
     {

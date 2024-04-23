@@ -110,8 +110,28 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult FilterRegion(FilterModel filterModel)
         {
-            var list = _adminService.GetRequestByRegion(filterModel);
-            return PartialView("_PNewRequest", list);
+            var aspid = GetLoginId();
+            var phyid = _providerService.GetPhysicianId(aspid);
+            var list = _providerService.GetRequestByRegion(filterModel,phyid);
+            int tabNo = filterModel.tabNo;
+            if (tabNo == 1)
+            {
+                return PartialView("_PNewRequest", list);
+
+            }
+            else if (tabNo == 2)
+            {
+                return PartialView("_PPendingRequest", list);
+            }
+            else if (tabNo == 3)
+            {
+                return PartialView("_PActiveRequest", list);
+            }
+            else if (tabNo == 4)
+            {
+                return PartialView("_PConcludeRequest", list);
+            }
+            return View();
         }
 
        
@@ -462,9 +482,8 @@ namespace HalloDoc.mvc.Controllers
       
         public IActionResult Finalizesubmit(int reqid)
         {
-            _providerService.finalizesubmit(reqid);
-            _notyf.Success("Finalized");
-            return Ok();
+            bool isFinalized = _providerService.finalizesubmit(reqid);
+            return Json(new { isFinalized });
         }
         public IActionResult DownloadEncounterPopUp(int reqId)
         {

@@ -166,7 +166,15 @@ namespace BusinessLogic.Services
                             reqId = r.Requestid,
                             regionId = rc.Regionid,
                             callType = r.Calltype,
-                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null
+                            phyId = r.Physicianid ?? null,
+                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null,
+                            reqDate = r.Createddate.ToString("yyyy-MMM-dd"),
+                            notes = _db.Requeststatuslogs
+                                     .Where(x => x.Requestid == r.Requestid)
+                                     .OrderBy(x => x.Requeststatuslogid)
+                                     .Select(x => x.Notes)
+                                     .LastOrDefault() ?? null,
+                            email = rc.Email ?? null,
                         };
 
 
@@ -229,7 +237,90 @@ namespace BusinessLogic.Services
 
 
         }
+        public DashboardModel GetRequestByRegion(FilterModel filterModel, int phyid)
+        {
 
+            var query = from r in _db.Requests
+                        join rc in _db.Requestclients on r.Requestid equals rc.Requestid
+                        where r.Physicianid == phyid
+                        select new AdminDashTableModel
+                        {
+                            firstName = rc.Firstname,
+                            lastName = rc.Lastname,
+                            intDate = rc.Intdate,
+                            intYear = rc.Intyear,
+                            strMonth = rc.Strmonth,
+                            requestorFname = r.Firstname,
+                            requestorLname = r.Lastname,
+                            createdDate = r.Createddate,
+                            mobileNo = rc.Phonenumber,
+                            city = rc.City,
+                            state = rc.State,
+                            street = rc.Street,
+                            zipCode = rc.Zipcode,
+                            requestTypeId = r.Requesttypeid,
+                            status = r.Status,
+                            requestClientId = rc.Requestclientid,
+                            reqId = r.Requestid,
+                            regionId = rc.Regionid,
+                            callType = r.Calltype,
+                            phyId = r.Physicianid ?? null,
+                            isFinalized = _db.Encounterforms.Where(x => x.Requestid == r.Requestid).Select(x => x.Isfinalized).First() ?? null,
+                            reqDate = r.Createddate.ToString("yyyy-MMM-dd"),
+                            notes = _db.Requeststatuslogs
+                                     .Where(x => x.Requestid == r.Requestid)
+                                     .OrderBy(x => x.Requeststatuslogid)
+                                     .Select(x => x.Notes)
+                                     .LastOrDefault() ?? null,
+                            email = rc.Email ?? null,
+
+                        };
+
+
+            if (filterModel.tabNo == 1)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Unassigned);
+            }
+
+            else if (filterModel.tabNo == 2)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Accepted);
+            }
+            else if (filterModel.tabNo == 3)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.MDEnRoute || x.status == (int)StatusEnum.MDOnSite);
+            }
+            else if (filterModel.tabNo == 4)
+            {
+
+                query = query.Where(x => x.status == (int)StatusEnum.Conclude);
+            }
+          
+
+            if (filterModel.searchWord != null)
+            {
+                query = query.Where(x => x.firstName.Trim().ToLower().Contains(filterModel.searchWord.Trim().ToLower()));
+            }
+            if (filterModel.requestTypeId != null)
+            {
+                query = query.Where(x => x.requestTypeId == filterModel.requestTypeId);
+            }
+
+            var result = query.ToList();
+            int count = result.Count();
+            int TotalPage = (int)Math.Ceiling(count / (double)5);
+            result = result.Skip((filterModel.CurrentPage - 1) * 5).Take(5).ToList();
+
+            DashboardModel dashboardModel = new DashboardModel();
+            dashboardModel.adminDashTableList = result;
+            dashboardModel.regionList = _db.Regions.ToList();
+            dashboardModel.TotalPage = TotalPage;
+            dashboardModel.CurrentPage = filterModel.CurrentPage;
+            return dashboardModel;
+        }
         public void housecall(int requestId)
         {
             Request? req = _db.Requests.FirstOrDefault(x => x.Requestid == requestId);
@@ -242,7 +333,12 @@ namespace BusinessLogic.Services
         {
             try
             {
+                
                 var enc = _db.Encounterforms.FirstOrDefault(x => x.Requestid == reqid);
+                if (enc == null)
+                {
+                    return false;
+                }
                 enc.Isfinalized = true;
                 _db.Encounterforms.Update(enc);
                 _db.SaveChanges();

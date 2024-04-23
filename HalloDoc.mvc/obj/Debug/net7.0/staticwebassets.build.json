@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dP+j40kWAcPFBfXiaVfnjR4yZNr/BR+pd7dRWlg+vlM=",
+  "Hash": "Rg577R8MFqJReIEV9xELyNkbQWsK84g4qvJ3d3rSBrM=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -1734,6 +1734,40 @@
       "OriginalItemSpec": "wwwroot\\PhysicianImages\\11\\images-modified2.jfif"
     },
     {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\4\\bg-image.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianImages/4/bg-image.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianImages\\4\\bg-image.png"
+    },
+    {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\4\\profile.jpg",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianImages/4/profile.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianImages\\4\\profile.jpg"
+    },
+    {
       "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\44\\banner.jpg",
       "SourceId": "HalloDoc.mvc",
       "SourceType": "Discovered",
@@ -1768,6 +1802,23 @@
       "OriginalItemSpec": "wwwroot\\PhysicianImages\\44\\doc-portrait.jpg"
     },
     {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\5\\doc-portrait.jpg",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianImages/5/doc-portrait.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianImages\\5\\doc-portrait.jpg"
+    },
+    {
       "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\dark.png",
       "SourceId": "HalloDoc.mvc",
       "SourceType": "Discovered",
@@ -1800,6 +1851,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PhysicianSign\\10\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\4\\sign2.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianSign/4/sign2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianSign\\4\\sign2.png"
     },
     {
       "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\Rotativa\\wkhtmltoimage.exe",

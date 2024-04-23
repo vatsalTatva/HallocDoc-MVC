@@ -33,12 +33,28 @@
       "PackagePath": "staticwebassets\\PhysicianImages\\44\\doc-portrait.jpg"
     },
     {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\4\\bg-image.png",
+      "PackagePath": "staticwebassets\\PhysicianImages\\4\\bg-image.png"
+    },
+    {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\4\\profile.jpg",
+      "PackagePath": "staticwebassets\\PhysicianImages\\4\\profile.jpg"
+    },
+    {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\5\\doc-portrait.jpg",
+      "PackagePath": "staticwebassets\\PhysicianImages\\5\\doc-portrait.jpg"
+    },
+    {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\dark.png",
       "PackagePath": "staticwebassets\\PhysicianSign\\10\\dark.png"
     },
     {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\favicon.ico",
       "PackagePath": "staticwebassets\\PhysicianSign\\10\\favicon.ico"
+    },
+    {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\4\\sign2.png",
+      "PackagePath": "staticwebassets\\PhysicianSign\\4\\sign2.png"
     },
     {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\Rotativa\\wkhtmltoimage.exe",
