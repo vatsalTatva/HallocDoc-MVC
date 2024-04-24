@@ -62,7 +62,7 @@
                                 if (date == DateOnly.FromDateTime(previousSunday.AddDays(i)))
                                 {
                                 <div id="i_@obj.Physicianid" class="m-1">
-                                        <button class="dates d-flex border-0 viewshiftbtn w-100  small" value="@item.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal" 
+                                        <button class="dates d-flex border-0 viewshiftbtn w-100  small" value="@item.Shiftdetailid" data-bs-toggle="modal" data-bs-target="#viewShiftModal" onclick="viewshift(@item.Shiftdetailid)"
                                         @if (item.Status == 2)
                                         {
                                             @:style="background-color:rgb(197 255 194); color: rgb(26, 62, 24); font-weight:600"
@@ -94,6 +94,7 @@
     </table>
 
 </div>
+<div id="viewshift"></div>
 
 
 <script>

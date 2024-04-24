@@ -137,7 +137,7 @@
                                                     {
                                                         <tr>
                                                             <td class="d-flex justify-content-center" style="width:inherit">
-                                                                <button class="dates d-flex align-items-center justify-content-center border-0 viewshiftbtn small " value="@item.Shiftdetailid"
+                                                                <button class="dates d-flex align-items-center justify-content-center border-0 viewshiftbtn small " onclick="viewshift(@item.Shiftdetailid)" value="@item.Shiftdetailid" onclick="viewshift(@item.Shiftdetailid)"
                                                                         data-bs-toggle="modal" data-bs-target="#viewShiftModal"
                                                                 @if (item.Status == 2)
                                                                 {
@@ -211,6 +211,7 @@
         </div>
     }
 </div>
+<div id="viewshift"></div>
 
 
 <script>

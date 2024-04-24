@@ -1,0 +1,209 @@
+﻿@using DataAccess.CustomModels;
+@model LibraryModel2;
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+
+<style>
+    .color_primary{
+        background-color: #326c9b;
+    }
+   
+    #search{
+        width:25rem;
+    }
+   /* #addBook{
+        height:3rem;
+        width:5rem;
+    }*/
+</style>
+@*<div id="response"></div>
+*@<div class="container-fluid m-0 p-0">
+    <div class="color_primary text-white p-3">
+        <h1>Library Management System</h1>
+    </div>
+    <div class="mx-5 my-3 d-flex justify-content-between">
+        <div class="form-floating h-25 d-flex">
+            <input type="search" class="form-control" id="search"  placeholder="Search">
+            <label for="searching" class="ms-2 text-muted">Search</label>
+        </div>
+        <button class="btn  px-3 color_primary" type="button" id="addBook" onclick="openAddBook()">Add Book</button>
+
+    </div>
+
+    <div class="mx-5">
+        <table class="table table-hover" id="libraryTable">
+            <thead class="table-active">
+                <tr>
+                    <th scope="col" class="text-center">Book ID</th>
+                    <th scope="col" class="text-center">Book Name</th>
+                    <th scope="col" class="text-center">Author</th>
+                    <th scope="col" class="text-center">Borrower Name</th>
+                    <th scope="col" class="text-center">Date Of Issue</th>
+                    <th scope="col" class="text-center">City</th>
+                    <th scope="col" class="text-center">Genere</th>
+                    <th scope="col" class="text-center">Action</th>
+                   
+                 
+                </tr>
+            </thead>
+            @{
+                var count = 1;
+            }
+            <tbody>
+              
+                @if(Model.LibraryList!=null && Model.LibraryList.Count > 0)
+                {
+                   
+                    @foreach(var items in Model.LibraryList)
+                    {
+                        <tr>
+                            <td class="text-center">@count</td>
+                            <td class="text-center">@items.BookName</td>
+                            <td class="text-center">@items.Author</td>
+                            <td class="text-center">@items.BorrowerName</td>
+                            <td class="text-center">@items.DateOfIssue</td>
+                            <td class="text-center">@items.City</td>
+                            <td class="text-center">@items.Genere</td>
+                            <td class="text-center">
+                                <button class="btn  px-3 text-white color_primary" type="button" onclick="editBook(@items.BookId)" id="edit">Edit</button>
+                                <button class="btn ms-1 px-3 text-white bg-dark" type="button" onclick="deleteBook(@items.BookId)" id="delete">Delete</button>
+                            </td>
+
+                        </tr>
+                        count++;
+                    }
+                    
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" style="text-align: center;">No records found.</td>
+                    </tr>
+                }
+             
+                    
+
+              
+            </tbody>
+
+        </table>
+    </div>
+    <div id="displayModal"></div>
+</div>
+@*@if (model.totalpage > 1)
+{
+    <div class="page-container">
+        <ul class="pagination justify-content-center d-flex page-list">
+            <li class="page-item @(model.currentpage <= 1 ? "d-none" : "")">
+                <a class="page-link border-0 m-2" onclick="changepage(@model.currentpage - 1)"><i class="bi bi-chevron-double-left text-info page"></i></a>
+            </li>
+            @for (int currentpage = 1; currentpage <= model.totalpage; currentpage++)
+            {
+                <li class="m-2 btn @(currentpage == model.currentpage ? "page-active" : "")" onclick="changepage(@currentpage)"><a class="text-decoration-none text-black curent-page-index" data-page="@currentpage">@currentpage</a></li>
+            }
+            <li class="page-item  @(model.currentpage == model.totalpage ? "d-none" : "")">
+                <a class="page-link border-0 m-2" onclick="changepage(@model.currentpage + 1)"><i class="bi bi-chevron-double-right text-info page"></i></a>
+            </li>
+        </ul>
+
+    </div>
+}
+else if (model.totalpage == 1)
+{
+}*@
+@*else
+{
+    <div class="text-center text-danger fw-bold h5">no record found</div>
+}
+*@
+
+<script>
+    //function changepage(CurrentPage) {
+
+    //    console.log("pagination");
+
+    //    $.ajax({
+    //        url: '/Home/Library',
+    //        type: "GET",
+    //        data: { CurrentPage: CurrentPage },
+
+    //        success: function (response) {
+    //           console.log(response);
+    //           $("#response").html(response);
+    //        },
+    //        error: function (xhr, status, error) {
+    //            if (xhr.status === 401) {
+
+    //                window.location.reload();
+    //            }
+    //            console.error(error);
+    //        }
+    //    });
+    //}
+
+  
+    function openAddBook(){
+        $.ajax({
+            url:"/Home/AddBook",
+            type:"GET",
+            success:function(response){
+                console.log(response);
+                $('#displayModal').html(response);
+                $('#bookFormModal').modal('show');
+            },
+            error:function(e){
+                console.log(e);
+            }
+        })
+    }
+
+    function editBook(BookId) {
+        $.ajax({
+            url: "/Home/EditBook",
+            type: "GET",
+            data: { bookId: BookId },
+            success: function (response) {
+                console.log(response);
+                $('#displayModal').html(response);
+                $('#editbookFormModal').modal('show');
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+    
+    function deleteBook(BookId) {
+        $.ajax({
+            url: "/Home/DeleteBook",
+            type: "GET",
+            data: { bookId: BookId },
+            success: function (response) {
+                console.log(response);
+                if(response.isDeleted){
+                    window.location.href = "/Home/Library";
+                    toastr.success("Deleted");
+                }else{
+                    window.location.href = "/Home/Library";
+                    toastr.error("Something went wrong");
+                }
+               
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+
+    //function searchword(event) {
+    //    var x = event.code;
+    //    var searchword = $("#search").val();
+    //    if (x == "Enter") {
+    //        $.ajax({
+    //            url:"Home/Library",
+    //            data:{search}
+    //        })
+    //    }
+
+    //}
+</script>

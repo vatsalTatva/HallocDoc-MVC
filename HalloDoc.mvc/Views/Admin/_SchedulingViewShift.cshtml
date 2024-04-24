@@ -1,7 +1,7 @@
 ﻿@using DataAccess.CustomModels;
 @model CreateNewShift;
 
-<div class="modal fade" id="ViewShiftModel" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade " id="ViewShiftModel" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border border-0 rounded-3">
             <form id="editViewShiftForm">
@@ -9,7 +9,7 @@
                     <h5 class="modal-title" id="staticBackdropLabel">View Shift</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body  dark-mode1">
                     <div class="d-flex flex-row">
                         <p class="text-secondary mr-1">To assign this request, search and select another physician.</p>
                     </div>
@@ -17,34 +17,34 @@
                     <input asp-for="shiftdetailid" hidden />
                     <div class=" gap-2">
                         <div class="form-floating mb-3">
-                            <select asp-for="RegionId" disabled class="form-select text-secondary regionData d4class" id="floatingSelect" aria-label="Floating label select example">
+                            <select asp-for="RegionId" disabled class="form-select  dark-mode1 text-secondary regionData d4class" id="floatingSelect" aria-label="Floating label select example">
                                 <option value="@Model.RegionId" selected>@Model.RegionName</option>
                             </select>
                             <label for="floatingSelect">Narrow Search By Region</label>
 
                         </div>
                         <div class="form-floating mb-3">
-                            <select asp-for="PhysicianName" disabled class="form-select d4class text-secondary physician py-1" id="physelect" aria-label="Floating label select example">
+                            <select asp-for="PhysicianName" disabled class="form-select  dark-mode1 d4class text-secondary physician py-1" id="physelect" aria-label="Floating label select example">
                                 <option value="@Model.PhysicianId" selected>@Model.PhysicianName</option>
                             </select>
                             <label for="physelect"></label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="date" asp-for="ShiftDate" class="form-control d4class" id="floatingInput" placeholder="shift date" disabled />
+                            <input type="date" asp-for="ShiftDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control  dark-mode1 d4class" id="floatingInput" placeholder="shift date" disabled />
                             <label for="floatingInput" class=""></label>
                             <span asp-validation-for="ShiftDate" class="text-danger"></span>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class=" form-floating mb-3">
-                                    <input asp-for="Start" type="time" class="form-control d4class" id="floatingInput" placeholder="start" disabled />
+                                    <input asp-for="Start" type="time" class="form-control  dark-mode1 d4class" id="floatingInput" placeholder="start" disabled />
                                     <label for="floatingInput" class="">Start</label>
                                     <span asp-validation-for="Start" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="End" type="time" class="form-control d4class" id="floatingInput" placeholder="end" disabled />
+                                    <input asp-for="End" type="time" class="form-control  dark-mode1 d4class" id="floatingInput" placeholder="end" disabled />
                                     <label for="floatingInput" class="">End</label>
                                     <span asp-validation-for="End" class="text-danger"></span>
                                 </div>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer  dark-mode1">
                     <button type="button" class="btn bg-info text-white assign" onclick="returnShift()">Return</button>
                     <button type="button" class="btn bg-info text-white assign d-none" onclick="editShift()" id="saveViewShift">save</button>
                     <button type="button" onclick="enableFieldsViewShift()" class="btn border border-info text-info" id="editViewShift">Edit</button>

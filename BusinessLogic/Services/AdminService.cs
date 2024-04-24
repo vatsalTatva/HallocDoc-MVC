@@ -3380,21 +3380,21 @@ namespace BusinessLogic.Services
             };
             if (regionid != 0 && status != 0)
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && (m.Status == status && m.Isdeleted.Equals(deletedBit))).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift.Physician).Where(m => m.Regionid == regionid && (m.Status == status && m.Isdeleted.Equals(deletedBit))).ToList();
             }
             else if (regionid != 0)
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Regionid == regionid && m.Isdeleted.Equals(deletedBit)).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift.Physician).Where(m => m.Regionid == regionid && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else if (status != 0)
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(m => m.Status == status && m.Isdeleted.Equals(deletedBit)).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift.Physician).Where(m => m.Status == status && m.Isdeleted.Equals(deletedBit)).ToList();
 
             }
             else
             {
-                month.shiftdetails = _db.Shiftdetails.Include(u => u.Shift).Where(x => x.Isdeleted.Equals(deletedBit)).ToList();
+                month.shiftdetails = _db.Shiftdetails.Include(u =>  u.Shift.Physician).Where(x => x.Isdeleted.Equals(deletedBit)).ToList();
             }
             return month;
         }
@@ -3609,11 +3609,12 @@ namespace BusinessLogic.Services
         {
             var currentTime = new TimeOnly(DateTime.Now.Hour, DateTime.Now.Minute);
             BitArray deletedBit = new BitArray(new[] { false });
+            DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
             var onDutyQuery = _db.Shiftdetails
                 .Include(sd => sd.Shift.Physician)
                 .Where(sd => (regionId == 0 || sd.Shift.Physician.Physicianregions.Any(pr => pr.Regionid == regionId)) &&
-                             //sd.Shiftdate.Date == DateTime.Today &&
+                             sd.Shiftdate == today &&
                              currentTime >= sd.Starttime &&
                              currentTime <= sd.Endtime &&
                              sd.Isdeleted.Equals(deletedBit))
@@ -3627,10 +3628,12 @@ namespace BusinessLogic.Services
                 .Where(p => (regionId == 0 || p.Physicianregions.Any(pr => pr.Regionid == regionId))
                     && !_db.Shiftdetails.Any(sd =>
                     sd.Shift.Physicianid == p.Physicianid &&
-                    //sd.Shiftdate.Date == DateTime.Today &&
+                    sd.Shiftdate == today &&
                     currentTime >= sd.Starttime &&
                     currentTime <= sd.Endtime &&
-                    sd.Isdeleted.Equals(deletedBit)) && p.Isdeleted == null).ToList();
+                    sd.Isdeleted.Equals(deletedBit)) && p.Isdeleted.Equals(deletedBit)).ToList();
+
+
             var onCallModal = new OnCallModal
             {
                 OnCall = onDutyQuery,
@@ -3639,6 +3642,7 @@ namespace BusinessLogic.Services
             };
 
             return onCallModal;
+
         }
 
         public List<ShiftReview> GetShiftReview(int regionId, int callId)

@@ -1,0 +1,86 @@
+﻿@using DataAccess.CustomModels;
+@model BookFormModel;
+
+
+<div class="modal fade" id="editbookFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="post" asp-action="EditBook" asp-controller="Home" class="modal-content">
+            <div class="modal-header" style="background-color:#326c9b">
+                <h5 class="modal-title text-light" id="exampleModalLabel">Book Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input asp-for="BookId" hidden />
+                <div class="row">
+                    <div class="col-6 p-2">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="bookName" placeholder="Book Name" asp-for="BookName">
+                            <label for="bookName" class="ms-2 text-muted">Book Name</label>
+                            <span asp-validation-for="BookName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6 p-2">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="author" placeholder="Author" asp-for="Author">
+                            <label for="author" class="ms-2 text-muted">Author</label>
+                            <span asp-validation-for="Author" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-6 p-2">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="borrowName" placeholder="Borrower Name" asp-for="BorrowerName">
+                            <label for="borrowName" class="ms-2 text-muted">Borrower Name</label>
+                            <span asp-validation-for="BorrowerName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6 p-2">
+                        <div class="form-floating mb-3">
+                            <input type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" id="dateOfIssue" placeholder="Date Of Issue" asp-for="DateOfIssue">
+                            <label for="dateOfIssue" class="ms-2 text-muted">Date Of Issue</label>
+                            <span asp-validation-for="DateOfIssue" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-6 p-2">
+                        <select class="form-select text-secondary h-75" id="genere" asp-for="Genere" aria-label="Default select example">
+                            <option disabled selected>Genere</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="History Fiction">History Fiction</option>
+                        </select>
+                        <span asp-validation-for="Genere" class="text-danger"></span>
+                    </div>
+                    <div class="col-6 p-2">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="dateOfIssue" placeholder="city" asp-for="City">
+                            <label for="city" class="ms-2 text-muted">City</label>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <button type="button" class="btn btn-light w-50 shadow px-2" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn text-light w-50 shadow px-2" style="background-color:#326c9b">Edit</button>
+
+                </div>
+
+
+            </div>
+
+        </form>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />

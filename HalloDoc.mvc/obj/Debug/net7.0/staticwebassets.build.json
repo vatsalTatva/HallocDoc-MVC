@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Rg577R8MFqJReIEV9xELyNkbQWsK84g4qvJ3d3rSBrM=",
+  "Hash": "NN5vnYxz86Py05FP0wxb5yQx0GM5SSVJscxFZ4E6InY=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -1817,6 +1817,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PhysicianImages\\5\\doc-portrait.jpg"
+    },
+    {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\8\\dark.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianImages/8/dark.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianImages\\8\\dark.png"
+    },
+    {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\9\\banner.jpg",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianImages/9/banner.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianImages\\9\\banner.jpg"
     },
     {
       "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\dark.png",

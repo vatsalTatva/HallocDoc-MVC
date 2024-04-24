@@ -114,7 +114,7 @@
             <form  id="addNewShiftForm">
                 <div class="modal-body dark-mode1">
                     <div class="form-floating">
-                        <select asp-for="regionid" class="form-select physiciandata" id="addShiftRegion" aria-label="Floating label select example">
+                        <select asp-for="regionid" class="form-select dark-mode1 physiciandata" id="addShiftRegion" aria-label="Floating label select example">
                             <option value="" selected>Select Region</option>
                             @if (Model.regions != null)
                             {
@@ -129,28 +129,28 @@
                         </label>
                         <span class="small text-danger" asp-validation-for="regionid"></span>
                     </div>
-                    <select asp-for="providerid" class="form-select mt-4" id="physicianAddShift" aria-label="Floating label select example" style="height:58px">
+                    <select asp-for="providerid" class="form-select  dark-mode1 mt-4" id="physicianAddShift" aria-label="Floating label select example" style="height:58px">
                         <option value="" selected>Select Physician</option>
                     </select>
                     <span class="small text-danger" asp-validation-for="providerid"></span>
                     <div class="form-floating mt-3">
                         <input asp-for="shiftdate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" placeholder="Date">
                         <label for="floatingInput">Shift Date</label>
-                        <span class="small text-danger" asp-validation-for="shiftdate"></span>
+                        <span class="text-danger" asp-validation-for="shiftdate"></span>
                     </div>
                     <div class="row row-cols-md-2 row-cols-sm-1 row-cols-1 mt-3">
                         <div class="col mb-3 mb-md-0">
                             <div class="form-floating">
-                                <input asp-for="starttime" id="startTimeAddShiftModel" type="time" class="form-control" placeholder="Date" />
-                                <label for="floatingInput">Start</label>
-                                <span class="small text-danger" asp-validation-for="starttime"></span>
+                                <input asp-for="starttime"  type="time" class="form-control  dark-mode1" placeholder="Date" />
+                                <label for="">Start</label>
+                                <span asp-validation-for="starttime" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-floating">
-                                <input asp-for="endtime" id="endTimeAddShiftModel" type="time" class="form-control" placeholder="Date" />
-                                <label for="floatingInput">End</label>
-                                <span class="small text-danger" asp-validation-for="endtime"></span>
+                                <input asp-for="endtime"  type="time" class="form-control  dark-mode1" placeholder="Date" />
+                                <label for="">End</label>
+                                <span asp-validation-for="endtime" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                         <span><input type="checkbox" value="6" class="me-1 disable" name="repeatdays" disabled /> Every Saturday</span>
                     </div>
                     <div class="form-floating mt-3">
-                        <select asp-for="repeatcount" class="form-select disable" id="floatingSelect" aria-label="Floating label select example" disabled>
+                        <select asp-for="repeatcount" class="form-select  dark-mode1 disable" id="floatingSelect" aria-label="Floating label select example" disabled>
                             <option value="1" selected>1-times</option>
                             <option value="2" selected>2-times</option>
                             <option value="3" selected>3-times</option>
@@ -181,7 +181,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer  dark-mode1">
                     <button type="button" onclick="addNewShift()" class="btn btn-info text-white">Save</button>
                     <button type="button" id="addnewshiftCancelBtn" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
                 </div>
@@ -189,32 +189,10 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@if (TempData["shiftalreadyassigned"] != null)
-{
-    <script>
-        console.log("kdshgduhsghjfddsfdsfdsfdsf")
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Already assigned shift in selected time period",
-        });
-    </script>
-}
-@if (TempData["ShiftCreated"] != null)
-{
-    <script>
-        console.log("added")
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Shift Created Successfully",
-            showConfirmButton: false,
-            timer: 1700
-        });
-    </script>
-}
 <partial name="_ValidationScriptsPartial" />
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 <script>

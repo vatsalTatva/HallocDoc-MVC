@@ -45,6 +45,14 @@
       "PackagePath": "staticwebassets\\PhysicianImages\\5\\doc-portrait.jpg"
     },
     {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\8\\dark.png",
+      "PackagePath": "staticwebassets\\PhysicianImages\\8\\dark.png"
+    },
+    {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\9\\banner.jpg",
+      "PackagePath": "staticwebassets\\PhysicianImages\\9\\banner.jpg"
+    },
+    {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianSign\\10\\dark.png",
       "PackagePath": "staticwebassets\\PhysicianSign\\10\\dark.png"
     },

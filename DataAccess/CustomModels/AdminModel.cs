@@ -959,20 +959,35 @@ ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digi
         public DateTime? searchRecordFour { get; set; }
         public DateTime? searchRecordFive { get; set; }
     }
+    //public class TimeValidationAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        var model = (SchedulingViewModel)validationContext.ObjectInstance;
 
+    //        if (model.starttime >= model.endtime)
+    //        {
+    //            return new ValidationResult("Start time must be earlier than End time.");
+    //        }
+
+    //        return ValidationResult.Success;
+    //    }
+    //}
     public class SchedulingViewModel
     {
 
         public List<Region> regions { get; set; }
         public List<Physicianregion> physicianregionlist { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Region is required")]
         public int regionid { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Provider is required")]
         public int providerid { get; set; }
         public DateOnly shiftdateviewshift { get; set; }
-        [Required]
-        public DateOnly shiftdate { get; set; }
+        [Required(ErrorMessage = "ShiftDate is required")]        public DateOnly shiftdate { get; set; }
+        [Required(ErrorMessage = "StartTime is required")]
+        //[TimeValidation]
         public TimeOnly starttime { get; set; }
+        [Required(ErrorMessage = "EndTime is required")]
         public TimeOnly endtime { get; set; }
         public int repeatcount { get; set; }
         public int shiftid { get; set; }
@@ -1012,7 +1027,20 @@ ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digi
         public IEnumerable<Physician> offdutyphysicianlist { get; set; }
         public List<Region> regions { get; set; }
 
-    }    public class CreateNewShift    {        public List<Region>? RegionList { get; set; }        [Required(ErrorMessage = "Please Select Region")]        public int RegionId { get; set; }        public string? RegionName { get; set; }        [Required(ErrorMessage = "Please Select Physician")]        public int PhysicianId { get; set; }        public string PhysicianName { get; set; }        [Required(ErrorMessage = "ShiftDate is required")]        public DateOnly ShiftDate { get; set; }        [Required(ErrorMessage = "StartTime is required")]        public TimeOnly Start { get; set; }        [Required(ErrorMessage = "EndTime is required")]        public TimeOnly End { get; set; }        public List<int>? RepeatDays { get; set; }        public int RepeatEnd { get; set; }
+    }    //public class TimeValidationAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        var model = (CreateNewShift)validationContext.ObjectInstance;
+
+    //        if (model.Start >= model.End)
+    //        {
+    //            return new ValidationResult("Start time must be earlier than End time.");
+    //        }
+
+    //        return ValidationResult.Success;
+    //    }
+    //}    public class CreateNewShift    {        public List<Region>? RegionList { get; set; }        [Required(ErrorMessage = "Please Select Region")]        public int RegionId { get; set; }        public string? RegionName { get; set; }        [Required(ErrorMessage = "Please Select Physician")]        public int PhysicianId { get; set; }        public string PhysicianName { get; set; }        [Required(ErrorMessage = "ShiftDate is required")]        public DateOnly ShiftDate { get; set; }        [Required(ErrorMessage = "StartTime is required")]        //[TimeValidation]        public TimeOnly Start { get; set; }        [Required(ErrorMessage = "EndTime is required")]        public TimeOnly End { get; set; }        public List<int>? RepeatDays { get; set; }        public int RepeatEnd { get; set; }
         public int shiftdetailid { get; set; }
     }
 
