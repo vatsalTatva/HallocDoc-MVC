@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RkbOh88qFmMxwF9vsOzwK7gqfCjtvQfCgMRGza5cMoo9ti6EhRGN8ZhUVJgbddMH5s06KWV0Jja7NCNobvPg/A==",
+  "dgSpecHash": "PfdkFDFZLnC9CHpBTR4WGe3s4RaTjHyxCwRGH7lfOgoOpTtGiCmvGTM7ALprM8m89lwcXaP0HeRxgX+V3nhPGg==",
   "success": true,
-  "projectFilePath": "D:\\HalloDoc FInal\\Assignment\\BusinessLogic\\BusinessLogic.csproj",
+  "projectFilePath": "D:\\HalloDoc FInal\\Assignment_07\\BusinessLogic\\BusinessLogic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.18\\microsoft.entityframeworkcore.7.0.18.nupkg.sha512",
     "C:\\Users\\pce159\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.18\\microsoft.entityframeworkcore.abstractions.7.0.18.nupkg.sha512",

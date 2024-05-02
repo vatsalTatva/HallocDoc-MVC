@@ -565,7 +565,71 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("ProviderDashboard");
         }
 
-      
+
+        [HttpGet]
+        public IActionResult CreateRequest()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult VerifyState(string stateMain)
+        {
+            if (stateMain == null || stateMain.Trim() == null)
+            {
+                return Json(new { isSend = false });
+            }
+            var isSend = _adminService.VerifyState(stateMain);
+            return Json(new { isSend = isSend });
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateRequest(CreateRequestModel model)
+        {
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string createAccountLink = baseUrl + Url.Action("ResetPassword", "Patient");
+            var email = GetTokenEmail();
+            var isSaved = _adminService.CreateRequest(model, email, createAccountLink);
+            if (isSaved)
+            {
+                _notyf.Success("Request Created");
+                return RedirectToAction("ProviderDashboard");
+            }
+            else
+            {
+                _notyf.Error("Failed to Create");
+                return View(model);
+            }
+        }
+
+        public IActionResult ReturnShift(int ShiftDetailId)
+        {
+            var email = GetTokenEmail();
+            var isReturned = _adminService.ReturnShift(ShiftDetailId, email);
+            return Json(new { isReturned });
+        }
+
+        public IActionResult DeleteShift(int ShiftDetailId)
+        {
+            var email = GetTokenEmail();
+            var isDeleted = _adminService.DeleteShift(ShiftDetailId, email);
+            return Json(new { isDeleted });
+        }
+
+        public IActionResult EditViewShift(CreateNewShift model)
+        {
+            var email = GetTokenEmail();
+            bool isEditted = _adminService.EditShift(model, email);
+
+            return Json(new { isEditted });
+        }
+
+        [HttpGet]
+        public IActionResult Invoicing()
+        {
+            return PartialView("_PInvoicing");
+        }
 
     }
 }

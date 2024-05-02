@@ -834,11 +834,11 @@ namespace BusinessLogic.Services
         {
             var rc = _db.Requestclients.FirstOrDefault(x=>x.Requestid == reqId);
             var list = _db.Requestwisefiles.Where(x => x.Requestid == reqId).ToList();
-            string date = null;
-            if ((rc.Intyear != null && rc.Intdate != null) && rc.Strmonth != null)
-            {
-                date = new DateTime((int)(rc.Intyear), Convert.ToInt16(rc.Strmonth), (int)(rc.Intdate)).ToString("yyyy-MM-dd");
-            }
+            //string date = null;
+            //if ((rc.Intyear != null && rc.Intdate != null) && rc.Strmonth != null)
+            //{
+            //    date = new DateTime((int)(rc.Intyear), Convert.ToInt16(rc.Strmonth), (int)(rc.Intdate)).ToString("yyyy-MM-dd");
+            //}
             CloseCaseModel model = new()
             {
                 reqid= reqId,
@@ -848,7 +848,7 @@ namespace BusinessLogic.Services
                 phoneNo= rc.Phonenumber,
                 files=list,
                
-                fulldateofbirth = date,
+                //fulldateofbirth = date,
 
 
 

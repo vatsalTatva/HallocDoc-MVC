@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HalloDoc FInal\\Assignment\\DataAccess\\DataAccess.csproj": {}
+    "D:\\HalloDoc FInal\\Assignment_07\\DataAccess\\DataAccess.csproj": {}
   },
   "projects": {
-    "D:\\HalloDoc FInal\\Assignment\\DataAccess\\DataAccess.csproj": {
+    "D:\\HalloDoc FInal\\Assignment_07\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HalloDoc FInal\\Assignment\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\HalloDoc FInal\\Assignment_07\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\HalloDoc FInal\\Assignment\\DataAccess\\DataAccess.csproj",
+        "projectPath": "D:\\HalloDoc FInal\\Assignment_07\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\pce159\\.nuget\\packages\\",
-        "outputPath": "D:\\HalloDoc FInal\\Assignment\\DataAccess\\obj\\",
+        "outputPath": "D:\\HalloDoc FInal\\Assignment_07\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pce159\\AppData\\Roaming\\NuGet\\NuGet.Config",

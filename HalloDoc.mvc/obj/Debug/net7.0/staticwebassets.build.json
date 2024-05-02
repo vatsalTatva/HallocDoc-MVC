@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NN5vnYxz86Py05FP0wxb5yQx0GM5SSVJscxFZ4E6InY=",
+  "Hash": "7/ammM/0Mwvx1GNU9jd8gOObVFCc3YStpLYCHTPdAf0=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -1683,6 +1683,23 @@
       "OriginalItemSpec": "wwwroot\\PhysicianFiles\\10\\Independent_Contractor.pdf"
     },
     {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianFiles\\45\\Independent_Contractor.pdf",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianFiles/45/Independent_Contractor.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianFiles\\45\\Independent_Contractor.pdf"
+    },
+    {
       "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\10\\doc-portrait.jpg",
       "SourceId": "HalloDoc.mvc",
       "SourceType": "Discovered",
@@ -1800,6 +1817,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PhysicianImages\\44\\doc-portrait.jpg"
+    },
+    {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\45\\logo.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "PhysicianImages/45/logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PhysicianImages\\45\\logo.png"
     },
     {
       "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\5\\doc-portrait.jpg",

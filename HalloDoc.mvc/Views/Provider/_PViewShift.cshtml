@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn bg-info text-white assign d-none" onclick="editShift()" id="saveViewShift">save</button>
+                    <button type="button" class="btn bg-info text-white assign d-none" onclick="peditShift()" id="saveViewShift">save</button>
                     <button type="button" onclick="enableFieldsViewShift()" class="btn border border-info text-info" id="editViewShift">Edit</button>
                     <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal" onclick="deleteShift()">Delete</button>
                 </div>
@@ -67,18 +67,18 @@
 
 <script>
 
-    function editShift() {
+    function peditShift() {
         if ($('#editViewShiftForm').valid()) {
             var payload = $('#editViewShiftForm').serializeArray();
             $.ajax({
-                url: '/Admin/EditViewShift',
+                url: '/Provider/EditViewShift',
                 type: 'POST',
                 data: payload,
                 success: function (result) {
                     if (result.isEditted) {
                         toastr.success("Shift Edited");
                         $('#ViewShiftModel').modal('hide');
-                        ShowScheduling();
+                        ProviderShowScheduling();
                     }
                     else {
                         toastr.error("Unable to edit");
@@ -93,7 +93,7 @@
         var payload = $('#editViewShiftForm').serializeArray();
         console.log(payload);
         $.ajax({
-            url: '/Admin/ReturnShift',
+            url: '/Provider/ReturnShift',
             type: 'POST',
             data: payload,
             success: function (result) {
@@ -113,7 +113,7 @@
         var payload = $('#editViewShiftForm').serializeArray();
         console.log(payload);
         $.ajax({
-            url: '/Admin/DeleteShift',
+            url: '/Provider/DeleteShift',
             type: 'POST',
             data: payload,
             success: function (result) {
@@ -202,7 +202,7 @@
             End: $('#end').val(),
         }
         $.ajax({
-            url: "/Admin/EditShift",
+            url: "/Provider/EditShift",
             type: "POST",
             data: formdata,
             success: function () {

@@ -382,12 +382,12 @@
             }
         });
     }
-    function ShiftReview() {
+    function ShiftReview(regionId, callId) {
 
         $.ajax({
             url: "/Admin/ShiftReview",
             type: "GET",
-
+            data: { regionId: regionId, callId :callId},
             success: function (data) {
                 $("#provider-tab-pane").html(data);
             },

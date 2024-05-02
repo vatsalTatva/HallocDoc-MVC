@@ -9,49 +9,49 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Assignment
 build_property.RootNamespace = Assignment
-build_property.ProjectDir = D:\HalloDoc FInal\Assignment\Assignment\
+build_property.ProjectDir = D:\HalloDoc FInal\Assignment_07\Assignment\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\HalloDoc FInal\Assignment\Assignment
+build_property.MSBuildProjectDirectory = D:\HalloDoc FInal\Assignment_07\Assignment
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Home/Index.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Home/Library.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Home/Library.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaWJyYXJ5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Home/Privacy.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Home/_BookForm.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Home/_BookForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfQm9va0Zvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Home/_EditBookForm.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Home/_EditBookForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfRWRpdEJvb2tGb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Shared/Error.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/_ViewImports.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/_ViewStart.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HalloDoc FInal/Assignment/Assignment/Views/Shared/_Layout.cshtml]
+[D:/HalloDoc FInal/Assignment_07/Assignment/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-y18fyt0aqx

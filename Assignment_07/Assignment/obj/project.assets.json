@@ -1164,11 +1164,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HalloDoc FInal\\Assignment\\Assignment\\Assignment.csproj",
+      "projectUniqueName": "D:\\HalloDoc FInal\\Assignment_07\\Assignment\\Assignment.csproj",
       "projectName": "Assignment",
-      "projectPath": "D:\\HalloDoc FInal\\Assignment\\Assignment\\Assignment.csproj",
+      "projectPath": "D:\\HalloDoc FInal\\Assignment_07\\Assignment\\Assignment.csproj",
       "packagesPath": "C:\\Users\\pce159\\.nuget\\packages\\",
-      "outputPath": "D:\\HalloDoc FInal\\Assignment\\Assignment\\obj\\",
+      "outputPath": "D:\\HalloDoc FInal\\Assignment_07\\Assignment\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pce159\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1186,11 +1186,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\HalloDoc FInal\\Assignment\\BusinessLogic\\BusinessLogic.csproj": {
-              "projectPath": "D:\\HalloDoc FInal\\Assignment\\BusinessLogic\\BusinessLogic.csproj"
+            "D:\\HalloDoc FInal\\Assignment_07\\BusinessLogic\\BusinessLogic.csproj": {
+              "projectPath": "D:\\HalloDoc FInal\\Assignment_07\\BusinessLogic\\BusinessLogic.csproj"
             },
-            "D:\\HalloDoc FInal\\Assignment\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "D:\\HalloDoc FInal\\Assignment\\DataAccess\\DataAccess.csproj"
+            "D:\\HalloDoc FInal\\Assignment_07\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "D:\\HalloDoc FInal\\Assignment_07\\DataAccess\\DataAccess.csproj"
             }
           }
         }

@@ -1,0 +1,43 @@
+﻿<div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 class="mb-4">Invoicing</h4>
+        @*         <button onclick="ShowScheduling()" id="back-btn">&lt; Back</button>
+        *@
+    </div>
+
+
+    <div class="border rounded shadow p-3 bg-white dark-mode1">
+        <div class="my-2 mb-3">
+          
+            <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
+                <form role="search" class="d-flex align-items-center border border-rounded rounded border-info mb-3">
+                    <i type="search" class="bi bi-search px-2 text-black" style="position: absolute;"></i>
+                    <select class="form-select border-0 regionDropdown ps-5" id="timesheetPeriod" aria-label="Default select example">
+                        <option disabled selected>Timesheet Period</option>
+
+                        <option value="1">
+                            2024/03/01 - 2024/03/14
+                        </option>
+
+                    </select>
+                </form>
+                <div class="d-flex mb-3">
+                    <button type="button" class="btn btn-info text-light d-md-block d-none me-2" onclick="ShowScheduling()">
+                        Finalize Timesheet
+                    </button>
+
+                </div>
+            </div>
+
+            <div id="matched-events" class="row my-2">
+
+                No records found
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>

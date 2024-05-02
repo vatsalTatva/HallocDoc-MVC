@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\PhysicianFiles\\10\\Independent_Contractor.pdf"
     },
     {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianFiles\\45\\Independent_Contractor.pdf",
+      "PackagePath": "staticwebassets\\PhysicianFiles\\45\\Independent_Contractor.pdf"
+    },
+    {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\10\\doc-portrait.jpg",
       "PackagePath": "staticwebassets\\PhysicianImages\\10\\doc-portrait.jpg"
     },
@@ -31,6 +35,10 @@
     {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\44\\doc-portrait.jpg",
       "PackagePath": "staticwebassets\\PhysicianImages\\44\\doc-portrait.jpg"
+    },
+    {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\45\\logo.png",
+      "PackagePath": "staticwebassets\\PhysicianImages\\45\\logo.png"
     },
     {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\PhysicianImages\\4\\bg-image.png",
