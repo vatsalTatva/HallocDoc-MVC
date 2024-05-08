@@ -27,16 +27,18 @@ namespace HalloDoc.mvc.Controllers
         private readonly INotyfService _notyf;
         private readonly IAdminService _adminService;
         private readonly IPatientService _patientService;
+        private readonly IProviderService _providerService;
         private readonly IJwtService _jwtService;
 
 
-        public AdminController(ILogger<AdminController> logger ,INotyfService notyfService , IAdminService adminService , IPatientService patientService,IJwtService jwtService)
+        public AdminController(ILogger<AdminController> logger ,INotyfService notyfService , IAdminService adminService , IPatientService patientService,IJwtService jwtService,IProviderService providerService)
         {
             _logger = logger;
             _notyf = notyfService;
             _adminService = adminService;
             _patientService = patientService;
             _jwtService = jwtService;
+            _providerService = providerService;
         }
 
         public IActionResult Index()
@@ -1287,6 +1289,92 @@ namespace HalloDoc.mvc.Controllers
 
             return Json(new { isDeleted });
         }
+
+
+
+        public IActionResult Invoicing()
+        {
+            ViewBag.username = HttpContext.Session.GetString("Admin");
+            InvoicingViewModel model = new InvoicingViewModel();
+            model.dates = _providerService.GetDates();
+            model.PhysiciansList = _adminService.GetPhysiciansForInvoicing();
+            return PartialView("_Invoicing", model);
+        }
+
+
+        public IActionResult CheckInvoicingApprove(string selectedValue, int PhysicianId)
+        {
+            string result = _adminService.CheckInvoicingApprove(selectedValue, PhysicianId);
+            return Json(result);
+        }
+
+        public IActionResult GetApprovedViewData(string selectedValue, int PhysicianId)
+        {
+            InvoicingViewModel model = _adminService.GetApprovedViewData(selectedValue, PhysicianId);
+            return PartialView("_ApproveInvoicing", model);
+        }
+
+        //public IActionResult GetInvoicingDataonChangeOfDate(string selectedValue, int PhysicianId)
+        //{
+        //    int? AdminID = HttpContext.Session.GetInt32("AdminId");
+        //    string[] dateRange = selectedValue.Split('*');
+        //    DateOnly startDate = DateOnly.Parse(dateRange[0]);
+        //    DateOnly endDate = DateOnly.Parse(dateRange[1]);
+        //    InvoicingViewModel model = _IProviderDash.GetInvoicingDataonChangeOfDate(startDate, endDate, PhysicianId, AdminID);
+        //    return PartialView("Provider/_InvoicingPartialView", model);
+        //}
+
+        //public IActionResult GetUploadedDataonChangeOfDate(string selectedValue, int PhysicianId, int pageNumber, int pagesize)
+        //{
+        //    string[] dateRange = selectedValue.Split('*');
+        //    DateOnly startDate = DateOnly.Parse(dateRange[0]);
+        //    DateOnly endDate = DateOnly.Parse(dateRange[1]);
+        //    InvoicingViewModel model = _IProviderDash.GetUploadedDataonChangeOfDate(startDate, endDate, PhysicianId, pageNumber, pagesize);
+        //    return PartialView("Provider/_TimeSheetReiembursementPartialView", model);
+        //}
+
+        //public IActionResult BiWeeklyTimesheet(string selectedValue, int PhysicianId)
+        //{
+        //    int? AdminID = HttpContext.Session.GetInt32("AdminId");
+        //    if (AdminID == null)
+        //    {
+        //        ViewBag.username = HttpContext.Session.GetString("Provider");
+        //    }
+        //    else
+        //    {
+        //        ViewBag.username = HttpContext.Session.GetString("Admin");
+        //    }
+        //    string[] dateRange = selectedValue.Split('*');
+        //    DateOnly startDate = DateOnly.Parse(dateRange[0]);
+        //    DateOnly endDate = DateOnly.Parse(dateRange[1]);
+        //    InvoicingViewModel model = _IProviderDash.getDataOfTimesheet(startDate, endDate, PhysicianId, AdminID);
+        //    return PartialView("Provider/_BiWeeklyTimesheet", model);
+        //}
+
+        //[HttpPost]
+        //public IActionResult AprooveTimeSheet(InvoicingViewModel model)
+        //{
+        //    int? AdminID = HttpContext.Session.GetInt32("AdminId");
+        //    _IAdminDash.AprooveTimeSheet(model, AdminID);
+        //    return Ok();
+        //}
+
+        //public IActionResult GetPayRate(int callid, int physicianId)
+        //{
+        //    adminDashData adminDashCM = new adminDashData
+        //    {
+        //        _GetPayRate = _IAdminDash.GetPayRate(physicianId, callid),
+        //    };
+        //    return PartialView("_PayRate", adminDashCM);
+        //}
+        //[HttpPost]
+        //public IActionResult SetPayRates(adminDashData adminDashData)
+        //{
+        //    bool isSend = _IAdminDash.SetPayRate(adminDashData._GetPayRate);
+        //    return Json(new { isSend = isSend, callid = adminDashData._GetPayRate.callid, PhysicianId = adminDashData._GetPayRate.PhysicianId });
+        //}
+
+
     }
 
 

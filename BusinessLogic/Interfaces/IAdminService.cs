@@ -148,6 +148,8 @@ namespace BusinessLogic.Interfaces
         bool ApproveSelectedShift(int[] shiftDetailsId, string Aspid);
 
 
-
+        List<PhysicianViewModel> GetPhysiciansForInvoicing();
+        string CheckInvoicingApprove(string selectedValue, int PhysicianId);
+        InvoicingViewModel GetApprovedViewData(string selectedValue, int PhysicianId);
     }
 }

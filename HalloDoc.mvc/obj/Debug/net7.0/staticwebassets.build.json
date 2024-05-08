@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7/ammM/0Mwvx1GNU9jd8gOObVFCc3YStpLYCHTPdAf0=",
+  "Hash": "iTFZy0fo9ZgZi8Hj9993xJ6wOZ9XTyHt4vfIqJODdAE=",
   "Source": "HalloDoc.mvc",
   "BasePath": "_content/HalloDoc.mvc",
   "Mode": "Default",
@@ -2293,6 +2293,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\profile.jpg"
+    },
+    {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\ProviderBills\\44-01-05-2024-doc-portrait.jpg",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "UploadedFiles/ProviderBills/44-01-05-2024-doc-portrait.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\ProviderBills\\44-01-05-2024-doc-portrait.jpg"
+    },
+    {
+      "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\ProviderBills\\44-02-05-2024-bg-image.png",
+      "SourceId": "HalloDoc.mvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc.mvc",
+      "RelativePath": "UploadedFiles/ProviderBills/44-02-05-2024-bg-image.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\ProviderBills\\44-02-05-2024-bg-image.png"
     },
     {
       "Identity": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\sign1.jpg",

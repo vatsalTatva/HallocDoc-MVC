@@ -93,6 +93,14 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\4\\Licence.pdf"
     },
     {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\ProviderBills\\44-01-05-2024-doc-portrait.jpg",
+      "PackagePath": "staticwebassets\\UploadedFiles\\ProviderBills\\44-01-05-2024-doc-portrait.jpg"
+    },
+    {
+      "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\ProviderBills\\44-02-05-2024-bg-image.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\ProviderBills\\44-02-05-2024-bg-image.png"
+    },
+    {
       "Id": "D:\\HalloDoc FInal\\HalloDoc.mvc\\wwwroot\\UploadedFiles\\banner (1).jpg",
       "PackagePath": "staticwebassets\\UploadedFiles\\banner (1).jpg"
     },

@@ -1686,6 +1686,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Adminnote)
                 .HasMaxLength(500)
                 .HasColumnName("adminnote");
+            entity.Property(e => e.Bonusamount).HasColumnName("bonusamount");
             entity.Property(e => e.Createddate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("createddate");

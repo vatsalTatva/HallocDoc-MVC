@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\PhysicianSign\" />
-    <Folder Include="wwwroot\UploadedFiles\" />
+    <Folder Include="wwwroot\UploadedFiles\ProviderBills\" />
   </ItemGroup>
 
 </Project>
