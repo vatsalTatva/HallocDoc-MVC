@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[7.1.1, )"
             },
+            "LinqKit": {
+              "target": "Package",
+              "version": "[1.2.5, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[7.0.16, )"

@@ -22,6 +22,8 @@ builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IProviderService, ProviderService>();
+builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
 
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

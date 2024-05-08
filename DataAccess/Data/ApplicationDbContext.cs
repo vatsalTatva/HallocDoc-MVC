@@ -46,6 +46,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Orderdetail> Orderdetails { get; set; }
 
+    public virtual DbSet<Payrate> Payrates { get; set; }
+
     public virtual DbSet<Physician> Physicians { get; set; }
 
     public virtual DbSet<Physicianlocation> Physicianlocations { get; set; }
@@ -87,6 +89,10 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Smslog> Smslogs { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<Weeklytimesheet> Weeklytimesheets { get; set; }
+
+    public virtual DbSet<Weeklytimesheetdetail> Weeklytimesheetdetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -730,6 +736,33 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Vendor).WithMany(p => p.Orderdetails)
                 .HasForeignKey(d => d.Vendorid)
                 .HasConstraintName("fk_orderdetails");
+        });
+
+        modelBuilder.Entity<Payrate>(entity =>
+        {
+            entity.HasKey(e => e.Payrateid).HasName("pk_payrate");
+
+            entity.ToTable("payrate");
+
+            entity.Property(e => e.Payrateid)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("payrateid");
+            entity.Property(e => e.Batchtesting).HasColumnName("batchtesting");
+            entity.Property(e => e.Createddate)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("createddate");
+            entity.Property(e => e.Housecall).HasColumnName("housecall");
+            entity.Property(e => e.Housecallnightweekend).HasColumnName("housecallnightweekend");
+            entity.Property(e => e.Nightshiftweekend).HasColumnName("nightshiftweekend");
+            entity.Property(e => e.Phoneconsult).HasColumnName("phoneconsult");
+            entity.Property(e => e.Phoneconsultnightweekend).HasColumnName("phoneconsultnightweekend");
+            entity.Property(e => e.Physicianid).HasColumnName("physicianid");
+            entity.Property(e => e.Shift).HasColumnName("shift");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Payrates)
+                .HasForeignKey(d => d.Physicianid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_PayRate");
         });
 
         modelBuilder.Entity<Physician>(entity =>
@@ -1638,6 +1671,78 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Region).WithMany(p => p.Users)
                 .HasForeignKey(d => d.Regionid)
                 .HasConstraintName("fk_users2");
+        });
+
+        modelBuilder.Entity<Weeklytimesheet>(entity =>
+        {
+            entity.HasKey(e => e.Timesheetid).HasName("pk_WeeklyTimeSheet");
+
+            entity.ToTable("weeklytimesheet");
+
+            entity.Property(e => e.Timesheetid)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("timesheetid");
+            entity.Property(e => e.Adminid).HasColumnName("adminid");
+            entity.Property(e => e.Adminnote)
+                .HasMaxLength(500)
+                .HasColumnName("adminnote");
+            entity.Property(e => e.Createddate)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("createddate");
+            entity.Property(e => e.Enddate).HasColumnName("enddate");
+            entity.Property(e => e.Isfinalized).HasColumnName("isfinalized");
+            entity.Property(e => e.Payrateid).HasColumnName("payrateid");
+            entity.Property(e => e.Physicianid).HasColumnName("physicianid");
+            entity.Property(e => e.Startdate).HasColumnName("startdate");
+            entity.Property(e => e.Status).HasColumnName("status");
+
+            entity.HasOne(d => d.Admin).WithMany(p => p.Weeklytimesheets)
+                .HasForeignKey(d => d.Adminid)
+                .HasConstraintName("fk_WeeklyTimeSheet1");
+
+            entity.HasOne(d => d.Payrate).WithMany(p => p.Weeklytimesheets)
+                .HasForeignKey(d => d.Payrateid)
+                .HasConstraintName("fk_WeeklyTimeSheet2");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Weeklytimesheets)
+                .HasForeignKey(d => d.Physicianid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_WeeklyTimeSheet3");
+        });
+
+        modelBuilder.Entity<Weeklytimesheetdetail>(entity =>
+        {
+            entity.HasKey(e => e.Timesheetdetailid).HasName("pk_weeklytimesheetdetail");
+
+            entity.ToTable("weeklytimesheetdetail");
+
+            entity.Property(e => e.Timesheetdetailid)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("timesheetdetailid");
+            entity.Property(e => e.Amount).HasColumnName("amount");
+            entity.Property(e => e.Batchtesting).HasColumnName("batchtesting");
+            entity.Property(e => e.Bill)
+                .HasMaxLength(100)
+                .HasColumnName("bill");
+            entity.Property(e => e.Bonusamount).HasColumnName("bonusamount");
+            entity.Property(e => e.Housecall).HasColumnName("housecall");
+            entity.Property(e => e.Housecallnightweekend).HasColumnName("housecallnightweekend");
+            entity.Property(e => e.Isweekendholiday).HasColumnName("isweekendholiday");
+            entity.Property(e => e.Item)
+                .HasMaxLength(100)
+                .HasColumnName("item");
+            entity.Property(e => e.Nightshiftweekend).HasColumnName("nightshiftweekend");
+            entity.Property(e => e.Numberofshifts).HasColumnName("numberofshifts");
+            entity.Property(e => e.Oncallhours).HasColumnName("oncallhours");
+            entity.Property(e => e.Phoneconsult).HasColumnName("phoneconsult");
+            entity.Property(e => e.Phoneconsultnightweekend).HasColumnName("phoneconsultnightweekend");
+            entity.Property(e => e.Timesheetid).HasColumnName("timesheetid");
+            entity.Property(e => e.Totalamount).HasColumnName("totalamount");
+            entity.Property(e => e.Totalhours).HasColumnName("totalhours");
+
+            entity.HasOne(d => d.Timesheet).WithMany(p => p.Weeklytimesheetdetails)
+                .HasForeignKey(d => d.Timesheetid)
+                .HasConstraintName("fk_WeeklyTimeSheetDetail");
         });
 
         OnModelCreatingPartial(modelBuilder);
