@@ -203,6 +203,25 @@
                         </div>
                     </div>
                     <div class="d-grid gap-2 d-flex justify-content-end  justify-content-md-end mt-3 mb-3">
+                      
+                    </div>
+                    <div class="d-grid gap-2 d-flex justify-content-end  justify-content-md-end mt-3 mb-3">
+                        @if (Model.editPro.flagId == 1)
+                        {
+                            <button type="button" id="PayRate" class="btn btn-info text-white EditBtn"
+                                    onclick="GetPayRate(1,@Model.editPro.PhyID)">
+                                Enter Payrate
+                            </button>
+                        }
+
+                        @if (Model.editPro.flagId == 2)
+                        {
+                            <button type="button" id="PayRate" class="btn btn-info text-white EditBtn"
+                                    onclick="GetPayRate(2,@Model.editPro.PhyID)">
+                                PayRate
+                            </button>
+                        }
+
                         <button type="button" id="editBtn2" class="btn btn-info text-white EditBtn"
                                 onclick="enableFields(2)">
                             Edit
@@ -830,6 +849,22 @@
             },
             error: function () {
                 alert("Error");
+            },
+        });
+    }
+
+    function GetPayRate(callid, physicianId) {
+        console.log(callid + " " + physicianId)
+        $.ajax({
+            method: "GET",
+            url: "/Admin/GetPayRate",
+            data: { callid: callid, physicianId: physicianId },
+            success: function (res) {
+                $("#provider-tab-pane").html(res);
+            },
+
+            error: function () {
+                toastr.error("Error To Load Partial View");
             },
         });
     }

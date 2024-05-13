@@ -1333,40 +1333,46 @@ namespace HalloDoc.mvc.Controllers
         //    return PartialView("Provider/_TimeSheetReiembursementPartialView", model);
         //}
 
-        //public IActionResult BiWeeklyTimesheet(string selectedValue, int PhysicianId)
-        //{
-        //    int? AdminID = HttpContext.Session.GetInt32("AdminId");
-        //    if (AdminID == null)
-        //    {
-        //        ViewBag.username = HttpContext.Session.GetString("Provider");
-        //    }
-        //    else
-        //    {
-        //        ViewBag.username = HttpContext.Session.GetString("Admin");
-        //    }
-        //    string[] dateRange = selectedValue.Split('*');
-        //    DateOnly startDate = DateOnly.Parse(dateRange[0]);
-        //    DateOnly endDate = DateOnly.Parse(dateRange[1]);
-        //    InvoicingViewModel model = _IProviderDash.getDataOfTimesheet(startDate, endDate, PhysicianId, AdminID);
-        //    return PartialView("Provider/_BiWeeklyTimesheet", model);
-        //}
+        public IActionResult BiWeeklyTimesheet(string selectedValue, int PhysicianId)
+        {
+            int? AdminID = HttpContext.Session.GetInt32("AdminId");
+            if (AdminID == null)
+            {
+                ViewBag.username = HttpContext.Session.GetString("Provider");
+            }
+            else
+            {
+                ViewBag.username = HttpContext.Session.GetString("Admin");
+            }
+            string[] dateRange = selectedValue.Split('*');
+            DateOnly startDate = DateOnly.Parse(dateRange[0]);
+            DateOnly endDate = DateOnly.Parse(dateRange[1]);
+            InvoicingViewModel model = _providerService.getDataOfTimesheet(startDate, endDate, PhysicianId, AdminID);
+            return PartialView("_AdminBiWeeklyTimesheet", model);
+        }
 
-        //[HttpPost]
-        //public IActionResult AprooveTimeSheet(InvoicingViewModel model)
-        //{
-        //    int? AdminID = HttpContext.Session.GetInt32("AdminId");
-        //    _IAdminDash.AprooveTimeSheet(model, AdminID);
-        //    return Ok();
-        //}
+        [HttpPost]
+        public IActionResult SubmitTimeSheet(InvoicingViewModel model)
+        {
+            int? AdminID = HttpContext.Session.GetInt32("AdminId");
+            _providerService.SubmitTimeSheet(model, model.PhysicianId);
+          
+            return Ok();
+        }
 
-        //public IActionResult GetPayRate(int callid, int physicianId)
-        //{
-        //    adminDashData adminDashCM = new adminDashData
-        //    {
-        //        _GetPayRate = _IAdminDash.GetPayRate(physicianId, callid),
-        //    };
-        //    return PartialView("_PayRate", adminDashCM);
-        //}
+        [HttpPost]
+        public IActionResult ApproveTimeSheet(InvoicingViewModel model)
+        {
+            int? AdminID = HttpContext.Session.GetInt32("AdminId");
+            _adminService.ApproveTimeSheet(model, AdminID);
+            return Ok();
+        }
+
+        public IActionResult GetPayRate(int callid, int physicianId)
+        {
+            var model = _adminService.GetPayRate(physicianId, callid);
+            return PartialView("_PayRate", model);
+        }
         //[HttpPost]
         //public IActionResult SetPayRates(adminDashData adminDashData)
         //{

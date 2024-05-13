@@ -1,0 +1,222 @@
+﻿@using DataAccess.CustomModels;
+@model GetPayRate;
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mx-3">
+        <h4>PayRate</h4>
+        @if (@Model.callid == 1)
+        {
+            <a onclick="providers()" class="btn shadow  btn-outline-secondary border-info text-info px-3 ">
+                <i class="fa-solid fa-angle-left fs-6"></i> Back
+            </a>
+        }
+        else
+        {
+            <a onclick="userAccess()" class="btn shadow  btn-outline-secondary border-info text-info px-3 ">
+                <i class="fa-solid fa-angle-left fs-6"></i> Back
+            </a>
+        }
+    </div>
+
+    <form method="post" id="PayRateForm">
+        <input asp-for="@Model.PhysicianId" hidden />
+        <input asp-for="@Model.callid" hidden />
+        <div class="m-3 p-3 border rounded shadow">
+            <div class="table-responsive">
+                <table class="table PartnerTable">
+                    <thead class="table-active">
+                        <tr class="text-center">
+                            <th>Catagory</th>
+                            <th>PayRate</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center align-middle">
+                            <td>NightShift_Weekend</td>
+                            <td style="display: flex;align-items: center;justify-content: center;">
+                                <div class="form-floating" style="width: 70%;">
+                                    <input type="text" class="form-control ms-3" asp-for="@Model.NightShift_Weekend" id="NightShiftPayRate"
+                                           placeholder="PayRate" aria-label="PayRate">
+                                    <label class="ms-3" for="NightShiftPayRate">PayRate</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (@Model.NightShift_Weekend != null)
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Edit </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Submit </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-center align-middle">
+                            <td>Shift</td>
+                            <td style="display: flex;align-items: center;justify-content: center;">
+                                <div class="form-floating" style="width: 70%;">
+                                    <input type="text" class="form-control ms-3" asp-for="@Model.Shift" id="ShiftPayRate"
+                                           placeholder="PayRate" aria-label="PayRate">
+                                    <label class="ms-3" for="ShiftPayRate">PayRate</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (@Model.Shift != null)
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Edit </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Submit </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-center align-middle">
+                            <td>HouseCalls_Nights_Weekend</td>
+                            <td style="display: flex;align-items: center;justify-content: center;">
+                                <div class="form-floating" style="width: 70%;">
+                                    <input type="text" class="form-control ms-3" asp-for="@Model.HouseCalls_Nights_Weekend" id="HouseCalls_Nights_PayRate"
+                                           placeholder="PayRate" aria-label="PayRate">
+                                    <label class="ms-3" for="HouseCalls_Nights_PayRate">PayRate</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (@Model.HouseCalls_Nights_Weekend != null)
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Edit </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Submit </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-center align-middle">
+                            <td>PhoneConsult</td>
+                            <td style="display: flex;align-items: center;justify-content: center;">
+                                <div class="form-floating" style="width: 70%;">
+                                    <input type="text" class="form-control ms-3" asp-for="@Model.PhoneConsult" id="PhoneConsultPayRate"
+                                           placeholder="PayRate" aria-label="PayRate">
+                                    <label class="ms-3" for="PhoneConsultPayRate">PayRate</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (@Model.PhoneConsult != null)
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Edit </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Submit </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-center align-middle">
+                            <td>PhoneConsults_Nights_Weekend</td>
+                            <td style="display: flex;align-items: center;justify-content: center;">
+                                <div class="form-floating" style="width: 70%;">
+                                    <input type="text" class="form-control ms-3" asp-for="@Model.PhoneConsults_Nights_Weekend" id="PhoneConsults_Nights_PayRate"
+                                           placeholder="PayRate" aria-label="PayRate">
+                                    <label class="ms-3" for="PhoneConsults_Nights_PayRate">PayRate</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (@Model.PhoneConsults_Nights_Weekend != null)
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Edit </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Submit </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-center align-middle">
+                            <td>BatchTesting</td>
+                            <td style="display: flex;align-items: center;justify-content: center;">
+                                <div class="form-floating" style="width: 70%;">
+                                    <input type="text" class="form-control ms-3" asp-for="@Model.BatchTesting" id="BatchTestingPayRate"
+                                           placeholder="PayRate" aria-label="PayRate">
+                                    <label class="ms-3" for="BatchTestingPayRate">PayRate</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (@Model.BatchTesting != null)
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Edit </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Submit </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-center align-middle">
+                            <td>HouseCalls</td>
+                            <td style="display: flex;align-items: center;justify-content: center;">
+                                <div class="form-floating" style="width: 70%;">
+                                    <input type="text" class="form-control ms-3" asp-for="@Model.HouseCalls" id="HouseCallsPayRate"
+                                           placeholder="PayRate" aria-label="PayRate">
+                                    <label class="ms-3" for="HouseCallsPayRate">PayRate</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (@Model.HouseCalls != null)
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Edit </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-info btn-outline-dark border-info text-light" onclick="SetPayRates()"> Submit </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<partial name="_ValidationScriptsPartial" />
+
+
+<script>
+    function SetPayRates() {
+        event.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/adminDashboard/SetPayRates",
+            data: $("#PayRateForm").serialize(),
+
+            success: function (result) {
+                if (result.isSend == true) {
+                    toastr.success("PayRate Data Updated");
+                } else {
+                    toastr.error("Change atleast one field");
+                }
+                GetPayRate(result.callid, result.physicianId);
+            },
+
+            error: function () {
+                toastr.error("Error To Load Partial View");
+            },
+        });
+    }
+</script>

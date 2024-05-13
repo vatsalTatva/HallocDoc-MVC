@@ -509,6 +509,7 @@ namespace DataAccess.CustomModels
         public List<Role> roles { get; set; }
 
         public bool? indicate { get; set; }
+        public int? flagId { get; set; }
     }
     public class PhysicianRegionTable
     {
@@ -1102,6 +1103,22 @@ ErrorMessage = "8 characters long (one uppercase, one lowercase letter, one digi
         [Required(ErrorMessage = "Please Enter Description")]
         [RegularExpression(@"^\S.*$", ErrorMessage = "Note cannot be null or whitespace.")]
         public string? Note { get; set; }
+
+    }
+
+    public class GetPayRate
+    {
+        public int PhysicianId { get; set; }
+        public int? NightShift_Weekend { get; set; }
+        public int? Shift { get; set; }
+        public int? HouseCalls_Nights_Weekend { get; set; }
+        public int? PhoneConsult { get; set; }
+        public int? PhoneConsults_Nights_Weekend { get; set; }
+        public int? BatchTesting { get; set; }
+        public int? HouseCalls { get; set; }
+        public string? AspId { get; set; }
+        public int callid { get; set; }
+        public DateTime? created_date { get; set; }
 
     }
 }

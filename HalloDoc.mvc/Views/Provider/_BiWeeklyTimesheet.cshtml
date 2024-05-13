@@ -272,21 +272,6 @@
         alert("Edit Clicked");
     }
 
-    function AprooveBtn() {
-        $.ajax({
-            url: "/adminDashboard/AprooveTimeSheet",
-            type: 'POST',
-            processData: false,
-            contentType: false,
-            data: new FormData($('#BiWeeklyForm')[0]),
-            success: function (result) {
-                Invoicing();
-                toastr.success("TimeSheet Aprooved Succesfully");
-            },
-            error: function () {
-                toastr.error("Error");
-            },
-        });
-    }
+   
 
 </script>

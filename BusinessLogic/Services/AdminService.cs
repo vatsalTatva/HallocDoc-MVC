@@ -26,6 +26,7 @@ using OfficeOpenXml;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
+using System.Data.Entity;
 
 namespace BusinessLogic.Services
 {
@@ -3778,6 +3779,51 @@ namespace BusinessLogic.Services
             return model;
 
         }
+
+        public void ApproveTimeSheet(InvoicingViewModel model, int? AdminID)
+        {
+            Weeklytimesheet weeklyTimeSheet = _weeklyTimeSheetRepo.GetFirstOrDefault(u => u.Physicianid == model.PhysicianId && u.Startdate == model.startDate && u.Enddate == model.endDate);
+            if (weeklyTimeSheet != null)
+            {
+                weeklyTimeSheet.Adminid = AdminID;
+                weeklyTimeSheet.Status = 2;
+                weeklyTimeSheet.Bonusamount = model.BonusAmount;
+                weeklyTimeSheet.Adminnote = model.AdminNotes;
+                _weeklyTimeSheetRepo.Update(weeklyTimeSheet);
+            }
+        }
+
+        public GetPayRate GetPayRate(int physicianId, int callid)
+        {
+            var payrate = _db.Payrates.FirstOrDefault(i => i.Physicianid == physicianId);
+            var Aspid = _db.Physicians.Where(a => a.Physicianid == physicianId).Select(a=>a.Aspnetuserid).FirstOrDefault();
+            if (payrate == null)
+            {
+                var GetPayRate = new GetPayRate()
+                {
+                    PhysicianId = physicianId,
+                    callid = callid,
+                };
+                return GetPayRate;
+            }
+            else
+            {
+                var GetPayRate = new GetPayRate()
+                {
+                    PhysicianId = physicianId,
+                    NightShift_Weekend = payrate.Nightshiftweekend != 0 ? payrate.Nightshiftweekend : default,
+                    Shift = payrate.Shift != 0 ? payrate.Shift : default,
+                    HouseCalls_Nights_Weekend = payrate.Housecallnightweekend != 0 ? payrate.Housecallnightweekend : default,
+                    PhoneConsult = payrate.Phoneconsult != 0 ? payrate.Phoneconsult : default,
+                    PhoneConsults_Nights_Weekend = payrate.Phoneconsultnightweekend != 0 ? payrate.Phoneconsultnightweekend : default,
+                    BatchTesting = payrate.Batchtesting != 0 ? payrate.Batchtesting : default,
+                    HouseCalls = payrate.Housecall != 0 ? payrate.Housecall : default,
+                    callid = callid,
+                };
+                return GetPayRate;
+            }
+        }
     }
+
 
 }

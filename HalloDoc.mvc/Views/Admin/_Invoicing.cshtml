@@ -159,25 +159,7 @@
         })
     }
 
-    function FinalizeNew() {
-        var PhyscianID = $('#PhyscianID').val();
-        var timesheetdropdown = $('#timesheetdropdown').val();
-        console.log(timesheetdropdown);
-        $.ajax({
-            url: "/Admin/BiWeeklyTimesheet",
-            method: 'GET',
-            data: {
-                selectedValue: timesheetdropdown,
-                PhysicianId: PhyscianID
-            },
-            success: function (result) {
-                $('#content').html(result);
-            },
-            error: function () {
-                console.log("Function Fail")
-            },
-        });
-    }
+    
 
 </script>
 

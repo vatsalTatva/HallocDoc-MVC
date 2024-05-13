@@ -26,7 +26,30 @@ else
             <td class="ViewUploadtd">@Model.startDate</td>
             <td class="ViewUploadtd">@Model.endDate</td>
             <td class="ViewUploadtd">@Model.Status</td>
-            <td class="ViewUploadtd"><button class="btn shadow  btn-outline-info px-3 submit1" onclick="FinalizeNew()">Approve</button></td>
+            <td class="ViewUploadtd"><button class="btn shadow  btn-outline-info px-3 submit1" onclick="Approve()">Approve</button></td>
         </tr>
     </table>
 }
+
+
+ <script>
+    function Approve() {
+        var PhyscianID = $('#PhyscianID').val();
+        var timesheetdropdown = $('#timesheetdropdown').val();
+        console.log(timesheetdropdown);
+        $.ajax({
+            url: "/Admin/BiWeeklyTimesheet",
+            method: 'GET',
+            data: {
+                selectedValue: timesheetdropdown,
+                PhysicianId: PhyscianID
+            },
+            success: function (result) {
+                $('#provider-tab-pane').html(result);
+            },
+            error: function () {
+                console.log("Function Fail")
+            },
+        });
+    }
+</script>

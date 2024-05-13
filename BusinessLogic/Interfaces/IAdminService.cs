@@ -151,5 +151,7 @@ namespace BusinessLogic.Interfaces
         List<PhysicianViewModel> GetPhysiciansForInvoicing();
         string CheckInvoicingApprove(string selectedValue, int PhysicianId);
         InvoicingViewModel GetApprovedViewData(string selectedValue, int PhysicianId);
+        public void ApproveTimeSheet(InvoicingViewModel model, int? AdminID);
+        GetPayRate GetPayRate(int physicianId, int callid);
     }
 }
