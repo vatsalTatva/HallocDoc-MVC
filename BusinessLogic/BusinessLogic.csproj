@@ -10,6 +10,7 @@
     <PackageReference Include="EPPlus" Version="7.1.1" />
     <PackageReference Include="LinqKit" Version="1.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="7.0.18" />
     <PackageReference Include="Twilio" Version="7.0.5" />
   </ItemGroup>
 

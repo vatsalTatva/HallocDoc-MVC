@@ -153,5 +153,7 @@ namespace BusinessLogic.Interfaces
         InvoicingViewModel GetApprovedViewData(string selectedValue, int PhysicianId);
         public void ApproveTimeSheet(InvoicingViewModel model, int? AdminID);
         GetPayRate GetPayRate(int physicianId, int callid);
+
+        ChatViewModel GetChats(int RequestId, int AdminID, int ProviderId, int RoleId);
     }
 }

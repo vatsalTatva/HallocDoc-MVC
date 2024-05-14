@@ -32,6 +32,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Casetag> Casetags { get; set; }
 
+    public virtual DbSet<Chat> Chats { get; set; }
+
     public virtual DbSet<Concierge> Concierges { get; set; }
 
     public virtual DbSet<Emaillog> Emaillogs { get; set; }
@@ -388,6 +390,17 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Chat>(entity =>
+        {
+            entity.HasKey(e => e.ChatId).HasName("pk_Chat");
+
+            entity.ToTable("chat");
+
+            entity.Property(e => e.ChatId).UseIdentityAlwaysColumn();
+            entity.Property(e => e.Message).HasMaxLength(500);
+            entity.Property(e => e.SentDate).HasColumnType("timestamp without time zone");
         });
 
         modelBuilder.Entity<Concierge>(entity =>

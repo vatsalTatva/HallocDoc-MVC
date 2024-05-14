@@ -180,13 +180,13 @@
                               @item.notes
                             </td>
                             @*8*@
-                        @*    <td style="background:@bgColor">
+                            <td style="background:@bgColor">
 
                                 <div class="d-flex">
                                     <div class="dropdown mb-1 w-75">
                                         <button class="btn text-white border border-white py-1"
                                                 type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
+                                                aria-expanded="false" onclick="ChatWith(@item.reqId,0,1)">
                                             <i class="bi bi-person-fill"></i>
                                             <span>
                                                 Patient
@@ -200,7 +200,7 @@
                                     <div class="dropdown w-75">
                                         <button class="btn text-white border border-white py-1"
                                                 type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
+                                                aria-expanded="false" onclick="ChatWith(0,@item.phyId,1)">
                                             <i class="bi bi-person-badge-fill"></i>
                                             <span>
                                                 Provider
@@ -209,7 +209,7 @@
 
                                     </div>
                                 </div>
-                            </td>*@
+                            </td>
                             @*9*@
                             <td style="background:@bgColor">
                                 <div>
@@ -444,6 +444,8 @@ else
 </div>
 *@
 <script>
+   
+
     //$("#exportNewReq").click(function () {
       
     //    var request = @Html.Raw(Json.Serialize(Model));

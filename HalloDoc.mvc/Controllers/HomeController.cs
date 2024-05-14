@@ -180,5 +180,12 @@ namespace HalloDoc.mvc.Controllers
         }
 
 
+        public IActionResult Chat(int RequestId, int AdminID, int ProviderId)
+        {
+            int? roleMain = HttpContext.Session.GetInt32("roleId");
+            ChatViewModel model = _adminService.GetChats(RequestId, AdminID, ProviderId, 1);
+            return PartialView("_Chat", model);
+        }
+
     }
 }

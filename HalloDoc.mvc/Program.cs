@@ -51,6 +51,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
      };
  });
+
+builder.Services.AddSignalR();
+
 //Jwt configuration ends here
 
 var app = builder.Build();
@@ -80,6 +83,7 @@ app.Use(async (context, next) =>
 
     await next.Invoke();
 });
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
